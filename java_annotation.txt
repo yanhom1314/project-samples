@@ -1,0 +1,139 @@
+什么是注解（Annotation）
+	Java注解是JDK1.5提供的新语法，它提供了一套机制使我们可以对方法、类、参数、包、域以及变量等添加信息。以便在需要使用的时候，可以通过反射将标注的信息提取出来。
+
+
+Java1.5起标准库内建的三个annotation类型:
+	一个是@Override:只能用在方法之上的，用来告诉别人这一个方法是改写父类的。
+　　一个是@Deprecated:建议别人不要使用旧的API的时候用的,编译的时候会用产生警告信息,可以设定在程序里的所有的元素上.
+　　一个是@SuppressWarnings:这一个类型可以来暂时把一些警告信息消息关闭.
+自定义注解
+自定义步骤大致分为两步：
+1：通过@interface关键字声明注解名称，以及注解的成员属性或者叫做注解的参数。
+2：使用java内置的四个元注解对这个自定义标注的功能和范围进行一些限制
+
+
+元注解有：@Target,@Retention,@Documented,@Inherited  
+    @Target 表示该注解用于什么地方，可能的 ElemenetType 参数包括： 
+        ElemenetType.CONSTRUCTOR 构造器声明 
+        ElemenetType.FIELD 域声明（包括 enum 实例） 
+        ElemenetType.LOCAL_VARIABLE 局部变量声明 
+        ElemenetType.METHOD 方法声明 
+        ElemenetType.PACKAGE 包声明 
+        ElemenetType.PARAMETER 参数声明 
+        ElemenetType.TYPE 类，接口（包括注解类型）或enum声明 
+         
+    @Retention 表示在什么级别保存该注解信息。可选的 RetentionPolicy 参数包括： 
+        RetentionPolicy.SOURCE 注解将被编译器丢弃 
+        RetentionPolicy.CLASS 注解在class文件中可用，但会被JVM丢弃 
+        RetentionPolicy.RUNTIME JVM将在运行期也保留注释，因此可以通过反射机制读取注解的信息。 
+
+	注意一下，当你没有设定一个Annotation类型的Retention值时，系统默认值是CLASS.
+
+    @Documented 将此注解包含在 javadoc 中 
+      
+    @Inherited 允许子类继承父类中的注解 
+
+	说明:所有的Annotation会自动继承java.lang.annotation这一个接口,所以不能再去继承别的类或是接口.
+最重要的一点,Annotation类型里面的参数该怎么设定:
+　　第一,只能用public或默认(default)这两个访问权修饰.例如,String value();这里把方法设为defaul默认类型.
+　　第二,参数成员只能用基本类型byte,short,char,int,long,float,double,boolean八种基本数据类型和 String,Enum,Class,annotations等数据类型,以及这一些类型的数组.例如,String value();这里的参数成员就为String.
+　　第三,如果只有一个参数成员,最好把参数名称设为"value",后加小括号.例:上面的例子就只有一个参数成员.
+	
+
+示例
+注解@Description：Description.java
+@Target(ElementType.TYPE)//这个标注应用于类
+@Retention(RetentionPolicy.RUNTIME)//标注会一直保留到运行时
+@Documented//将此注解包含在javadoc中
+public @interface Description {
+	String value();
+}
+注解@Name：Name.java
+@Target({ ElementType.FIELD, ElementType.METHOD }) //支持集合
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Name {
+    String originate();
+    String community();
+}
+注解信息使用和提取：HelloWorld.java
+@Description(value = "这是一个演示注解的示例！")
+public class HelloWorld {
+	@Name(community = "域组织", originate = "域创始")
+	private String value;
+
+	@Name(community = "域公开组织", originate = "域公开创始")
+	public String pvalue;
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	@Name(originate = "创始人", community = "社区")
+	public void testName() {
+		System.out.println("Hello Wolrd!");
+	}
+
+	public static void main(String[] args) throws Exception {
+		Class<?> test = HelloWorld.class;
+		Method[] method = test.getMethods();
+		boolean flag = test.isAnnotationPresent(Description.class);
+		if (flag) {
+			Description des = test.getAnnotation(Description.class);
+			System.out.println("描述:" + des.value());
+			System.out.println("-----------------");
+		}
+
+		// 把利用到@Name的全部方法保存到Set中去
+		Set<Method> set = new HashSet<Method>();
+		for (int i = 0; i < method.length; i++) {
+			boolean otherFlag = method[i].isAnnotationPresent(Name.class);
+			if (otherFlag)
+				set.add(method[i]);
+		}
+		for (Method m : set) {
+			Name name = m.getAnnotation(Name.class);
+			System.out.printf("%s\n%s\n", name.originate(), name.community());
+		}
+		HelloWorld t = new HelloWorld();
+		init(t);
+		System.out.printf("@%s@\n@%s@\n", t.getValue(), t.pvalue);
+	}
+
+	public static <T> void init(T t) {
+		try {
+			Class<?> cl = t.getClass();
+			Field[] fds = cl.getDeclaredFields();
+			Method[] mds = cl.getMethods();
+			Map<String, Method> kmds = new HashMap<String, Method>();
+			for (Method md : mds) {
+				if (md.getName().indexOf("set") == 0) {
+					String key = md.getName().substring(3).toLowerCase();					
+					kmds.put(key, md);
+				}
+			}
+
+			for (Field fd : fds) {
+				if (fd.isAnnotationPresent(Name.class)) {
+					int mod = fd.getModifiers();
+					if (Modifier.isPublic(mod)) {
+						fd.set(t, "公共Pvalue");
+					} else {
+						if (kmds.containsKey(fd.getName())) {
+							Method md = kmds.get(fd.getName());
+							md.invoke(t, "非公共Value");
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+

@@ -1,0 +1,80 @@
+J2EE
+
+Framework
+Seam    http://www.seamframework.org
+Spring  http://www.springsource.com
+Play 	http://www.playframework.org
+
+ORM
+Hibernate http://www.jboss.org/hibernate
+MyBatis   http://www.mybatis.org/
+
+NIO
+Netty    http://www.jboss.org/netty
+Mina     http://mina.apache.org
+Grizzly  http://grizzly.java.net/
+Yanf4j   http://code.google.com/p/yanf4j/
+
+Search
+Lucene  http://lucene.apache.org
+Nutch   http://lucene.apache.org/nutch/
+
+OSGI
+Felix     http://felix.apache.org/
+Equinox   http://www.eclipse.org/equinox/
+
+AOP
+Aspectj   http://www.eclipse.org/aspectj/
+
+WorkFlow
+JBPM      http://labs.jboss.com/jbossjbpm/
+Activiti  http://www.activiti.org/
+
+IOC
+Guice     http://code.google.com/p/google-guice/ 
+
+Cache
+JBoss Cache  http://jboss.org/jbosscache/
+Encache      http://ehcache.sourceforge.net/
+
+Template Engine
+Freemaker http://freemarker.net
+Velocity  http://velocity.apache.org/
+
+J2ME
+Android
+
+Build Tools
+Maven 	http://maven.apache.org
+Gradle	http://gradle.org/
+
+Web Server
+Nginx
+Apache HTTP Server
+
+JSF
+MyFaces 	http://myfaces.apache.org
+OpenFaces	http://openfaces.org/
+RichFaces   http://www.jboss.org/richfaces
+PrimeFaces  http://www.primefaces.org/
+PrettyFaces http://ocpsoft.com/prettyfaces/
+
+Other
+Nagios 		http://www.nagios.net
+Squid  		http://www.squid.net
+Memcached   http://memcached.org/
+
+Code
+Code Examples http://www.java2s.com/
+
+Team
+Bitbucket https://bitbucket.org/
+Github  https://github.com
+
+Whahah
+
+
+
+
+
+

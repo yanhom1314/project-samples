@@ -1,0 +1,45 @@
+Seam
+
+1.修改META-INF/persistence-*.xml文件
+
+ 修改
+ transaction-type="RESOURCE_LOCAL"
+
+
+ 注释掉或者使用其他
+ <property name="hibernate.transaction.manager_lookup_class"
+				value="org.hibernate.transaction.JBossTransactionManagerLookup" />
+
+
+
+2.修改WEB-INF/components.xml文件
+
+
+添加
+xmlns:transaction="http://jboss.com/products/seam/transaction"
+...
+http://jboss.com/products/seam/transaction http://jboss.com/products/seam/transaction-2.0.xsd
+...
+
+<transaction:entity-transaction entity-manager="#{entityManager}"/>
+
+	
+3.修改build.xml文件
+
+在<copy todir="${war.dir}/WEB-INF/lib">的<fileset dir="${lib.dir}">节点中添加
+
+<!--Tomcat6-->						
+<include name="antlr.jar" />
+<include name="asm.jar" />
+<include name="cglib.jar" />
+<include name="commons-*.jar"/>
+<include name="dom4j.jar" />
+<include name="javassist.jar"/>
+<include name="jta.jar" />
+<include name="jsf-*.jar" />
+<include name="jstl.jar" />
+<include name="hibernate*.jar" />
+<include name="persistence-api.jar" />
+<include name="lucene-core.jar" />
+<include name="jboss-common-core.jar"/>
+<!--Tomcat6-->

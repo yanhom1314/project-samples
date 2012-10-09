@@ -1,0 +1,49 @@
+﻿set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+"窗口最大化
+au GUIEnter * simalt ~x
+"中文乱码
+set fileencodings=ucs-bom,utf-8,chinese
+"字体
+set guifont=Droid_Sans_Mono:h10
+"设置样式
+colorscheme molokai
+"取消备份
+set nobackup
+"设置tab键的宽度
+set tabstop=4      
+"自动对齐
+set autoindent     
+set shiftwidth=4
+"设置折叠
+"set foldmethod=indent
+set foldmethod=syntax
+"设置行数
+set number
+
+"映射快捷键
+"map <F12> <Esc>:!d:\python\python.exe %<CR> 
+"map <F12> <Esc>:!d:\python\python.exe %<CR> 
+
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+set nocp
+filetype plugin on
+filetype indent on
+"json file highlighting
+au! BufRead,BufNewFile *.json setfiletype json 
+"set tags+=d:\Vim\tags\mingw\tags
+"au BufWritePost *.c,*.cpp,*.cc,*.h !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+"au BufWritePost *.java,*.py !ctags -R .
+
+"filetype on
+set completeopt=longest,menu
+"Taglist设置
+"set Tlist_Ctags_Cmd ='E:\gvim\ctags\ctags.exe'
+set tags=tags;
+set autochdir
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+

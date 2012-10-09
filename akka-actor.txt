@@ -1,0 +1,132 @@
+Actor分布式并发模型
+1.使用Scala Library中包含的actor包，不过据传此部分会被移除；
+2.使用Akka框架，这个产品与Scala同属typesafe公司；
+
+package scala.akka.demo {
+    import akka.actor._
+
+    trait MathOp
+    case class Add(n1: Int, n2: Int) extends MathOp
+    case class Sub(n1: Int, n2: Int) extends MathOp
+    trait MathRes
+    case class AddRes(n1: Int, n2: Int, r: Int) extends MathRes
+    case class SubRes(n1: Int, n2: Int, r: Int) extends MathRes
+
+    case class Stop
+    class TestActor extends Actor {
+        def receive = {
+            case Add(n1, n2) =>
+                println("Add")
+                sender ! AddRes(n1, n2, n1 + n2)
+            case Sub(n1, n2) =>
+                println("Sub")
+                sender ! SubRes(n1, n2, n1 - n2)
+        }
+    }
+    class LookActor extends Actor {
+        def receive = {
+            case (actor: ActorRef, op: MathOp) =>
+                println("fuck")
+                actor ! op
+            case AddRes(n1, n2, r) =>
+                println("Add Res:%d + %d = %d.".format(n1, n2, r))
+            case SubRes(n1, n2, r) =>
+                println("Sub Res:%d - %d = %d.".format(n1, n2, r))
+            case Stop =>
+                context.system.shutdown()
+        }
+    }
+
+    object OneCpu extends App {
+        //init
+        val system = ActorSystem()
+        val testActor = system.actorOf(Props[TestActor], "testActor")
+        val lookActor = system.actorOf(Props[LookActor], "lookActor")
+        println("fuck1")
+        lookActor ! (testActor, Add(12, 34))
+        lookActor ! Stop
+    }
+}
+Remoting Actor
+必须在应用的classpath中存在application.conf配置文件，actor系统从中读取相关配置信息。
+参考akka-samples中的remoting例子：
+//#calculator
+calculator {   						//actor索引名称 
+  include "common"					//引入外部配置文件common.conf
+
+  akka {
+    remote.netty.port = 2552  				//定义akka系统属性remote.netty.port也可以用remote{netty{ port = 2552 }}
+  }
+}
+//#calculator
+
+//#remotelookup
+remotelookup {
+  include "common"
+
+  akka {
+    remote.netty.port = 2553
+  }
+}
+//#remotelookup
+
+//#remotecreation
+remotecreation {
+  include "common"
+
+  akka {
+    actor {
+      deployment {
+        /advancedCalculator {
+          remote = "akka://CalculatorApplication@127.0.0.1:2552"
+        }
+      }
+    }
+
+    remote.netty.port = 2554
+  }
+}
+//#remotecreation
+
+*Lookup : used to look up an actor on a remote node with actorFor(path)
+*Creation : used to create an actor on a remote node with actorOf(Props(...), actorName)
+
+val actor = context.actorFor("akka://actorSystemName@10.0.0.1:2552/user/actorName")
+
+akka://<actor system>@<hostname>:<port>/<actor path>
+
+//A:根据配置文件创建本地Actor
+val system = ActorSystem("CalculatorApplication", ConfigFactory.load.getConfig("calculator"))
+val actor = system.actorOf(Props[SimpleCalculatorActor], "simpleCalculator")
+ 
+//B:使用actorFor远程获取actor，
+val system = ActorSystem("LookupApplication", ConfigFactory.load.getConfig("remotelookup"))
+val remoteActor = system.actorFor("akka://CalculatorApplication@127.0.0.1:2552/user/simpleCalculator")
+
+//C:使用actorOf远程创建actor
+val system = ActorSystem("RemoteCreation", ConfigFactory.load.getConfig("remotecreation"))
+val remoteActor = system.actorOf(Props[AdvancedCalculatorActor], "advancedCalculator")
+
+//D:获取C:创建的远程actor
+val system = ActorSystem("LookupApplication", ConfigFactory.load.getConfig("remotelookup"))
+val remoteActor = system.actorFor("akka://CalculatorApplication@127.0.0.1:2552/remote/RemoteCreation@127.0.0.1:2554/user/advancedCalculator")
+注意的是actorPath为/remote/<remote actor system>@hostname:<port>/<actor path>参考上面的路径。
+
+
+Integrate SBT
+
+build.sbt中引入actor依赖库
+
+libraryDependencies  += "com.typesafe.akka" % "akka-actor" % "2.0.1"
+
+libraryDependencies  += "com.typesafe.akka" % "akka-remote" % "2.0.1"
+
+libraryDependencies  += "com.typesafe.akka" % "akka-kernel" % "2.0.1"
+注意换行，也可以使用 ++= Seq(...)的写法
+
+IDE支持
+在project/build.sbt中加入Plugin定义
+addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.1.0-M2")
+
+addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.0.0")
+

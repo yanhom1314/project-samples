@@ -1,0 +1,81 @@
+1. 拷贝 jetty-plus-6.1.9.jar 到 ${activemq.base}/lib/web/
+
+2. 在配置文件${activemq.base}/conf/activemq.xml的<jetty xmlns="http://mortbay.com/schemas/jetty/1.0">节点里加上:
+        <!-- @wjw_add -->
+        <userRealms>
+          <jaasUserRealm name="ActiveMQ Realm" loginModuleName="ActiveMQ" />
+        </userRealms>
+
+3. 建立:${activemq.base}/conf/mylogin.conf
+###########################################
+ActiveMQ{
+org.mortbay.jetty.plus.jaas.spi.PropertyFileLoginModule required
+debug="true"
+file="${activemq.base}/conf/mylogin.properties";
+};
+###########################################
+
+4. 建立:${activemq.base}/conf/mylogin.properties
+###########################################
+#The format is: <username>: <password>[,<rolename> ...]
+admin: XinFeng,roleAdmin
+demo: db2admin,roleUser
+###########################################
+
+5. Configure the security constraint either in the webconsoles web.xml or in jetty's webdefault.xml
+在${activemq.base}/webapps/admin/WEB-INF/web.xml文件里添加以下内容
+###########################################
+<security-constraint>
+<web-resource-collection>
+  <web-resource-name>A Protected Page</web-resource-name>
+  <url-pattern>/*</url-pattern>
+</web-resource-collection>
+<auth-constraint>
+  <role-name>roleAdmin</role-name>
+</auth-constraint>
+</security-constraint>
+
+<login-config>
+<auth-method>BASIC</auth-method>
+<realm-name>ActiveMQ Realm</realm-name>
+</login-config>
+###########################################
+在${activemq.base}/webapps/demo/WEB-INF/web.xml文件里添加以下内容
+###########################################
+<security-constraint>
+<web-resource-collection>
+  <web-resource-name>A Protected Page</web-resource-name>
+  <url-pattern>/*</url-pattern>
+</web-resource-collection>
+<auth-constraint>
+  <role-name>roleUser</role-name>
+</auth-constraint>
+</security-constraint>
+
+<login-config>
+<auth-method>BASIC</auth-method>
+<realm-name>ActiveMQ Realm</realm-name>
+</login-config>
+###########################################
+
+6. 在文件: ${activemq.base}/bin/activemq里把环境变量"-Djava.security.auth.login.config=${ACTIVEMQ_BASE}/conf/mylogin.conf"加到ACTIVEMQ_OPTS
+例如: ACTIVEMQ_OPTS="$ACTIVEMQ_OPTS $SUNJMX $SSL_OPTS -Djava.security.auth.login.config=${ACTIVEMQ_BASE}/conf/mylogin.conf"
+
+7.编辑${activemq.base}/conf/jetty.xml中添加：
+ <!-- @add -->
+ <userRealms>
+	 <jaasUserRealm name="ActiveMQ Realm" loginModuleName="ActiveMQ" />
+ </userRealms>
+
+8.编辑 ${activemq.base}/conf/activemq.xml文件，
+<transportConnectors>
+	<transportConnector name="default" uri="tcp://221.231.148.247:8976"/>
+        <transportConnector name="stomps" uri="stomp://221.231.148.247:8977"/>
+</transportConnectors>
+
+结束:使用浏览器访问http://activemq的IP:8161/admin和http://activemq的IP:8161/demo,浏览器就会弹出登录对话框
+
+
+tcp://221.231.148.247:8976
+http://221.231.148.247:8161/admin   admin:XinFeng
+http://221.231.148.247:8161/demo    demo:db2admin
