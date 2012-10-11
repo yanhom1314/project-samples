@@ -233,7 +233,7 @@ def add(x:Int)(y:Int) = x +y
 
 Curry化函数不仅限于你定义的函数，也可以将已存在的函数Curry化。
 def add(x:Int,y:Int) = x + y
-val addCurried=Function.curried(add _)//已经deprecated
+//val addCurried=Function.curried(add _)//已经deprecated
 val addCurried=(add _).curried
 add(1,2) //3
 addCurried(1)(2) //3
@@ -279,6 +279,20 @@ addFive(3,1) //9
 val addFive2 = (y:Int,z:Int) => add(5,y,z)
 addFive2(3,1) //9
 
+类型中的函数继承
+
+trait可以extend函数，例如：
+trait Action extends (String => String)
+
+object Action {
+  def apply(block: => String): String = {
+    "Test"
+  }
+
+  def apply(block: String => String): String = {
+    block("Test")
+  }
+}
 
 目录/文件处理
 import java.io._
