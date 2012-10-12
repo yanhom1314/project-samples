@@ -294,6 +294,32 @@ object Action {
   }
 }
 
+函数apply与unapply的使用
+如果可以定义CASE class，例如：
+case class Apple(price:Int,weight:Int)
+则可以通过模式匹配来获取和设置对象值：
+val apple=Apple(12,34)
+val Apple(p,w)=apple
+println(p+":"+w)//打印12:34值
+有一些情况在不定义CASE CLASS或者不能定义CASE CLASS的情况下可以使用unapply（Extraction method）与apply（Injection method）：
+例如有需要从"name,age,addr"中的字符串中获取学生的name,age,addr:
+object Student {
+	def unapply(str:String):Option[(String,String,String)] = {
+		val splits = str.split(",")
+    	if (splits.length == 3) Some(splits(0), splits(1), splits(2)) else None
+	}
+	def apply(name:String,age:String,addr:String):String = {
+		name+","+age+","+addr
+	}
+}
+val Stduent(name,age,addr)="lyf,18,NanJing"
+println(name+":"+age+":"+addr)//打印name、age、addr值
+val str=Student("lyf","12","NanJing")
+println(str)//打印str值
+
+apply为注入方法，unapply为提取方法
+
+
 目录/文件处理
 import java.io._
 import scala.io.Source
