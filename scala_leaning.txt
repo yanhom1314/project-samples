@@ -134,7 +134,13 @@ object Hello extends App{
 	    println(name+"|"+age)
     }
 }
-
+函数也是对象。实际上函数f: (ArgType1,...ArgTypeN)=>ReturnTyp是以类FunctionN[ArgType1,..., ArgTypeN, ReturnType]的实例形式被定义的。N是表示参数个数的正整数。如果是1个参数的话则是Function1[ArgType1, ReturnType]。
+def double(n:Int):Int = n * 2
+上述函数基本上与下述定义是等同的。
+object double extends Function1[Int, Int] {
+	def apply(n: Int): Int = n * 2
+}
+double(10) //20
 
 分号
 语句末尾的分号可选；单行多语句需要使用分号分开。
