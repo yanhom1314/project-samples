@@ -12,7 +12,17 @@ def say(call:() => Unit):Unit = {
 }
 call为函数形参，表示无参数返回Unit的函数调用。
 
-类型参数中协变(+)、逆变（-）、类型上界(<:)和类型下界(>:)的使用
+
+类型参数中协变(+)、逆变(-)、类型上界(<:)和类型下界(>:)的使用
+
+scala 中是用 [] 代替 java 中的<> 表达泛型。
+协变(covariant)的定义: 假设有类G(或者接口和特征) 和类型T1,T2  。 在T1是T2的子类的情况下， 如果G<T1> 也是G2<T2>的子类，则类G是协变的。
+逆变(contravariance)的定义:	假设有类 G 和类型T1,T2, 在T1 是T2的子类的情况，如果G[T2]是G[T1]的子类， 则G为逆变。
+
+在类的协变定义中，不能直接使用泛型定义方法，如：
+trait CoVar[+T] {
+	def f(t: T):Unit
+}
 1）trait Queue[T] {} 
 这是非变情况。这种情况下，当类型S是类型A的子类型，则Queue[S]不可认为是Queue[A]的子类型或父类型，这种情况是和Java一样的。 
 
@@ -22,16 +32,50 @@ call为函数形参，表示无参数返回Unit的函数调用。
 3）trait Queue[-T] {} 
 这是逆变情况。这种情况下，当类型S是类型A的子类型，则Queue[A]反过来可以认为是Queue[S}的子类型。也就是被参数化类型的泛化方向与参数类型的方向是相反的，所以称为逆变。 
 
-在trait、class中使用了协变（+）、逆变（-）则方法就必须使用边界。
+在trait、class中使用了协变（+）、逆变（-）则成员方法在使用泛型时就必须使用边界。
 a)trait Queue[+T]{
 	def fun[U >: T](u:U):Unit
 }
->:是类型下边界定义，表示U为T的父类（包含自身）。类型下界只能在协变定义中使用（在协变中类型上界为T本身）。
+>:是类型下边界定义，表示U为T以及T的父类。类型下界只能在协变定义中使用，因为协变是自上而下，必须定义下边界。
 
 b)trait Queue[-T]{
 	def fun[U <: T](u:U):Unit
 }
-<:是类型上边界定义，表示U为T的子类（包含自身）。类型上界只能在逆变定义中使用（在逆变中类型下界为T本身）。
+<:是类型上边界定义，表示U为T以及T的子类。类型上界只能在逆变定义中使用，逆变是自下而上，必须定义上边界。
+
+边界的范例：
+
+case class A(val name:String) { override def toString = name}
+case class B(override val name:String) extends A(name)
+case class C(override val name:String) extends B(name)
+case class D(val name:String) { override def toString = name}
+
+def +:[T >: B](t:T):Unit = println(t)
+
+当在函数+:的定义使用>:边界，如果在调用时不定义参数的类型，则Any都可以作为入参；
++:(new A("A"))
++:(new B("B"))
++:(new C("C"))
++:(new D("D"))
+这样调用是可以编译并执行的，结果就是打印：
+A
+B
+C
+D
+但是如果使用
++:[A](new A("A"))
++:[B](new B("B"))
++:[C](new C("C"))//编译错误，修改+:[B](new C("C"))可以编译
++:[D](new D("D"))//编译错误，修改+:[B](new D("D"))仍然不可编译
+所以，在下边界(lower bound)的使用中，建议指定成员函数的泛型类型，如+:[B]或者+:[A]，不要省略
+
+在上边界(upper bound)中有些不同
+def -:[T <: B](t:T):Unit = println(t)
+当如下调用时
+-:(new A("A"))//编译错误,使用-:[A](new A("A"))相同
+-:(new B("B"))
+-:(new C("C"))
+-:(new D("D"))//编译错误,使用-:[D](new D("D"))相同
 
 
 class A(val name: String) {
@@ -73,17 +117,6 @@ object ChangeMain extends App {
   print("逆变B：")
   lda.fun(b)
 }
-scala 中是用 [] 代替 java 中的<> 表达泛型。
-协变(covariant)的定义: 假设有类G(或者接口和特征) 和类型T1,T2  。 在T1是T2的子类的情况下， 如果G<T1> 也是G2<T2>的子类，则类G是协变的。
-逆变(contravariance)的定义:	假设有类 G 和类型T1,T2, 在T1 是T2的子类的情况，如果G[T2]是G[T1]的子类， 则G为逆变。
-
-在类的协变定义中，不能直接使用泛型定义方法，如：
-trait CoVar[+T] {
-	def f(t: T):Unit
-}
-
-
-
 
 变量
 定义变量有val与var两种方式，区别在于val与java中final变量类似，初始化后不可以再赋值；
@@ -352,16 +385,30 @@ grep(".*2\\.2\\.2\\.2.*")
 classOf、isInstanceOf、asInstanceOf
 把classOf[T]看成Java里的T.class, obj.isInstanceOf[T]看成 obj instanceof T, obj.asInstanceOf[T]看成(T)obj
 
+Any,AnyVal,AnyRef
+Scala中没有像java中的基础类型（int，byte，short）等，Scala中存在单一的根类Any，java中的基础类型如int，byte等继承的是AnyVal类，
+而java中的class则继承的是AnyRef类。
+Any
+|
+|---AnyVal
+|      |---Byte(相当于Java的byte)
+|      |---Short(相当于Java的short)
+|      |---Char(相当于Java的char)
+|      |---Int(相当于Java的int)
+|      |---Long(相当于Java的long)
+|      |---Float(相当于Java的float)
+|      |---Double(相当于Java的double)
+|      |---Boolean(相当于Java的boolean)
+|      |---Unit(相当于Java的void)
+|---AnyRef（相当于java中的java.lang.Object）
+       |---String
+       |---:::
 
 Nothing, Null, Nil, None, Unit 
-Nothing 是trait，定义为：final trait Nothing extends Any。Nothing处于Scala类型体系的最底层，是所有类型的子类型，Nothing没有实例。
- 
-Null 是trait，定义为：final trait Null extends AnyRef 。Null是所有引用类型的子类型，唯一的一个实例是null。
- 
+Nothing 是trait，定义为：final trait Nothing extends Any。Nothing处于Scala类型体系的最底层，是所有类型(Any)的子类型，Nothing没有实例。
+Null 是trait，定义为：final trait Null extends AnyRef 。Null是所有引用类型(AnyRef)的子类型，唯一的一个实例是null。 
 Nil 是case object，定义为case object Nil extends List[Nothing]， 代表一个空list。由于Scala中的List是协变的，因此无论T是何种类型，Nil都是List[T]的实例。
- 
 None 是case object，定义为：case object None extends Option[Nothing]，代表不存在的值。
-
 Unit 是class，定义为：abstract final class Unit extends AnyVal。Unit跟Java中的void相当，当一个方法不返回任何值的时候，那么方法的类型是Unit。Unit唯一的一个实例是().
 
 
