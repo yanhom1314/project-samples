@@ -412,3 +412,12 @@ None 是case object，定义为：case object None extends Option[Nothing]，代
 Unit 是class，定义为：abstract final class Unit extends AnyVal。Unit跟Java中的void相当，当一个方法不返回任何值的时候，那么方法的类型是Unit。Unit唯一的一个实例是().
 
 
+
+获取泛型类型
+在class定义中可以使用Manifest，例如：
+class A[T: Manifest] {
+	def getType = implicitly[Manifest[T]].erasure
+}
+new A[String].getType
+
+

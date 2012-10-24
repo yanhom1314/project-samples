@@ -1,0 +1,96 @@
+Play Frameworke 2.0+
+
+集成Spring Module
+
+编辑project/Build.scala文件，添加：
+
+val appDependencies = Seq(
+  // Add your project dependencies here,
+  "play" %% "spring" % "2.0"
+)
+
+val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
+    // Add your own project settings here
+    resolvers += "TAMU Release Repository" at "https://maven.library.tamu.edu/content/repositories/releases/"
+)
+
+在conf目录中新建application-context.xml文件。
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="beans"/>
+</beans>
+
+如果需要修改spring配置文件，需修改conf/application.conf文件：
+spring.context=another-context-file.xml
+
+在扫描包beans中新建HelloBean类，获取Bean可以使用Spring.get*的相关方法。
+
+
+import org.springframework.stereotype.Service
+import play.api.libs.json.{JsString, JsObject, JsValue, Writes}
+
+@Service
+case class Hello(var name: String, var age: Int) {
+  def this() = this(null, -1)
+
+  def say(): Unit = {
+    println(this.name + ":" + this.age)
+  }
+
+}
+
+
+使用toJson(t:T)
+类型T需定义reads和writes方法，使用implicit。
+object Hello {
+  implicit object HelloWrites extends Format[Hello] {
+    def writes(obj: Hello) = JsObject(List("name" -> JsString(obj.name), "age" -> JsNumber(obj.age)))
+
+    def reads(json: JsValue) = Hello((json \ "name").asOpt[String].get, (json \ "age").asOpt[Int].get)
+  }
+}
+在Action中可以parse或者generate符合json格式的数据
+/*返回application/json格式的内容*/
+def json= Action {
+	//val hello = Spring.getBeanOfType(classOf[Hello]) // spring		
+	val hello = Hello("#What the fucking hell!#",999)    
+    Ok(toJson(hello))
+}
+处理application/json请求可以使用可以处理Anycontent的Action也可以使用Action(parse.json)，建议使用第二种。
+def json = Action {
+  request =>
+    request.body.asJson.map {
+      json =>
+        val hello = json.as[Hello]
+        println("###" + hello.toString)
+        (json \ "name").asOpt[String].map {
+          name =>
+            Ok("Hello" + name)
+        }.getOrElse {
+          BadRequest("UNKOWN format request")
+        }
+    }.getOrElse {
+      BadRequest("UNKOWN format request")
+    }
+}
+
+def json2 = Action(parse.json) {
+  request =>
+    val hello = request.body.as
+    println("###" + hello.toString)
+    (request.body \ "name").asOpt[String].map {
+      name =>
+        Ok("Hello" + name)
+    }.getOrElse {
+      BadRequest("UNKOWN format request")
+    }
+}
+
