@@ -233,6 +233,36 @@ object Hello{
 互为伴生。
 
 隐式转换implicit
+implicit只能在值(values)，参数(variables)，方法(methods)，伴生对象(object)中使用，隐式转换的作用：
+1.扩展或增加你困扰的Lirary
+case class IntTimes(val t:Int){
+	def times(f:(Int)=>Unit):Unit = {
+		for(i <- 0 to t){
+			f(i)
+		}
+	}
+}
+object IntTimes{
+	implicit def int2times(t:Int) = new IntTimes(t)
+}
+
+object Test extends App{
+	import IntTimes._
+	/*也可以直接定义隐式方法*/
+	//implicit def int2times(t:Int) = new IntTimes(t)
+	
+	12.times { println(_)}
+}
+
+
+2.适配或扩展一个对象
+
+case class Blah(msg:String)(implicit m:String) {
+	def sayHi = println("%s say %s".format(msg,m))
+}
+
+
+
 trait Filter[A] {
   def filter(input: A)(f: A => Boolean): Option[A]
 }
@@ -411,7 +441,24 @@ Nil 是case object，定义为case object Nil extends List[Nothing]， 代表一
 None 是case object，定义为：case object None extends Option[Nothing]，代表不存在的值。
 Unit 是class，定义为：abstract final class Unit extends AnyVal。Unit跟Java中的void相当，当一个方法不返回任何值的时候，那么方法的类型是Unit。Unit唯一的一个实例是().
 
+使用Option、Some、None避免NullpointException
+创建Option[T]对象
+val st: Option[String] = Some("Hello World")
+val nt: Option[String] = None
+println(st.getOrElse("").length)
+println(nt.getOrElse("").length)
 
+判断是Some还是None可以使用类方法isDefined，不过建议使用Pattern Matching。
+if(st.isDefined){
+	println(st.get.length)
+}
+st match {
+	case Some(ct) => println(ct.length)
+	case None =>
+}
+
+Option[T]是个容器，可以map，foreach，filter等方法。
+println(st.filter(p => p.length >10).getOrElse(""))
 
 获取泛型类型
 在class定义中可以使用Manifest，例如：

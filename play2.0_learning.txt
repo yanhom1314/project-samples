@@ -47,6 +47,59 @@ case class Hello(var name: String, var age: Int) {
 
 }
 
+继承Squeryl
+
+创建app/Global.scala
+
+import play.api.{Application, GlobalSettings}
+import org.squeryl.{Session, SessionFactory}
+import play.api.db.DB
+import org.squeryl.adapters.PostgreSqlAdapter
+import org.squeryl.internals.DatabaseAdapter
+
+object Global extends GlobalSettings {
+  override def onStart(app: Application) {
+    SessionFactory.concreteFactory = app.configuration.getString("db.default.driver") match {
+      case Some("org.postgresql.Driver") => println("postgresql"); Some(() => getSession(new PostgreSqlAdapter, app))
+      case _ => sys.error("Database driver must be either org.h2.Driver or org.postgresql.Driver")
+    }
+    if (!Session.hasCurrentSession) {
+      val session = SessionFactory.newSession
+      session.bindToCurrentThread
+    }
+  }
+
+
+  override def onStop(app: Application) {
+    super.onStop(app)
+    if (Session.hasCurrentSession) {
+      println("Stop and Close squeryl session!")
+      val s = Session.currentSession
+      s.cleanup
+      s.close
+    }
+  }
+
+  private def getSession(adapter: DatabaseAdapter, app: Application) = Session.create(DB.getConnection()(app), adapter)
+}
+创建Model和Schema
+import org.squeryl.Schema
+
+case class User(var id: Long, var name: String, var address: String)
+
+object AppDB extends Schema {
+  val users = table[User]("t_user")
+}
+
+在Controller中可以正常使用Squeryl的API。
+
+def index = Action {
+	inTransaction {
+		val a = from(AppDB.users)(a => where(a.name like "1%").select(a))        
+		println("#session#" + Session.currentSession+":"+a.size)
+	}
+}
+
 
 使用toJson(t:T)
 类型T需定义reads和writes方法，使用implicit。
@@ -54,7 +107,7 @@ object Hello {
   implicit object HelloWrites extends Format[Hello] {
     def writes(obj: Hello) = JsObject(List("name" -> JsString(obj.name), "age" -> JsNumber(obj.age)))
 
-    def reads(json: JsValue) = Hello((json \ "name").asOpt[String].get, (json \ "age").asOpt[Int].get)
+    def reads(json: JsValue) = Hello((json \ "name").asOpt[String].getOrElse(""), (json \ "age").asOpt[Int].getOrElse(-1))
   }
 }
 在Action中可以parse或者generate符合json格式的数据
@@ -93,4 +146,5 @@ def json2 = Action(parse.json) {
       BadRequest("UNKOWN format request")
     }
 }
+
 
