@@ -1,16 +1,18 @@
 J2EE
 
-Framework
+Web Framework
+Play 	http://www.playframework.org
 Seam    http://www.seamframework.org
 Spring  http://www.springsource.com
-Play 	http://www.playframework.org
 
 ORM
 Hibernate http://www.jboss.org/hibernate
 MyBatis   http://www.mybatis.org/
+Ebean     http://www.avaje.org/
+Squeryl   http://squeryl.org/
 
 NIO
-Netty    http://www.jboss.org/netty
+Netty    http://netty.io
 Mina     http://mina.apache.org
 Grizzly  http://grizzly.java.net/
 Yanf4j   http://code.google.com/p/yanf4j/
@@ -19,7 +21,12 @@ Search
 Lucene  http://lucene.apache.org
 Nutch   http://lucene.apache.org/nutch/
 
+Actor
+Akka    http://akka.io/
+JActor  http://jactorconsulting.com/product/jactor/
+
 OSGI
+Karaf     http://karaf.apache.org/
 Felix     http://felix.apache.org/
 Equinox   http://www.eclipse.org/equinox/
 
@@ -59,10 +66,19 @@ RichFaces   http://www.jboss.org/richfaces
 PrimeFaces  http://www.primefaces.org/
 PrettyFaces http://ocpsoft.com/prettyfaces/
 
+NoSql
+Redis       http://redis.io/
+Mongodb		http://www.mongodb.org/
+HBase 		http://hbase.apache.org/
+
+Cloud Service
+Hadoop      http://hadoop.apache.org/
+Spark 		http://www.spark-project.org/
+
 Other
+Memcached   http://memcached.org/
 Nagios 		http://www.nagios.net
 Squid  		http://www.squid.net
-Memcached   http://memcached.org/
 
 Code
 Code Examples http://www.java2s.com/
@@ -70,8 +86,6 @@ Code Examples http://www.java2s.com/
 Team
 Bitbucket https://bitbucket.org/
 Github  https://github.com
-
-Whahah
 
 
 
