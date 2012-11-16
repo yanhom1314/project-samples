@@ -435,10 +435,15 @@ Any
        |---:::
 
 Nothing, Null, Nil, None, Unit 
-Nothing 是trait，定义为：final trait Nothing extends Any。Nothing处于Scala类型体系的最底层，是所有类型(Any)的子类型，Nothing没有实例。
+Nothing 是trait，定义为：final trait Nothing extends Any。
+Nothing处于Scala类型体系的最底层，是所有类型(Any)的子类型，Nothing没有实例，如果一个方法抛出异常，则异常的返回值类型就是Nothing。
+
 Null 是trait，定义为：final trait Null extends AnyRef 。Null是所有引用类型(AnyRef)的子类型，唯一的一个实例是null。 
+
 Nil 是case object，定义为case object Nil extends List[Nothing]， 代表一个空list。由于Scala中的List是协变的，因此无论T是何种类型，Nil都是List[T]的实例。
+
 None 是case object，定义为：case object None extends Option[Nothing]，代表不存在的值。
+
 Unit 是class，定义为：abstract final class Unit extends AnyVal。Unit跟Java中的void相当，当一个方法不返回任何值的时候，那么方法的类型是Unit。Unit唯一的一个实例是().
 
 使用Option、Some、None避免NullpointException

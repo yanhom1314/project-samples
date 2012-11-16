@@ -59,6 +59,10 @@ Web Server
 Nginx
 Apache HTTP Server
 
+HTML5
+Vert.x    http://vertx.io/
+Node.js   
+
 JSF
 MyFaces 	http://myfaces.apache.org
 OpenFaces	http://openfaces.org/
@@ -85,8 +89,9 @@ Code Examples http://www.java2s.com/
 
 Team
 Bitbucket https://bitbucket.org/
-Github  https://github.com
-
+Github    https://github.com/
+Taobao    http://code.taobao.org/
+Google    http://code.google.com/
 
 
 
