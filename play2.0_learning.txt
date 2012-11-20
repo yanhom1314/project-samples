@@ -46,8 +46,12 @@ case class Hello(var name: String, var age: Int) {
   }
 
 }
+部署成War
+play2-war-plugin
+https://github.com/dlecan/play2-war-plugin
 
-继承Squeryl
+
+集成Squeryl
 
 创建app/Global.scala
 

@@ -1,0 +1,58 @@
+每一个.scala.html文件会被编译为一个Function，例如：index.scala.html会被编译成views.html.index函数
+
+1.模板中的魔法符号@，当使用@(...)，(...)内为单个scala code语句的表达式计算值返回，当使用@{...}时，{...}为scala code多语句，会编译处理并返回值，例如：
+
+Hello @(your.name+her.name)! //your.name+her.name为single-token语句；
+Hello @{val allname=your.name+her.name;allname} //这是muti-token语句；
+
+当对取值时，()与{}可以省略，例如：
+Hello @(your.name),@{your.name},@your.name!
+
+2.在模板中使用Pattern时,正确的作法是：
+@{your.name match {
+	case name:String => name
+	case _ => ""
+}}
+
+在Play 2.0.4文档中的写法报错，可能需要修正；
+
+3.if的使用，if可以简洁的用法，例如：
+
+@if(!your.name.isEmpty) {<h3>@your.name</h3>} else {<h3>Anymouns.</h3>}
+
+当if语句比较复杂时，可以使用@{}多语句定义块，例如：
+@{if(!your.name.isEmpty) {"<h3>"+your.name+"</h3>"} else {"<h3>Anymouns.</h3>"}}
+
+两种的区别在于前者为返回就是Html，后者返回的是String。
+
+
+4.模板中定义block，这个在使用模板时很有用处，例如：
+
+@name = { @your.name }
+@name = { @(your.name)}
+@name = @{your.name} //使用@{}是=号后的{}可以省略，使用@()不可以省略=号后的{}
+
+@welcome = {<h3>Hello @your.name</h3>}
+
+
+5.flash的使用
+flash仅能在Redirect(...).flashing(..)
+
+def index = Action { impilcit request =>
+	Ok(views.html.index())
+}
+
+def homt =Action { impilicit request =>
+	Redirect(routes.Application.index).flashing(
+		"success" -> "This is a SUCCESS MESSAGE!"
+	)
+}
+
+index.scala.html
+@()(implicit flash:Flash)
+...
+@flash.get("success").getOrElse("Welcome!")
+
+
+
+
