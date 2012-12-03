@@ -107,14 +107,22 @@ def index = Action {
 
 使用toJson(t:T)
 类型T需定义reads和writes方法，使用implicit。
-object Hello {
-  implicit object HelloWrites extends Format[Hello] {
+object Hellos {
+  implicit object HelloFormats extends Format[Hello] {
     def writes(obj: Hello) = JsObject(List("name" -> JsString(obj.name), "age" -> JsNumber(obj.age)))
 
-    def reads(json: JsValue) = Hello((json \ "name").asOpt[String].getOrElse(""), (json \ "age").asOpt[Int].getOrElse(-1))
+    def reads(json: JsValue) = JsSuccess(Hello((json \ "name").asOpt[String].getOrElse(""), (json \ "age").asOpt[Int].getOrElse(-1))))
+    //在play 2.0.x版本中直接返回
+    //def reads(json: JsValue) = Hello((json \ "name").asOpt[String].getOrElse(""), (json \ "age").asOpt[Int].getOrElse(-1))
   }
 }
 在Action中可以parse或者generate符合json格式的数据
+def json = Action(parse.json) { implicit request =>
+	val json=request.body
+	val user=Json.fromJson[User](json).get
+	val userJson=Json.toJson(user)
+	
+}
 /*返回application/json格式的内容*/
 def json= Action {
 	//val hello = Spring.getBeanOfType(classOf[Hello]) // spring		

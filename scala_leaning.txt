@@ -473,3 +473,4 @@ class A[T: Manifest] {
 new A[String].getType
 
 
+flatMap map foreach

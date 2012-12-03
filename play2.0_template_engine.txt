@@ -54,5 +54,79 @@ index.scala.html
 @flash.get("success").getOrElse("Welcome!")
 
 
+6.Form表单
+通过定义val userForm=Form[User](
+ mapping(
+      "name" -> text.verifying(nonEmpty),
+      "address" -> text.verifying("#ERROR MESSAGE#", address => if (address != null && address.length > 6) true else false)
+    )((name, address) => User(-1, name, address))((user: User) => Some((user.name, user.address)))
+  ))
+
+val anyData=Map("name" -> "test","address" -> "JiangSuNanJing")
+val user:User=userForm.bind(anyData).get
+接受页面表单传送的数据使用:
+val user:User=userForm.bindFromRequest
+
+*小技巧*
+填充页面表单正确数据，可以单独写成Tag(或者叫函数~~)
+tags/init.scala.html
+@(data:Map[String,String])
+@data.map { it =>$("input[name=@it._1]").val("@it._2");}
+
+
+在jquery的function中使用；
+<script type="text/javascript">
+    $(function () {
+    	//根据表单name填写正确值
+        @tags.init(myForm.data)
+    });
+</script>
+
+也可以在template中定义block；
+@init = {@myForm.data.map { it =>
+$("input[name=@it._1]").val("@it._2");
+}}
+
+*小技巧*
+在表单数据后显示错误信息；
+可以定义tags/errors.scala.html文件；
+
+@(hasErrors:Boolean,value:play.api.libs.json.JsValue)
+
+@if(hasErrors) {
+var data = @{Html(value.toString)};
+for (var index in data) {
+$("input[name=" + index + "]").after("<span style='color: red'>" + data[index] + "</span");
+}}
+就可以用以下代码调用：
+
+<script type="text/javascript">
+    $(function () {
+        @tags.errors(myForm.hasErrors, myForm.errorsAsJson)
+    });
+</script>
+当然也可以在本函数内定义使用，不过就不具有通用性了。
+@(myForm:Form[A])(implicit flash:Flash)
+...
+@if(myForm.hasErrors) {
+<script type="text/javascript">
+    var data = @{Html(myForm.errorsAsJson.toString)};
+    for (var index in data) {
+        $("input[name=" + index + "]").after("<span style='color: red'>" + data[index] + "</span");
+    }
+</script>
+}
+*小技巧*
+获取单个属性值显示
+@name = {@if(!myForm.value.isEmpty) {@myForm.value.get.name}}
+
+<p>Hello @name!</p>
+或者
+@if(!user.value.isEmpty){
+<h1>@user.value.get.name</h1>
+}
+
+
+
 
 
