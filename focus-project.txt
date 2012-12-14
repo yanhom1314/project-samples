@@ -61,7 +61,10 @@ Apache HTTP Server
 
 HTML5
 Vert.x    http://vertx.io/
-Node.js   
+Node.js   http://nodejs.org
+Google JavaScript Compress http://closure-compiler.googlecode.com
+YuiCompressor http://developer.yahoo.com/yui/compressor/
+
 
 JSF
 MyFaces 	http://myfaces.apache.org

@@ -1,5 +1,11 @@
 Play Frameworke 2.0+
 
+定制根路径
+在conf/application.conf中添加application.context属性。
+application.context="/demo"
+
+则conf/routes中所有映射均自动添加/demo前缀。
+
 集成Spring Module
 
 编辑project/Build.scala文件，添加：
