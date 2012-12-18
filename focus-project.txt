@@ -11,6 +11,9 @@ MyBatis   http://www.mybatis.org/
 Ebean     http://www.avaje.org/
 Squeryl   http://squeryl.org/
 
+JPA
+http://www.objectdb.com/
+
 NIO
 Netty    http://netty.io
 Mina     http://mina.apache.org
