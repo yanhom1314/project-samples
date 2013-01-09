@@ -70,11 +70,11 @@ YuiCompressor http://developer.yahoo.com/yui/compressor/
 
 
 JSF
+PrimeFaces  http://www.primefaces.org/
+PrettyFaces http://ocpsoft.com/prettyfaces/  #UrlRewrite
 MyFaces 	http://myfaces.apache.org
 OpenFaces	http://openfaces.org/
 RichFaces   http://www.jboss.org/richfaces
-PrimeFaces  http://www.primefaces.org/
-PrettyFaces http://ocpsoft.com/prettyfaces/
 
 NoSql
 Redis       http://redis.io/
