@@ -95,9 +95,9 @@ Code Examples http://www.java2s.com/
 
 Team
 Bitbucket     https://bitbucket.org/
-Github    	  https://github.com/ yafengli/x**ly*
-Taobao        http://code.taobao.org/   yafengli/x**ly*
-Gitcafe       https://gitcafe.com/ yafengli/x**ly*
+Github    	  https://github.com/ yafengli/x***ly***
+Taobao        http://code.taobao.org/   yafengli/x***ly***
+Gitcafe       https://gitcafe.com/ yafengli/x***ly***
 Google        http://code.google.com/
 Lighthouseapp http://lighthouseapp.com/
 
@@ -110,7 +110,10 @@ Gmail        http://gmail.com
 网易         http://mail.163.com http://wp.163.com
 
 
+Cloud
+Cloudfoundry http://www.cloudfoundry.com   yafengli@sina.com/x***ly***
 
 
 
-
+Scala
+http://www.scoop.it/t/playframework
