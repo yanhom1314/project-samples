@@ -4,7 +4,7 @@
 
     	A：192.168.1.1
 		B：192.168.1.2
-2. 安装步骤
+## 安装步骤
 
 ##主机A：
 1. 安装PostgreSQL 9.x.x版本
@@ -15,9 +15,9 @@
         useradd postgres
         sudo -u postgres /path/bin/initdb /data/path
 
-+ 编辑/data/path目录下配置文件postgresql.conf:`listen_addresses = '192.168.1.1'`
+2. 编辑/data/path目录下配置文件postgresql.conf:`listen_addresses = '192.168.1.1'`
 
-+ 性能调优
+3. 性能调优
         shared_buffers = 2048MB
         work_mem = 256MB 
         maintenance_work_mem = 512MB
@@ -25,13 +25,13 @@
         effective_cache_size = 4096MB
         constraint_exclusion = on
         max_locks_per_transaction = 512 
-+ 主备配置 
+4. 主备配置 
         wal_level = hot_standby
         max_wal_senders = 1
         wal_keep_segments = 32
         log_destination = 'stderr'
         logging_collector = on
-+ 参数listen_addresses是bind的地址列表，必须配置，否则备份机无法通过TCP/IP连接到主服务器
+5. 参数listen_addresses是bind的地址列表，必须配置，否则备份机无法通过TCP/IP连接到主服务器
 + pg_hba.conf:
         host    all             all             192.168.1.2/32        trust
 + replication privilege.
