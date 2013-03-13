@@ -77,8 +77,10 @@
 		select pg_size_pretty(pg_database_size('db_name')); 
 ####查看所有索引大小
 * relpages(磁盘使用量)
-	        SELECT relname, reltuples, relpages FROM pg_class ORDER BY relpages DESC        
+
+		SELECT relname, reltuples, relpages FROM pg_class ORDER BY relpages DESC        
 * reltuples(记录数)
+ 
   		SELECT relname, reltuples, relpages FROM pg_class ORDER BY reltuples DESC
 * 查看单个表大小
 
