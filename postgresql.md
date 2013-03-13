@@ -1,4 +1,5 @@
-﻿PostgreSQL 9 
+# PostgreSQL 9 
+
 ##Hot standby 实践
 1. 主机环境
 
@@ -53,7 +54,7 @@
 1. 安装PostgreSQL 9.x.x版本
 + 编辑/data/path目录下配置文件，postgresql.conf:
         hot_standby = on
-新增recovery.conf:
+> 新增recovery.conf:
         standby_mode = 'on'
         primary_conninfo = 'host=192.168.1.1 port=5432 user=postgres'
         trigger_file = '/phd/db/data/postgresql.trigger.1'
