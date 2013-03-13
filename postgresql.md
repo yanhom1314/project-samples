@@ -4,9 +4,9 @@
 
     	A：192.168.1.1
 		B：192.168.1.2
-## 安装步骤
+##安装步骤
 
-##主机A：
+* **主机A**
 1. 安装PostgreSQL 9.x.x版本
 
         /configure --prefix=/path
@@ -49,7 +49,7 @@
 **注意**：执行SELECT  pg_start_backup后所有请求在写日志之后不会再刷新到磁盘。除非pg_stop_backup()这个函数
 被执行。接下来把data目录过scp、rsync等工具同步到节点192.168.1.2服务器，则完成了基础备份的内容。
 
-##主机B：
+* **主机B**
 1. 安装PostgreSQL 9.x.x版本
 + 编辑/data/path目录下配置文件，postgresql.conf:
         hot_standby = on
