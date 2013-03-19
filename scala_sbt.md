@@ -35,7 +35,7 @@
 然后使用`sbt`命令操作。
 
 ## 使用publish与publish-local
-+ 在project/plugins.sbt定义内容：
++ 在build.sbt或者project/Build.scala中定义内容：
     
-    resolvers += "Local Maven Repository" at "file:///d:/repository/"
+    publishTo := Some(Resolver.file("My local maven repo", file("d:/repository")))
 则`publish`命令会发布内容到本地Maven Repository，而`publish-local`则会发布到本地ivy repository中。       
