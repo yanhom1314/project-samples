@@ -54,7 +54,7 @@ B.java：
 private List<A> as;
 
 optional：为true时则映射关联对象可为null，为false时则不能使用null对象；
-mappedBy：在Person类中定义IdCard的属性名；
+mappedBy：mappedBy属性避免生成中间表；
 cascade：在对声明此属性的类操作时，同时对有映射关系的类进行操作；
 
 在@OneToOne、@ManyToOne中可以使用@JoinColumn注解
