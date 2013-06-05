@@ -27,7 +27,7 @@
 $ git remote -v    				//查看远程仓库的信息，Git在clone之后会缺省建立一个origin的远程仓库
 $ git remote add [git_url]		//如果使用init新建项目，可以用此命令新增远程仓库
 
-分支处理
+分支标签处理
 $ git branch 					//列出本地所有分支
 $ git branch -r   				//列出远程所有分支
 $ git branch new-branch-name    //分支new-branch-name不为空时是查看分支列表，否则创建new-branch-name分支
@@ -69,21 +69,23 @@ pull是从远程获取最新版本并merge到本地
 tag主要用来记录代码的版本状态；
 branch主要是用来声明一个单独开发进程与其他分支并行；
 
-##Tag
+##标签Tag
 
-		$ git tag -a v0.1  			//增加一个v0.1的tag
-		$ git tag -d v0.1 			//删除一个v0.1的tag
-		$ git tag -l 	 			//查看所有tag，支持名称过滤，如：'v0.*'
-		$ git push origin --tag  	//想origin push所有的tags
+		$ git tag -a v0.1  							//增加一个v0.1的tag
+		$ git tag -d v0.1 							//删除一个v0.1的tag
+		$ git tag -l 	 							//查看所有tag，支持名称过滤，如：'v0.*'
+		$ git push origin --tag  					//向origin push所有的tags
+		$ git push origin --delete tag <tagname> 	//删除remote的tag
 
-##Branch		
+##分支Branch		
 
-		$ git branch <new_branch_name> 			//建立本地 local branch
-		$ git branch -m <old_name> <new_name> 	//改名字 (如果有同名會失敗，改用 -M 可以強制覆蓋)
-		$ git branch 							//列出本地所有branch以及目前在那個branch,加`-a`参数，列出所有远程+本地的branch
-		$ git checkout <branch_name> 			//切換 branch (注意到如果你有檔案修改了卻還沒 commit，會不能切換 branch，解法稍後會談)
-		$ git checkout -b <new_branch_name> 	//本地建立 branch 並立即 checkout 切換過去
-		$ git branch -d <branch_name> 			//刪除 local branch
+		$ git branch <new_branch_name> 				//建立本地 local branch
+		$ git branch -m <old_name> <new_name> 		//改名字 (如果有同名會失敗，改用 -M 可以強制覆蓋)
+		$ git branch 								//列出本地所有branch，`-a`参数列出所有远程+本地
+		$ git checkout <branch_name> 				//切換 branch,如果存在沒commit的内容不能切換 branch
+		$ git checkout -b <new_branch_name> 		//本地建立 branch 並立即 checkout 切換過去
+		$ git branch -d <branch_name> 				//刪除 local branch
+		$ git push origin --delete <branchName>		//刪除 remote branch
 ##比较分支
 		
 		$ git diff master branch-0.1 			//比较master与branch-0.1分支的区别		
