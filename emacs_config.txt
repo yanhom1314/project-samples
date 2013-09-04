@@ -1,8 +1,8 @@
-;;ÉèÖÃHOMEÂ·¾¶
+ï»¿;;è®¾ç½®HOMEè·¯å¾„
 (setenv "HOME" "C:/Tools/emacs")
 ;;(setenv "EMACS_SERVER_FILE" "C:/Tools/emacs/.emacs.d/server/server")
 
-;;ÉèÖÃ×ÖÌå
+;;è®¾ç½®å­—ä½“
 ;;Setting English Font
 (set-face-attribute 'default nil :font "Monaco 9")  
 ;;Chinese Font 
@@ -11,7 +11,7 @@
           charset (font-spec :family "Yahei Consolas Hybird" :size 9)))
 
 
-;;²»ÏÔÊ¾Æô¶¯Ò³Ãæ   
+;;ä¸æ˜¾ç¤ºå¯åŠ¨é¡µé¢   
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -34,10 +34,10 @@
 ;;(color-theme-gnome2)
 (color-theme-ld-dark)
 
-;;Æô¶¯µ¥½ø³ÌServer
+;;å¯åŠ¨å•è¿›ç¨‹Server
 (server-start)
 
-;;Æô¶¯×Ô¶¯×î´ó»¯(Êı¾İ×Ô¼ºµ÷Õû£¬×¢Òâ¸ñÊ½£¬Èç(top . 0)£¬Ô²µãÇ°ºó¶¼ÒªÁôÓĞ¿Õ¸ñ)
+;;å¯åŠ¨è‡ªåŠ¨æœ€å¤§åŒ–(æ•°æ®è‡ªå·±è°ƒæ•´ï¼Œæ³¨æ„æ ¼å¼ï¼Œå¦‚(top . 0)ï¼Œåœ†ç‚¹å‰åéƒ½è¦ç•™æœ‰ç©ºæ ¼)
 (defun w32-restore-frame () 
 "Restore a minimized frame" 
 (interactive) 
@@ -49,13 +49,15 @@
 (w32-send-sys-command 61488)) 
 (w32-maximize-frame) 
 
-;;¿Õ°×¸É¾»µÄÒ³Ãæ
+;;ç©ºç™½å¹²å‡€çš„é¡µé¢
 (setq initial-scratch-message "") 
 
-;;ÏÔÊ¾ĞĞÊı
+;;æ˜¾ç¤ºè¡Œæ•°
 (global-linum-mode t)
-;;²»Éú³É±¸·İÎÄ¼ş
+;;ä¸ç”Ÿæˆå¤‡ä»½æ–‡ä»¶
 (setq make-backup-files nil)
+;;è·³è½¬åˆ°æŸä¸€è¡ŒC-c C-g
+(define-key global-map "\C-c\C-g" 'goto-line)
 
 ;;cedet
 (load-file "~/.emacs.d/cedet/common/cedet.el")
@@ -66,37 +68,37 @@
 (add-to-list 'load-path "~/.emacs.d/ecb")
 (load-file "~/.emacs.d/ecb/ecb.el")
 (require 'ecb)
-;; ×Ô¶¯Æô¶¯ecb£¬²¢ÇÒ²»ÏÔÊ¾Ã¿ÈÕÌáÊ¾
+;; è‡ªåŠ¨å¯åŠ¨ecbï¼Œå¹¶ä¸”ä¸æ˜¾ç¤ºæ¯æ—¥æç¤º
 (setq stack-trace-on-error t)
 (setq ecb-auto-activate t
      ecb-tip-of-the-day nil)
-;;½ûÓÃÆô¶¯ĞÅÏ¢
+;;ç¦ç”¨å¯åŠ¨ä¿¡æ¯
 (setq inhibit-startup-message t)
-;;¹Ø±Õ·³ÈËµÄ³ö´íÊ±µÄÌáÊ¾Éù
+;;å…³é—­çƒ¦äººçš„å‡ºé”™æ—¶çš„æç¤ºå£°
 (setq visible-bell t) 
 
 
-;;; ¸÷´°¿Ú¼äÇĞ»»
+;;; å„çª—å£é—´åˆ‡æ¢
 (global-set-key [M-left] 'windmove-left)
 (global-set-key [M-right] 'windmove-right)
 (global-set-key [M-up] 'windmove-up)
 (global-set-key [M-down] 'windmove-down)
 
-;;;; Òş²ØºÍÏÔÊ¾ecb´°¿Ú
+;;;; éšè—å’Œæ˜¾ç¤ºecbçª—å£
 (define-key global-map [(control f1)] 'ecb-hide-ecb-windows)
 (define-key global-map [(control f2)] 'ecb-show-ecb-windows)
 (define-key global-map "\M-`" 'ecb-restore-default-window-sizes);;
 
-;;;; Ê¹Ä³Ò»ecb´°¿Ú×î´ó»¯
+;;;; ä½¿æŸä¸€ecbçª—å£æœ€å¤§åŒ–
 (define-key global-map "\M-1" 'ecb-maximize-window-directories)
 (define-key global-map "\M-2" 'ecb-maximize-window-sources)
 (define-key global-map "\C-c3" 'ecb-maximize-window-methods)
 (define-key global-map "\C-c4" 'ecb-maximize-window-history)
-;;;; »Ö¸´Ô­Ê¼´°¿Ú²¼¾Ö
+;;;; æ¢å¤åŸå§‹çª—å£å¸ƒå±€
 
 (put 'upcase-region 'disabled nil)
 
-;;±à³ÌhaskellÖ§³Ö
+;;ç¼–ç¨‹haskellæ”¯æŒ
 (load "~/.emacs.d/haskell-mode/haskell-site-file")
 
 ;;yasnippet
@@ -104,9 +106,9 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
-;;±à³ÌScalaÖ§³Ö
+;;ç¼–ç¨‹Scalaæ”¯æŒ
 (add-to-list 'load-path "~/.emacs.d/scala-mode")
-(require 'scala-mode-auto) ;; ±à¼­.scalaÎÄ¼şÊ±×Ô¶¯Æô¶¯scala mode
+(require 'scala-mode-auto) ;; ç¼–è¾‘.scalaæ–‡ä»¶æ—¶è‡ªåŠ¨å¯åŠ¨scala mode
 
 ;;scala yasnippet
 ;;(setq yas/my-directory "~/.emacs.d/scala-mode/contrib/yasnippet/snippets")
@@ -152,7 +154,7 @@
      (dolist (spec distel-shell-keys)  
        (define-key erlang-shell-mode-map (car spec) (cadr spec)))))  
 
-;; ÉèÖÃTabbar
+;; è®¾ç½®Tabbar
 (add-to-list 'load-path "~/.emacs.d/tabbar") 
 (require 'tabbar)  
 (tabbar-mode 1)

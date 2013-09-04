@@ -1,4 +1,17 @@
-﻿快捷键：
+﻿#### color-theme包
+
+        http://download.gna.org/color-theme/
+
+#### 在C:/User/<name>/AppData/Roming/.emacs文件中添加
+
+        (add-to-list 'load-path "~/.emacs.d/")
+         (require 'color-theme)
+        (color-theme-initialize)
+        (color-theme-matrix)
+
+#### Windows7生成`.emacs`配置文件的方法，运行`emacs`打开`Options`->`Set Default fonts`选择字体后再打开`Options`->`Save Options`会生成`.emacs`配置文件，再编辑即可。
+
+快捷键：
 ##### 常规 ##### 
 退出Emacs: C-x C-c 
 撤销命令: C-g 

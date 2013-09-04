@@ -1,5 +1,9 @@
 
-#### 基础
+
+#### Vim配色
+        
+                https://code.google.com/p/vimcolorschemetest/
+#### 快捷键基础
 
         :e filename Open filename for edition
         :w  Save file
