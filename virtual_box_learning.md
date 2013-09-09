@@ -8,6 +8,12 @@
 #### VBoxManage命令
 
 		VBoxManage --help		
++ 命令
+
+		VBoxManager list vms
+		VBoxManager startvm <name> --type headless
+		VBoxManager controlvm <name> poweroff		
+
 
 #### Vncserver安装
 
