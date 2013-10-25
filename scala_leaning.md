@@ -1,4 +1,21 @@
-﻿支持纯面向对象或面向函数编程的完全兼容JVM的静态类型语言。
+﻿## Scala
+#### 在Linux脚本中运行
++ 编辑hello脚本，加入以下内容：
+
+    #!/bin/sh 
+    exec scala $0 $@
+    !#
+    object Hello extends App {
+      println("Hello World!")
+    }
+    Hello.main(args)
+
++ 执行
+
+    chmod 700 hello
+    ./hello
+
+支持纯面向对象或面向函数编程的完全兼容JVM的静态类型语言。
 伴随你成长，拥抱变化！
 
 一切都是对象
