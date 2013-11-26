@@ -9,48 +9,48 @@
 
 + 编辑project/Build.scala文件，添加：
 
-    val appDependencies = Seq(
-      // Add your project dependencies here,
-      "play" %% "spring" % "2.0"
-    )
-
-    val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-        // Add your own project settings here
-        resolvers += "TAMU Release Repository" at "https://maven.library.tamu.edu/content/repositories/releases/"
-    )
+        val appDependencies = Seq(
+          // Add your project dependencies here,
+          "play" %% "spring" % "2.0"
+        )
+    
+        val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
+            // Add your own project settings here
+            resolvers += "TAMU Release Repository" at "https://maven.library.tamu.edu/content/repositories/releases/"
+        )
 
 + 在conf目录中新建application-context.xml文件。
 
-    <?xml version="1.0" encoding="UTF-8"?>
-        <beans xmlns="http://www.springframework.org/schema/beans"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xmlns:context="http://www.springframework.org/schema/context"
-          xsi:schemaLocation="http://www.springframework.org/schema/beans
-              http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-              http://www.springframework.org/schema/context
-              http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-
-        <context:annotation-config/>
-        <context:component-scan base-package="beans"/>
-    </beans>
+        <?xml version="1.0" encoding="UTF-8"?>
+            <beans xmlns="http://www.springframework.org/schema/beans"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:context="http://www.springframework.org/schema/context"
+              xsi:schemaLocation="http://www.springframework.org/schema/beans
+                  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                  http://www.springframework.org/schema/context
+                  http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
+            <context:annotation-config/>
+            <context:component-scan base-package="beans"/>
+        </beans>
 
 + 如果需要修改spring配置文件，需修改conf/application.conf文件：`spring.context=another-context-file.xml`
 
 在扫描包beans中新建HelloBean类，获取Bean可以使用Spring.get*的相关方法。
 
 
-import org.springframework.stereotype.Service
-import play.api.libs.json.{JsString, JsObject, JsValue, Writes}
-
-@Service
-case class Hello(var name: String, var age: Int) {
-  def this() = this(null, -1)
-
-  def say(): Unit = {
-    println(this.name + ":" + this.age)
-  }
-
-}
+        import org.springframework.stereotype.Service
+        import play.api.libs.json.{JsString, JsObject, JsValue, Writes}
+        
+        @Service
+        case class Hello(var name: String, var age: Int) {
+          def this() = this(null, -1)
+        
+          def say(): Unit = {
+            println(this.name + ":" + this.age)
+          }
+        
+        }
 部署成War
 play2-war-plugin
 https://github.com/dlecan/play2-war-plugin
@@ -60,35 +60,35 @@ https://github.com/dlecan/play2-war-plugin
 
 + 创建app/Global.scala
 
-    import play.api.{Application, GlobalSettings}
-    import org.squeryl.{Session, SessionFactory}
-    import play.api.db.DB
-    import org.squeryl.adapters.PostgreSqlAdapter
-    import org.squeryl.internals.DatabaseAdapter
-
-    object Global extends GlobalSettings {
-      override def onStart(app: Application) {
-        SessionFactory.concreteFactory = app.configuration.getString("db.default.driver") match {
-          case Some("org.postgresql.Driver") => println("postgresql"); Some(() => getSession(new PostgreSqlAdapter, app))
-          case _ => sys.error("Database driver must be either org.h2.Driver or org.postgresql.Driver")
+        import play.api.{Application, GlobalSettings}
+        import org.squeryl.{Session, SessionFactory}
+        import play.api.db.DB
+        import org.squeryl.adapters.PostgreSqlAdapter
+        import org.squeryl.internals.DatabaseAdapter
+    
+        object Global extends GlobalSettings {
+          override def onStart(app: Application) {
+            SessionFactory.concreteFactory = app.configuration.getString("db.default.driver") match {
+              case Some("org.postgresql.Driver") => println("postgresql"); Some(() => getSession(new PostgreSqlAdapter, app))
+              case _ => sys.error("Database driver must be either org.h2.Driver or org.postgresql.Driver")
+            }
+            if (!Session.hasCurrentSession) {
+              val session = SessionFactory.newSession
+              session.bindToCurrentThread
+            }
+          }
+    
+          override def onStop(app: Application) {
+            super.onStop(app)
+            if (Session.hasCurrentSession) {
+              println("Stop and Close squeryl session!")
+              val s = Session.currentSession
+              s.cleanup
+              s.close
+            }
+          }
+          private def getSession(adapter: DatabaseAdapter, app: Application) = Session.create(DB.getConnection()(app), adapter)
         }
-        if (!Session.hasCurrentSession) {
-          val session = SessionFactory.newSession
-          session.bindToCurrentThread
-        }
-      }
-
-      override def onStop(app: Application) {
-        super.onStop(app)
-        if (Session.hasCurrentSession) {
-          println("Stop and Close squeryl session!")
-          val s = Session.currentSession
-          s.cleanup
-          s.close
-        }
-      }
-      private def getSession(adapter: DatabaseAdapter, app: Application) = Session.create(DB.getConnection()(app), adapter)
-    }
 
 + 创建Model和Schema
 import org.squeryl.Schema
