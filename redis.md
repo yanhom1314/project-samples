@@ -21,6 +21,7 @@
 #### Redis Scala Client
 
 + 封装工具
+
 		case class RedisUtilPool(pool: JedisPool) {
 		  def withClient(call: (Jedis) => Unit) {
 		    val client = pool.getResource
