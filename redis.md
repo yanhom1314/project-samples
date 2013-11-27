@@ -1,26 +1,24 @@
 ## Redis安装运行
 
-		wget -c http://download.redis.io/releases/redis-2.8.1.tar.gz
-		tar zxf redis-2.8.1.tar.gz
-		cd redis-2.8.1
+		wget -c http://download.redis.io/releases/redis-x.y.z.tar.gz
+		tar zxf redis-x.y.z.tar.gz
+		cd redis-x.y.z
 		make && make install
 
-#### Redis Java Client
+#### Redis Java Client Library
 + [Jedis](https://github.com/xetorthio/jedis)
-+ 使用Jedis
 
-		Jedis client=new Jedis("127.0.0.1",6379);
-		client.XXX;
-+ 适用JedisPool
+#### Java Client Call
++ 使用
 
 		JedisPool pool=new JedisPool("127.0.0.1",6379);
 		Jedis client=pool.getResource();
 		client.XXX;
 		pool.returnResource(client);
 
-#### Redis Scala Client
+#### Scala Client Call
++ 封装
 
-+ 封装工具
 		case class RedisUtilPool(pool: JedisPool) {
 		  def withClient(call: (Jedis) => Unit) {
 		    val client = pool.getResource
@@ -59,7 +57,7 @@
 		val pool = RedisUtilPool("127.0.0.1", 6379)
 		pool.withClient {
 	        client =>
-    		      client.get("key")
+    		      client.get("key") 
       	}
 
 

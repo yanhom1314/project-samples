@@ -15,3 +15,18 @@ perl -e 'while(<>){$count+= s/[str]//g;} print "$count\n";' [filename]
 
 # rpm -vv --rebuilddb
 # /etc/cron.daily/rpm
+
+#### 阻止特定IP访问 
+$ iptables -A INPUT -p tcp --dport $port -s $ip/32 -d 0.0.0.0/0 -j REJECT
+来自$ip访问本地$port端口的访问被阻止。
+2.	统计一个文件($filename)中某个字符出现的次数
+$ perl -e 'while(<>){$count+= s/[$string]//g; } print "$count\n";'  $filename
+$ grep -c ‘$string’$filename
+3.	系统任务
+$ crontab [-u user] file
+$ crontab [-u user] { -e | -l | -r }
+4.	内存统计
+$ ps aux|awk \
+'BEGIN {CPU=0;MEM=0;MEMN=0} /httpd/ {CPU=CPU+$3;MEM=MEM+$4;MEMN=MEMN+$5} END {print "cpu used " CPU "|mem used " MEM "|mem all size is " MEMN}'
+
+
