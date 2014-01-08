@@ -336,3 +336,7 @@ OpenEntityManagerHandler handler = new OpenEntityManagerHandler();
 第一、	使用OpenEntityManagerInViewFilter/OpenSessionInViewFilter，在Spring MVC结构中还可以更方便简洁的使用 OpenEntityManagerInViewInterceptor/OpenSessionInViewInterceptor。
 第二、	使用非注入的AOP的结构，应用动态代理，不依赖于任何容器。
 第三、	配合Spring使用，需要修改Service/DAO模型，引入自实现的OpenEntityManagerInterceptor/OpenSessionInterceptor
+
+
+#### 经典教程
+[ObjectDB](http://www.objectdb.com/java/jpa)
