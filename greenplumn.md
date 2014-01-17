@@ -157,6 +157,41 @@
 		gpcheckperf -f /usr/local/greenplum-db/hosts-seg -r ds -D -d /gpdata1 -d /gpdata1
 		gpcheckperf -h gphost1 -h gphost2 -d /gpdata1 -r d -D -v
 
+#### gpload载入数据
++ 准备数据文件支持txt与csv两种格式
++ 支持gpzip与bzip2压缩文件的自动解压载入；
++ 编辑载入数据配置文件load.yml:
+	
+		VERSION: 1.0.0.1
+		DATABASE: demo
+		USER: gpadmin
+		HOST: master1
+		PORT: 5432
+		GPLOAD:
+		   INPUT:
+		    - SOURCE:
+		         LOCAL_HOSTNAME:
+		           - master1 
+		         PORT: 8081
+		         FILE: 
+		           - /phd/favdata/*
+		    - COLUMNS:
+		           - imsi: varchar(50)
+		           - userip: cidr
+		           - favid: int
+		    - FORMAT: TEXT
+		    - DELIMITER: ','
+		    - ERROR_LIMIT: 25
+		    - ERROR_TABLE: err_expenses
+		   OUTPUT:
+		    - TABLE: favdata
+		    - MODE: INSERT
+		   SQL:
+		    - BEFORE: "INSERT INTO reporttime VALUES('start', current_timestamp)"
+		    - AFTER: "INSERT INTO reporttime VALUES('end', current_timestamp)"
+
++ 在数据存放的机器执行gpload命令：gpload -f load.yml -V -l logs
+
 
 
 
