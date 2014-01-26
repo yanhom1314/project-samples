@@ -132,7 +132,8 @@
 
 + 编辑配置文件`vim gpinitsystem_config`主要参数：
 
-		declare -a DATA_DIRECTORY=(/phd/data/segment /phd/data/segment)
+		declare -a DATA_DIRECTORY=(/phd/data/segment /phd/data/segment) #按CPU核数配置
+		declare -a MIRROR_DATA_DIRECTORY=(/phd/data/mirror /phd/data/mirror) #按CPU核数配置
 		MASTER_HOSTNAME=master1
 		MASTER_DIRECTORY=/phd/data/master
 		MACHINE_LIST_FILE=all_segment_hosts.txt
@@ -142,6 +143,7 @@
 		su - gpadmin
 		gpssh-exkeys -f all_segment_hosts.txt		
 		gpinitsystem -c /home/gpadmin/gpinitsystem_config
+		gpinitsystem -c /home/gpadmin/gpinitsystem_config -s master2 #配置standby master
 
 + 环境变量`vim ~/.bashrc`:
 
@@ -192,6 +194,9 @@
 
 + 在数据存放的机器执行gpload命令：gpload -f load.yml -V -l logs
 
+##### Table
++ 查看表数据分布情况，gp_segment_id是greenplum table里面的一个隐藏列,用来标记该行属于哪个节点：
 
+		select gp_segment_id,count(*) from [tablename] group by gp_segment_id order by count(*) desc;
 
 
