@@ -29,4 +29,15 @@ $ crontab [-u user] { -e | -l | -r }
 $ ps aux|awk \
 'BEGIN {CPU=0;MEM=0;MEMN=0} /httpd/ {CPU=CPU+$3;MEM=MEM+$4;MEMN=MEMN+$5} END {print "cpu used " CPU "|mem used " MEM "|mem all size is " MEMN}'
 
+##### 删除大量文件
++ 使用`rsync`
 
+		mkdir /tmp/blankdir
+		rsync --delete-before  --progress --stats /tmp/blankdir/ /target/ 
++ 使用`find -exec`
+
+		find . -name *.txt -exec ls -l {} \;
+
++ 使用`find xargs`
+
+		find . -name *.txt | xargs rm -f
