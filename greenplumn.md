@@ -1,11 +1,5 @@
-#### XFS
-+ 安装xfs相关包；
+#### Greenplum Database Server安装(Greenplum-Database-4.2-Installation-Guide)
 
-		yum install -y xfsprogs kmod-xfs xfsdump xfsprogs-devel
-		modprobe xfs
-		lsmod |grep xfs
-
-#### 安装
 + 确定各个主机的hostname，并编辑`/etc/hosts`：
 	
 		###gpb
@@ -18,6 +12,11 @@
 		172.16.83.7     node5
 		172.16.83.8     node6
 
++ 安装xfs相关包；
+
+		yum install -y xfsprogs kmod-xfs xfsdump xfsprogs-devel
+		modprobe xfs
+		lsmod |grep xfs
 + 在所有主机上编辑`/etc/sysctl.conf`
 
 		xfs_mount_options = rw,noatime,inode64,allocsize=16m
