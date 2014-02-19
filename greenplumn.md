@@ -152,11 +152,11 @@
 
 #### 验证安装
 
-		gpcheck -f /usr/local/greenplum-db/hosts -m gphostm
-		gpcheckos -f /usr/local/greenplum-db/hosts
-		gpcheckperf -f /usr/local/greenplum-db/hosts -r N -d /tmp
+		gpcheck -f /phd/bin/greenplum-db/hosts -m gphostm
+		gpcheckos -f /phd/bin/greenplum-db/hosts
+		gpcheckperf -f /phd/bin/greenplum-db/hosts -r N -d /tmp
 		 
-		gpcheckperf -f /usr/local/greenplum-db/hosts-seg -r ds -D -d /gpdata1 -d /gpdata1
+		gpcheckperf -f /phd/bin/greenplum-db/hosts-seg -r ds -D -d /gpdata1 -d /gpdata1
 		gpcheckperf -h gphost1 -h gphost2 -d /gpdata1 -r d -D -v
 
 #### gpload载入数据
@@ -200,3 +200,32 @@
 		select gp_segment_id,count(*) from [tablename] group by gp_segment_id order by count(*) desc;
 
 
+#### Greenplum Command Center安装(Greenplum Command Center X.Y.Z Administrator Guide:2+Setting Up Greenplum Command Center)
++ `Greenplum Command Center`是`Greenplum Big Data Platform`的管理平台，它将信息存储在`gpperfmon`数据库中；
++ Setting up Greenplum Command Center
+
+		su - gpadmin		
+		gpperfmon_install --enable --password p@$$word --port 5432 //启用gpperfmon
+		gpstop -r 												   //重启Greenplumn Database Server
+		ps -ef | grep gpmmon                                       //确认gpmon进程启动
+		psql gpperfmon -c 'SELECT * FROM system_now;'              //确认数据写入数据库
+		psql gpperfmon                                             //登录数据库
++ 安装Web
+
+		su - gpadmin
+		cd /phd/bin
+		chmod +x greenplum-cc-web-versionx.x-PLATFORM.bin
+		./greenplum-cc-web-versionx.x-PLATFORM.bin
+		>Yes
+		source /phd/bin/greenplum-cc-web-versionx.x/gpcc_path.sh
+		gpccinstall -f allhosts.txt
++ `vim ~/.bash_profic`增加：
+
+		GPPERFMONHOME=/phd/bin/greenplum-cc-web
+		source $GPPERFMONHOME/gpcc_path.sh
++ 重启Database Server：`gpstop`、`gpstart`
++ 运行`gpcmdr --setup`创建instance name
++ 启动`gpcmdr --start`
++ 访问`http://monitor_hostname:28080/`，按安装时定义的密码或者查询`~/.pgpass`文件。
+
+		
