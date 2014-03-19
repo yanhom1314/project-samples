@@ -196,7 +196,8 @@
 ##### Table
 + 查看表数据分布情况，gp_segment_id是greenplum table里面的一个隐藏列,用来标记该行属于哪个节点：
 
-		select gp_segment_id,count(*) from [tablename] group by gp_segment_id order by count(*) desc;
+		psql [database]
+		>select gp_segment_id,count(*) from [tablename] group by gp_segment_id order by count(*) desc;
 
 
 #### Greenplum Command Center安装(Greenplum Command Center X.Y.Z Administrator Guide:2+Setting Up Greenplum Command Center)
