@@ -228,4 +228,7 @@
 + 启动`gpcmdr --start`
 + 访问`http://monitor_hostname:28080/`，按安装时定义的密码或者查询`~/.pgpass`文件。
 
+
+#### 命令
++ `createdb [databasename]`创建数据库
 		
