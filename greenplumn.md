@@ -193,12 +193,87 @@
 
 + 在数据存放的机器执行gpload命令：gpload -f load.yml -V -l logs
 
-##### Table
+##### 常用DBA SQL命令 `>psql [database]`
 + 查看表数据分布情况，gp_segment_id是greenplum table里面的一个隐藏列,用来标记该行属于哪个节点：
 
-		psql [database]
-		>select gp_segment_id,count(*) from [tablename] group by gp_segment_id order by count(*) desc;
+		select gp_segment_id,count(*) from [tablename] group by gp_segment_id order by count(*) desc;
++ 查看对象大小(表、索引、数据库等)
+	
+		select pg_size_pretty(pg_relation_size(’$schema.$table’));
+ 
++ 查看用户(非系统)表和索引
 
+		select * from pg_stat_user_tables; 
+		select * from pg_stat_user_indexes;
++ 查看表分区
+		
+		select b.nspname||’.'||a.relname as tablename, d.parname as partname
+		from pg_class a, pg_namespace b, pg_partition c, pg_partition_rule d
+		where a.relnamespace = b.oid
+		and b.nspname = ‘$schema’
+		and a.relname = ‘$table’
+		and a.oid = c.parrelid
+		and c.oid = d.paroid
+		order by parname;
+ 
++查看Distributed key
+
+		select  b.attname
+		from pg_class a, pg_attribute b, pg_type c, gp_distribution_policy  d, pg_namespace e
+		where d.localoid = a.oid
+		and a.relnamespace = e.oid
+		and e.nspname = ‘$schema’
+		and a.relname=’$table’
+		and a.oid = b.attrelid
+		and b.atttypid = c.oid
+		and b.attnum > 0
+		and b.attnum = any(d.attrnums)
+		order by attnum;
++ 查看当前存活的查询
+		
+		select   *   from   pg_stat_activity;
+ 
++ 表上被用作外键的字段名
+		
+		select f.conname, pg_get_constraintdef(f.oid), t2.relname
+		from pg_class t, pg_class t2, pg_constraint f
+		where f.confrelid = t.oid
+		and f.conrelid = t2.oid
+		and f.contype = ‘f’
+		and t.relname = ‘$table’;
+
++ 查看表使用空间
+		
+		SELECT      *  
+		FROM         PUBLIC.dba_segments  
+		WHERE         owner   LIKE   'owber_name'
+		AND            table_name   LIKE   '%table_name%'
+		ORDER   BY   table_name;
+ 
++ GP中查看分区：
+		
+		select   partitionname,partitionboundary   from   pg_partitions   where   tablename='table_name';  
+		select   partitionname,partitionboundary   from   pg_catalog.pg_partitions   where   tablename='table_name';
+ 
++ 查看正在运行的sql
+		
+		select   *   from   pg_stat_activity;
+ 
++ 修改表的owner语句
+		
+		Alter table table_name owner to owner_name;
+   
++ 增加表分区
+		
+		ALTER TABLE table_name   ADD PARTITION P20091001  START (DATE '2009-10-01') INCLUSIVE END (DATE '2009-10-02')  EXCLUSIVE WITH(appendonly=true,compresslevel=5);
+ 
++ 修改列类型
+		
+		ALTER TABLE table_name  ALTER COLUMN a TYPE varchar(2048);
+ 
++ 修改distributed列
+	
+		alter table table_name  set distributed by(column_1);
 
 #### Greenplum Command Center安装(Greenplum Command Center X.Y.Z Administrator Guide:2+Setting Up Greenplum Command Center)
 + `Greenplum Command Center`是`Greenplum Big Data Platform`的管理平台，它将信息存储在`gpperfmon`数据库中；
