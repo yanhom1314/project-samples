@@ -120,7 +120,9 @@
 
 		gpssh -f all_segment_hosts.txt
 		=> mkdir -p /phd/data/segment
+		=> mkdir -p /phd/data/mirror
 		=> chown -R gpadmin:gpadmin /phd/data/segment
+		=> chown -R gpadmin:gpadmin /phd/data/mirror
 		=> quit
 
 #### 初始化数据库
@@ -141,13 +143,36 @@
 
 		su - gpadmin
 		gpssh-exkeys -f all_segment_hosts.txt		
-		gpinitsystem -c /home/gpadmin/gpinitsystem_config
-		gpinitsystem -c /home/gpadmin/gpinitsystem_config -s master2 #配置standby master
+		gpinitsystem -c /home/gpadmin/gpinitsystem_config [-s master2 #配置standby master]
+
+		?使用-S参数报错
 
 + 环境变量`vim ~/.bashrc`:
 
-		MASTER_DATA_DIRECTORY=/phd/data/master
-		export MASTER_DATA_DIRECTORY
+		#greenplumn
+		source /phd/bin/greenplum-db/greenplum_path.sh
+		MASTER_DATA_DIRECTORY=/phd/data/master/gpseg-1
+		export MASTER_DATA_DIRECTORY		
++ 启动:登录master1
+		
+		gpstart		
+
+####Master与Standby切换
+定义：server1=(master) server2=(standby)
++ Active standby server when master down. 
+
+		gpactivatestandby -d /phd/data/master/gpseg-1 -f (on server2)
++ Change server1 as standby . 
+ 		
+ 		gpinitstandby -s server1 (on server2)
+ 		gpactivatestandby -d /data/master/gpseg-1 -f (on server1)
++ restore server1 as master
+		
+		gpstop -m (on server2)
+		gpactivatestandby -d /data/master/gpseg-1 -f (on server1)
++ restore server2 as standby
+		
+		gpinitstandby -s  server2 (on server1)
 
 #### 验证安装
 
