@@ -331,4 +331,5 @@
 
 #### 命令
 + `createdb [databasename]`创建数据库
-		
++ 创建资源队列`CREATE RESOURCE QUEUE gpload_que WITH(ACTIVE_STATEMENTS=2,MEMORY_LIMIT='2000MB',PRIORITY=LOW)`	
++ 查看资源队列:`SELECT * FROM gp_toolkit.gp_resqueue_status`
