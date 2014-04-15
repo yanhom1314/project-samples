@@ -319,11 +319,15 @@
 		>Yes
 		source /phd/bin/greenplum-cc-web-versionx.x/gpcc_path.sh
 		gpccinstall -f allhosts.txt
-+ `vim ~/.bash_profic`增加：
++ `vim ~/.bashrc`增加：
 
 		GPPERFMONHOME=/phd/bin/greenplum-cc-web
 		source $GPPERFMONHOME/gpcc_path.sh
-+ 重启Database Server：`gpstop`、`gpstart`
++ 编辑master中的pg_hba.conf文件，增加:
+
+		host     all         gpmon          172.16.83.0/24   md5
+		host     all         gpmon          ::1/128          md5
++ 重启Database Server：`gpstop -r -M fast`
 + 运行`gpcmdr --setup`创建instance name
 + 启动`gpcmdr --start`
 + 访问`http://monitor_hostname:28080/`，按安装时定义的密码或者查询`~/.pgpass`文件。
