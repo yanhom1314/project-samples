@@ -41,3 +41,34 @@ $ ps aux|awk \
 + 使用`find xargs`
 
 		find . -name *.txt | xargs rm -f
+
+
+#### Vncserver
+
++ 安装桌面(建议使用xfce，但可以使用`yum -y groupinstall kde`或者`yum -y groupinstall gnome`)：
+
+		yum -y groupinstall xfce   
+
++ 安装vncserver：
+
+		yum -y install vnc vnc-server
+
++ 编辑`/etc/sysconfig/vncservers`
+
+		VNCSERVERS="1:root" 
+		VNCSERVERARGS[1]="-geometry 1600x900"
+
++ 编辑`/root/.vnc/xstartup`
+
+		#!/bin/sh 
+		/usr/bin/startxfce4
+
++ 设定密码：
+
+		vncpasswd
+
++ 启动：
+
+		service vncserver restart
+
+
