@@ -47,3 +47,11 @@
 **当调用含有`implicit value parameter`的函数时，不使用括号则使用`implicit value`在本例中使用的是`Hello World!`**
 **当调用含有`implicit value parameter`的函数时，使用括号则使用函数定义时的缺省参数值`Wahaha`**
 **使用`implicit class method value`，只要`import`导入即可使用**
+
+
+## Scala的Symbol类
++ Symbol是scala中的一个实例类：
+
+		final case class Symbol private(name: String) {
+ 			override def toString: String = "’" + name
+		} 
