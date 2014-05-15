@@ -29,6 +29,7 @@ B.java
 
 		public class Person{
 			@OneToOne(optional = false, cascade = Array(CascadeType.REMOVE))
+			@JoinColum(name="p_id")
 			private IdCard idCard;
 		}
 
