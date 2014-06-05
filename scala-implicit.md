@@ -26,12 +26,12 @@
 + 使用`implicit`修饰的`value`
 
 		object StringF {
-			implicit val name = "Hello World!"
+			implicit val name:String = "Hello World!"
 		}
 
-		objcet Main extends App {
+		object Main extends App {
 			
-			def say(implicit name:Sting="Wahaha",y:Int = 5) {
+			def say(implicit name:String="Wahaha",y:Int = 5) {
 				(0 to 5).foreach {
 					i =>
 						println(name)
@@ -46,6 +46,7 @@
 
 **当调用含有`implicit value parameter`的函数时，不使用括号则使用`implicit value`在本例中使用的是`Hello World!`**
 **当调用含有`implicit value parameter`的函数时，使用括号则使用函数定义时的缺省参数值`Wahaha`**
+**当`implicit value`的定义在调用之前，可以使用类型推导，例如：`implicit val name = "Hello"`，否则必须定义类型，例如：`implicit val name:String = "Hello"`**
 **使用`implicit class method value`，只要`import`导入即可使用**
 
 
