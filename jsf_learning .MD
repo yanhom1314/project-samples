@@ -136,3 +136,5 @@
 		    </servlet-mapping>
 		</web-app>				
 
+#### JavaEE XSD
++ (JavaEE)[http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/index.html]
