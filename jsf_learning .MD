@@ -62,7 +62,11 @@
 			@Autowired
 			private JSFA jsfa;
 			public JSFA getJsfa(){return this.jsfa;}
-		}				
+		}			
+
+* 当使用`@Component`与`@Scope()`代替`@ManagedBean`与`@SessionScoped @RequestScoped ...`时，`@ManagedProperty`不能工作，可以使用`@Value`代替。
+
+* 获取`request param`可以使用`((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getParameter("param")`，但是要注意`@Scope`。
 
 * 也可以在@ManageBean中直接获取Spring管理的Bean:`FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance()).getBean([T.class]);`
 
