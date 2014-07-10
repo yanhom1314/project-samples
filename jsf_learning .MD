@@ -138,7 +138,11 @@
 		        <servlet-name>Faces Servlet</servlet-name>
 		        <url-pattern>*.xhtml</url-pattern>
 		    </servlet-mapping>
-		</web-app>				
+		</web-app>			
+
+#### JSR-330 @Inject And @Named 
++ 可以使用JSR-330代替Spring Annotation，使用`@Named`代替`@Compenent`，使用`@Inject`代替`@Autowire`
+
 
 #### JavaEE XSD
 + (JavaEE)[http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/index.html]
