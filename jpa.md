@@ -3,7 +3,7 @@
 ####JPA关系注解
 Entiyty关系维护中常见使用的@OneToOne、@ManyToOne、@OneToMany、@ManyToMany。
 在这些注解中，属性：
-**cacade**：`CascadeType.ALL`、`CascadeType.MERGE`等，设置级联操作，当操作当前实体时级联操作目标实体；
+**cacade**：在那个Class中定义，表示操作自身时对映射的Class产生级联操作。`CascadeType.ALL`、`CascadeType.MERGE`等，设置级联操作，当操作当前实体时级联操作目标实体；
 **mappedBy**：映射关系维护方，如果不设置会生成中间表，如果设置则在被维护方生称外键；并可以在被维护端使用`@JoinColumn("column_name")`设置外键字段名。
 例如：
 A.java
