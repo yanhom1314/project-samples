@@ -61,3 +61,6 @@
     val system = ActorSystem("demo1ActorSystem",ConfigFactory.load("demo2"))
     val hiActor = system.actorOf(Props[HiActor],"hiActor") //其中name与配置中deployment中的名要一致；
 
++ 使用`Props.create`可以生成非缺省Constructor构建的Actor：
+
+    .actorOf(Props.create(classOf[HelloActor],...))
