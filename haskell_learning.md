@@ -20,7 +20,7 @@
 + OpenGL:`yum install freeglut-devel`
 
 #### GHCI配置
-+ Windows 7配置文件是AppData\ghc\ghci.conf:`:set prompt "λ>"`
++ Windows 7配置文件是Users\[用户名]\AppData\Roaming\ghc\ghci.conf:`:set prompt "λ>"`
 
 
 ##### Haskell缩进
