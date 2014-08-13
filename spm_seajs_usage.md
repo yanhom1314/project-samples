@@ -54,6 +54,7 @@
 
         cd /spm-demo/ztree
         spm init --force
+        spm install jquery --save
 
 + 编辑`package.json`中`spm.main`为`js/jquery.ztree.all-3.5.js`
 + 编辑`js/jquery.ztree.all-3.5.js`，采用下面的格式:
@@ -146,3 +147,11 @@
         </body>
         </html>
 
+
+#### Spm Build
++ `spm build`会将`.js`文件按模块分别打包输出，如果添加了`--with-deps`参数，会将依赖的模块也打包输出；
++ `spm build --include all`会将当前模块与依赖的模块打包成一个文件输出，产品模式一般采用这种方式；
++ `spm build --include standalone`会将当前模块、依赖模块与Seajs封装成一个单独的`.js`文件，使用的方式：
+
+        <script src="path/to/abc.js"></script> //这种方式没有研究出如果使用`seajs.use([...],function(...){});`
+        
