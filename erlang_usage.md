@@ -47,6 +47,7 @@
 
         {app, app_1, [{mod_cond, app}, {incl_cond, include}]}
 
+*** 注意`app_1`是`app_1/src/app_1.app.src`中定义的`application`相同。 ***
 
 + 打包:
 		rebar generate
