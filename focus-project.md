@@ -1,49 +1,57 @@
-J2EE
 
-Web Framework
+## Tools
++ [Chocolatey](http://chocolatey.org/)是Windows版的包管理工具，类似Linux的yum。
+
+    clist Atom
+    choco install Atom
+    choco install vim
+    choco install lighttable
+    choco install bind-toolsonly
+
+## J2EE
+#### Web Framework
+Spring  http://spring.io
 Play 	http://www.playframework.org
-Seam    http://www.seamframework.org
-Spring  http://www.springsource.com
 
-ORM
+#### ORM
 Hibernate http://www.jboss.org/hibernate
 MyBatis   http://www.mybatis.org/
 Ebean     http://www.avaje.org/
 Squeryl   http://squeryl.org/
 
-JPA
+#### JPA
 http://www.objectdb.com/
 
-NIO
+#### NIO
 Netty    http://netty.io
 Mina     http://mina.apache.org
 Grizzly  http://grizzly.java.net/
 Yanf4j   http://code.google.com/p/yanf4j/
 
-Search
+#### Search
 Lucene  http://lucene.apache.org
 Nutch   http://lucene.apache.org/nutch/
 
-Actor
+#### Actor
 Akka    http://akka.io/
 JActor  http://jactorconsulting.com/product/jactor/
 
-OSGI
+#### OSGI
 Karaf     http://karaf.apache.org/
 Felix     http://felix.apache.org/
 Equinox   http://www.eclipse.org/equinox/
 
-AOP
+#### AOP
 Aspectj   http://www.eclipse.org/aspectj/
 
-WorkFlow
+#### WorkFlow
 JBPM      http://labs.jboss.com/jbossjbpm/
 Activiti  http://www.activiti.org/
 
-IOC
-Guice     http://code.google.com/p/google-guice/ 
+#### IOC
+Guice     http://code.google.com/p/google-guice/
 
-Cache
+#### Cache
 JBoss Cache  http://jboss.org/jbosscache/
 Encache      http://ehcache.sourceforge.net/
 
