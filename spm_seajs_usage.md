@@ -6,7 +6,7 @@
 
 + 基本使用：
 
-        mkdie spm-demo
+        mkdir spm-demo
         cd spm-demo
         spm init
 
