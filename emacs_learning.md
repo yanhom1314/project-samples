@@ -10,6 +10,36 @@
         (color-theme-matrix)
 
 #### Windows7生成`.emacs`配置文件的方法，运行`emacs`打开`Options`->`Set Default fonts`选择字体后再打开`Options`->`Save Options`会生成`.emacs`配置文件，再编辑即可。
+##### 文件 ##### 
+打开文件: C-x C-f 
+保存文件: C-x C-s 
+打开buffer里的文件: C-x b [filename] 
+buffer list: C-x C-b 
+保存buffer: C-x s 
+恢复文件: M-x recover file 
+关闭buffer: C-x k 
+改变文件的只读/可写状态: C-x C-q 
+
+##### 帮助 ##### 
+简单说明: C-h c [command] 
+详细说明: C-h k [command] 
+在线文档: C-h i
+
+
+CEDET安装：
+安装：
+步骤1
+下载http://cedet.sourceforge.net/下载cedet安装包并解压缩。
+步骤2
+在基于Unix的系统（例如Linux）使用make安装
+make EMACS=emacs
+windows：
+cd cedet-1.0pre7
+emacs –Q –l cedet-build.el –f cedet-build
+配置（.emacs[linux:/LOGINNAME/.emacs]/_emacs[windows:c:/Documents and Settings/LOGINNAME/Application Data/_emacs]）
+;;不显示Message
+(setq inhibit-startup-message t)
+
 
 快捷键：
 ##### 常规 ##### 
