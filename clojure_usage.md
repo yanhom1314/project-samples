@@ -1,53 +1,52 @@
-## Erlang
-+ å˜é‡ä»¥å¤§å†™å­—æ¯å¼€å¤´ï¼›
-+ å¸¸é‡ä»¥å°å†™å­—æ¯å¼€å¤´ï¼›
-+ å˜é‡å€¼ä¸å¯å˜ï¼›
-+ æ¨¡å—åä¸æ–‡ä»¶åä¸€è‡´ï¼›
-+ åªæœ‰8ç§åŸºæœ¬ç±»å‹ï¼›integer float atom reference fun bitstring 
-+ 2ç§ç¬¦åˆç±»å‹ï¼šå…ƒç¥–ï¼š{}	åˆ—è¡¨ï¼š[]
+#### µü´úÓëµİ¹é
++ doseqÖ´ĞĞ²Ù×÷ºó·µ»Ønil
 
+	;;´òÓ¡0-4
+	(doseq [x (range 5)]
+	  (println x))
+	>0
+	>1
+	>2
+	>3
+	>4
+	>nil
+	
++ for·µ»Øvector
 
+	(for [x (range 5)]
+	  (println x))
+	>0
+	>1
+	>2
+	>3
+	>4
+	>(0 1 2 3 4)
 
-## Rebaræ„å»ºå·¥å…·
-+ åˆ›å»ºä¸€ä¸ªé¡¹ç›®ï¼š
++ loopµİ¹é´¦Àí
 
-		mkdir app_1
-		cd app_1
-		rebar create-app appid=app_1
-		rebar compile
-		cd ..
+	(defn fac [n]
+	  (loop [cnt n res 1]
+	    (if (<= cnt 0) res
+		  (recur (dec cnt) (* cnt res)))))	
+	(fac 10)
 
-+ åˆ›å»º`rebar.config`æ–‡ä»¶ï¼š
+#### º¯ÊıÓë±äÁ¿
++ ÄäÃûº¯Êı:`(fn [n] (println n))`
++ °ó¶¨±äÁ¿:`(def b-n "bind value.")`
++ °ó¶¨º¯Êı:`(def b-n-len (fn [] (count b-n)))`Óë`(defn b-n-len [] (count b-n))`ÏàÍ¬
++ °ó¶¨º¯ÊıÒ²¿ÉÒÔÊ¹ÓÃ`#(...)`µÄ·½Ê½:`(def b-n-len #(count b-n))`
++ º¯ÊıÖĞ¿ÉÒÔÊ¹ÓÃ`%`±íÊ¾Ò»¸ö²ÎÊı£¬Ò²¿ÉÒÔÓÃ`%[ĞòÁĞºÅ]`±íÊ¾µÚ¼¸¸ö²ÎÊı:`(def ex-len #(+ (count %1) (count %2))`
++ ¹Ì¶¨²ÎÊı:
 
-		echo {sub_dirs, ["app_1","rel"]}. > rebar.config
-		rebar compile
+	(defn add [v1 v2 v3 v4]
+	  (+ v1 v2 (if v3 v3 0) (if v4 v4 0)))
+	;;½¨ÒéÊ¹ÓÃÏÂÃæµÄÄ£Ê½Æ¥Åä·½Ê½¶¨Òå
+	(defn add
+	  [v1 v2] (+ v1 v2)
+	  [v1 v2 v3] (+ v1 v2 v3)
+	  [v1 v2 v3 v4] (+ v1 v2 v3 v4))
 
-+ åˆ›å»ºä¸€ä¸ªèŠ‚ç‚¹ï¼ˆæ‰“åŒ…éƒ¨ç½²ï¼‰ï¼š	
++ ¿É±ä²ÎÊı:
 
-		mkdir rel
-		cd rel
-		rebar create-node nodeid=myapp1
-
-+ ç¼–è¾‘`rel/reltool.config`æ–‡ä»¶ï¼š
-		
-		{lib_dirs, [".."]}
-		
-		{rel, "myapp1", "1",
-        [
-         kernel,
-         stdlib,
-         sasl,
-         app_1
-        ]},
-       {rel, "start_clean", "",
-        [
-         kernel,
-         stdlib
-        ]},
-
-        {app, app_1, [{mod_cond, app}, {incl_cond, include}]}
-
-
-+ æ‰“åŒ…:
-		rebar generate
-+ åœ¨`rel`ç›®å½•ä¸‹ç”Ÿæˆ`myapp1`ç›®å½•ï¼Œå°†è¿™ä¸ªç›®å½•`zip`åéƒ¨ç½²å³å¯ã€‚
+	(defn add [v1 v2 & others]
+	  (+ v1 v2 (if others (reduce + 0 others) 0)))
