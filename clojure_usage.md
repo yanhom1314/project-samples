@@ -1,3 +1,34 @@
+#### 相关内容
++ [Clojure](http://clojure.org) Clojure的主站;
++ [Leiningen](http://leiningen.org) Clojure的构建工具;
++ [Clojars](http://clojars.org) Clojure的新仓库;
+
+#### Leiningen
++ 创建一个项目:`lein new clj-hello`
++ 帮助:`lein help`
++ 编译:`lein compile`
++ 打包成一个单独可以执行的Jar:`lein uberjar`会在target目录下生成*-standelon-*.jar，可以运行`java -jar *-standelone-*.jar`
+
+#### Clojars
++ 部署文件到仓库：
+
+		lein pom
+		lein deploy clojars
+
+#### 注释
+使用`;`来注释，`;`的个数代表注释的重要性。
+;      单行注释
+;;     函数注释
+;;;    macro或者defmulti的注释
+;;;;   ns注释
+多行注释使用宏`comment`:`(comment "
+111
+222
+333
+")`
+
+#### 
+
 #### 迭代与递归
 + doseq执行操作后返回nil
 
@@ -50,3 +81,18 @@
 
 	(defn add [v1 v2 & others]
 	  (+ v1 v2 (if others (reduce + 0 others) 0)))
+
+
+#### 宏(macro)
++ `->`:将多个形式串练成一个表达式，例如：
+
+    (-> "a b c d" .toUpperCase (.replace "A" "X") (.split " ") first)
+	>"X"    ;;"a b c d"字母转成大写然后将A用X替换然后以空格(\s)分割然后返回第一个字母
+
+	(use '[clojure.walk :only [macroexpand-all]])
+	(macroexpand-all '(-> "a b c d" .toUpperCase (.replace "A" "X") (.split " ") first))
+	>(first (. (. (. "a b c d" toUpperCase) replace "A" "X") split " "))   
+	;;与(first (.split (.replace (.toUpperCase "a b c d") "A" "X") " "))是相同的
+	;;如果列表中有多个表达式，则第一个表达式作为第二个表达式的第二项插入到形式中，以此类推；
+
++  [->](http://clojuredocs.org/clojure.core/->)文档
