@@ -1,0 +1,25 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+# output dir
+build/
+target/
+bin/
+mods/
+project/project/
+project/target/
+#Eclipse
+.gradle/
+.settings/
+.classpath
+.project
+#Intellij IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+#Netbeans
+nbproject/
