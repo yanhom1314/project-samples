@@ -14,7 +14,7 @@ function Pagination(obj) {
     this.error = obj.error;                 //error：回调函数
     this.div = null;						//page tool bar的html
     this.init();
-}
+};
 Pagination.prototype.init = function () {
     if (this.data == undefined) {
         this.data = {}
@@ -63,13 +63,12 @@ Pagination.prototype.showUI = function () {
     	if(i == this.pageNum) this.div.append('<span class="active item">' + i + '</span>');
     	else this.div.append('<a class="item">' + i + '</a>');
     }
-
-    that.div.find('a').each(function(i,d){    	
+    that.div.find('a').each(function(i){    	
     	if(i == 0 && that.pageNum > 1){
-    		$(d).click({param:that},that.previewPage);
+    		$(this).click({param:that},that.previewPage);
     	}  	    	
     	else {
-	    	$(d).click({param: that}, function (event) {
+	    	$(this).click({param: that}, function (event) {
 	        	var p = event.data.param;
 	            var n = $(this).text().trim();                                
 	            p.fetchData(parseInt(n));

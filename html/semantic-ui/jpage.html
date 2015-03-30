@@ -4,12 +4,13 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.4/semantic.min.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/main.css"/>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>		
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.4/semantic.min.js"></script>
 		<script type="text/javascript" src="/js/page.js"></script>
+		<script type="text/javascript" src="/js/jquery.page.js"></script>
 		<script type="text/javascript">
 		$(function(){
-			new Pagination({
+			$.pagination({
 			    id: "pagination",			//页面元素jQuery id值，自动加"#"
 			    url: "/data/page.json",		//服务端REST地址
 			    pageSize: 5, 				//每页显示的记录数
