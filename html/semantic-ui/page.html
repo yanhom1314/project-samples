@@ -14,14 +14,19 @@
 			    url: "/data/page.json",		//服务端REST地址
 			    pageSize: 5, 				//每页显示的记录数
 			    barSize: 6,					//分页工具条上展现的页码数
-			    data: {name:2},			//请求参数
+			    data: {name:2},				//请求参数
 			    success: function (rows) { 	
 			    	var html = $("table tbody");
 			    	html.empty();			    	
 			    	for(i in rows) {
 			    		var t = rows[i];			    					        	
-			        	html.append("<tr><td>" + t.name + "</td><td>" + t.age + "</td></tr>");//显示内容
-			        }			        			        
+			        	html.append("<tr><td class='name'>" + t.name + "</td><td>" + t.age + "</td></tr>");//显示内容
+			        }			        			        			        
+			        html.find("tr td[class=name]").each(function(i,d){
+			        	$(d).click(function(){
+			        		console.log($(this).html());
+			        	});			        	
+			        });
 			    },
 			    error: function (msg) {
 			        console.log(msg);

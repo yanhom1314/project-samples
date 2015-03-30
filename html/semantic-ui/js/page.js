@@ -56,31 +56,32 @@ Pagination.prototype.showUI = function () {
     var bar = this.barTuple();    
     //previous 
     if(this.pageNum <= 1) this.div.append('<span class="disabled icon item"><i class="left arrow icon"></i> 上一页</span>');
-    else this.div.append('<a class="icon item"><i class="left arrow icon"></i> 上一页</a>');
+    else this.div.append('<a class="icon item"><i class="left arrow icon"></i> 上一页</a>');  
+    	
     //bar    
     for (var i = bar[0]; i <= bar[1]; i++) {    
-    	if(i == this.pageNum) this.div.append('<a class="active item">' + i + '</a>');
+    	if(i == this.pageNum) this.div.append('<span class="active item">' + i + '</span>');
     	else this.div.append('<a class="item">' + i + '</a>');
     }
-    //next    
-    if(this.pageNum < this.totalPage) this.div.append('<a class="icon item"> 下一页 <i class="icon right arrow"></i></a>');
-    else this.div.append('<span class="disabled icon item"> 下一页 <i class="icon right arrow"></i></span>');
- 
-    var array = this.div.find('a');
-    for (var j = 0; j < array.length; j++) {
-        var current = $(array[j]);
-        if (j == 0) {
-            current.click({param: that}, that.previewPage);
-        } else if (j == array.length - 1) {
-            current.click({param: that}, that.nextPage)
-        } else {
-            current.click({param: that}, function (event) {
-                var p = event.data.param;
-                var n = $(this).text().trim();                                
-                p.fetchData(parseInt(n));
-            })
+
+    that.div.find('a').each(function(i,d){    	
+    	if(i == 0 && that.pageNum > 1){
+    		$(d).click({param:that},that.previewPage);
+    	}  	    	
+    	else {
+	    	$(d).click({param: that}, function (event) {
+	        	var p = event.data.param;
+	            var n = $(this).text().trim();                                
+	            p.fetchData(parseInt(n));
+	        });
         }
-    }        
+    });    
+    //next    
+    if(this.pageNum >= this.totalPage) this.div.append('<span class="disabled icon item"> 下一页 <i class="icon right arrow"></i></span>');
+  	else {
+   		this.div.append('<a class="icon item"> 下一页 <i class="icon right arrow"></i></a>');
+   		this.div.find('a:last').click({param:that},that.nextPage);
+   	} 
 };
 Pagination.prototype.barTuple = function() {
 	var pageFix = Math.ceil(this.barSize / 2);
@@ -90,11 +91,11 @@ Pagination.prototype.barTuple = function() {
 };
 Pagination.prototype.nextPage = function (event) {
     var that = event.data.param;
-    that.pageNum++;        
+    if(that.pageNum < that.totalPage) that.pageNum++;        
     that.showUI();    
 };
 Pagination.prototype.previewPage = function (event) {
     var that = event.data.param;
-    that.pageNum--;        
+    if(that.pageNum > 1) that.pageNum--;        
     that.showUI();   
 };
