@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.4/semantic.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/main.css"/>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.4/semantic.min.js"></script>
+		<script type="text/javascript" src="/js/page.js"></script>
+		<script type="text/javascript">
+		$(function(){
+			new Pagination({
+			    id: "pagination",
+			    url: "/data/page.json",
+			    pageSize: 5, //每页显示的记录数
+			    barSize: 5,//分页工具条上展现的页码数
+			    data: {pageNum:2},
+			    success: function (rows) { //回调函数					    	
+			    	var html = $("table tbody");
+			    	html.empty();			    	
+			    	for(i in rows) {
+			    		var t = rows[i];			    					        	
+			        	html.append("<tr><td>" + t.name + "</td><td>" + t.age + "</td></tr>");
+			        }			        			        
+			    },
+			    error: function (msg) {//回调函数
+			        console.log(msg);
+			    }
+			});
+		});
+			
+		</script>
+	</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+			</tr>		
+		</thead>
+		<tbody>			
+		</tbody>	
+	</table>
+	<div id="pagination" class="ui pagination menu"></div>
+</body>
+</html>
