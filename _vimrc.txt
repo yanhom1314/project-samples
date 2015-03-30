@@ -10,7 +10,7 @@ set fileencodings=ucs-bom,utf-8,chinese
 "字体
 set guifont=Droid_Sans_Mono:h10
 "设置样式
-colorscheme molokai
+colorscheme desert
 "取消备份
 set nobackup
 "设置tab键的宽度
