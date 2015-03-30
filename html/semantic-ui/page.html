@@ -10,25 +10,24 @@
 		<script type="text/javascript">
 		$(function(){
 			new Pagination({
-			    id: "pagination",
-			    url: "/data/page.json",
-			    pageSize: 5, //每页显示的记录数
-			    barSize: 5,//分页工具条上展现的页码数
-			    data: {pageNum:2},
-			    success: function (rows) { //回调函数					    	
+			    id: "pagination",			//页面元素jQuery id值，自动加"#"
+			    url: "/data/page.json",		//服务端REST地址
+			    pageSize: 5, 				//每页显示的记录数
+			    barSize: 6,					//分页工具条上展现的页码数
+			    data: {name:2},			//请求参数
+			    success: function (rows) { 	
 			    	var html = $("table tbody");
 			    	html.empty();			    	
 			    	for(i in rows) {
 			    		var t = rows[i];			    					        	
-			        	html.append("<tr><td>" + t.name + "</td><td>" + t.age + "</td></tr>");
+			        	html.append("<tr><td>" + t.name + "</td><td>" + t.age + "</td></tr>");//显示内容
 			        }			        			        
 			    },
-			    error: function (msg) {//回调函数
+			    error: function (msg) {
 			        console.log(msg);
 			    }
 			});
-		});
-			
+		});		
 		</script>
 	</head>
 <body>

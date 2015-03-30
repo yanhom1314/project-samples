@@ -1,15 +1,18 @@
+/**
+* 依赖jQuery
+*/
 function Pagination(obj) {
-    this.id = obj.id;  //div id
-    this.url = obj.url; 
-    this.pageSize = obj.pageSize; 
-    this.pageNum = 1; //current page number
-    this.total = 0; //total count
-    this.totalPage = 0; 
-    this.barSize = obj.barSize; //分页工具条上展现的页码数    
-    this.data = obj.data;
-    this.success = obj.success;
-    this.error = obj.error;
-    this.div = null;
+    this.id = obj.id;  						//div id
+    this.url = obj.url; 					//服务端REST地址
+    this.pageSize = obj.pageSize;  			//每页显示元素条数
+    this.pageNum = 1; 						//当前页码从1开始
+    this.total = 0; 						//合计条数
+    this.totalPage = 0;                     //最大页码
+    this.barSize = obj.barSize; 			//分页工具条上展现的页码数    
+    this.data = obj.data;                   //服务端响应数据
+    this.success = obj.success;             //scuccess：回调函数
+    this.error = obj.error;                 //error：回调函数
+    this.div = null;						//page tool bar的html
     this.init();
 }
 Pagination.prototype.init = function () {
@@ -50,8 +53,7 @@ Pagination.prototype.fetchData = function (pageNum) {
 Pagination.prototype.showUI = function () {	
     var that = this;
     this.div.empty();
-    var bar = this.barArray();
-    console.log("bar[0]:"+bar[0] + " bar[1]"+bar[1]);
+    var bar = this.barTuple();    
     //previous 
     if(this.pageNum <= 1) this.div.append('<span class="disabled icon item"><i class="left arrow icon"></i> 上一页</span>');
     else this.div.append('<a class="icon item"><i class="left arrow icon"></i> 上一页</a>');
@@ -80,7 +82,7 @@ Pagination.prototype.showUI = function () {
         }
     }        
 };
-Pagination.prototype.barArray = function() {
+Pagination.prototype.barTuple = function() {
 	var pageFix = Math.ceil(this.barSize / 2);
 	var min = (this.pageNum - pageFix <= 1) ? 1 : this.pageNum - pageFix;
 	var max= (this.pageNum + pageFix > this.totalPage) ? this.totalPage : this.pageNum + pageFix;
