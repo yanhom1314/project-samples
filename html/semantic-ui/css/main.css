@@ -1,4 +1,14 @@
- table{
+body {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.demo.icons .icon {
+	font-size: 16px;
+	margin: 0em 4px 8px;
+}
+
+table{
  	border-collapse: collapse;
     border: none;
     width: 400px;
