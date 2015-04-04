@@ -101,97 +101,64 @@
 ;;编程haskell支持
 (load "~/.emacs.d/haskell-mode/haskell-site-file")
 
-;;yasnippet
-(add-to-list 'load-path "~/.emacs.d/yasnippet")
-(require 'yasnippet)
-(yas-global-mode 1)
+;;字体 启动 编码
+(set-language-environment 'UTF-8) 
+(set-locale-environment "UTF-8") 
+(set-default-font "Lucida Console") 
+;;(set-fontset-font "fontset-default" 'unicode '("WenQuanYi Zen Hei" . "unicode-ttf"))
 
-;;编程Scala支持
-(add-to-list 'load-path "~/.emacs.d/scala-mode")
-(require 'scala-mode-auto) ;; 编辑.scala文件时自动启动scala mode
+(tool-bar-mode -1)
+;;(menu-bar-mode -1)
+(setq inhibit-startup-message t)
+(setq initial-scratch-message "")
 
-;;scala yasnippet
-;;(setq yas/my-directory "~/.emacs.d/scala-mode/contrib/yasnippet/snippets")
-;;(yas/load-directory yas/my-directory)
-;;(add-hook 'scala-mode-hook
-;;           '(lambda ()
-;;               (yas/minor-mode-on)
-;;               ))
+;;设定不产生备份文件
+(setq make-backup-files nil)
+;;自动保存模式
+;;(setq auto-save-mode nil)
+;;不生成临时文件
+(setq-default make-backup-files nil)
 
-;;Erlang Mode
-(setq load-path (cons  "C:/Tools/erl/lib/tools-2.6.7/emacs" load-path)) 
-(setq erlang-root-dir "C:/Tools/erl") 
-(setq exec-path (cons "C:/Tools/erl/bin" exec-path)) 
-(require 'erlang-start) 
+;;启动0.5秒后自动最大化 （windows下）
+(run-with-idle-timer 0.1 nil 'w32-send-sys-command 61488)
+;;(w32-send-sys-command 61488)
 
-;; This is needed for Distel setup 
-(let ((distel-dir "~/.emacs.d/distel/elisp")) 
-(unless (member distel-dir load-path) 
-;; Add distel-dir to the end of load-path 
-(setq load-path (append load-path (list distel-dir))))) 
-(require 'distel) 
-(distel-setup) 
-;; Some Erlang customizations 
-(add-hook 'erlang-mode-hook 
-      (lambda () 
-        ;; when starting an Erlang shell in Emacs, default in the node name 
-        (setq inferior-erlang-machine-options '("-sname" "emacs")) 
-        ;; add Erlang functions to an imenu menu 
-        (imenu-add-to-menubar "imenu"))) 
+;;系统本身内置的智能自动补全括号
+(electric-pair-mode t)
 
-(defconst distel-shell-keys 
-'(("\C-\M-i"   erl-complete) 
-("\M-?"      erl-complete)  
-("\M-."      erl-find-source-under-point) 
-("\M-,"      erl-find-source-unwind) 
-("\M-*"      erl-find-source-unwind) 
-)
- "Additional keys to bind when in Erlang shell.")
-
-(add-hook 'erlang-shell-mode-hook  
-   (lambda ()  
-     ;; add some Distel bindings to the Erlang shell  
-     (dolist (spec distel-shell-keys)  
-       (define-key erlang-shell-mode-map (car spec) (cadr spec)))))  
-
-;; 设置Tabbar
-(add-to-list 'load-path "~/.emacs.d/tabbar") 
-(require 'tabbar)  
-(tabbar-mode 1)
-(global-set-key [(meta j)] 'tabbar-backward)  
-(global-set-key [(meta k)] 'tabbar-forward) 
-
-
-(setq  
- tabbar-scroll-left-help-function nil   ;don't show help information  
- tabbar-scroll-right-help-function nil  
- tabbar-help-on-tab-function nil  
- tabbar-home-help-function nil  
- tabbar-buffer-home-button (quote (("") "")) ;don't show tabbar button  
- tabbar-scroll-left-button (quote (("") ""))  
- tabbar-scroll-right-button (quote (("") "")))  
+(defun emacs-maximize ()  
+  "Maximize emacs window in windows os"  
+  (interactive)  
+  (w32-send-sys-command 61488))        ; WM_SYSCOMMAND #xf030 maximize  
+(defun emacs-minimize ()  
+  "Minimize emacs window in windows os"  
+  (interactive)  
+  (w32-send-sys-command #xf020))    ; #xf020 minimize  
+(defun emacs-normal ()  
+  "Normal emacs window in windows os"  
+  (interactive)  
+  (w32-send-sys-command #xf120))    ; #xf120 normalimize  
   
-  
-(defun my-tabbar-buffer-groups ()  
-  "Return the list of group names the current buffer belongs to.  
-Return a list of one element based on major mode."  
-  (list  
-   (cond  
-    ((or (get-buffer-process (current-buffer))  
-         ;; Check if the major mode derives from `comint-mode' or  
-         ;; `compilation-mode'.  
-         (tabbar-buffer-mode-derived-p  
-          major-mode '(comint-mode compilation-mode)))  
-     "Process"  
-     )  
-    ((string-equal "*" (substring (buffer-name) 0 1))  
-     "Emacs Buffer"  
-     )  
-    ((eq major-mode 'dired-mode)  
-     "Dired"  
-     )  
-    (t  
-     "User Buffer"  
-     ))))  
-  
-(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
+;; (emacs-maximize)  
+(global-set-key (kbd  "C-x C-z") 'emacs-maximize)
+(global-set-key (kbd  "C-x z") 'emacs-minimize)
+
+;;Add the path to list
+(add-to-list 'load-path "~/.emacs.d/scala-mode/")
+(add-to-list 'load-path "~/.emacs.d/clojure-mode/")
+(add-to-list 'load-path "~/.emacs.d/evil")
+
+;;Evil
+(require 'evil)
+(evil-mode 1)
+
+;;Clojure
+(require 'clojure-mode)
+
+;;Scala
+(require 'scala-mode2)
+
+;;显示时间  
+(display-time-mode t)  
+;;启动Emacs Server  
+(server-start)  
