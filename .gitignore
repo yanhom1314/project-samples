@@ -11,6 +11,8 @@ bin/
 mods/
 project/project/
 project/target/
+#NodeJS
+node_modules
 #Eclipse
 .gradle/
 .settings/
