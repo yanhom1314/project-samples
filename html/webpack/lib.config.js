@@ -1,20 +1,18 @@
 var path = require("path");
 module.exports = {
     entry: {
-        semantic:'./semantic-load.js',
-        d_c3:"./demo_c3.js",
-        d_amd:"./demo_amd.js",
-        d_jquery:"./demo_jquery.js",
-        d_terminal:"./demo_terminal.js",
-
+        math:'./lib/math.js',
+        inc:'./lib/inc.js'
     },
     output: {
-        path: path.join(__dirname, "html/js"),
-        filename: "[name].bundle.js"
+        path: path.join(__dirname, "html/lib"),
+        filename: "[name].js",
+        library: ["lyf", "[name]"],
+        libraryTarget:'var'
     },
     externals: {
-       'jquery': 'jQuery'
-      //'d3':'d3'
+       'jquery': 'jQuery',
+       'math':'math'
     },
     module: {
         loaders: [
