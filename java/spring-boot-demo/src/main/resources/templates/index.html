@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/layout">
 <head>
@@ -8,7 +9,14 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <p>This is a paragraph from content page 1</p>
+    <ul>
+        <li><a th:href="@{/wsdl/test/94304}">Soap Web Service</a></li>
+        <li><a th:href="@{/admin/}">Admin</a></li>
+        <li><a th:href="@{/demo/index}">Demo</a></li>
+        <li><a th:href="@{/greeting}">Greeting REST Web Service</a></li>
+        <li><a th:href="@{/demo/customer}">User CRUD REST Customer</a></li>
+        <li><a th:href="@{/demo/people}">Spring CRUD REST Customer</a></li>
+    </ul>
 </section>
 <footer>
     <p layout:fragment="custom-footer">This is some footer content from content page 1</p>

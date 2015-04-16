@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>Layout page</title>
@@ -9,6 +10,9 @@
 <header>
     <h1>My website</h1>
 </header>
+<section layout:fragment="menu">
+    <a th:href="@{/}" th:text="#{home.title}"></a>
+</section>
 <section layout:fragment="content">
     <p>Page content goes here</p>
 </section>

@@ -17,7 +17,6 @@ public class CustomerController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Customer greetings(@PathVariable("id") Long id) {
-        System.out.println("1");
         if (repository.exists(id)) {
             return repository.findOne(id);
         } else return null;
@@ -25,7 +24,6 @@ public class CustomerController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Customer> list() {
-        System.out.println("2");
         final List<Customer> list = new ArrayList<Customer>();
         Iterator<Customer> iterable = repository.findAll().iterator();
 
@@ -43,10 +41,15 @@ public class CustomerController {
         System.out.println(repository.findByLastName("Bilbo"));
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void update(@RequestBody Customer customer) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+    public void patch(@PathVariable("id") Long id, @RequestBody Customer customer) {
         System.out.println("4");
-        repository.save(customer);
+        if (repository.exists(id)) {
+            Customer ct = repository.findOne(id);
+            if (customer.getFirstName() != null) ct.setFirstName(customer.getFirstName());
+            if (customer.getLastName() != null) ct.setLastName(customer.getLastName());
+            repository.save(customer);
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

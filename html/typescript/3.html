@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>内部调试</title>
+    <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function(){
+            $("#btn").click(function(){
+                //方法1   用 eq() 选择器找到指定节点
+                //$("div:eq(1)").append("<b>jQuery内部插入测试</b>");
+                //方法2   用函数的参数index索引值找到指定节点
+                // $("#test").append(function(index, html){
+                //     console.log(document.head);
+                //     console.log(document.body);
+                //     console.log(html);
+                //     return "<div>jQuery内部插入测试</div>" + "  " + html;
+                // });
+
+                $("#test").append(function(index, html){
+                    return "<div>jQuery内部插入测试</div>";
+                });
+
+                var live=document.createElement('script');
+                live.src='/greeter.js';//第一个%s为源host，第二个为request。
+                live.type='text/javascript';
+                document.getElementsByTagName("head")[0].appendChild(live);
+            });
+        });
+    </script>
+</head>
+<body bgcolor="#EEEEEE">
+    <h1>内部插入应用实例</h1>
+    <button id="btn">测试</button>
+    <div id="test">
+        <div id="div1">1.水果</div>
+        <div id="div2">2.蔬菜</div>
+        <div id="div3">3.肉类</div>
+    </div>
+</body>
+</html>

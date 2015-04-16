@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class HelloController {
+public class HomeController {
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     @ResponseBody
     public String home() {
         return "Hello World!";
     }
 
 
-    @RequestMapping("/index")
+    @RequestMapping("/")
     public String index() {
         return "index";
     }

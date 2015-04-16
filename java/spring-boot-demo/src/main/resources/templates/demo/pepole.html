@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <title>Content page 1</title>
+    <script src="content-script.js"></script>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>curl -i http://localhost:9001/console/ </h1>
+    <h1>curl -i http://localhost:9001/console/people </h1>
+    add:<h1>curl -i -X POST -H "Content-Type:application/json" -d '{  "firstName" : "Frodo",  "lastName" : "Baggins" }' http://localhost:9001/console/people </h1>
+    search:<h1>curl -i http://localhost:9001/console/people/1</h1>
+    update(not supplied will be replaced with null.):<h1>curl -X PUT -H "Content-Type:application/json" -d '{ "firstName": "Bilbo", "lastName": "Baggins" }' http://localhost:9001/console/people/1</h1>
+    update(only update a subset of items.)<h1>curl -X PATCH -H "Content-Type:application/json" -d '{ "firstName": "Bilbo Jr." }' http://localhost:9001/console/people/1</h1>
+    delete:<h1>curl -X DELETE http://localhost:8080/people/1</h1>
+</section>
+<footer>
+    <p layout:fragment="custom-footer">This is some footer content from content page 1</p>
+</footer>
+</body>
+</html>

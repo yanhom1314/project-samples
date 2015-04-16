@@ -14,7 +14,17 @@ public class DemoController {
     @Autowired
     private RedisDemo redisDemo;
 
-    @RequestMapping("/index/{key}")
+    @RequestMapping("/")
+    public String index() {
+        return "demo/index";
+    }
+
+    @RequestMapping("/customer")
+    public String customer() {
+        return "demo/customer";
+    }
+
+    @RequestMapping("/test/{key}")
     public String index(@PathVariable("key") String key, Model model) {
         System.out.println("redisDemo:" + redisDemo);
         model.addAttribute("hello", redisDemo.get(key));
