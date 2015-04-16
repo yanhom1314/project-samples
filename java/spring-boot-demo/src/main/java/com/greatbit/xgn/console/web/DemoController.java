@@ -26,7 +26,7 @@ public class DemoController {
 
     @RequestMapping("/people")
     public String people() {
-        return "demo/customer";
+        return "demo/people";
     }
 
     @RequestMapping("/test/{key}")

@@ -5,6 +5,42 @@
       layout:decorator="layout/layout">
 <head>
     <title>Content page 1</title>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function _load_(_url, _method,_data) {
+            $.ajax({
+                url: _url,
+                type: _method,
+                contentType:'application/json',
+                data:_data,
+                success: function (data) {
+                    $("#_c").html(data);
+                }
+            });
+        }
+        $(function () {
+            var path = /*[[@{/people}]]*/ '/people';
+            console.log("path:"+path);
+            $("#_get").click(function(){
+                _load_(path+"/1","GET");
+            });
+
+            $("#_post").click(function(){
+                _load_(path,"POST",{"firstName" : "Frodo", "lastName" : "Baggins"});
+            });
+            $("#_put").click(function(){
+                _load_(path,"PUT",{"firstName" : "Frodo2", "lastName" : "Baggins2"});
+            });
+            $("#_patch").click(function(){
+                _load_(path,"PATCH",{ "firstName": "Bilbo Jr." });
+            });
+            $("#_delete").click(function(){
+                _load_(path+"/1","DELETE");
+            });
+        });
+        /*]]>*/
+    </script>
     <script type="text/javascript">
         function _load_(_url, _method,_data) {
             $.ajax({
@@ -26,20 +62,15 @@
 <section layout:fragment="content">
     <h1>curl -i http://localhost:9001/console/ </h1>
 
-    <a th:onclick="_load_('@{/people}','GET')" th:text="#{people.get}"></a>
+    <a id="_get" th:text="#{people.get}"></a>
 
-    <a th:onclick="_load_(@{/people},'GET');" th:text="#{people.get}"></a>
+    <a id="_post" >Add</a>
 
-    <a th:onclick="_load_(@{/people},'GET');" th:text="#{people.get}"></a>
+    <a id="_put">PUT</a>
 
-    <a th:onclick="_load_(@{/people},'GET');" th:text="#{people.get}"></a>
-    <h1>curl -i http://localhost:9001/console/people </h1>
-    add:<h1>curl -i -X POST -H "Content-Type:application/json" -d '{ "firstName" : "Frodo", "lastName" : "Baggins" }' http://localhost:9001/console/people </h1>
-    search:<h1>curl -i http://localhost:9001/console/people/1</h1>
-    update(not supplied will be replaced with null.):<h1>curl -X PUT -H "Content-Type:application/json" -d '{ "firstName": "Bilbo", "lastName": "Baggins" }' http://localhost:9001/console/people/1</h1>
-    update(only update a subset of items.)<h1>curl -X PATCH -H "Content-Type:application/json" -d '{ "firstName": "Bilbo Jr." }' http://localhost:9001/console/people/1</h1>
-    delete:<h1>curl -X DELETE http://localhost:8080/people/1</h1>
+    <a id="_patch">PATCH</a>
 
+    <a id="_delete">DELETE</a>
 
     <div id="_c" style="width: 400px;height: 300px;"></div>
 </section>
