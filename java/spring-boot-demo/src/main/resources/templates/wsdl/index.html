@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <title>Content page 1</title>
+    <script src="content-script.js"></script>
+</head>
+<body>
+<section layout:fragment="content">
+    <span th:text="${result.city}"/><br/>
+    <span th:text="${result.state}"/><br/>
+    <span th:text="${result.responseText}"/><br/>
+    <table border="1">
+        <tr>
+            <th>DATE</th>
+            <th>Description</th>
+            <th>MorningLow</th>
+            <th>DayTimeHign</th>
+        </tr>
+        <tr th:each="f : ${forecasts}">
+            <td th:text="${f.date}"></td>
+            <td th:text="${f.desciption}"></td>
+            <td th:text="${f.temperatures.morningLow}"></td>
+            <td th:text="${f.temperatures.daytimeHigh}"></td>
+        </tr>
+    </table>
+    <p>This is a paragraph from content page 1</p>
+</section>
+<footer>
+    <p layout:fragment="custom-footer">This is some footer content from content page 1</p>
+</footer>
+</body>
+</html>

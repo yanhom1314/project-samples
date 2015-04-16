@@ -4,19 +4,11 @@ import com.greatbit.xgn.console.domain.LoginUser;
 import com.greatbit.xgn.console.domain.LoginUserRepository;
 import com.greatbit.xgn.console.domain.Role;
 import com.greatbit.xgn.console.domain.RoleRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.listener.PatternTopic;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.CountDownLatch;
 
 @SpringBootApplication
 public class Application {
@@ -24,7 +16,7 @@ public class Application {
     private RoleRepository roleRepository;
     @Autowired
     private LoginUserRepository userRepository;
-    
+
     @PostConstruct
     public void init() {
         if (roleRepository.count() <= 0) {
@@ -49,7 +41,6 @@ public class Application {
             userRepository.save(admin);
         }
     }
-
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

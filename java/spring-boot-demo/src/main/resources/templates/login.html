@@ -17,10 +17,9 @@
 <form th:action="@{/login}" method="POST">
     <div><label> User Name : <input type="text" name="username"/> </label></div>
     <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><label> Captcha: <input type="password" name="j_captcha"/> </label></div>
+    <div><label> Captcha: <input type="text" name="j_captcha"/> </label></div>
     <div>
-        <img id="_captcha" th:src="@{/captcha}" style="width: 120px;height: 25px;"/><a id="_refresh"
-                                                                                       href="javascript:void(0);">点击刷新</a>
+        <img id="_captcha" th:src="@{/captcha}" style="width: 120px;height: 25px;"/><a id="_refresh" href="javascript:void(0);">点击刷新</a>
     </div>
     <div><input type="submit" value="Sign In"/></div>
 </form>
