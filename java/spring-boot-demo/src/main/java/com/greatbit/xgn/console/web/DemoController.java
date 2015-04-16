@@ -24,6 +24,11 @@ public class DemoController {
         return "demo/customer";
     }
 
+    @RequestMapping("/people")
+    public String people() {
+        return "demo/customer";
+    }
+
     @RequestMapping("/test/{key}")
     public String index(@PathVariable("key") String key, Model model) {
         System.out.println("redisDemo:" + redisDemo);

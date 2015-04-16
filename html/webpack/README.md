@@ -1,7 +1,7 @@
 ## 安装
 
         npm install webpack -g
-        npm install style-loader css-loader url-loader
+        npm install style-loader css-loader url-loader file-loader
         #npm install jquery d3 semantic-ui
         npm install d3 semantic-ui
 

