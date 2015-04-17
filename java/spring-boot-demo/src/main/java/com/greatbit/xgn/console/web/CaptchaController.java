@@ -25,7 +25,7 @@ public class CaptchaController {
     }
 
     @RequestMapping(value = "/captcha", method = RequestMethod.GET)
-    public void greeting(HttpSession session, HttpServletResponse resp) {
+    public void captcha(HttpSession session, HttpServletResponse resp) {
         try {
             resp.setHeader("Cache-Control", "no-store, no-cache");
             resp.setContentType("image/jpeg");

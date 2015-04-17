@@ -16,7 +16,7 @@ public class CustomerController {
     CustomerRepository repository;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Customer greetings(@PathVariable("id") Long id) {
+    public Customer get(@PathVariable("id") Long id) {
         if (repository.exists(id)) {
             return repository.findOne(id);
         } else return null;

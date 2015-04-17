@@ -4,16 +4,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/layout">
 <head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
     <title>Content page 1</title>
-
     <script th:inline="javascript">
         /*<![CDATA[*/
-        function _load_(_url, _method,_data) {
+        function _load_(_url, _method, _data) {
+            var _csrf = /*[[${_csrf.token}]]*/ '/people';
             $.ajax({
                 url: _url,
                 type: _method,
-                contentType:'application/json',
-                data:_data,
+                contentType: 'application/json',
+                data: _data + {"_csrf": _csrf},
                 success: function (data) {
                     $("#_c").html(data);
                 }
@@ -21,48 +22,32 @@
         }
         $(function () {
             var path = /*[[@{/people}]]*/ '/people';
-            console.log("path:"+path);
-            $("#_get").click(function(){
-                _load_(path+"/1","GET");
+            console.log("path:" + path);
+            $("#_get").click(function () {
+                _load_(path + "/1", "GET");
             });
 
-            $("#_post").click(function(){
-                _load_(path,"POST",{"firstName" : "Frodo", "lastName" : "Baggins"});
+            $("#_post").click(function () {
+                _load_(path, "POST", {"firstName": "Frodo", "lastName": "Baggins"});
             });
-            $("#_put").click(function(){
-                _load_(path,"PUT",{"firstName" : "Frodo2", "lastName" : "Baggins2"});
+            $("#_put").click(function () {
+                _load_(path, "PUT", {"firstName": "Frodo2", "lastName": "Baggins2"});
             });
-            $("#_patch").click(function(){
-                _load_(path,"PATCH",{ "firstName": "Bilbo Jr." });
+            $("#_patch").click(function () {
+                _load_(path, "PATCH", {"firstName": "Bilbo Jr."});
             });
-            $("#_delete").click(function(){
-                _load_(path+"/1","DELETE");
+            $("#_delete").click(function () {
+                _load_(path + "/1", "DELETE");
             });
         });
         /*]]>*/
-    </script>
-    <script type="text/javascript">
-        function _load_(_url, _method,_data) {
-            $.ajax({
-                url: _url,
-                type: _method,
-                contentType:'application/json',
-                data:_data,
-                success: function (data) {
-                    $("#_c").html(data);
-                }
-            });
-        }
-        $(function () {
-
-        });
     </script>
 </head>
 <body>
 <section layout:fragment="content">
     <h1>curl -i http://localhost:9001/console/ </h1>
 
-    <a id="_get" th:text="#{people.get}"></a><br/>
+    <a id="_get" href="#" th:text="#{people.get}"></a><br/>
 
     <a id="_post" href="#">Add</a><br/>
 

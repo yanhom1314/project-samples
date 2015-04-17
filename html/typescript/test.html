@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>TypeScript Greeter</title>
+		<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+        <script>
+            var browserName=navigator.appName;
+            if (browserName=="Netscape") {
+                function closeme(){
+                    window.open('','_parent','');
+                    window.close();
+                }
+            }
+            else{
+                if (browserName=="Microsoft Internet Explorer"){
+                    function closynoshowsme(){
+                        window.opener = "whocares";
+                        window.close();
+                    }
+                }
+            }
+        </script>
+	</head>
+    <body>
+        <input type="button" value="close me 3" onclick="javascript:closeme();"/>
+        <button class="close" onclick="javascript:window.open(location, '_self').close();">关闭</button>
+    </body>
+</html>

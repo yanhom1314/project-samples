@@ -1,8 +1,11 @@
-package com.greatbit.xgn.console.filter;
+package com.greatbit.xgn.console.service;
 
 import com.greatbit.xgn.console.web.CaptchaController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -10,10 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CaptchaFilter implements Filter {
     public static final Logger logger = LoggerFactory.getLogger(CaptchaFilter.class);
     private String captchaParam = "j_captcha";
     private String loginUrl = "/login";
+
+    public CaptchaFilter() {
+
+    }
 
     public CaptchaFilter(String loginUrl) {
         this.loginUrl = loginUrl;

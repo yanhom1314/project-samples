@@ -4,13 +4,23 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/layout">
 <head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
     <title>Content page 1</title>
-    <script src="content-script.js"></script>
 </head>
 <body>
 <section layout:fragment="content">
-    <p th:text="'Hello, ' + ${name} + '!'" />
+    <p th:text="'Hello, ' + ${name} + '!'"/>
+
+    <span th:text="'Csrf:' + ${#httpSession}"/>
+    <span th:text="${#httpSession.id} + ${#httpSession.getAttribute('_csrf')}"/>
+    <span th:text="${#httpSession.lastAccessedTime}"/>
+
     <p>This is a paragraph from content page 1</p>
+
+    <form th:action="@{/greeting}" method="post">
+        <input type="hidden" name="name" value="Hacked content!"/>
+        <input type="submit" value="Hack!"/>
+    </form>
 </section>
 <footer>
     <p layout:fragment="custom-footer">This is some footer content from content page 1</p>
