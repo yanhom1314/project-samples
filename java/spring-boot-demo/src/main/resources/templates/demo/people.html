@@ -4,7 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/layout">
 <head>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
     <title>Content page 1</title>
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -14,7 +13,9 @@
                 url: _url,
                 type: _method,
                 contentType: 'application/json',
-                data: _data + {"_csrf": _csrf},
+                dataType: 'json',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', _csrf);},
+                data: _data,
                 success: function (data) {
                     $("#_c").html(data);
                 }
@@ -47,15 +48,15 @@
 <section layout:fragment="content">
     <h1>curl -i http://localhost:9001/console/ </h1>
 
-    <a id="_get" href="#" th:text="#{people.get}"></a><br/>
+    <a id="_get" href="javascript:void(0);" th:text="#{people.get}"></a><br/>
 
-    <a id="_post" href="#">Add</a><br/>
+    <a id="_post" href="javascript:void(0);">Add</a><br/>
 
-    <a id="_put" href="#">PUT</a><br/>
+    <a id="_put" href="javascript:void(0);">PUT</a><br/>
 
-    <a id="_patch" href="#">PATCH</a><br/>
+    <a id="_patch" href="javascript:void(0);">PATCH</a><br/>
 
-    <a id="_delete" href="#">DELETE</a><br/>
+    <a id="_delete" href="javascript:void(0);">DELETE</a><br/>
 
     <div id="_c" style="width: 400px;height: 300px;"></div>
 </section>
