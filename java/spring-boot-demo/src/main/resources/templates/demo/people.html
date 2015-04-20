@@ -10,12 +10,12 @@
         function _load_(_url, _method, _data) {
             var _csrf = /*[[${_csrf.token}]]*/ '/people';
             $.ajax({
-                url: _url,
                 type: _method,
-                contentType: 'application/json',
-                dataType: 'json',
-                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', _csrf);},
-                data: _data,
+                url: _url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(_data),
+                dataType: "json",
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', _csrf);}, //解决csrf
                 success: function (data) {
                     $("#_c").html(data);
                 }
