@@ -27,7 +27,7 @@ public class CsrfHeaderFilter implements Filter {
         response.setHeader("Access-Control-Allow-Methods", "POST, PUT, PATCH, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Allow", "POST, PUT, PATCH, GET, OPTIONS, DELETE");
+        //response.setHeader("Allow", "POST, PUT, PATCH, GET, OPTIONS, DELETE");
         if (!request.getMethod().equals("OPTIONS")) {
             try {
                 filterChain.doFilter(servletRequest, servletResponse);

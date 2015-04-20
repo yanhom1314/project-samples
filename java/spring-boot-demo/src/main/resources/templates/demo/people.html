@@ -15,15 +15,20 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(_data),
                 dataType: "json",
-                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', _csrf);}, //解决csrf
-                success: function (data) {
-                    $("#_c").html(data);
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', _csrf);//解决csrf
+                },
+                success: function (d) {
+                    if (d) console.log(d);
                 }
             });
         }
         $(function () {
             var path = /*[[@{/people}]]*/ '/people';
             console.log("path:" + path);
+            $("#_init").click(function () {
+                _load_(path, "GET");
+            });
             $("#_get").click(function () {
                 _load_(path + "/1", "GET");
             });
@@ -32,10 +37,10 @@
                 _load_(path, "POST", {"firstName": "Frodo", "lastName": "Baggins"});
             });
             $("#_put").click(function () {
-                _load_(path, "PUT", {"firstName": "Frodo2", "lastName": "Baggins2"});
+                _load_(path + "/1", "PUT", {"firstName": "Frodo2", "lastName": "Baggins2"});
             });
             $("#_patch").click(function () {
-                _load_(path, "PATCH", {"firstName": "Bilbo Jr."});
+                _load_(path + "/1", "PATCH", {"firstName": "Bilbo Jr."});
             });
             $("#_delete").click(function () {
                 _load_(path + "/1", "DELETE");
@@ -46,19 +51,17 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <h1>curl -i http://localhost:9001/console/ </h1>
+    <h4>curl -i http://localhost:9001/console/</h4>
 
-    <a id="_get" href="javascript:void(0);" th:text="#{people.get}"></a><br/>
-
-    <a id="_post" href="javascript:void(0);">Add</a><br/>
-
-    <a id="_put" href="javascript:void(0);">PUT</a><br/>
-
-    <a id="_patch" href="javascript:void(0);">PATCH</a><br/>
-
-    <a id="_delete" href="javascript:void(0);">DELETE</a><br/>
-
-    <div id="_c" style="width: 400px;height: 300px;"></div>
+    <h4>curl -i -H "Content-Type: application/json" -d {"firstName":"Test","lastName":"Test2"} http://localhost:9001/console/</h4>
+    <ul>
+        <li><a id="_init" href="javascript:void(0);" th:text="#{get}"></a><br/></li>
+        <li><a id="_get" href="javascript:void(0);" th:text="#{get}"></a><br/></li>
+        <li><a id="_post" href="javascript:void(0);">Add</a><br/></li>
+        <li><a id="_put" href="javascript:void(0);">PUT</a><br/></li>
+        <li><a id="_patch" href="javascript:void(0);">PATCH</a><br/></li>
+        <li><a id="_delete" href="javascript:void(0);">DELETE</a><br/></li>
+    </ul>
 </section>
 <footer>
     <p layout:fragment="custom-footer">This is some footer content from content page 1</p>
