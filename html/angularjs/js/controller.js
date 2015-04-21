@@ -16,3 +16,29 @@ ha.controller("HelloCtrl", ['$scope', '$http', function($scope, $http) {
 ha.controller("SayHello", ['$scope', '$http', function($scope, $http){
 	$scope.name="Default the name!";
 }]);
+
+//Hello
+ha.controller("Hello", ['$scope', '$http', function ($scope, $http) {
+    $scope.message = {loading: false};
+    $scope.show = function (info) {
+        $scope.message.loading = true;
+        setTimeout(function () {
+            $http.get('/js/form.json' + info.key).success(function (data) {
+                $scope.info = data;
+                $scope.message = {loading: false};
+            });
+        }, 2000);
+    };
+
+    $scope.reset = function () {
+        $scope.info = angular.copy({});
+    };
+
+    //init
+    $scope.saveSession = function () {
+        if ($scope._form.$valid) {
+            alert("Saving");
+        }
+    };
+    $scope.reset();
+}]);
