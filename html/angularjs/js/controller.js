@@ -42,3 +42,17 @@ ha.controller("Hello", ['$scope', '$http', function ($scope, $http) {
     };
     $scope.reset();
 }]);
+
+//Sync
+ha.controller("Sync", ['$scope', '$http', function ($scope, $http) {
+    $scope.message = {loading: false};
+    $scope.show = function (info) {
+        $scope.message.loading = true;
+        setTimeout(function () {
+            $http.get('/js/content.json' + info.key).success(function (data) {
+                $scope.data = data;
+                $scope.message = {loading: false};
+            });
+        }, 2000);
+    };
+}]);

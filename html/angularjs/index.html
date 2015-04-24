@@ -16,12 +16,20 @@
             <hr>
             Hello {{name || 'World'}}!
         </div>
-
+		<hr/>
 		<div ng-controller="HelloCtrl">
 			<ul>
 			    <li ng-repeat="phone in phones">
 			    	  {{phone.name}}
 				    <p>{{phone.snippet}}</p>
+			    </li>
+			</ul>
+		</div>
+		<hr/>
+		<div ng-controller="Sync">
+			<ul>
+			    <li ng-repeat="l in data.content">			    	  
+				    <p>{{l}}</p>
 			    </li>
 			</ul>
 		</div>
