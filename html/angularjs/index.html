@@ -27,11 +27,9 @@
 		</div>
 		<hr/>
 		<div ng-controller="Sync">
-			<ul>
-			    <li ng-repeat="l in data.content">			    	  
-				    <p>{{l}}</p>
-			    </li>
-			</ul>
+		    <div ng-repeat="l in data.content  track by $index">
+			    {{l}}
+			</div>
 		</div>
     </body>
 </html>
