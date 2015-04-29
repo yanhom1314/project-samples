@@ -1,9 +1,9 @@
 <!doctype html>
-<html ng-app='helloApp'>
+<html ng-app="helloApp">
     <head>
 		<meta charset="utf-8">
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
-        <script src="dist/controller.bundle.js"></script>
+        <script src="/js/controller.js"></script>
 		<!--
 		 //cdn.jsdelivr.net/angularjs/1.3.14/angular-animate.min.js
 		 //cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js
@@ -27,8 +27,20 @@
 		</div>
 		<hr/>
 		<div ng-controller="Sync">
-		    <div ng-repeat="l in data.content  track by $index">
+            <div>
+                Search:<input type="text" ng-model="query"/>
+                <select ng-model="orderCol">
+                    <option value="name">Name</option>
+                    <option value="age">Age</option>
+                    <option value="snippet">Snippet</option>
+                </select>
+            </div>
+		    <div ng-repeat="l in data.content | filter:query track by $index">
 			    {{l}}
+			</div>
+            <hr/>
+            <div ng-repeat="p in phones | filter:query | orderBy:orderCol track by $index">
+			    {{p.name}}|{{p.age}}|{{p.snippet}}
 			</div>
 		</div>
     </body>
