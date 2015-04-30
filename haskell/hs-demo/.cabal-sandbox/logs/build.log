@@ -1,0 +1,10 @@
+
+package: hs-demo-1.0
+os: windows
+arch: x86_64
+compiler: ghc-7.8.4
+client: cabal-install-1.22.2.0
+dependencies: base-4.7.0.2
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
