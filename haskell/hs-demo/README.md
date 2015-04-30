@@ -4,11 +4,17 @@
 		cd hs-demo
 		cabal init
 
-## Build Project
+## Build and Run I
 
 		cabal sandbox init
 		cabal install -j
-
-## Run it
-
 		.cabal-sandbox/bin/hs-demo.exe
+
+## Build and Run II
+
+		runghc Setup.hs configure
+		runghc Setup.hs build
+		dist/build/hs-demo/hs-demo.exe
+
+
+		
