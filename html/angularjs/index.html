@@ -1,47 +1,15 @@
 <!doctype html>
-<html ng-app="helloApp">
+<html>
     <head>
 		<meta charset="utf-8">
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
-        <script src="/js/controller.js"></script>
-		<!--
-		 //cdn.jsdelivr.net/angularjs/1.3.14/angular-animate.min.js
-		 //cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js
-		 -->
     </head>
     <body>
-        <div ng-controller="SayHello">
-            Hello {{'World'}}!
-    		Your name: <input type="text" ng-model="name" placeholder="Nice">
-            <hr>
-            Hello {{name || 'World'}}!
-        </div>
-		<hr/>
-		<div ng-controller="HelloCtrl">
-			<ul>
-			    <li ng-repeat="phone in phones">
-			    	  {{phone.name}}
-				    <p>{{phone.snippet}}</p>
-			    </li>
-			</ul>
-		</div>
-		<hr/>
-		<div ng-controller="Sync">
-            <div>
-                Search:<input type="text" ng-model="query"/>
-                <select ng-model="orderCol">
-                    <option value="name">Name</option>
-                    <option value="age">Age</option>
-                    <option value="snippet">Snippet</option>
-                </select>
-            </div>
-		    <div ng-repeat="l in data.content | filter:query track by $index">
-			    {{l}}
-			</div>
-            <hr/>
-            <div ng-repeat="p in phones | filter:query | orderBy:orderCol track by $index">
-			    {{p.name}}|{{p.age}}|{{p.snippet}}
-			</div>
-		</div>
+        <ul>
+            <li><a href="demo.html">演示</a></li>
+            <li><a href="native2ascii.html">Native2Ascii</a></li>
+            <li><a href="route.html">Angularjs Route</a></li>
+            <li><a href="form.html">表单</a></li>
+            <li><a href="time.html">Time</a></li>
+        </ul>
     </body>
 </html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="n2aApp">
+    <head>
+		<meta charset="utf-8">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css">
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+        <script type="text/javascript" src="/js/native2ascii.js"></script>
+    </head>
+    <body>
+        <div ng-controller="TranslateCtrl">
+            <form name="_form" class="ui form page sixteen column grid">
+                <div class="six wide column">
+                    <textarea type="text" name="native" ng-model="data.native"></textarea>
+                </div>
+                <div class="center aligned  four wide column">
+                    <br/>
+                    <br/>
+                    <button class="ui primary right labeled icon button" ng-click="native2ascii(data)"><i class="right arrow icon"></i>Native2Ascii</button><br/>
+                    <button class="ui secondary left labeled icon button" ng-click="ascii2native(data)"><i class="left arrow icon"></i>Ascii2Native</button>
+                </div>
+                <div class="six wide column">
+                    <textarea name="ascii" ng-model="data.ascii"></textarea>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
