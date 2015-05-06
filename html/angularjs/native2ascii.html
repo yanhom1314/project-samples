@@ -14,11 +14,10 @@
                 <div class="six wide column">
                     <textarea type="text" name="native" ng-model="data.native"></textarea>
                 </div>
-                <div class="center aligned  four wide column">
-                    <br/>
-                    <br/>
-                    <button class="ui primary right labeled icon button" ng-click="native2ascii(data)"><i class="right arrow icon"></i>Native2Ascii</button><br/>
+                <div class="center aligned four wide column">
+                    <button class="ui primary right labeled icon button" ng-click="native2ascii(data)"><i class="right arrow icon"></i>Native2Ascii</button>
                     <button class="ui secondary left labeled icon button" ng-click="ascii2native(data)"><i class="left arrow icon"></i>Ascii2Native</button>
+                    <button class="ui primary left labeled icon button" ng-click="clear()"><i class="setting icon"></i>Clear The All</button>
                 </div>
                 <div class="six wide column">
                     <textarea name="ascii" ng-model="data.ascii"></textarea>

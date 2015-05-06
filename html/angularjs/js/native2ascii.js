@@ -23,4 +23,7 @@ _n2a.controller("TranslateCtrl", ['$scope', '$http', 'time', function ($scope, $
     $scope.ascii2native = function (data) {
         data.native = unescape(data.ascii.split("\\").join("%")).toLowerCase();
     };
+    $scope.clear = function() {
+        $scope.data = {};
+    };
 }]);
