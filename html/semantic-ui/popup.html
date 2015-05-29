@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.1/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.1/semantic.min.js"></script>
+    <script>
+        $(function(){
+            $('.ui.avatar.image').popup();
+            $('.ui.avatar.image').popup({
+                inline   : true,
+                hoverable: true,
+
+            });
+            $('.icon.link').popup({on:'click'});
+            $('.field').popup({on:'focus'});
+            console.log($('.ui.avatar.image').attr("src"));
+            console.log($('.icon.link').attr("class"));
+        });
+    </script>
+  </head>
+<body>
+    <div class="ui success message">
+        <div class="header">Popup</div>
+        <p>气泡提示</p>
+    </div>
+    <img class="ui avatar image" src="/img/1.png" data-title="Elliot Fu" data-content="Elliot has been a member since July 2012" />
+    <div>
+        <i class="heart circular icon link" data-content="Hello, I am a pop-up."></i>
+        <i class="heart circular icon link" title="Hello, I am a pop-up."></i>
+        <input class="field" type="text" name="test" title="hhahhahah"/>
+    </div>
+</body>
+</html>

