@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+		<meta charset="utf-8">
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $("#_show").text("数据载入中...");
+                $.get('http://61.160.183.220:8082/adv/demo/dial',function(data){
+                    if(window.console) console.log(data);
+                    else alert(data);
+                    switch(data.code) {
+                        case '0':
+                            $("#_show").text("接口回显-> [un:"+data.un+" ip:"+data.ip +" sign:"+data.sign+"]");
+                            break;
+                        default:
+                            $("#_show").text(data);
+                    }
+                })
+            });
+        </script>
+    </head>
+<body>
+    <div id="_show"></div>
+</body>
+</html>
