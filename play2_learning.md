@@ -1,112 +1,44 @@
-##Play Frameworke 2.0+
+##Play Frameworke 2.4+
 
-####定制根路径
-在conf/application.conf中添加application.context属性:`application.context="/demo"`
+#### 定制根路径
+在conf/application.conf中添加play.http.context属性:`play.http.context="/demo"`
 
 则conf/routes中所有映射均自动添加/demo前缀。
 
-####集成Spring Module
+#### 表单定制
++ 创建`app\custom`目录，然后在此目录下创建`input.scala.html` Template文件，编译后会生成`custom.html.input`类；
 
-+ 编辑project/Build.scala文件，添加：
+		@(elements: helper.FieldElements)
 
-        val appDependencies = Seq(
-          // Add your project dependencies here,
-          "play" %% "spring" % "2.0"
-        )
-    
-        val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-            // Add your own project settings here
-            resolvers += "TAMU Release Repository" at "https://maven.library.tamu.edu/content/repositories/releases/"
-        )
+		<div class="@if(elements.hasErrors) {error}">
+			<label for="@elements.id">@elements.label</label>
+			<div class="input">
+				@elements.input
+				<span class="errors">@elements.errors.mkString(", ")</span>
+				<span class="help">@elements.infos.mkString(", ")</span>
+			</div>
+		</div>
 
-+ 在conf目录中新建application-context.xml文件。
++ 创建`MyHelper.scala`:
 
-        <?xml version="1.0" encoding="UTF-8"?>
-            <beans xmlns="http://www.springframework.org/schema/beans"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xmlns:context="http://www.springframework.org/schema/context"
-              xsi:schemaLocation="http://www.springframework.org/schema/beans
-                  http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-                  http://www.springframework.org/schema/context
-                  http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-    
-            <context:annotation-config/>
-            <context:component-scan base-package="beans"/>
-        </beans>
+		object MyHelpers {
 
-+ 如果需要修改spring配置文件，需修改conf/application.conf文件：`spring.context=another-context-file.xml`
+		  import views.html.helper.FieldConstructor
 
-在扫描包beans中新建HelloBean类，获取Bean可以使用Spring.get*的相关方法。
+		  implicit val myFields = FieldConstructor(custom.html.input.f)
+		}
 
++ 在需要使用模版中：
 
-        import org.springframework.stereotype.Service
-        import play.api.libs.json.{JsString, JsObject, JsValue, Writes}
-        
-        @Service
-        case class Hello(var name: String, var age: Int) {
-          def this() = this(null, -1)
-        
-          def say(): Unit = {
-            println(this.name + ":" + this.age)
-          }
-        
-        }
-部署成War
-play2-war-plugin
-https://github.com/dlecan/play2-war-plugin
+		@import MyHelpers._
 
+		@helper.form(action = routes.Wizard.form(), 'id -> "form_1") {
+			@helper.inputText(userForm("name"), '_id -> "name", '_showConstraints -> false)
+			@helper.inputText(userForm("age"), '_id -> "age", '_showConstraints -> false)
+			<button type="submit">提交</button>
+		}
 
-####集成Squeryl
-
-+ 创建app/Global.scala
-
-        import play.api.{Application, GlobalSettings}
-        import org.squeryl.{Session, SessionFactory}
-        import play.api.db.DB
-        import org.squeryl.adapters.PostgreSqlAdapter
-        import org.squeryl.internals.DatabaseAdapter
-    
-        object Global extends GlobalSettings {
-          override def onStart(app: Application) {
-            SessionFactory.concreteFactory = app.configuration.getString("db.default.driver") match {
-              case Some("org.postgresql.Driver") => println("postgresql"); Some(() => getSession(new PostgreSqlAdapter, app))
-              case _ => sys.error("Database driver must be either org.h2.Driver or org.postgresql.Driver")
-            }
-            if (!Session.hasCurrentSession) {
-              val session = SessionFactory.newSession
-              session.bindToCurrentThread
-            }
-          }
-    
-          override def onStop(app: Application) {
-            super.onStop(app)
-            if (Session.hasCurrentSession) {
-              println("Stop and Close squeryl session!")
-              val s = Session.currentSession
-              s.cleanup
-              s.close
-            }
-          }
-          private def getSession(adapter: DatabaseAdapter, app: Application) = Session.create(DB.getConnection()(app), adapter)
-        }
-
-+ 创建Model和Schema
-import org.squeryl.Schema
-
-case class User(var id: Long, var name: String, var address: String)
-
-object AppDB extends Schema {
-  val users = table[User]("t_user")
-}
-
-在Controller中可以正常使用Squeryl的API。
-
-def index = Action {
-	inTransaction {
-		val a = from(AppDB.users)(a => where(a.name like "1%").select(a))        
-		println("#session#" + Session.currentSession+":"+a.size)
-	}
-}
+#### 集成Slick
 
 
 ####使用toJson(t:T)
@@ -310,8 +242,6 @@ GET    /comet     controllers.Application.comet
 
 WebSocket
 HTML5中定义了WebSocket规范，可以使用WebSocket是来代替Comet技术，目前chrome，firefox，oppra都支持websocket，但是IE目前还不支持。
-
-
 
 ####POST方法参数获取
 *在Play 2.x中通过POST方法提交的参数没有放在queryString中，不能在`routes`文件中配置参数名对应获取*
