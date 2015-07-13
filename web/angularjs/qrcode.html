@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <head>
+		<meta charset="utf-8"/>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+        <script type="text/javascript">
+        $(function(){
+            $("#code").qrcode({
+                render: "table", //table方式
+                width: 100, //宽度
+                height:100, //高度
+                text: "http://www.baidu.com" //任意内容
+            });
+            $('#qrcodeCanvas').qrcode({
+                render:'canvas',
+                width:100,
+                height:100,
+		        text:"http://www.baidu.com"
+	        });
+        });
+        </script>
+    </head>
+    <body>
+        <div id="code"></div>
+        <hr/>
+        <div id="qrcodeCanvas"></div>
+    </body>
+</html>
