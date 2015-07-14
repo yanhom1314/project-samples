@@ -8,7 +8,6 @@
 build/
 dist/
 target/
-bin/
 mods/
 project/project/
 project/target/

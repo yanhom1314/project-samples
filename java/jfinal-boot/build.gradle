@@ -1,0 +1,47 @@
+apply plugin: 'java'
+
+group = "com.jfinal.boot"
+version = "${version}"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url "http://maven.oschina.net/content/groups/public/" }
+    maven { url "http://repo.spring.io/libs-release" }
+    maven { url "http://repo.typesafe.com/typesafe/releases/" }
+}
+
+dependencies {
+    compile("com.jfinal:jfinal:${jfinal}",
+            "io.undertow:undertow-servlet:${undertow}",
+            "org.eclipse.jetty:jetty-servlet:${jetty}")
+    testCompile("junit:junit:4.11")
+}
+
+task boot(type: JavaExec, dependsOn: 'classes') {
+    description '运行指定main函数的java'
+    classpath = sourceSets.main.runtimeClasspath
+    main = "demo.JettyBoot"
+}
+
+task copyDeps(type: Copy) {
+    from configurations.compile
+    into project.buildDir.absolutePath + "/libs"
+}
+
+task packageBin(type: Copy, dependsOn: [':build', ':copyDeps']) {
+    from 'bin/run.bat'
+    into project.buildDir.absolutePath
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': 'demo.JettyBoot'
+    }
+    baseName = project.name + '-assembly'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
