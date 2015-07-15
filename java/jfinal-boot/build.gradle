@@ -22,7 +22,7 @@ dependencies {
 task boot(type: JavaExec, dependsOn: 'classes') {
     description '运行指定main函数的java'
     classpath = sourceSets.main.runtimeClasspath
-    main = "demo.JettyBoot"
+    main = "${mainClass}"
 }
 
 task copyDeps(type: Copy) {
@@ -39,7 +39,7 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Gradle Jar File Example',
                 'Implementation-Version': version,
-                'Main-Class': 'demo.JettyBoot'
+                'Main-Class': "${mainClass}"
     }
     baseName = project.name + '-assembly'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
