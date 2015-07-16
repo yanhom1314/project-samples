@@ -1,0 +1,16 @@
+apply plugin:'java'
+apply plugin:'custom-plugin'
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath group: 'io.lyf', name: 'custom-plugin', version: '0.1'
+    }
+}
+//setting
+greeting {
+    message = 'Hi'
+    greeter = 'Gradle'
+}
