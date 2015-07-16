@@ -5,9 +5,9 @@ import org.gradle.api.Project
 
 class GreetingPlugin implements Plugin<Project> {
     void apply(Project project) {
-        project.extensions.create("greeting", GreetingPluginExtension)
-        project.task('hello') << {
-            println "${project.greeting.message} from ${project.greeting.greeter}"
+        project.extensions.create("jfinal", GreetingPluginExtension)
+        project.task('hello').dependsOn('classes') << {
+            println "${project.jfinal.message} from ${project.jfinal.greeter}"
         }
     }
 }
