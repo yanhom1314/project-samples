@@ -1,10 +1,13 @@
 package jfinal.gradle
 
+import groovy.text.SimpleTemplateEngine
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginConvention
 
 class JFinalPlugin implements Plugin<Project> {
+    static SimpleTemplateEngine engine = new SimpleTemplateEngine()
+
     void apply(Project project) {
         project.extensions.create("jfinalConf", JFinalPluginExtension)
         project.task('hello') << {
@@ -23,19 +26,25 @@ class JFinalPlugin implements Plugin<Project> {
         String bashText = this.class.getClassLoader().getResource("template/bin/run").text
 
         project.task('packageBin').dependsOn('build') << {
+            File dist = new File(project.buildDir, 'dist')
             def binding = [
                     mainClass: "${project.jfinalConf.mainClass}"
             ]
             project.copy {
                 from project.configurations.compile
-                into project.buildDir.absolutePath + "/libs"
+                into dist.absolutePath + "/libs"
             }
-            new File(project.buildDir, 'run.bat').withWriter('utf-8') {
-                it.write(ShellTemplate.engine.createTemplate(batText).make(binding).toString())
+
+            project.copy {
+                from project.buildDir.absolutePath + "/libs/" + "${project.jar.archiveName}"
+                into dist.absolutePath + "/libs"
+            }
+            new File(dist, 'run.bat').withWriter('utf-8') {
+                it.write(engine.createTemplate(batText).make(binding).toString())
                 it.flush()
             }
-            new File(project.buildDir, 'run').withWriter('utf-8') {
-                it.write(ShellTemplate.engine.createTemplate(bashText).make(binding).toString())
+            new File(dist, 'run').withWriter('utf-8') {
+                it.write(engine.createTemplate(bashText).make(binding).toString())
                 it.flush()
             }
         }
