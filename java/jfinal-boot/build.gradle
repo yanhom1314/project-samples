@@ -5,6 +5,16 @@ apply plugin: 'jfinal-plugin'
 group = "com.jfinal.boot"
 version = "${version}"
 
+
+distributions {
+	main {
+        baseName = 'jfinal'
+        contents {
+            from { 'build/dist' }
+        }
+    }
+}
+
 buildscript {
 	repositories {
         mavenLocal()
@@ -16,8 +26,6 @@ buildscript {
 }
 
 jfinalConf {
-	message = 'Hi'
-	greeter = 'Gradle'
 	mainClass = "demo.JettyBoot"
 }
 
