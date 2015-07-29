@@ -4,12 +4,12 @@ Golang 测试
 ## 演示
 + 创建`$EXT_ROOT_DIR`:
 
-		mkdir -p test_go/src/hello    //command project dir
-		mkdir -p test_go/src/newmath  //library project dir
+		mkdir -p /test_go/src/hello    //command project dir
+		mkdir -p /test_go/src/newmath  //library project dir
 
 + 设置`GOPATH`环境变量:
 						  
-		set GOPATH="$BASE_DIR"/test_go
+		export GOPATH=/phd/bin/go:/test_go
 
 + 编译安装`pkg`库文件：
 		
