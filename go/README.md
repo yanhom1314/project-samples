@@ -9,7 +9,7 @@ Golang 测试
 
 + 设置`GOPATH`环境变量:
 						  
-		export GOPATH=/phd/bin/go:/test_go
+		export GOPATH=/phd/bin/go:/test_go //window set GOPATH=c:\go;e:\test_go
 
 + 编译安装`pkg`库文件：
 		

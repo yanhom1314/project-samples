@@ -1,13 +1,14 @@
 package main
 
 import (
-	"fmt"	
-	"newmath"
+	"fmt"
 	"mathii"
+	"newmath"
 )
-func main(){
-	result := newmath.Sqrt(2)	
+
+func main() {
+	result := newmath.Sqrt(2)
 	fmt.Printf("Hello World!\n")
-	fmt.Printf("Number:%d\n",result)
+	fmt.Printf("Number:%d\n", result)
 	mathii.SayHi("YaFengLi")
 }
