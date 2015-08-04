@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'jfinal-plugin'
 
 group = "com.jfinal.boot"
