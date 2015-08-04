@@ -4,6 +4,8 @@ import Text.Printf
 import qualified Geometry.Sphere as Sphere
 import qualified Geometry.Cube as Cube
 
+import Ext.Util
+
 main :: IO()
 
 main = do
@@ -18,6 +20,9 @@ main = do
   let a1 = Cube.area(12.3)
   print result
   print a1
+
+  name <- getLine
+  putStrLn("Hello, " ++ reverseWords name ++"!")
 
 add::(Int,Int) -> Int
 add(x,y) = x + y

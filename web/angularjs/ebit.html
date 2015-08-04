@@ -6,7 +6,7 @@
         <script type="text/javascript">
             $(function(){
                 $("#_show").text("数据载入中...");
-                $.get('http://61.160.183.220:8082/jsts/ebit/dial',{'k':'5c77938cc611bea07aedbf61201ec6050b3048d213a85189d2f64b3c7a9f6266'},function(data){
+                $.get('http://61.160.183.220/jsts/ebit/dial',{'k':'5c77938cc611bea07aedbf61201ec6050b3048d213a85189d2f64b3c7a9f6266'},function(data){
                     if(window.console) console.log(data);
                     else alert(data);
                     switch(data.code) {
