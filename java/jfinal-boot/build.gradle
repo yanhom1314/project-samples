@@ -1,19 +1,8 @@
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'jfinal-plugin'
 
 group = "com.jfinal.boot"
 version = "${version}"
-
-
-distributions {
-	main {
-        baseName = 'jfinal'
-        contents {
-            from { 'build/dist' }
-        }
-    }
-}
 
 buildscript {
 	repositories {
@@ -41,31 +30,4 @@ dependencies {
             "io.undertow:undertow-servlet:${undertow}",
             "org.eclipse.jetty:jetty-servlet:${jetty}")
     testCompile("junit:junit:4.11")
-}
-
-//task boot(type: JavaExec, dependsOn: 'classes') {
-//    description '运行指定main函数的java'
-//    classpath = sourceSets.main.runtimeClasspath
-//    main = "${mainClass}"
-//}
-
-//task copyDeps(type: Copy) {
-//    from configurations.compile
-//    into project.buildDir.absolutePath + "/libs"
-//}
-
-//task packageBin(type: Copy, dependsOn: [':build', ':copyDeps']) {
-//    from 'bin/run.bat'
-//    into project.buildDir.absolutePath
-//}
-
-task fatJar(type: Jar) {
-    manifest {
-        attributes 'Implementation-Title': 'Gradle Jar File Example',
-                'Implementation-Version': version,
-                'Main-Class': "${mainClass}"
-    }
-    baseName = project.name + '-assembly'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
 }
