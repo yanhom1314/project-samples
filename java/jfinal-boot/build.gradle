@@ -31,3 +31,12 @@ dependencies {
             "org.eclipse.jetty:jetty-servlet:${jetty}")
     testCompile("junit:junit:4.11")
 }
+
+task fatJar(type: Jar) {
+	manifest { 
+    	attributes "Main-Class": "demo.JettyBoot"
+  	}  
+    baseName = project.name + '-assembly'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

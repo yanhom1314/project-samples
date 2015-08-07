@@ -10,11 +10,9 @@ import org.gradle.api.tasks.bundling.Jar
 
 class JFinalPlugin implements Plugin<Project> {
 
-    static final String JF_CONF = "jfinalConf"
-
-    static final String FAT_JAR_TASK ='fatJar'
-    static final String BOOT_TASK ='boot'
-    static final String DIST_TASK ='distApp'
+    static final String FAT_JAR_TASK = 'fatJar'
+    static final String BOOT_TASK = 'boot'
+    static final String DIST_TASK = 'distApp'
 
     static SimpleTemplateEngine engine = new SimpleTemplateEngine()
 
@@ -22,17 +20,22 @@ class JFinalPlugin implements Plugin<Project> {
         project.pluginManager.apply(JavaPlugin)
         project.pluginManager.apply(DistributionPlugin)
 
-        project.extensions.create(JF_CONF, JFinalPluginExtension)
+        project.extensions.create("jfinalConf", JFinalPluginExtension)
 
-        project.tasks.create(FAT_JAR_TASK, Jar) << {
-            manifest.attributes = ['Implementation-Title'  : 'Gradle Jar File Example',
-                                   'Implementation-Version': version,
-                                   'Main-Class'            : "${project.jfinalConf.mainClass}"]
-
-            baseName = project.name + '-assembly'
-            from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-            with Jar
+        project.task('hello') << {
+            println("main:${project.jfinalConf.mainClass}")
+            println("${project.tasks}")
         }
+
+//        Jar fatJar = project.tasks.create(FAT_JAR_TASK, Jar)
+//        fatJar.manifest.attributes = ['Manifest-Version'      : project.version,
+//                                      'Implementation-Title'  : 'Gradle Jar File Example',
+//                                      'Implementation-Version': project.version,
+//                                      'Main-Class'            : 'demo.JettyBoot']
+//
+//        fatJar.baseName = project.name + '-assembly'
+//        fatJar.from { project.configurations.compile.collect { it.isDirectory() ? it : project.zipTree(it) } }
+
 
         project.task(BOOT_TASK).dependsOn('classes') << {
             project.javaexec {
