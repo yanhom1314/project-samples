@@ -4,6 +4,9 @@ apply plugin: 'jfinal-plugin'
 group = "com.jfinal.boot"
 version = "${version}"
 
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
+
 buildscript {
 	repositories {
         mavenLocal()        
@@ -20,12 +23,12 @@ jar {
 repositories {
     mavenLocal()
     jcenter()
-    maven { url "http://repo.spring.io/libs-release" }
-    maven { url "http://repo.typesafe.com/typesafe/releases/" }
+    maven { url "maven.oschina.net/content/groups/public" }    
 }
 
 dependencies {
     compile("com.jfinal:jfinal:${jfinal}",
+            "org.beetl:beetl-core:${beetl}",
             "io.undertow:undertow-servlet:${undertow}",
             "org.eclipse.jetty:jetty-servlet:${jetty}")
     testCompile("junit:junit:4.11")

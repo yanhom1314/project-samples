@@ -32,7 +32,7 @@ class JFinalPlugin implements Plugin<Project> {
             project.javaexec {
                 description = '运行指定main函数的java'
                 classpath = project.convention.getPlugin(JavaPluginConvention).sourceSets.main.runtimeClasspath
-                main = "${project.jfinalConf.mainClass}"
+                main = "${project.jar.manifest.attributes.get('Main-Class')}"
             }
         }
 
@@ -42,7 +42,7 @@ class JFinalPlugin implements Plugin<Project> {
         project.task(DIST_TASK).dependsOn('build') << {
             File dist = new File(project.buildDir, 'dist')
             def binding = [
-                    mainClass: "${project.tasks.jar.manifest.attributes.get('Main-Class')}"
+                    mainClass: "${project.jar.manifest.attributes.get('Main-Class')}"
             ]
             project.copy {
                 from project.configurations.compile

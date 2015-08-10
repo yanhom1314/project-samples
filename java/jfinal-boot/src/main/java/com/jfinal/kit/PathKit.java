@@ -85,33 +85,12 @@ public class PathKit {
     private static String detectWebRootPath() {
         try {
             URL url = PathKit.class.getResource("/");
-
-            //log
-            if (url != null) {
-                System.out.print("url:" + url);
-                if (url.toURI() != null) {
-                    System.out.print("uri:" + url.toURI().getPath());
-                }
-            }
-
             String path = url != null ? url.toURI().getPath() : System.getProperty("user.dir");
-
             return new File(path).getParentFile().getParentFile().getCanonicalPath();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
-	/*
-    private static String detectWebRootPath() {
-		try {
-			String path = PathKit.class.getResource("/").getFile();
-			return new File(path).getParentFile().getParentFile().getCanonicalPath();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	*/
 }
 
 

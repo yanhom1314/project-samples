@@ -1,0 +1,18 @@
+<h1>Hello Nice!</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Index</th>
+        <th>Id</th>
+        <th>UserName</th>
+    </tr>
+    </thead>
+    <%for(t in list){%>
+    <tr>
+        <td>${tLP.index}</td>
+        <td>${t.id}</td>
+        <td>${t.username!''}</td>
+    </tr>
+    <%}%>
+</table>
