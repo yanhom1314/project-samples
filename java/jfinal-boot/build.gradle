@@ -6,18 +6,17 @@ version = "${version}"
 
 buildscript {
 	repositories {
-        mavenLocal()
-        jcenter()
+        mavenLocal()        
     }
     dependencies {
         classpath group: 'io.lyf', name: 'jfinal-plugin', version: '0.1'
     }
 }
-
-jfinalConf {
-	mainClass = "demo.JettyBoot"
+jar {
+    manifest {
+        attributes('Main-Class': 'demo.JettyBoot')
+    }
 }
-
 repositories {
     mavenLocal()
     jcenter()
@@ -30,13 +29,4 @@ dependencies {
             "io.undertow:undertow-servlet:${undertow}",
             "org.eclipse.jetty:jetty-servlet:${jetty}")
     testCompile("junit:junit:4.11")
-}
-
-task fatJar(type: Jar) {
-	manifest { 
-    	attributes "Main-Class": "demo.JettyBoot"
-  	}  
-    baseName = project.name + '-assembly'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
 }

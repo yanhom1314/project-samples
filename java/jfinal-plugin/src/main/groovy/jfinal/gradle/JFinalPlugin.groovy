@@ -9,35 +9,26 @@ import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.bundling.Jar
 
 class JFinalPlugin implements Plugin<Project> {
-
-    static final String FAT_JAR_TASK = 'fatJar'
+    static final String J_CONF = "jfinalConf"
+    static final String JAR_TASK = 'distJar'
     static final String BOOT_TASK = 'boot'
     static final String DIST_TASK = 'distApp'
 
     static SimpleTemplateEngine engine = new SimpleTemplateEngine()
 
+
     void apply(Project project) {
         project.pluginManager.apply(JavaPlugin)
         project.pluginManager.apply(DistributionPlugin)
+        project.extensions.create(J_CONF, JFinalPluginExtension)
 
-        project.extensions.create("jfinalConf", JFinalPluginExtension)
+        Jar fatJar = project.tasks.create(JAR_TASK, Jar)
+        fatJar.manifest = project.tasks.jar.manifest
+        fatJar.baseName = project.name + '-assembly'
+        fatJar.from { project.configurations.compile.collect { it.isDirectory() ? it : project.zipTree(it) } }
+        fatJar.with(project.tasks.findByName('jar'))
 
-        project.task('hello') << {
-            println("main:${project.jfinalConf.mainClass}")
-            println("${project.tasks}")
-        }
-
-//        Jar fatJar = project.tasks.create(FAT_JAR_TASK, Jar)
-//        fatJar.manifest.attributes = ['Manifest-Version'      : project.version,
-//                                      'Implementation-Title'  : 'Gradle Jar File Example',
-//                                      'Implementation-Version': project.version,
-//                                      'Main-Class'            : 'demo.JettyBoot']
-//
-//        fatJar.baseName = project.name + '-assembly'
-//        fatJar.from { project.configurations.compile.collect { it.isDirectory() ? it : project.zipTree(it) } }
-
-
-        project.task(BOOT_TASK).dependsOn('classes') << {
+        project.tasks.create(BOOT_TASK).dependsOn('classes') << {
             project.javaexec {
                 description = '运行指定main函数的java'
                 classpath = project.convention.getPlugin(JavaPluginConvention).sourceSets.main.runtimeClasspath
@@ -51,7 +42,7 @@ class JFinalPlugin implements Plugin<Project> {
         project.task(DIST_TASK).dependsOn('build') << {
             File dist = new File(project.buildDir, 'dist')
             def binding = [
-                    mainClass: "${project.jfinalConf.mainClass}"
+                    mainClass: "${project.tasks.jar.manifest.attributes.get('Main-Class')}"
             ]
             project.copy {
                 from project.configurations.compile
