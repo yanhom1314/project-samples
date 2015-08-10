@@ -12,7 +12,7 @@ public class HelloController extends Controller {
     }
 
     public void hi() {
-        render("/hi.html");
+        render("/hi");
     }
 
     public void nice() {
@@ -22,6 +22,6 @@ public class HelloController extends Controller {
         list.add(new User(3L, "three"));
         list.add(new User(4L, "four"));
         setAttr("list", list);
-        render("/nice.html");
+        render("/nice");
     }
 }

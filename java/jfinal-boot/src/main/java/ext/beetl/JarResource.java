@@ -19,7 +19,7 @@ public class JarResource extends Resource {
     public Reader openReader() {
         try {
             return resourceLoader.getClass().getResource(this.path) != null ?
-                    new BufferedReader(new InputStreamReader(this.resourceLoader.getClass().getResourceAsStream(this.path))) : null;
+                    new BufferedReader(new InputStreamReader(this.resourceLoader.getClass().getResourceAsStream(this.path), ((JarResourceLoader) resourceLoader).charset)) : null;
         } catch (Exception e) {
             System.out.println("path: " + this.path);
             e.printStackTrace();

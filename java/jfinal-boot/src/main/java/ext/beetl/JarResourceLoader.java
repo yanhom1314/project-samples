@@ -9,16 +9,13 @@ import org.beetl.core.misc.BeetlUtil;
 import java.util.Map;
 
 public class JarResourceLoader implements ResourceLoader {
+    String suffix = ".html";
     String root;
-    boolean autoCheck;
-    protected String charset;
-    String functionRoot;
-    String functionSuffix;
-    ClassLoader classLoader;
-
+    String charset = "UTF-8";
 
     public Resource getResource(String key) {
-        JarResource resource = new JarResource(key, this.root + key, this);
+        String path = this.suffix != null ? this.root + key + this.suffix : this.root + key;
+        JarResource resource = new JarResource(key, path, this);
         return resource;
     }
 
@@ -26,27 +23,23 @@ public class JarResourceLoader implements ResourceLoader {
     }
 
     public boolean isModified(Resource key) {
-        return this.autoCheck ? key.isModified() : false;
+        return false;
     }
 
 
     public void init(GroupTemplate gt) {
         Map resourceMap = gt.getConf().getResourceMap();
 
-        if (this.root == null && resourceMap.containsKey("root"))
-            this.root = (String) resourceMap.get("root");
+        resourceMap.keySet().forEach(k -> System.out.println("key:" + k + " " + resourceMap.get(k)));
 
-        if (this.charset == null && resourceMap.containsKey("charset"))
-            this.charset = (String) resourceMap.get("charset");
-
-        this.functionSuffix = (String) resourceMap.get("functionSuffix");
-        this.autoCheck = Boolean.parseBoolean((String) resourceMap.get("autoCheck"));
-        this.functionRoot = (String) resourceMap.get("functionRoot");
+        if (resourceMap.containsKey("root")) this.root = (String) resourceMap.get("root");
+        if (resourceMap.containsKey("suffix")) this.suffix = (String) resourceMap.get("suffix");
+        if (resourceMap.containsKey("charset")) this.charset = (String) resourceMap.get("charset");
     }
 
 
     public boolean exist(String key) {
-        return this.classLoader.getClass().getResource(key) != null;
+        return Thread.currentThread().getContextClassLoader().getResource(key) != null;
     }
 
 
