@@ -1,0 +1,25 @@
+{
+  "name": "jsmart",
+  "version": "2.13.1",
+  "description": "jSmart is a port of the Smarty Template Engine to Javascript",
+  "keywords": [],
+  "homepage": "",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:umakantp/jsmart.git"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "licenses": "MIT",
+  "spm": {
+    "main": "jsmart.js",
+    "dependencies": {
+      "jquery":"2.1.1"
+    },
+    "devDependencies": {
+      "expect.js": "0.3.1"
+    }
+  }
+}

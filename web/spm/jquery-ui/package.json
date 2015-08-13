@@ -1,0 +1,30 @@
+{
+  "name": "jquery-ui",
+  "version": "1.11.1",
+  "description": "The official jQuery user interface library. ",
+  "keywords": [],
+  "homepage": "",
+  "author": "jqueryui.com",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "licenses": "MIT",
+  "spm": {
+    "main": "jquery-ui.js",
+    "output": [
+      "images/*.png",
+      "themes/*/*.css",
+      "themes/*/images/*.png"
+    ],
+    "dependencies": {
+    	"jquery": "2.1.1"
+    },
+    "devDependencies": {
+      "expect.js": "0.3.1"
+    }
+  }
+}

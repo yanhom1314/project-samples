@@ -1,0 +1,25 @@
+{
+  "name": "jquery-cookie",
+  "version": "1.4.1",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/carhartl/jquery-cookie/",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:carhartl/jquery-cookie.git"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "licenses": "MIT",
+  "spm": {
+    "main": "jquery.cookie.js",
+    "dependencies": {
+      "jquery": "2.1.1"
+    },
+    "devDependencies": {
+      "expect.js": "0.3.1"
+    }
+  }
+}

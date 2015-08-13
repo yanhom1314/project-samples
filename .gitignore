@@ -13,6 +13,8 @@ project/project/
 project/target/
 #NodeJS
 node_modules
+#SPM
+spm_modules
 #Eclipse
 .gradle/
 .settings/

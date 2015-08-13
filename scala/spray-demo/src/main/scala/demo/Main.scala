@@ -11,5 +11,14 @@ object Main extends App {
   // the handler actor replies to incoming HttpRequests
   val handler = system.actorOf(Props[DemoService], name = "handler")
 
+  println(fibonacci(10))
   IO(Http) ! Http.Bind(handler, interface = "localhost", port = 8001)
+
+  def fibonacci(n: Int): Long = {
+    n match {
+      case 0 => 0L
+      case 1 => 1L
+      case _ => fibonacci(n - 1) + fibonacci(n - 2)
+    }
+  }
 }

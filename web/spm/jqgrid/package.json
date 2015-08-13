@@ -1,0 +1,30 @@
+{
+  "name": "jqgrid",
+  "version": "4.6.0",
+  "description": "jQuery grid plugin ",
+  "keywords": [],
+  "homepage": "",
+  "author": "git@github.com:tonytomov/jqGrid.git",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "licenses": "MIT",
+  "spm": {
+    "main": "js/jquery.jqGrid.src.js",
+    "output": [
+      "css/*",
+      "js/i18n/*"
+    ],
+    "dependencies": {
+      "jquery":"2.1.1",
+      "jquery-ui":"1.11.1"
+    },
+    "devDependencies": {
+      "expect.js": "0.3.1"
+    }
+  }
+}

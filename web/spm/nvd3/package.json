@@ -1,0 +1,25 @@
+{
+  "name": "nvd3",
+  "version": "v1.1.15-beta",
+  "description": "",
+  "keywords": [],
+  "homepage": "",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:novus/nvd3.git"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "licenses": "MIT",
+  "spm": {
+    "main": "nv.d3.js",
+    "dependencies": {
+      "d3": "3.4.8"
+    },
+    "devDependencies": {
+      "expect.js": "0.3.1"
+    }
+  }
+}
