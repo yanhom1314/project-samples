@@ -10,7 +10,6 @@ import spray.http.HttpMethods._
 import spray.http.MediaTypes._
 import spray.http._
 import spray.util._
-
 import scala.concurrent.duration._
 
 class DemoService extends Actor with ActorLogging {
