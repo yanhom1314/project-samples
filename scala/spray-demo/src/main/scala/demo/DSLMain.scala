@@ -1,5 +1,7 @@
 package demo
 
+import java.io.File
+
 import akka.actor.ActorSystem
 import spray.routing.SimpleRoutingApp
 
@@ -55,12 +57,20 @@ object DSLMain extends App with SimpleRoutingApp {
             </ul>
           }
         } ~
-        path("profile" / Segment / Segment) { (id, name) =>
+        path("profile" / IntNumber / Segment) { (id, name) =>
           complete {
             <h1>
-              {id}{name}
+              <span>
+                {id}
+              </span>
+              <span>
+                {name}
+              </span>
             </h1>
           }
+        } ~
+        path("file" / Segment) { name =>
+          getFromFile(new File("E:/Github/project-samples/web/angularjs", name))
         }
     } ~
       post {
