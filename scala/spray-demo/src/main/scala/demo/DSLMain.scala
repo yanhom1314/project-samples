@@ -3,6 +3,9 @@ package demo
 import java.io.File
 
 import akka.actor.ActorSystem
+import spray.http.HttpHeaders.RawHeader
+import spray.http.MediaTypes
+import spray.httpx.encoding.Gzip
 import spray.routing.SimpleRoutingApp
 
 object DSLMain extends App with SimpleRoutingApp {
@@ -20,15 +23,16 @@ object DSLMain extends App with SimpleRoutingApp {
     get {
       path("hello") {
         parameter('color, 'name ? "NOTHING") { (color, name) =>
-          complete {
-            <h1>Say hello to spray,
-              <span>
-                {color}
-              </span>
-              <span>
-                {name}
-              </span>
-              !</h1>
+          respondWithHeader(RawHeader("ADD_HEAD_KEY", "Hello")) {
+            respondWithMediaType(MediaTypes.`text/html`) {
+              encodeResponse(Gzip) {
+                complete {
+                  s"""<h1>Say hello to spray,
+                     |<span>${color}</span>
+                     |<span>${name}</span>!</h1>""".stripMargin('|')
+                }
+              }
+            }
           }
         }
       } ~
@@ -47,7 +51,7 @@ object DSLMain extends App with SimpleRoutingApp {
                   name=YaFengli</a>
               </li>
               <li>
-                <a href="/profile/TheFirst/TheSecond">Profile/$1/$2</a>
+                <a href="/profile/1/Second">Profile/$1/$2</a>
               </li>
               <li>
                 <form action="/stop" method="POST">
@@ -55,6 +59,17 @@ object DSLMain extends App with SimpleRoutingApp {
                 </form>
               </li>
             </ul>
+          }
+        } ~
+        pathPrefix("twirl") {
+          path("index" / Segment) { message =>
+            respondWithMediaType(MediaTypes.`text/html`) {
+              encodeResponse(Gzip) {
+                complete {
+                  page.html.index(message).toString
+                }
+              }
+            }
           }
         } ~
         path("profile" / IntNumber / Segment) { (id, name) =>
