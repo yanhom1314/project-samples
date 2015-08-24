@@ -8,7 +8,7 @@ scalaVersion := "2.11.7"
 
 lazy val root = (project in file(".")).enablePlugins(SbtTwirl)
 
-mainClass in assembly := Some("demo.Main")
+mainClass in assembly := Some("demo.DSLMain")
 
 libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-actor" % $("akka"),
 							"io.spray" %% "spray-can" % $("spray"),
