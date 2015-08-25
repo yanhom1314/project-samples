@@ -10,5 +10,5 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!")
+  (println "Listern to 127.0.0.1:8080, Server starting.")
   (run-server app {:port 8080}))

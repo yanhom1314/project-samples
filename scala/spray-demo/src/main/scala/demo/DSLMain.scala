@@ -8,17 +8,10 @@ import spray.http.MediaTypes
 import spray.httpx.encoding.Gzip
 import spray.routing.SimpleRoutingApp
 
+import scala.concurrent.duration._
+
 object DSLMain extends App with SimpleRoutingApp {
-
-  implicit val system = ActorSystem()
-
-  // the handler actor replies to incoming HttpRequests
-  val route =
-    parameter('color) { color =>
-      complete(s"The color is '$color'")
-    }
-
-
+  implicit val system = ActorSystem("my-system")
   startServer(interface = "localhost", port = 8001) {
     get {
       path("hello") {
@@ -27,9 +20,7 @@ object DSLMain extends App with SimpleRoutingApp {
             respondWithMediaType(MediaTypes.`text/html`) {
               encodeResponse(Gzip) {
                 complete {
-                  s"""<h1>Say hello to spray,
-                     |<span>${color}</span>
-                     |<span>${name}</span>!</h1>""".stripMargin('|')
+                  s"<h1>Say hello to spray,<span>${color}</span><span>${name}</span>!</h1>"
                 }
               }
             }
@@ -38,36 +29,14 @@ object DSLMain extends App with SimpleRoutingApp {
       } ~
         path("index") {
           complete {
-            <ul>
-              <li>
-                <h1>Hello World!</h1>
-              </li>
-              <li>
-                <a href="/hello?color=blue">Hello?color=blue</a>
-              </li>
-              <li>
-                <a href="/hello?color=blue&amp;name=YaFengli">Hello?color=blue
-                  &amp;
-                  name=YaFengli</a>
-              </li>
-              <li>
-                <a href="/profile/1/Second">Profile/$1/$2</a>
-              </li>
-              <li>
-                <form action="/stop" method="POST">
-                  <input type="submit" value="Stop"/>
-                </form>
-              </li>
-            </ul>
+            <h1>Hello world!</h1>
           }
         } ~
         pathPrefix("twirl") {
           path("index" / Segment) { message =>
             respondWithMediaType(MediaTypes.`text/html`) {
-              encodeResponse(Gzip) {
-                complete {
-                  page.html.index(message).toString
-                }
+              complete {
+                page.html.index(message).toString
               }
             }
           }
@@ -91,7 +60,7 @@ object DSLMain extends App with SimpleRoutingApp {
       post {
         path("stop") {
           complete {
-            system.shutdown()
+            system.scheduler.scheduleOnce(1.second)(system.shutdown())(system.dispatcher)
             <h1>Shutdown 1 second.</h1>
           }
         }
