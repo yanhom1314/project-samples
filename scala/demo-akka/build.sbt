@@ -1,4 +1,3 @@
-import net.virtualvoid.sbt.graph.Plugin._
 import org.koala.sbt.SbtAppPlugin._
 import Build._
 
@@ -18,6 +17,7 @@ lazy val root = project.in(file(".")).aggregate(demo_1, demo_2).dependsOn(demo_1
   organization := "org.koala",
   version := $("prod"),
   scalaVersion := $("scala"),
+  mainClass := None,
   list <<= (update, dependencyClasspath in Runtime) map {
     (ut, dr) =>
       ut.select(Set("compile")).filter(filter).foreach {
@@ -31,7 +31,7 @@ lazy val root = project.in(file(".")).aggregate(demo_1, demo_2).dependsOn(demo_1
             case None => sys.error(s"${t.data.getParent} NOT FOUND JAR FILE.")
           }
       }
-  }).settings(graphSettings: _*).settings(appSettings: _*)
+  }).settings(appSettings: _*)
 
 lazy val demo_1 = project.in(file("demo_1")).dependsOn(demo_2).settings(
   name := "demo_1",
@@ -47,7 +47,7 @@ lazy val demo_1 = project.in(file("demo_1")).dependsOn(demo_2).settings(
     "ch.qos.logback" % "logback-classic" % $("logback"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
     "junit" % "junit" % $("junit") % "test"
-  )).settings(graphSettings: _*)
+  ))
 
 lazy val demo_2 = project.in(file("demo_2")).settings(
   name := "demo_2",
@@ -60,4 +60,4 @@ lazy val demo_2 = project.in(file("demo_2")).settings(
     "ch.qos.logback" % "logback-classic" % $("logback"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
     "junit" % "junit" % $("junit") % "test"
-  )).settings(graphSettings: _*)
+  ))

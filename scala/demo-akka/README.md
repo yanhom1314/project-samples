@@ -3,7 +3,7 @@
 #### 部署安装
 + 编译：
         
-        activator
+        sbt
         >project demo_2
         >package
         >project demo_1
