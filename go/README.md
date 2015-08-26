@@ -19,9 +19,13 @@ Golang 测试
 + 编译安装`bin`执行文件：
 
 		go install hello		
+		go install modanywhere
 
 + 测试运行：
 		
 		bin/hello
 		>Hello World!
-		>Number:%!d(float64=1.7320508075688772)			
+		>Number:%!d(float64=1.7320508075688772)		
+
+		bin/modanywhere
+		>curl http://127.0.0.1:8080/	
