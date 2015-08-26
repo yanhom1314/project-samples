@@ -17,7 +17,7 @@ lazy val root = project.in(file(".")).aggregate(demo_1, demo_2).dependsOn(demo_1
   organization := "org.koala",
   version := $("prod"),
   scalaVersion := $("scala"),
-  mainClass := None,
+  mainClass := Some("demo.boot.ServerBoot"),
   list <<= (update, dependencyClasspath in Runtime) map {
     (ut, dr) =>
       ut.select(Set("compile")).filter(filter).foreach {

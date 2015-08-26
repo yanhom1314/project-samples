@@ -9,15 +9,16 @@ Golang 测试
 
 + 设置`GOPATH`环境变量:
 						  
-		export GOPATH=/phd/bin/go:/test_go //window set GOPATH=c:\go;e:\test_go
+		export GOPATH=/phd/bin/go:/test_go //window set GOPATH=d:\Tools\go;e:\Github\project-samples\go
 
 + 编译安装`pkg`库文件：
 		
 		go install newmath
+		go install mathii
 
 + 编译安装`bin`执行文件：
 
-		go install hello
+		go install hello		
 
 + 测试运行：
 		
