@@ -9,9 +9,9 @@ import demo.actor.{SayHello, SayHi}
 import demo.future.CloseRun
 
 object ServerBoot extends App {
-  lazy val serverSystem = ActorSystem(REMOTE_ACTOR_SYSTEM, ConfigFactory.parseFile(new File("conf/remote.conf")))
+  implicit lazy val system = ActorSystem(REMOTE_ACTOR_SYSTEM, ConfigFactory.parseFile(new File("conf/remote.conf")))
 
-  new Thread(CloseRun(serverSystem)).start()
+  new Thread(CloseRun(system)).start()
 
   create() match {
     case (a1, a2) => println(s"a1:${a1.path.toString} a2:${a2.path.toString}")
@@ -19,6 +19,6 @@ object ServerBoot extends App {
   }
 
   def create(): (ActorRef, ActorRef) = {
-    (serverSystem.actorOf(Props[SayHello], HELLO_ACTOR), serverSystem.actorOf(Props[SayHi], HI_ACTOR))
+    (system.actorOf(Props[SayHello], HELLO_ACTOR), system.actorOf(Props[SayHi], HI_ACTOR))
   }
 }
