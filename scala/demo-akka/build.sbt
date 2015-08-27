@@ -17,7 +17,7 @@ lazy val db = project.in(file("db")).settings(
     "junit" % "junit" % $("junit") % "test"
   ))
 
-lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).dependsOn(client, db).settings(
+lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).settings(
   name := "server",
   organization := "org.koala",
   version := $("prod"),
@@ -30,12 +30,12 @@ lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).dependsOn
     "junit" % "junit" % $("junit") % "test"
   ))
 
-lazy val client = project.in(file("client")).settings(
+lazy val client = project.in(file("client")).enablePlugins(SbtDistApp).dependsOn(server, db).settings(
   name := "client",
   organization := "org.koala",
   version := $("prod"),
   scalaVersion := $("scala"),
-  exportJars := true,
+  mainClass := Some("demo.ClientBoot"),
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-kernel" % $("akka"),
     "com.typesafe.akka" %% "akka-remote" % $("akka"),

@@ -4,8 +4,7 @@ import java.io.File
 
 import akka.actor.{ActorRef, ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
-import demo.actor.{ActorContaints, SayHello, SayHi}
-import ActorContaints._
+import demo.actor.ActorContaints._
 import demo.actor.{SayHello, SayHi}
 import demo.future.CloseRun
 
