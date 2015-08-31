@@ -1,8 +1,9 @@
 package demo
 
 import akka.actor.{Actor, ActorSystem, Props}
-import akka.kernel.Bootable
 import com.typesafe.config.ConfigFactory
+
+import scala.concurrent.duration._
 
 case object Start
 
@@ -23,20 +24,16 @@ class HiActor extends Actor {
   }
 }
 
-class Server extends Bootable {
-  val system = ActorSystem("demo2ActorSystem", ConfigFactory.load("demo2"))
+object LocalApp extends App {
+  implicit val system = ActorSystem("demo2ActorSystem", ConfigFactory.load("demo2"))
 
   val w1 = system.actorOf(Props[WorldActor], "w1")
   val w2 = system.actorOf(Props[WorldActor], "w2")
 
-  def startup = {
-    println("starting...")
-    println(s"created action:w1:${w1.path} w2:${w2.path}")
-  }
+  println("starting...")
+  println(s"created action:w1:${w1.path} w2:${w2.path}")
 
-  def shutdown = {
-    system.shutdown()
-  }
+  system.scheduler.scheduleOnce(20.seconds)(system.shutdown())(system.dispatcher)
 }
 
 

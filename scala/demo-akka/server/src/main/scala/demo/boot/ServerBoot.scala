@@ -2,23 +2,25 @@ package demo.boot
 
 import java.io.File
 
-import akka.actor.{ActorRef, ActorSystem, Props}
+import akka.actor.{ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
 import demo.actor.ActorContaints._
 import demo.actor.{SayHello, SayHi}
-import demo.future.CloseRun
+
+import scala.concurrent.duration._
 
 object ServerBoot extends App {
-  implicit lazy val system = ActorSystem(REMOTE_ACTOR_SYSTEM, ConfigFactory.parseFile(new File("conf/remote.conf")))
+  implicit lazy val system = ActorSystem(REMOTE_ACTOR_SYSTEM, ConfigFactory.parseFile(new File("conf/server.conf")))
 
-  new Thread(CloseRun(system)).start()
+  create()
 
-  create() match {
-    case (a1, a2) => println(s"a1:${a1.path.toString} a2:${a2.path.toString}")
-    case _ =>
+  def create(): Unit = {
+    (system.actorOf(Props[SayHello], HELLO_ACTOR), system.actorOf(Props[SayHi], HI_ACTOR)) match {
+      case (a1, a2) => println(s"a1:${a1.path} a2:${a2.path}")
+      case _ =>
+    }
   }
 
-  def create(): (ActorRef, ActorRef) = {
-    (system.actorOf(Props[SayHello], HELLO_ACTOR), system.actorOf(Props[SayHi], HI_ACTOR))
-  }
+  //shutdown
+  system.scheduler.scheduleOnce(20.seconds)(system.shutdown())(system.dispatcher)
 }
