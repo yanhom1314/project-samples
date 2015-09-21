@@ -10,5 +10,5 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println "Listern to 127.0.0.1:9002, Server starting.")
-  (run-server app {:port 9002}))
+  (run-server app {:port 9002})
+  (println "Listern to 127.0.0.1:9002, Server starting."))
