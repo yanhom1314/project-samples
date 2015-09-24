@@ -1,17 +1,29 @@
-@(person: Form[CreatePersonForm])(implicit messages: Messages)
+@(person: Form[CreatePersonForm])(implicit messages: Messages, session: Session, flash: Flash)
 
 @import helper._
 
 @main("Welcome to Play") {
     <script type='text/javascript' src='@routes.Assets.versioned("javascripts/index.js")'></script>
     <ul id="persons"></ul>
-    @form(routes.PersonController.addPerson()) {
-        @inputText(person("name"))
+    @form(routes.PersonController.addPerson) {
+        <div class="ui icon input">
+        @inputText(person("name"), 'id -> "_name")
+        </div>
+        <div class="ui icon input">
         @inputText(person("age"))
-
+        </div>
         <div class="buttons">
-            <input type="submit" value="Add New Person"/>
+            <input type="submit" value="Add New Person" class="ui primary  button"/>
+        </div>
+    }
+
+    @form(routes.HomeController.home(111, "XinFeng"), 'method -> "GET", 'id -> "index") {
+        <div class="buttons">
+            <input type="submit" value="Index With Flash And Session!" class="ui primary  button"/>
         </div>
     }
     <a href="@routes.PersonController.index()">Index</a>
+    <div id="messages">@messages("error.number")</div>
+    <div id="session">@session.get("home")|@session.get("index")|@session.get("user")</div>
+    <div id="flash">@flash.get("home")|@flash.get("index")|@flash.get("user")</div>
 }

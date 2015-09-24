@@ -28,8 +28,10 @@ class PersonController @Inject()(repo: PersonRepository, val messagesApi: Messag
   /**
    * The index action.
    */
-  def index = Action {
-    Ok(views.html.index(personForm))
+  def index = Action { implicit request =>
+    request.session.data.toSeq.foreach(e => println(s"session: ${e._1}:${e._2}"))
+    request.flash.data.toSeq.foreach(e => println(s"flash: ${e._1}:${e._2}"))
+    Ok(views.html.index(personForm)).withSession(request.session + ("user" -> "YaFengLi"))
   }
 
   /**

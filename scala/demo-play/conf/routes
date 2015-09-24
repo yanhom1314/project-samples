@@ -3,9 +3,12 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.PersonController.index
-POST    /person                     controllers.PersonController.addPerson
-GET     /persons                    controllers.PersonController.getPersons
+GET         /                    controllers.PersonController.index
+POST        /person              controllers.PersonController.addPerson
+GET         /persons             controllers.PersonController.getPersons
+
+GET         /home                controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")
+GET         /index               controllers.HomeController.index(id:Option[String])
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)

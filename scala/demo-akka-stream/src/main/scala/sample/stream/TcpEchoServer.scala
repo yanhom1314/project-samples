@@ -17,10 +17,10 @@ object TcpEchoServer extends App {
       .via(Framing.delimiter(ByteString(System.lineSeparator()), maximumFrameLength = 2048, allowTruncation = true))
       .map(_.utf8String)
       .filter(l =>
-      if (l.equalsIgnoreCase("quit")) {
-        system.scheduler.scheduleOnce(1.second)(system.shutdown())(system.dispatcher)
-        false
-      } else true)
+        if (l.equalsIgnoreCase("quit")) {
+          system.scheduler.scheduleOnce(1.second)(system.shutdown())(system.dispatcher)
+          false
+        } else true)
       .map(_ + "!!" + System.lineSeparator())
       .map(ByteString(_))
     connection.handleWith(echo)
