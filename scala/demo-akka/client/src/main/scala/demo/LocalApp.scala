@@ -25,10 +25,10 @@ class HiActor extends Actor {
 }
 
 object LocalApp extends App {
-  implicit val system = ActorSystem("demo2ActorSystem", ConfigFactory.load("demo2"))
+  implicit val system = ActorSystem("demo2ActorSystem")
 
   val w1 = system.actorOf(Props[WorldActor], "w1")
-  val w2 = system.actorOf(Props[WorldActor], "w2")
+  val w2 = system.actorOf(Props[HiActor], "w2")
 
   println("starting...")
   println(s"created action:w1:${w1.path} w2:${w2.path}")

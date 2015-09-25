@@ -1,6 +1,6 @@
 import Build._
 
-lazy val root = project.in(file(".")).aggregate(db, server, client)
+lazy val demo_akka = project.in(file(".")).aggregate(db, server, client)
 
 lazy val db = project.in(file("db")).settings(
   name := "db",
@@ -22,7 +22,7 @@ lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).settings(
   organization := "org.koala",
   version := $("prod"),
   scalaVersion := $("scala"),
-  mainClass := Some("demo.boot.ServerBoot"),
+  mainClass := Some("demo.example.boot.ServerBoot"),
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-kernel" % $("akka"),
     "com.typesafe.akka" %% "akka-remote" % $("akka"),
