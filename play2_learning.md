@@ -1,5 +1,11 @@
 ##Play Frameworke 2.4+
 
+#### HTTP Routing
++ `GET /client/:id             controllers.Home.show(id:Long)`中`:`表示正则表达式`[^\]+`而`id`表示参数名。
++ `GET /client/$id<[0-9]+>     controllers.Home.show(id:Long ?= 99)`
++ `GET /client                 controllers.Home.show(id:Long ?= 99)`
+
+
 #### 定制根路径
 在conf/application.conf中添加play.http.context属性:`play.http.context="/demo"`
 
