@@ -21,6 +21,7 @@
 
 #### GHCI配置
 + Windows 7配置文件是Users\[用户名]\AppData\Roaming\ghc\ghci.conf:`:set prompt "λ>"`
+* `ghci.conf`文件的编码需要采用`GBK`
 
 
 ##### Haskell缩进
