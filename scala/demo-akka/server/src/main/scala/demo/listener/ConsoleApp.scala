@@ -47,7 +47,7 @@ object ConsoleApp extends App {
       val reader = new BufferedReader(new InputStreamReader(System.in))
       while (isRun) {
         reader.read() match {
-          case 4 => // ctrl+d = 4
+          case 4 | 3 => // ctrl+d = 4
             isRun = false
             call
           case code: Int => println(s"command code:${code}")

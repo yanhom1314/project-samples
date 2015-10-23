@@ -6,7 +6,8 @@
   {:status  200
    :headers {"Content-Type" "text/html"}
    :body    "<h1>Hello  HTTP!</h1>"})
-
+(defn sat-hi [name]
+  (println name))
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
