@@ -45,7 +45,7 @@ class Server extends Actor with ActorLogging {
   IO(Tcp) ! Bind(self, new InetSocketAddress(8888))
 
   override def receive: Receive = {
-    case b @ Bound(localAddress) => log.error(s"receive:${localAddress.getHostName}:${localAddress.getPort}")
+    case b @ Bound(local) => log.error(s"receive:${local.getHostName}:${local.getPort}")
     case CommandFailed(_: Bind)  => context stop self
     case c @ Connected(remote, local) =>
       val handler = context.actorOf(Props[SimplisticHandler])

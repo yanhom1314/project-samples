@@ -24,6 +24,20 @@
     }
     <a href="@routes.PersonController.index()">Index</a>
     <div id="messages">@messages("error.number")</div>
-    <div id="session">@session.get("home")|@session.get("index")|@session.get("user")</div>
-    <div id="flash">@flash.get("home")|@flash.get("index")|@flash.get("user")</div>
+    <div id="session">
+        session:
+        <ul>
+            <li>home:@session.get("home")</li>
+            <li>index:@session.get("index")</li>
+            <li>user:@session.get("user")</li>
+        </ul>
+    </div>
+    <div id="flash">
+        flash:
+        <ul>
+            <li>home:@flash.get("home")</li>
+            <li>index:@flash.get("index")</li>
+            <li>user:@flash.get("user")</li>
+        </ul>
+    </div>
 }
