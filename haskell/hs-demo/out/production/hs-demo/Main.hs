@@ -5,9 +5,6 @@ import qualified Geometry.Sphere as Sphere
 import qualified Geometry.Cube as Cube
 
 import Ext.Util
---import qualified Ext.Math as Math
-import Ext.Math
-import Ext.Tcp
 
 main :: IO()
 
@@ -23,8 +20,16 @@ main = do
   let a1 = Cube.area 12.3
   print result
   print a1
-  putStrLn("[5..13]:" ++ show(boomBangs [5..13]) ++ "!")
 
   name <- getLine
   putStrLn("Hello, " ++ reverseWords name ++"!")
-  start
+
+add::(Int,Int) -> Int
+add(x,y) = x + y
+
+add' ::Int ->(Int -> Int)
+add' x y = x + y
+
+fac :: Integer -> Integer
+fac 0 = 1
+fac n | n > 0 = n * fac(n-1)
