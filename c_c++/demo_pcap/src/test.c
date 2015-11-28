@@ -1,4 +1,5 @@
-#include <demo.h>
+#include "demo.h"
+#include "hello.h"
 
 char httpbuf[4000];
 
@@ -114,7 +115,8 @@ void packet_info(u_char *arg, const struct pcap_pkthdr *pkthdr, const u_char *pa
                 dst_port = htons(_tcphdr->dest);
 
                 if (dst_port == 80) {//match port 80
-                    data = (char *) (packet + sizeof(struct ether_header) + sizeof(struct iphdr) + sizeof(struct tcphdr));
+                    data = (char *) (packet + sizeof(struct ether_header) + sizeof(struct iphdr) +
+                                     sizeof(struct tcphdr));
                     http_len = ntohs(_iphdr->tot_len) - (_iphdr->ihl) * 4 - sizeof(struct tcphdr);
                     if (http_len > 0) if ((*data == 'G') && (*++data == 'E') && (*++data == 'T')) {
                         memset(httpbuf, 0, 4000);
@@ -155,7 +157,7 @@ void call(char *devStr, char *errBuf, char *exp, pcap_handler callback) {
 
     /* wait loop forever */
     int id = 0;
-    pcap_loop(device, -1, callback, (u_char *) &id);
+    pcap_loop(device, -1, callback, (u_char * ) & id);
     pcap_close(device);
 }
 
@@ -206,7 +208,8 @@ int main(int argc, char *argv[]) {
             strcat(exp, argv[k]);
             strcat(exp, " ");
         }
-        printf("in:%s out:%s in_pos:%d out_pos:%d pos:%d argc:%d exp:%s\r\n", eth_in, eth_out, in_pos, out_pos, pos, argc, exp);
+        printf("in:%s out:%s in_pos:%d out_pos:%d pos:%d argc:%d exp:%s\r\n", eth_in, eth_out, in_pos, out_pos, pos,
+               argc, exp);
         loop_dev(errBuf, eth_in, exp, packet_info);
     }
     else {
@@ -214,5 +217,8 @@ int main(int argc, char *argv[]) {
     }
     free(eth_in);
     free(eth_out);
+
+    //test hello
+    printf("Hello count:%d.", add(12, 21));
     return 0;
 }

@@ -10,3 +10,4 @@ executable hs-demo
   main-is:         Main.hs
   hs-source-dirs:  src
   build-depends:   base
+  ghc-options: -fno-warn-tabs

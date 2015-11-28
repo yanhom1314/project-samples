@@ -1,6 +1,6 @@
 include_directories(../include /usr/include /usr/local/include)
 
-set(TEST_SRC_LIST test.c lib.c)
+set(TEST_SRC_LIST test.c lib.c hello.cc ../include/hello.h)
 
 add_executable(test ${TEST_SRC_LIST})
 

@@ -13,11 +13,11 @@ import scala.concurrent.duration._
 object ClientBoot extends App {
   implicit val system = ActorSystem(CLIENT_ACTOR_SYSTEM, ConfigFactory.parseFile(new File("conf/client.conf")))
 
-  loopByActorOf()
+  //  loopByActorOf()
   loopByActorSelection()
 
   //close after 50 seconds
-  system.scheduler.scheduleOnce(120.seconds)(system.shutdown())(system.dispatcher)
+  system.scheduler.scheduleOnce(40.seconds)(system.shutdown())(system.dispatcher)
 
   //create monitor actor on local for actorOf
   def loopByActorOf(): Unit = {

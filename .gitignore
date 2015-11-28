@@ -12,6 +12,8 @@ target/
 mods/
 project/project/
 project/target/
+#haskell
+.cabal-sandbox/
 #NodeJS
 node_modules
 #SPM
