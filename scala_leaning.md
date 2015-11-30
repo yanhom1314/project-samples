@@ -2,7 +2,7 @@
 #### 在Linux脚本中运行
 + 编辑hello脚本，加入以下内容：
 
-    #!/bin/sh 
+    #!/bin/sh
     exec scala $0 $@
     !#
     object Hello extends App {
@@ -40,14 +40,14 @@ scala 中是用 [] 代替 java 中的<> 表达泛型。
 trait CoVar[+T] {
 	def f(t: T):Unit
 }
-1）trait Queue[T] {} 
-这是非变情况。这种情况下，当类型S是类型A的子类型，则Queue[S]不可认为是Queue[A]的子类型或父类型，这种情况是和Java一样的。 
+1）trait Queue[T] {}
+这是非变情况。这种情况下，当类型S是类型A的子类型，则Queue[S]不可认为是Queue[A]的子类型或父类型，这种情况是和Java一样的。
 
-2）trait Queue[+T] {} 
-这是协变情况。这种情况下，当类型S是类型A的子类型，则Queue[S]也可以认为是Queue[A}的子类型，即Queue[S]可以泛化为Queue[A]。也就是被参数化类型的泛化方向与参数类型的方向是一致的，所以称为协变。 
+2）trait Queue[+T] {}
+这是协变情况。这种情况下，当类型S是类型A的子类型，则Queue[S]也可以认为是Queue[A}的子类型，即Queue[S]可以泛化为Queue[A]。也就是被参数化类型的泛化方向与参数类型的方向是一致的，所以称为协变。
 
-3）trait Queue[-T] {} 
-这是逆变情况。这种情况下，当类型S是类型A的子类型，则Queue[A]反过来可以认为是Queue[S}的子类型。也就是被参数化类型的泛化方向与参数类型的方向是相反的，所以称为逆变。 
+3）trait Queue[-T] {}
+这是逆变情况。这种情况下，当类型S是类型A的子类型，则Queue[A]反过来可以认为是Queue[S}的子类型。也就是被参数化类型的泛化方向与参数类型的方向是相反的，所以称为逆变。
 
 在trait、class中使用了协变（+）、逆变（-）则成员方法在使用泛型时就必须使用边界。
 a)trait Queue[+T]{
@@ -141,7 +141,7 @@ object ChangeMain extends App {
 val name="Jhon" //name值在整个系统运行期间仅为"Jhon"
 name="Smith" //编译器会报错
 
-var name_r="Jhon" 
+var name_r="Jhon"
 name_r="Smith" //name_r值被重新赋予"Smith"值
 
 数组Array、元组、列表List、集合Set与映射Map
@@ -179,8 +179,8 @@ class Test(_msg:String,_age:Int){
 }
 object Hello extends App{
     val test=new Test("Hello World",12)
-    test.withSay { 
-        (name,age) => 
+    test.withSay {
+        (name,age) =>
 	    println(name+"|"+age)
     }
 }
@@ -196,7 +196,7 @@ double(10) //20
 语句末尾的分号可选；单行多语句需要使用分号分开。
 trait
 trait Buffer {
-    type T 
+    type T
 }
 
 trait的堆叠操作特性进行切面编程
@@ -230,7 +230,7 @@ object ServiceObj extends App {
   s.action()
 }
 
-class 
+class
 
 class Test(x:Int,y:Int){
 	override def toString()=x+"/"+y
@@ -267,7 +267,7 @@ object Test extends App{
 	import IntTimes._
 	/*也可以直接定义隐式方法*/
 	//implicit def int2times(t:Int) = new IntTimes(t)
-	
+
 	12.times { println(_)}
 }
 
@@ -333,23 +333,23 @@ addUncurried(3,4)//7
 部分函数
 def process[A](filter:A=>Boolean)(list:List[A]):List[A] = {
   lazy val recurse = process(filter) _
- 
+
   list match {
     case head::tail => if (filter(head)) {
       head::recurse(tail)
     } else {
       recurse(tail)
     }
- 
+
     case Nil => Nil
   }
 }
- 
+
 val even = (a:Int) => a % 2 == 0
- 
+
 val numbersAsc = 1::2::3::4::5::Nil
 val numbersDesc = 5::4::3::2::1::Nil
- 
+
 process(even)(numbersAsc)   // [2, 4]
 process(even)(numbersDesc)  // [4, 2]
 //也可以使用下面的写法，其中_为函数占位符
@@ -451,11 +451,11 @@ Any
        |---String
        |---:::
 
-Nothing, Null, Nil, None, Unit 
+Nothing, Null, Nil, None, Unit
 Nothing 是trait，定义为：final trait Nothing extends Any。
 Nothing处于Scala类型体系的最底层，是所有类型(Any)的子类型，Nothing没有实例，如果一个方法抛出异常，则异常的返回值类型就是Nothing。
 
-Null 是trait，定义为：final trait Null extends AnyRef 。Null是所有引用类型(AnyRef)的子类型，唯一的一个实例是null。 
+Null 是trait，定义为：final trait Null extends AnyRef 。Null是所有引用类型(AnyRef)的子类型，唯一的一个实例是null。
 
 Nil 是case object，定义为case object Nil extends List[Nothing]， 代表一个空list。由于Scala中的List是协变的，因此无论T是何种类型，Nil都是List[T]的实例。
 
@@ -500,10 +500,57 @@ new A[String].getType
     scala> m1.flatMap { et => et }
     res1: List[Int] = List(1, 2, 3, 4, 5, 6)
 
+## 递归
+#### 普通
+def m1(x:Int,n:Int):Int = {
+	var result = 1
+	for(i <- 0 until n) {
+		result = result*x
+	}
+	result
+}
+
+#### 递归
+def m2(x:Int,n:Int):Int = {
+	if(n<=0) 1 else x * m2(x,n-1)
+}
+
+#### 尾递归
+import scala.annotation.tailrec
+def m3(x:Int,n:Int):Int = {
+	@tailrec
+	def loop(acc:Int,x:Int,n:Int):Int = {
+		if(n<=0) acc else loop(x * acc,x,n-1)
+	}
+	loop(1,x,n)
+}
+
+
+### Partial Function
+
+    Partial Function局部方法，可以动态的将一个函数的任意位置的参数提供默认值，获得新的函数。新函数的参数个数从而发生改变。
+
+比如我们有个函数，将字符b复制a次然后跟c拼接。
+
+    val f = (a: Int, b: String, c: String) => b * a + c
+    val f2 = f(5,_:String,_:String)  // 为复制次数指定默认5次
+    println(f2("A","B"))  >> AAAAAB
+    val f3 = f(_: Int, "A", _: String) // 为被复制的值指定默认为A
+    println(f3(5, "B"))
+
+#### Curry
+    比如有一个函数 f(a，b)，通过Curry化以后的函数可以变成f1(a)(b)，然后我们通过Partial函数f3= f1(10) _ 。这时候f3(2) == f(10,2)
+//curry化
+    val curry = new Function3[Int,String,String,String](){
+      def apply(a: Int, b: String, c: String) = f(a,b,c)
+    }
+    val f6 = f.curried(10)(_:String)(_:String)
+    // 设定遍历次数默认值
+    val f4 = curry.curried(4)(_:String)(_:String)
 
 ####Collection 排序
 + 使用`sorted`排序，Collection值的`class`需要`extends Ordered[T]`
-  
+
     val list=List("a","d","F","B","e")
     list.sorted
     res1: List[Char] = List(B, F, a, d, e)
