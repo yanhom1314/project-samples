@@ -14,7 +14,7 @@ main :: IO()
 main = do
   putStrLn "Hello World!"
   print (zip [1..10]['a'..'z'])
-  putStrLn $ printf "The value is %d" (fac 51)
+  putStrLn $ printf "fac 55:%d\n" (fac 55)
   print (add' 5 5)
   print (add' 6 6)
   print (add(7,7))
@@ -27,4 +27,4 @@ main = do
 
   name <- getLine
   putStrLn("Hello, " ++ reverseWords name ++"!")
-  start
+  --start

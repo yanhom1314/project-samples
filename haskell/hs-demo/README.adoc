@@ -1,0 +1,36 @@
+= Haskell Demo Project
+Doc Writer <yafengli@sina.com>
+v1.0, 2014-01-01
+:toc:
+
+* 生成HTML
+
+	$ asciidoctor README.adoc
+
+== Create Project
+* 创建项目
+
+	$ mkdir hs-demo
+	$ cd hs-demo
+	$ cabal init
+
+== Build and Run
+* 使用cabal
+
+	$ cabal configure
+	$ cabal build
+	$ cabal run
+
+== Build and Run II
+* 使用cabal sandbox
+
+	$ cabal sandbox init
+	$ cabal install -j
+	$ .cabal-sandbox/bin/hs-demo.exe
+
+== Build and Run III
+* 使用runghc
+
+	$ runghc Setup.hs configure
+	$ runghc Setup.hs build
+	$ dist/build/hs-demo/hs-demo.exe

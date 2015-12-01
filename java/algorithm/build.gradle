@@ -1,0 +1,11 @@
+apply plugin: "java"
+apply plugin: "application"
+
+repositories {
+	maven {url "http://maven.oschina.net/content/groups/public/"}
+}
+
+dependencies {
+	compile("org.freemarker:freemarker:$freemarker")
+	testCompile("junit:junit:4.12")
+}
