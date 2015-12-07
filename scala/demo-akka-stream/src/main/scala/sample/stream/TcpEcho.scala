@@ -1,11 +1,11 @@
 package sample.stream
 
 import akka.actor.ActorSystem
-import akka.pattern.ask
 import akka.stream.ActorMaterializer
+import akka.stream.io.Framing
 import akka.stream.scaladsl.{ Flow, Sink, Source, Tcp }
 import akka.util.ByteString
-import scala.concurrent.duration._
+
 import scala.util.{ Failure, Success }
 
 object TcpEcho {
@@ -45,9 +45,24 @@ object TcpEcho {
     import system.dispatcher
     implicit val materializer = ActorMaterializer()
 
+    val echo = Flow[ByteString]
+      .via(Framing.delimiter(
+        ByteString("\n"),
+        maximumFrameLength = 256,
+        allowTruncation = true))
+      .map(_.utf8String.toLowerCase.trim)
+      .filter {
+        case "quit" =>
+          system.shutdown(); false
+        case _      => true
+      }
+      .map(_ + "!!!\n")
+      .map(ByteString(_))
+
     val handler = Sink.foreach[Tcp.IncomingConnection] { conn =>
       println("Client connected from: " + conn.remoteAddress)
-      conn handleWith Flow[ByteString]
+      //conn handleWith Flow[ByteString]
+      conn handleWith echo
     }
 
     val connections = Tcp().bind(address, port)

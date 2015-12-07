@@ -26,7 +26,7 @@ object EchoServer extends App {
     Thread.sleep(1000)
 
     Future {
-      Thread.sleep(3000)
+      Thread.sleep(6000)
       client ! "close"
       client ! Close
     }
@@ -45,8 +45,8 @@ class Server extends Actor with ActorLogging {
   IO(Tcp) ! Bind(self, new InetSocketAddress(8888))
 
   override def receive: Receive = {
-    case b @ Bound(local) => log.error(s"receive:${local.getHostName}:${local.getPort}")
-    case CommandFailed(_: Bind)  => context stop self
+    case b @ Bound(local)       => log.error(s"receive:${local.getHostName}:${local.getPort}")
+    case CommandFailed(_: Bind) => context stop self
     case c @ Connected(remote, local) =>
       val handler = context.actorOf(Props[SimplisticHandler])
       val connection = sender()

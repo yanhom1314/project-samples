@@ -24,9 +24,7 @@ object GroupLogFile {
     // read lines from a log file
     val logFile = new File("e:/tmp/adv_web.log")
 
-    import akka.stream.io.Implicits._
-    // add file sources to Source object or use explicitly: SynchronousFileSource(f)
-    Source.synchronousFile(logFile).
+    Source.file(logFile).
       // parse chunks of bytes into lines
       via(Framing.delimiter(ByteString(fileSeperator), maximumFrameLength = 8094, allowTruncation = true)).
       map(_.utf8String).
@@ -39,7 +37,7 @@ object GroupLogFile {
       // write lines of each group to a separate file
       mapAsync(parallelism = 5) {
         case (level, groupFlow) =>
-          groupFlow.map(line => ByteString(line + System.lineSeparator())).runWith(Sink.synchronousFile(new File(s"e:/tmp/target/log-$level.txt")))
+          groupFlow.map(line => ByteString(line + System.lineSeparator())).runWith(Sink.file(new File(s"e:/tmp/target/log-$level.txt")))
       }.
       runWith(Sink.onComplete { _ =>
         system.shutdown()
