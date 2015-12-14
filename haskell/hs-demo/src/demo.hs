@@ -12,7 +12,7 @@ timeout time action = do
     takeMVar someMVar >>= return
     where
         nothingIzer time mvar = threadDelay time >> putMVar mvar Nothing
-        actionRunner action mvar timeoutThread =do
+        actionRunner action mvar timeoutThread = do
             res <- action
             killThread timeoutThread
             putMVar mvar $ Just res
