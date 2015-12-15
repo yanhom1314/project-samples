@@ -1,4 +1,4 @@
-var var gulp = require('gulp'),
+var gulp = require('gulp'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
@@ -6,14 +6,16 @@ var var gulp = require('gulp'),
 
 
 gulp.task('js',function(){
-	return gulp.src("*.js")
-	    .pipe(concat('bundle.js'))
-		.pipe(rename({suffix:'min'}))
-		.pipe(uglify());
+	return gulp.src("src/*.js")
+	    //.pipe(concat('bundle.js'))
+	    //.pipe(gulp.dest('dist'))
+		.pipe(rename({suffix:'.min'}))
+		.pipe(uglify())
+		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('clean',function(){
-	return del(['*.min.js']);
+	return del(['dist/*']);
 });
 
 gulp.task('default',['clean'],function(){
