@@ -26,25 +26,8 @@
 (global-set-key [f8] 'neotree-toggle)
 ;;Window-Numbering
 (window-numbering-mode 1)
-
-;;不显示启动页面   
-;(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-; '(column-number-mode t)
-; '(custom-safe-themes
-;   (quote
-;	("bc40f613df8e0d8f31c5eb3380b61f587e1b5bc439212e03d4ea44b26b4f408a" "f5eb916f6bd4e743206913e6f28051249de8ccfd070eae47b5bde31ee813d55f" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "0ec59d997a305e938d9ec8f63263a8fc12e17990aafc36ff3aff9bc5c5a202f0" default)))
-; '(display-time-mode t)
-; '(ecb-layout-window-sizes nil)
-; '(ecb-options-version "2.40")
-; '(ede-project-directories (quote ("f:/tmp/demo/hello")))
-; '(inhibit-startup-screen t)
-; '(show-paren-mode t))
-
-;;空白干净的页面
+;;空白干净的页面，不显示启动页面   
+(setq inhibit-startup-screen t)
 (setq initial-scratch-message "") 
 ;;不生成备份文件
 (setq make-backup-files nil)
