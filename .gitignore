@@ -14,9 +14,9 @@ project/project/
 project/target/
 #haskell
 .cabal-sandbox/
-#NodeJS
+#JS
 node_modules
-#SPM
+bower_components
 spm_modules
 #Eclipse
 .gradle/
