@@ -4,7 +4,7 @@
 * 环境：
   npm install gulp -g
   npm install gulp --save-dev
-  npm install gulp-minify-css gulp-concat gulp-uglify gulp-rename del --save-dev
+  npm install gulp-minify-css gulp-concat gulp-uglify gulp-rename gulp-react gulp-babel babel-preset-react del --save-dev
 * main.js
 [source,javascript]
 ----
@@ -39,3 +39,4 @@ ReactDOM.render(
 -----
 
 
+## gulp-react已经被gulp-babel取代，没有测试！！！

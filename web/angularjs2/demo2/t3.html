@@ -1,0 +1,19 @@
+<!doctyp html>
+<html>
+  <head>
+	
+  </head>
+  <body>
+	<script>
+	  function run(){
+	      var str=document.getElementById("test").value;
+  	      var go = document.getElementById("content");
+	      
+	      go.innerHTML = str;
+	  }
+	</script>
+	<TEXTAREA id="test" rows=10 cols=60></TEXTAREA><BR>
+	<INPUT style="BACKGROUND-COLOR: rgb(255,200,200)" onclick=run() type=button value=Run>
+	<scection id='content'></section>
+  </body>  
+</html>

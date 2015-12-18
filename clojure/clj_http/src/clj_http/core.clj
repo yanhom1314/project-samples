@@ -6,8 +6,10 @@
   {:status  200
    :headers {"Content-Type" "text/html"}
    :body    "<h1>Hello  HTTP!</h1>"})
-(defn say-hi [name]
-  (println name))
+(defn say-hi
+  "This function is say Hi to your name!"
+  [name]
+  (println "Hi, " name))
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
