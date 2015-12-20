@@ -14,6 +14,9 @@ project/project/
 project/target/
 #haskell
 .cabal-sandbox/
+#ensime
+.ensime
+.ensime_cache
 #JS
 node_modules
 bower_components
