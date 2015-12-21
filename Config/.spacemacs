@@ -23,13 +23,12 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
-     ;; better-defaults
+     auto-completion
+     better-defaults
      emacs-lisp
-     clojure
      haskell
+     clojure
      scala
-     ;; lyf_lt
      ;; git
      ;; markdown
      ;; org
@@ -195,21 +194,22 @@ values."
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
-user code."
+user code."  
   )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-   (evil-leader/set-key "w a" 'emacs-maximize)
-   (evil-leader/set-key "w i" 'emacs-minimize)
-   ;; (global-set-key (kbd  "C-x C-a") 'emacs-maximize)
-   ;; (global-set-key (kbd  "C-x a") 'emacs-minimize)
+  (evil-leader/set-key "w a" 'emacs-maximize)
+  (evil-leader/set-key "w i" 'emacs-minimize)
+  (evil-leader/set-key "f t" 'indent-whole)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+
+
 
 ;; 我的配置
 ;; 在标题栏提示你目前在什么位置
@@ -227,7 +227,11 @@ layers configuration. You are free to put any user code."
   "Normal emacs window in windows os"
   (interactive)
   (w32-send-sys-command #xf120))    ; #xf120 normalimize
-
+;;格式化整个文件函数
+(defun indent-whole ()
+  (interactive)
+  (indent-region (point-min) (point-max))
+  (message "format successfully"))
 ;; 全屏
 (run-with-idle-timer 0.1 nil 'emacs-maximize)
 ;;启动单进程Server
