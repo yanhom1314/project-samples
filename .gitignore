@@ -33,3 +33,7 @@ nbproject/
 #Golang
 bin/
 pkg/
+#ensime
+.ensime
+.ensime_cache/
+TAGS

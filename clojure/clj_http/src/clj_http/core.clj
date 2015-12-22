@@ -10,8 +10,18 @@
   "This function is say Hi to your name!"
   [name]
   (println "Hi, " name))
+(defn say-hello
+  "This function is say Hello to your name!"
+  [name]
+  (println "Hello, " name "!"))
+(defn lyf-add
+  "add a b"
+  [a b]
+  (+ a b))
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (run-server app {:port 9002})
+  (say-hi "ya_feng_li@163.com")
+  (say-hello "yafengli@sina.com")
+  ;;(run-server app {:port 9002})
   (println "Listern to 127.0.0.1:9002, Server starting."))
