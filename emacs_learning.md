@@ -1,15 +1,17 @@
-﻿#### color-theme包
+﻿#### Spacemacs
 
-        http://download.gna.org/color-theme/
+        http://github.com/my123/spacemacs
 
-#### 在C:/Users/<name>/AppData/Roming/.emacs文件中添加
+#### windows生成`.emacs`配置文件的方法，运行`emacs`打开`Options`->`Set Default fonts`选择字体后再打开`Options`->`Save Options`会生成`.emacs`配置文件，再编辑即可。
+## 全文搜索
 
-        (add-to-list 'load-path "~/.emacs.d/")
-         (require 'color-theme)
-        (color-theme-initialize)
-        (color-theme-matrix)
+  <M-x> grep
+  grep -nH -r [内容] [路径]
 
-#### Windows7生成`.emacs`配置文件的方法，运行`emacs`打开`Options`->`Set Default fonts`选择字体后再打开`Options`->`Save Options`会生成`.emacs`配置文件，再编辑即可。
+## Undo
+
+  <C-x> u
+
 ##### 文件 #####
 打开文件: C-x C-f
 保存文件: C-x C-s
@@ -24,22 +26,6 @@ buffer list: C-x C-b
 简单说明: C-h c [command]
 详细说明: C-h k [command]
 在线文档: C-h i
-
-
-CEDET安装：
-安装：
-步骤1
-下载http://cedet.sourceforge.net/下载cedet安装包并解压缩。
-步骤2
-在基于Unix的系统（例如Linux）使用make安装
-make EMACS=emacs
-windows：
-cd cedet-1.0pre7
-emacs –Q –l cedet-build.el –f cedet-build
-配置（.emacs[linux:/LOGINNAME/.emacs]/_emacs[windows:c:/Documents and Settings/LOGINNAME/Application Data/_emacs]）
-;;不显示Message
-(setq inhibit-startup-message t)
-
 
 快捷键：
 ##### 常规 #####
@@ -97,35 +83,3 @@ buffer list: C-x C-b
 简单说明: C-h c [command]
 详细说明: C-h k [command]
 在线文档: C-h i
-
-
-CEDET安装：
-安装：
-步骤1
-下载http://cedet.sourceforge.net/下载cedet安装包并解压缩。
-步骤2
-在基于Unix的系统（例如Linux）使用make安装
-make EMACS=emacs
-windows：
-cd cedet-1.0pre7
-emacs –Q –l cedet-build.el –f cedet-build
-配置（.emacs[linux:/LOGINNAME/.emacs]/_emacs[windows:c:/Documents and Settings/LOGINNAME/Application Data/_emacs]）
-;;不显示Message
-(setq inhibit-startup-message t)
-
-
-远程调用EMACS编辑器。
-
-首先启动emacs server。在配置文件中加入。
-;; .emacs  
-(start-server)  
-这样启动一个emacs之后，server也随之启动。
-如果要在此server中编辑，请使用
-emacsclient FILE  
-emacsclientw FILE (for windows)  
-退出使用C-x #，而不是C-x C-c，否则会关闭server。
-
-
-使emacs和x11下的应用程序可以互相粘贴，从网上找了如下代码，写入.emacs
-(setq x-select-enable-clipboard t)
-(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
