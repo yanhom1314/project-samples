@@ -1,11 +1,40 @@
 ﻿#### Spacemacs
 
         http://github.com/my123/spacemacs
+        
+
+#### Spacemacs常用快捷键
++ SPC 使用空格键作为Leader键
++ M-x 所有执行命令的入口
+
+#### 文件目录操作
+
+        k上
+    h左     l右 
+        j下 
+
+
+#### 目录(NeoTree)
++ SPC f t 
++ 新增`.spacemacs`
+
+  (evil-leader/set-key "d t" 'neotree-toggle)
+  (evil-leader/set-key "d s" 'neotree-show)
+  (evil-leader/set-key "d h" 'neotree-hide)
+  (evil-leader/set-key "d r" 'neotree-refresh)
+  (evil-leader/set-key "d d" 'neotree-dir)
+  
+#### 步骤
+* 打开文件或者目录：`runemacs [路径名]`
+* 打开文件：SPC f l
+* 打开/隐藏目录: SPC f t
+* 切换到目录窗口(自动打开目录): SPC d s
+* 切换根目录: SPC d d 
 
 #### windows生成`.emacs`配置文件的方法，运行`emacs`打开`Options`->`Set Default fonts`选择字体后再打开`Options`->`Save Options`会生成`.emacs`配置文件，再编辑即可。
 ## 全文搜索
 
-  <M-x> grep
+  M-x grep
   grep -nH -r [内容] [路径]
 
 ## Undo
