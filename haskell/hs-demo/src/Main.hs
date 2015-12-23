@@ -30,6 +30,8 @@ main = do
   print a1
   print a2
   print a3
+  print (double 12)
+  putStrLn(show(double 44) ++ show(fac 66) ++ show(Cube.area 18.7))
   putStrLn("[5..13]:" ++ show(boomBangs [5..13]) ++ "!")
   name <- getLine
   putStrLn("Hello, " ++ reverseWords name ++"!")

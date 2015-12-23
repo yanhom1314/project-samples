@@ -1,7 +1,8 @@
 module Ext.Math
     (add,
      add',
-     fac
+     fac,
+     double
     ) where
 
 add::(Int,Int) -> Int
@@ -9,6 +10,9 @@ add(x,y) = x + y
 
 add' ::Int -> Int -> Int
 add' x y = add(x,y)
+
+double :: Int -> Int
+double x = add(x,x)
 
 fac :: Integer -> Integer
 --fac 0 = 1
