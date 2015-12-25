@@ -21,6 +21,7 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
+  (say-hello "yafengli@sina.com")
   (say-hi "ya_feng_li@163.com")
   (say-hello "yafengli@sina.com")
   ;;(run-server app {:port 9002})
