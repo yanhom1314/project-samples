@@ -13,26 +13,30 @@
     h左     l右
         j下
 
+#### 缓存移动
++ 文件：SPC f l、SPC f r、 SPC p d等
+
+    C-k/C-p 向上
+    
+    C-j/C-n 向下
+
 
 #### 目录(NeoTree)
-+ SPC f t
++ 当前文件目录：SPC f t
++ 项目目录：SPC p t
 + 新增`.spacemacs`
 
 (evil-leader/set-key "w a" 'emacs-maximize)
 (evil-leader/set-key "w i" 'emacs-minimize)
 ;;neotree
 (evil-leader/set-key "d s" 'neotree-show)
-(evil-leader/set-key "d o" 'neotree-dir)
-(evil-leader/set-key "d c" 'neotree-create-node)
-(evil-leader/set-key "d d" 'neotree-delete-node)
-(evil-leader/set-key "d g" 'neotree-refresh)
-(evil-leader/set-key "d r" 'neotree-rename-node)
 ;;format
 (evil-leader/set-key "m f" 'indent-whole)
-
 + `c` 创建文件或者目录，当以`/`结尾时创建目录
-+ `d` 删除问价或者目录
++ `d` 删除文件或者目录
 + `g` 刷新
++ `r` 重命名 
++ `s` 退出f toggle
 
 #### 步骤
 * 打开文件或者目录：`runemacs [路径名]`
