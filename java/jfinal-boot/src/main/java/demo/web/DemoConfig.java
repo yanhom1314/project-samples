@@ -2,30 +2,22 @@ package demo.web;
 
 import com.jfinal.config.*;
 import com.jfinal.ext.handler.ContextPathHandler;
-import ext.beetl.JarResourceLoader;
-import org.beetl.core.GroupTemplate;
-import org.beetl.ext.jfinal.BeetlRenderFactory;
+import com.jfinal.render.FreeMarkerRender;
 
 public class DemoConfig extends JFinalConfig {
     @Override
     public void configConstant(Constants me) {
         me.setDevMode(true);
-        BeetlRenderFactory beetlRenderFactory = new BeetlRenderFactory(new JarResourceLoader());
-        me.setMainRenderFactory(beetlRenderFactory);
-
-        //获取GroupTemplate模板，可以设置共享变量操作
-        GroupTemplate groupTemplate = BeetlRenderFactory.groupTemplate;
-        //do something
     }
 
     @Override
     public void configRoute(Routes me) {
         me.add("/hello", HelloController.class);
+        me.add("/index", IndexController.class);
     }
 
     @Override
     public void configPlugin(Plugins me) {
-
     }
 
     @Override
@@ -36,5 +28,12 @@ public class DemoConfig extends JFinalConfig {
     @Override
     public void configHandler(Handlers me) {
         me.add(new ContextPathHandler("demo"));
+        me.getHandlerList().stream().forEach(a -> System.out.println("handler:" + a.getClass().getName()));
+    }
+
+    @Override
+    public void afterJFinalStart() {
+        super.afterJFinalStart();
+        FreeMarkerRender.getConfiguration().setClassLoaderForTemplateLoading(DemoConfig.class.getClassLoader(), "/views");
     }
 }

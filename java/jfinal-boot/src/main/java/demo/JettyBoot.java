@@ -26,11 +26,11 @@ public class JettyBoot {
         handler.setContextPath(CONTEXT_PATH);
 
         FilterHolder filterHolder = new FilterHolder();
+        filterHolder.setInitParameter("key", "value");
         filterHolder.setName(JFINAL_FILTER_NAME);
         filterHolder.setHeldClass(JFinalFilter.class);
         filterHolder.setInitParameter(JFINAL_INIT_PARAM_NAME, DemoConfig.class.getCanonicalName());
         handler.addFilter(filterHolder, "/*", EnumSet.allOf(DispatcherType.class));
-
         //server
         server.setHandler(handler);
         server.start();
