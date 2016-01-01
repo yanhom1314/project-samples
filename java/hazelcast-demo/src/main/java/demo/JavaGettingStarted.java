@@ -25,5 +25,12 @@ public class JavaGettingStarted {
         System.out.println("First customer: " + queueCustomers.poll());
         System.out.println("Second customer: "+ queueCustomers.peek());
         System.out.println("Queue size: " + queueCustomers.size());
+
+        try {
+            Thread.sleep(2000);
+            instance.shutdown();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

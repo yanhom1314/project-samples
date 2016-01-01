@@ -13,7 +13,8 @@
 (defn say-hello
   "This function is say Hello to your name!"
   [name]
-  (println "Hello, " name "!"))
+  (println "Hello, " name "!")
+  (println "Hello twice, " name ""))
 (defn lyf-add
   "add a b"
   [a b]
@@ -23,5 +24,6 @@
   [& args]
   (say-hi "ya_feng_li@163.com")
   (say-hello "yafengli@sina.com")
+  (say-hello (lyf-add 445 333))
   ;;(run-server app {:port 9002})
   (println "Listern to 127.0.0.1:9002, Server starting."))

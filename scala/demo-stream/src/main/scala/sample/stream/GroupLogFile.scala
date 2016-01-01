@@ -25,10 +25,7 @@ object GroupLogFile {
     // read lines from a log file
     val logFile = new File("src/main/resources/logfile.txt")
 
-    import akka.stream.io.Implicits._ // add file sources to Source object or use explicitly: SynchronousFileSource(f)
-    Source.synchronousFile(logFile).
-      // parse chunks of bytes into lines
-      via(Framing.delimiter(ByteString(System.lineSeparator), maximumFrameLength = 512, allowTruncation = true)).
+    Source.single(logFile).
       map(_.utf8String).
       // group them by log level
       groupBy {
