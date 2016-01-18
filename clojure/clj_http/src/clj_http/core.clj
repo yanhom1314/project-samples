@@ -19,6 +19,10 @@
   "add a b"
   [a b]
   (+ a b))
+(defn say-nice
+  "This function is say Nice to your friends!"
+  [name]
+  (println "Nice, " name))
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
