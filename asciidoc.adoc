@@ -1,11 +1,18 @@
 = AsciiDoc语法指南 =
 DocWriter - YaFengLi - <yafengli@sina.com>
 
-AsciiDoc是一种文本文档格式，可以用于书写文档，文章，手册，书籍和UNIX手册。
-AsciiDoc文件可以使用asciidoctor命令转换成HTML/DocBook/PDF/XML等文件格式。
-AsciiDoc结构先进：AsciiDoc语法和输出标签（几乎可以转换成任意的SGML/XML标记）都可以由用户自己定义和扩展。
+  AsciiDoc是一种文本文档格式，可以用于书写文档，文章，手册，书籍和UNIX手册。
+  AsciiDoc文件可以使用asciidoctor命令转换成HTML/DocBook/PDF/XML等文件格式。
+  AsciiDoc结构简洁合理，AsciiDoc语法和输出标签（几乎可以转换成任意的SGML/XML标记）都可以由用户自己定义和扩展。
+
 :toc:
 :icons: font
+
+== 文档工具 
+
+使用 http://asciidoctor.org/[AsciiDoctor] 生成HTML文档。
+使用 http://download.gna.org/wkhtmltopdf[Wkhtmltopdf] 由HTML生成PDF文档。
+一个PDF工具网站 http://smallpdf.com/[SmallPDF] 提供PDF与其他格式的互转。
 
 == 段落 ==
 
