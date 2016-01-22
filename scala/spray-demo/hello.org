@@ -1,0 +1,22 @@
+#+TITLE: Emacs门
+
+*粗体*
++删除线+
+/斜体/
+
+
+下标：H_2 O
+上标: M^2
+
+
+
+
+- 你好
+- 你好
++ 你不好
+1. 你好
+2. 你好
+3. 你不好
+
+#+SEQ_TODO: REPORT(r) BUG(b) KNOWNCAUSE(k) | FIXED(f)
+#+SEQ_TODO: TODO(T!) | DONE(D@)3  CANCELED(C@/!)    

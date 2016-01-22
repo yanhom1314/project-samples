@@ -203,5 +203,4 @@ class DemoService extends Actor with ActorLogging {
     case class Ok(remaining: Int)
 
   }
-
 }
