@@ -10,6 +10,4 @@ lazy val root = (project in file("."))
 
 libraryDependencies ++= Seq(
   "com.hazelcast" % "hazelcast" % $("hazelcast"),
-  "com.hazelcast" % "hazelcast-client" % $("hazelcast"),
-  "junit" % "junit" % "4.11",
-  "org.scalatest" %% "scalatest" % "2.2.4" % "test")
+  "com.hazelcast" % "hazelcast-client" % $("hazelcast"))
