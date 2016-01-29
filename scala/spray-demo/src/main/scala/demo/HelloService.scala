@@ -1,17 +1,11 @@
 package demo
 
-import akka.actor.ActorSystem
 import spray.http.{HttpHeader, HttpHeaders}
-import spray.routing.SimpleRoutingApp
+import spray.routing.HttpService
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 import scala.xml.Elem
 
-object HelloMain extends App with SimpleRoutingApp {
-
-  implicit val system = ActorSystem()
-
+trait HelloService extends HttpService {
   def headHost: HttpHeader => Option[String] = {
     case h: HttpHeaders.`Host` =>
       println("host:" + h.host + ":" + h.port)
@@ -55,7 +49,7 @@ object HelloMain extends App with SimpleRoutingApp {
     </div>
   }
 
-  val route = get {
+  val helloRoute = path("hello") {
     optionalHeaderValue(headHost) {
       case Some(port) =>
         optionalHeaderValue(headAp) {
@@ -72,20 +66,5 @@ object HelloMain extends App with SimpleRoutingApp {
         stop
       }
     }
-  } ~ post {
-    path("stop") {
-      complete {
-        Future {
-          Thread.sleep(200)
-          system.shutdown()
-        }
-        <h3>The system is shutdown...</h3>
-      }
-    }
-  }
-
-
-  startServer("127.0.0.1", 80) {
-    route
   }
 }

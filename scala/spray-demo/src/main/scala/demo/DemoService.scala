@@ -10,6 +10,7 @@ import spray.http.HttpMethods._
 import spray.http.MediaTypes._
 import spray.http._
 import spray.util._
+
 import scala.concurrent.duration._
 
 class DemoService extends Actor with ActorLogging {
@@ -51,7 +52,7 @@ class DemoService extends Actor with ActorLogging {
       sender ! HttpResponse(entity = "Shutting down in 1 second ...")
       sender ! Http.Close
       context.system.scheduler.scheduleOnce(1.second) {
-        context.system.shutdown()
+        context.system.terminate()
       }
       aroundPostStop()
 
@@ -203,4 +204,5 @@ class DemoService extends Actor with ActorLogging {
     case class Ok(remaining: Int)
 
   }
+
 }

@@ -1,4 +1,4 @@
-module Main where
+module Main where 
 
 import qualified Geometry.Cube   as Cube
 import qualified Geometry.Sphere as Sphere
