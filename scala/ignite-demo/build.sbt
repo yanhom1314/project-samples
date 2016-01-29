@@ -11,4 +11,5 @@ lazy val ignite_demo = (project in file("."))
 libraryDependencies ++= Seq(
   "org.apache.ignite" % "ignite-core" % $("ignite"),
   "org.apache.ignite" % "ignite-spring" % $("ignite"),
-  "org.apache.ignite" % "ignite-indexing" % $("ignite"))
+  "org.apache.ignite" % "ignite-indexing" % $("ignite"),
+  "com.h2database" % "h2" % $("h2"))
