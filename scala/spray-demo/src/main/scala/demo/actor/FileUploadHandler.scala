@@ -1,4 +1,4 @@
-package demo
+package demo.actor
 
 import java.io.{File, FileInputStream, FileOutputStream, InputStream}
 

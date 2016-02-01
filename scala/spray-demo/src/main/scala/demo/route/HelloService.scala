@@ -1,4 +1,4 @@
-package demo
+package demo.route
 
 import spray.http.{HttpHeader, HttpHeaders}
 import spray.routing.HttpService

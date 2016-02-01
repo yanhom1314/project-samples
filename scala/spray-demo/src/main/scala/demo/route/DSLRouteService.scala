@@ -1,6 +1,4 @@
-package demo
-
-import java.io.File
+package demo.route
 
 import spray.http.HttpHeaders.RawHeader
 import spray.http.MediaTypes

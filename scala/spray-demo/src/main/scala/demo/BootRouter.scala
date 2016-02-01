@@ -1,11 +1,12 @@
 package demo
 
 import akka.actor.ActorSystem
+import demo.route.{DSLRouteService, HelloService}
 import spray.routing.SimpleRoutingApp
 
 import scala.concurrent.duration._
 
-object RouteMain extends App with SimpleRoutingApp with DSLRouteService with HelloService {
+object BootRouter extends App with SimpleRoutingApp with DSLRouteService with HelloService {
   implicit val system = ActorSystem("my-system")
 
   startServer(interface = "localhost", port = 8080) {

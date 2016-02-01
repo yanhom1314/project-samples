@@ -2,9 +2,10 @@ package demo
 
 import akka.actor.{ActorSystem, Props}
 import akka.io.IO
+import demo.actor.DemoService
 import spray.can.Http
 
-object ActorMain extends App {
+object BootActor extends App {
 
   implicit val system = ActorSystem()
 
