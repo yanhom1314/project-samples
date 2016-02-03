@@ -1,5 +1,7 @@
 package demo.route
 
+import java.io.File
+
 import spray.http.HttpHeaders.RawHeader
 import spray.http.MediaTypes
 import spray.httpx.encoding.Gzip
