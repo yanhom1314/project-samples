@@ -30,14 +30,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/layout/**", "/captcha", "/create/*", "/save", "/ebit/**", "/demo/**");
+        web.ignoring().antMatchers("/resources/**", "/layout/**", "/captcha");
         web.ignoring().antMatchers("/index", "/greeting", "/hello", "/ws", "/ws/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/index", "/home", "/login", "/error/*").permitAll()
+                .antMatchers("/", "/index","/greeting", "/login", "/error/*").permitAll()
                 .anyRequest().authenticated();
         http.addFilterAfter(csrfHeaderFilter, CsrfFilter.class).csrf().csrfTokenRepository(csrfTokenRepository());
         http.formLogin()
