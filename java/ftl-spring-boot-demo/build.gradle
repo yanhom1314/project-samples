@@ -25,7 +25,8 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web",
-            "org.springframework.boot:spring-boot-starter-freemarker")
+            "org.springframework.boot:spring-boot-starter-freemarker",
+            "org.springframework.boot:spring-boot-starter-security")
     testCompile("junit:junit")
 }
 
