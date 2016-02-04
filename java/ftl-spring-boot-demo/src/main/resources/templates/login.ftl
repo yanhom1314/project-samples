@@ -9,12 +9,9 @@
     <div class="row-fluid">
         <div class="well span5 center login-box">
             <div class="alert alert-info"> 请输入管理员口令</div>
-            <h3 th:text="(${param.containsKey('error')} ? '请核查帐号/密码!':'')" style="color: red"></h3>
-
-            <h3 th:text="(${param.containsKey('captcha')} ? '验证码错误!':'')" style="color: red"></h3>
-
             <div>
                 <form action="#" th:action="@{/login}" method="post" class="form-horizontal">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <fieldset>
                         <div class="input-prepend" title="Username" data-rel="tooltip">
                             <span class="add-on"><i class="icon-user"></i></span>
@@ -47,4 +44,4 @@
         </div>
     </div>
 </div>
-</@p.boot>
+</@p.layout>

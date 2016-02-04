@@ -1,0 +1,6 @@
+spring:
+    application:
+        name: ftl_spring_boot_demo
+server:
+    context-path: /demo
+    port: 80

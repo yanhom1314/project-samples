@@ -1,5 +1,4 @@
 <#macro boot title>
-    <#assign security=JspTaglibs["http://www.springframework.org/security/tags"] />
 <!DOCTYPE html>
 <html>
 <head>
