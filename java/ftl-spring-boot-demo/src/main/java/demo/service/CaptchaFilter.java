@@ -17,21 +17,8 @@ import java.io.IOException;
 public class CaptchaFilter implements Filter {
     public static final Logger logger = LoggerFactory.getLogger(CaptchaFilter.class);
     public static final String S_CAPTCHA_ID = "j_captcha_img_id";
-    public static String captchaParam = "j_captcha";
-    public static String loginUrl = "/login";
-
-    public CaptchaFilter() {
-
-    }
-
-    public CaptchaFilter(String loginUrl) {
-        this.loginUrl = loginUrl;
-    }
-
-    public CaptchaFilter(String captchaParam, String loginUrl) {
-        this.captchaParam = captchaParam;
-        this.loginUrl = loginUrl;
-    }
+    public static final String captchaParam = "j_captcha";
+    public static final String loginUrl = "/login";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -40,8 +27,7 @@ public class CaptchaFilter implements Filter {
 
     @Override
     public void destroy() {
-        this.captchaParam = null;
-        this.loginUrl = null;
+
     }
 
     @Override
@@ -49,18 +35,19 @@ public class CaptchaFilter implements Filter {
         try {
             HttpServletRequest request = (HttpServletRequest) req;
             HttpServletResponse response = (HttpServletResponse) res;
-            HttpSession session = request.getSession(false);
-            if (session != null && request.getRequestURI().endsWith(loginUrl) && "POST".equalsIgnoreCase(request.getMethod())) {
-                if (session.getAttribute(S_CAPTCHA_ID) != null && request.getParameterMap().containsKey(captchaParam)) {
-                    String sid = (String) session.getAttribute(S_CAPTCHA_ID);
-                    String cid = request.getParameter(captchaParam);
-                    if (!sid.equalsIgnoreCase(cid)) {
-                        response.sendRedirect(request.getContextPath() + loginUrl + "?captcha");
-                        return;
-                    }
+            HttpSession session = request.getSession(true);
+            boolean isFilter = true;
+
+            if (request.getRequestURI().endsWith(loginUrl) && "POST".equalsIgnoreCase(request.getMethod())) {
+                if (session.getAttribute(S_CAPTCHA_ID) == null || !((String) session.getAttribute(S_CAPTCHA_ID)).equalsIgnoreCase(request.getParameter(captchaParam))) {
+                    response.sendRedirect(request.getContextPath() + loginUrl + "?captcha");
+                    isFilter = false;
+                }
+                if (logger.isInfoEnabled()) {
+                    logger.info("{}:{}", session.getAttribute(S_CAPTCHA_ID), request.getParameter(captchaParam));
                 }
             }
-            chain.doFilter(req, res);
+            if (isFilter) chain.doFilter(req, res);
         } catch (Exception e) {
             e.printStackTrace();
         }

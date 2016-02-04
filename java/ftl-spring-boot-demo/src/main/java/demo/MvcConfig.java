@@ -19,14 +19,14 @@ import java.io.IOException;
 
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
-    public static final String DEMO_FREEMARKER_PATH = "demo.freemarker.path";
+    public static final String FILE_LOAD_BASE_DIR = "demo.load.dir";
     private File TEMPLATE_DEV_PATH;
 
     @PostConstruct
     public void init() {
-        if (System.getProperty(DEMO_FREEMARKER_PATH) != null) {
+        if (System.getProperty(FILE_LOAD_BASE_DIR) != null) {
             try {
-                TEMPLATE_DEV_PATH = new File(System.getProperty("user.dir"), System.getProperty(DEMO_FREEMARKER_PATH));
+                TEMPLATE_DEV_PATH = new File(System.getProperty("user.dir"), System.getProperty(FILE_LOAD_BASE_DIR));
                 System.out.println("TEMPLATE_DEV_PATH:" + TEMPLATE_DEV_PATH.toURI().toString());
             } catch (Exception e) {
                 e.printStackTrace();

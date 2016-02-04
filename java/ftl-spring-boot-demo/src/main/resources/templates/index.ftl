@@ -5,6 +5,6 @@
     </#if>
     <#if section = "body">
     <!-- Just another example of using a macro: -->
-        <@p.otherExample p1=111 p2=222 />
+        <@p.otherExample p1=1 p2=2 />
     </#if>
 </@p.boot>

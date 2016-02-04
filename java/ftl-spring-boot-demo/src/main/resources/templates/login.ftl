@@ -8,15 +8,22 @@
     </div>
     <div class="row-fluid">
         <div class="well span5 center login-box">
-            <div class="alert alert-info"> 请输入管理员口令</div>
+            <#if pageContext.getParameter("error")??>
+                <div class="alert alert-danger" role="alert">帐号/密码错误！</div>
+            <#elseif pageContext.getParameter("captcha")??>
+                <div class="alert alert-danger" role="alert">图形验证码错误！</div>
+            <#else>
+                <div class="alert alert-info"> 请输入管理员口令</div>
+            </#if>
             <div>
-                <form action="#" th:action="@{/login}" method="post" class="form-horizontal">
+                <form action="${pageContext.contextPath}/login" method="post" class="form-horizontal">
+                    <input type="hidden" name="session" value="${session}"/>
+                    <input type="hidden" name="ctx" value="${servletContext}"/>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <fieldset>
                         <div class="input-prepend" title="Username" data-rel="tooltip">
                             <span class="add-on"><i class="icon-user"></i></span>
-                            <input class="input-large span10" name="username" id="j_username" type="text"
-                                   value="admin"/>
+                            <input class="input-large span10" name="username" id="j_username" type="text" value="admin"/>
                         </div>
                         <div class="clearfix"></div>
                         <div class="input-prepend" title="Password" data-rel="tooltip"><span class="add-on"><i
@@ -31,7 +38,7 @@
                                    value=""/>
                         </div>
                         <div>
-                            <img id="_captcha" th:src="@{/captcha}" style="width: 120px;height: 25px;"/><a id="_refresh" href="javascript:void(0);">点击刷新</a>
+                            <img id="_captcha" src="${pageContext.contextPath}/captcha" style="width: 120px;height: 25px;" onclick="$('#_captcha').attr('src',this.src);"/>
                         </div>
 
                         <div class="clearfix"></div>
