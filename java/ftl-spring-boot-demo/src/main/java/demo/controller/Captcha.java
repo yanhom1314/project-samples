@@ -21,7 +21,7 @@ import java.util.Properties;
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
 @SessionAttributes({CaptchaFilter.S_CAPTCHA_ID})
-public class CaptchaController {
+public class Captcha {
 
     private Producer producer;
 
