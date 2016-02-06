@@ -1,7 +1,14 @@
-(defn say [name]
+(defn say-nice [name]
   (println name))
 
-(say "hello world")
+(defn say-hi [name]
+  (println name))
+
+(defn say-hello [name]
+  (println "Hello " name))
 
 (defn -main [&args]
-  (say "Hello World!"))
+  (say-nice "Hello World!")
+  (say-hi "Hello Nice!")
+  (say "Hello World!")
+  (say-hello "YaFengLi"))
