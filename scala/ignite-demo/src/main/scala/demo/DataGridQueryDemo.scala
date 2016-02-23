@@ -2,7 +2,7 @@ package demo
 
 import org.apache.ignite.{Ignition,IgniteCache}
 
-object CacheDataGridDemo extends IgniteApp {
+object DataGridQueryDemo extends IgniteApp {
   println("Hello World!")
   Ignition.setClientMode(true)
 

@@ -5,7 +5,7 @@ import org.apache.ignite.cache.query.SqlFieldsQuery
 import org.apache.ignite.configuration.CacheConfiguration
 import org.apache.ignite.{Ignite, Ignition}
 
-object CacheQueryDemo extends IgniteApp {
+object SqlQueryDemo extends IgniteApp {
   Ignition.setClientMode(true)
 
   withClientIgnite { ig =>

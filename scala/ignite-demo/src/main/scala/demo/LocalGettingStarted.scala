@@ -19,13 +19,16 @@ case class QuitListener(ignite: Ignite) extends Thread {
   override def run(): Unit = {
     val scanner = new Scanner(System.in)
     var isRun = true
-    println(scanner.hasNext)
     while (isRun) {
-      scanner.nextLine().trim.toLowerCase() match {
-        case "quit" | "exit" =>
-          isRun = false
-          ignite.close()
-        case _ => println("2:" + scanner.hasNext)
+      print(1)
+      if (scanner.hasNext) {
+        print(2)
+        scanner.nextLine().trim.toLowerCase() match {
+          case "quit" | "exit" =>
+            isRun = false
+            ignite.close()
+          case _ => print(3)
+        }
       }
     }
     println("shutdown ok.")
