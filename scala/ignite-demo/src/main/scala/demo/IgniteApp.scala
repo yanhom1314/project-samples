@@ -16,11 +16,15 @@ trait IgniteApp extends App {
     }
   }
 
-
-  def time(call:()=>Unit):Unit = {
-    val start  = System.currentTimeMillis()
-    try{call()}catch {case e:Exception => e.printStackTrace()}
-    val end  = System.currentTimeMillis()
+  def time(call: () => Unit): Long = {
+    val start = System.currentTimeMillis()
+    try {
+      call()
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
+    val end = System.currentTimeMillis()
     println(s"time use ${end - start}ms.")
+    end - start
   }
 }

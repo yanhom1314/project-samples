@@ -20,9 +20,7 @@ case class QuitListener(ignite: Ignite) extends Thread {
     val scanner = new Scanner(System.in)
     var isRun = true
     while (isRun) {
-      print(1)
       if (scanner.hasNext) {
-        print(2)
         scanner.nextLine().trim.toLowerCase() match {
           case "quit" | "exit" =>
             isRun = false
