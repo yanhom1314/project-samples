@@ -13,6 +13,7 @@ import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success}
 
 object DataGridQueryDemo extends IgniteApp {
+  val fmt = new SimpleDateFormat("yyyyMMddHHmmss")
   println("Hello World!")
   Ignition.setClientMode(true)
 
@@ -30,9 +31,10 @@ object DataGridQueryDemo extends IgniteApp {
       case Failure(t) => print(t)
     }
 
-    Thread.sleep(1000)
-    val fmt = new SimpleDateFormat("yyyyMMddHHmmss")
     val f1 = Future {
+      while (!cache.containsKey(3)) {
+        Thread.sleep(1000)
+      }
       while (cache.containsKey(3)) {
         0 to 3 foreach { i =>
           println(s"${fmt.format(new Date())}:Got [key = ${i}, val = ${cache.get(i)}]")
@@ -52,17 +54,16 @@ object DataGridQueryDemo extends IgniteApp {
         Thread.sleep(1000)
       }
     }
-
     Await.result(f1, 15000 millis)
     Await.result(f2, 15000 millis)
 
-    f2 onSuccess {
+    f1 onSuccess {
       case _ => println(s"key:[3] is expired.")
     }
-
     f2 onSuccess {
       case _ => println(s"key:[50000] is expired.")
     }
-    Thread.sleep(2000)
+
+    Thread.sleep(1000)
   }
 }

@@ -1,9 +1,9 @@
 package demo
 
+import org.apache.ignite.Ignition
 import org.apache.ignite.cache.CacheMode
 import org.apache.ignite.cache.query.SqlFieldsQuery
 import org.apache.ignite.configuration.CacheConfiguration
-import org.apache.ignite.{Ignite, Ignition}
 
 object SqlQueryDemo extends IgniteApp {
   Ignition.setClientMode(true)
@@ -14,9 +14,12 @@ object SqlQueryDemo extends IgniteApp {
     orgCfg.setIndexedTypes(classOf[Long], classOf[Organization])
 
     val orgCache = ig.getOrCreateCache(orgCfg)
-    (0 to 10).foreach { i =>
-      val org =new  Organization(i.toLong, i.toString)
-      orgCache.put(org.getId, org)
+
+    time { () =>
+      0 to 50000 foreach { i =>
+        val org = new Organization(i.toLong, i.toString)
+        orgCache.put(org.getId, org)
+      }
     }
 
     //Get the names of Organization
