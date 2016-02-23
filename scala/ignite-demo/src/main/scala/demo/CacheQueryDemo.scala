@@ -5,11 +5,10 @@ import org.apache.ignite.cache.query.SqlFieldsQuery
 import org.apache.ignite.configuration.CacheConfiguration
 import org.apache.ignite.{Ignite, Ignition}
 
-
-object CacheQueryDemo extends App {
+object CacheQueryDemo extends IgniteApp {
   Ignition.setClientMode(true)
 
-  withIgnite { ig =>
+  withClientIgnite { ig =>
     val orgCfg = new CacheConfiguration[Long, Organization]("orgCache")
     orgCfg.setCacheMode(CacheMode.REPLICATED)
     orgCfg.setIndexedTypes(classOf[Long], classOf[Organization])
@@ -26,17 +25,5 @@ object CacheQueryDemo extends App {
     val cursor = orgCache.query(new SqlFieldsQuery(sql).setArgs("2"))
 
     println(s"cursor:${cursor.getAll}")
-  }
-
-  def withIgnite(call: Ignite => Unit): Unit = {
-    val ignite = Ignition.start("config/example-ignite.xml")
-    try {
-      call(ignite)
-    }
-    catch {
-      case e: Exception => e.printStackTrace()
-    } finally {
-      ignite.close()
-    }
   }
 }

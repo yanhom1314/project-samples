@@ -21,26 +21,30 @@ public class CsrfHeaderFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        try {
+            HttpServletResponse response = (HttpServletResponse) servletResponse;
+            HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, PUT, PATCH, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        if (!request.getMethod().equals("OPTIONS")) {
-            try {
-                CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class
-                        .getName());
-                if (csrf != null) {
-                    Cookie cookie = new Cookie("XSRF-TOKEN", csrf.getToken());
-                    cookie.setPath("/");
-                    response.addCookie(cookie);
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Methods", "POST, PUT, PATCH, GET, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            if (!request.getMethod().equals("OPTIONS")) {
+                try {
+                    CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class
+                            .getName());
+                    if (csrf != null) {
+                        Cookie cookie = new Cookie("XSRF-TOKEN", csrf.getToken());
+                        cookie.setPath("/");
+                        response.addCookie(cookie);
+                    }
+                    filterChain.doFilter(servletRequest, servletResponse);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                filterChain.doFilter(servletRequest, servletResponse);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

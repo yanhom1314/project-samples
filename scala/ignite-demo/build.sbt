@@ -6,10 +6,11 @@ version := "1.0"
 
 scalaVersion := "2.11.7"
 
-lazy val ignite_demo = (project in file("."))
+lazy val ignite_demo = (project in file(".")).enablePlugins(SbtDistApp).settings(mainClass := Some("demo.LocalGettingStarted"))
 
 libraryDependencies ++= Seq(
   "org.apache.ignite" % "ignite-core" % $("ignite"),
-  "org.apache.ignite" % "ignite-spring" % $("ignite"),
+  //"org.apache.ignite" % "ignite-spring" % $("ignite"),
   "org.apache.ignite" % "ignite-indexing" % $("ignite"),
   "com.h2database" % "h2" % $("h2"))
+
