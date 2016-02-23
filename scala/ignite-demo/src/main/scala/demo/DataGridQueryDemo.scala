@@ -54,8 +54,8 @@ object DataGridQueryDemo extends IgniteApp {
         Thread.sleep(1000)
       }
     }
-    Await.result(f1, 15000 millis)
-    Await.result(f2, 15000 millis)
+    Await.result(f1, 15000.millis)
+    Await.result(f2, 15000.millis)
 
     f1 onSuccess {
       case _ => println(s"key:[3] is expired.")
