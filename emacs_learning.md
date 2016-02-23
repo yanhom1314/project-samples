@@ -2,10 +2,20 @@
 
         http://github.com/my123/spacemacs
 
-
 #### Spacemacs常用快捷键
-+ SPC 使用空格键作为Leader键
-+ M-x 所有执行命令的入口
++ `SPC` 使用空格键作为Leader键
++ `SPC ?`查找快捷键绑定
++ `SPC h d f`描述函数
++ `SPC h d k`描述快捷键
++ `SPC h d m`描述模式
++ `SPC h d v`描述变量
++ `SPC :`与`M-x`与`M-m :`所有执行命令的入口
+
+#### Java
++ `~/.spacemacs`增加`java`在`dotspacemacs-configuration-layers`
++ 安装Eclipse、Eclim并运行`eclimd`
++ 项目目录下执行`mvn eclipse:eclipse -DdownloadSources -DdownloadJavadocs`
++ 在Emacs中执行`M-x eclim-project-create`
 
 #### 文件目录操作
 
