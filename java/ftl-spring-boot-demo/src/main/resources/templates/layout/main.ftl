@@ -5,7 +5,7 @@
     <title>${title?if_exists}</title>
     <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="${pageContext.contextPath}/resources/css/standard.css">
+    <link rel="stylesheet" type="text/css" href="${request.contextPath}/resources/css/standard.css">
 
     <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

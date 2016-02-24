@@ -3,22 +3,22 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/layout">
-<head>
-    <title>Content page 1</title>    
-</head>
-<body>
-<section layout:fragment="content">
-    <ul>
-        <li><a th:href="@{/wsdl/test/94304}">Soap Web Service</a></li>
-        <li><a th:href="@{/admin/}">Admin</a></li>
-        <li><a th:href="@{/demo/index}">Demo</a></li>
-        <li><a th:href="@{/greeting}">Greeting REST Web Service</a></li>
-        <li><a th:href="@{/demo/customer}">User CRUD REST Customer</a></li>
-        <li><a th:href="@{/demo/people}">Spring CRUD REST People</a></li>
-    </ul>
-</section>
-<footer>
-    <p layout:fragment="custom-footer">This is some footer content from content page 1</p>
-</footer>
-</body>
+    <head>
+        <title>Content page 1</title>    
+    </head>
+    <body>
+        <section layout:fragment="content">
+            <ul>
+                <li><a th:href="@{/wsdl/test/94304}">Soap Web Service</a></li>
+                <li><a th:href="@{/admin/}">Admin</a></li>
+                <li><a th:href="@{/demo/index}">Demo</a></li>
+                <li><a th:href="@{/greeting}">Greeting REST Web Service</a></li>
+                <li><a th:href="@{/demo/customer}">User CRUD REST Customer</a></li>
+                <li><a th:href="@{/demo/people}">Spring CRUD REST People</a></li>
+            </ul>
+        </section>
+        <footer>
+            <p layout:fragment="custom-footer">This is some footer content from content page 1</p>
+        </footer>
+    </body>
 </html>

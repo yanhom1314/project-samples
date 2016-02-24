@@ -33,7 +33,6 @@ public class DemoController {
     public String index(@PathVariable("key") String key, Model model) {
         System.out.println("redisDemo:" + redisDemo);
         model.addAttribute("hello", redisDemo.get(key));
-        redisDemo.
         return "demo/index";
     }
 
