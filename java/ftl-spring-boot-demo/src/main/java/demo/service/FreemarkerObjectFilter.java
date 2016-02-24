@@ -1,16 +1,26 @@
 package demo.service;
 
-import org.springframework.stereotype.Component;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Component;
 
 @Component
 public class FreemarkerObjectFilter implements Filter {
-    public static final String NAME_PAGE_CONTEXT = "pageContext";
-    public static final String NAME_SERVLET_CONTEXT = "servletContext";
+    public static final String NAME_REQUEST = "request";
     public static final String NAME_SESSION = "session";
 
     @Override
@@ -19,16 +29,23 @@ public class FreemarkerObjectFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        ServletContext ctx = servletRequest.getServletContext();
-        HttpServletRequest req = ((HttpServletRequest) servletRequest);
-        HttpSession session = req.getSession(true);
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = ((HttpServletRequest) req);
+        HttpSession session = request.getSession(true);
 
-        servletRequest.setAttribute(NAME_SERVLET_CONTEXT, ctx);
-        servletRequest.setAttribute(NAME_PAGE_CONTEXT, req);
-        servletRequest.setAttribute(NAME_SESSION, session);
+        req.setAttribute(NAME_REQUEST, request);
 
-        filterChain.doFilter(servletRequest, servletResponse);
+        Map<String,Object> map = new HashMap<>();
+
+        Enumeration<String> keys  = session.getAttributeNames();
+        while(keys.hasMoreElements()){
+            String key = keys.nextElement();
+            map.put(key,session.getAttribute(key));
+        }
+
+        req.setAttribute(NAME_SESSION, map);
+
+        filterChain.doFilter(req, resp);
     }
 
     @Override

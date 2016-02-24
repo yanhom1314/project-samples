@@ -27,7 +27,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         if (System.getProperty(FILE_LOAD_BASE_DIR) != null) {
             try {
                 TEMPLATE_DEV_PATH = new File(System.getProperty("user.dir"), System.getProperty(FILE_LOAD_BASE_DIR));
-                System.out.println("TEMPLATE_DEV_PATH:" + TEMPLATE_DEV_PATH.toURI().toString());
+                System.out.println("###TEMPLATE_DEV_PATH###" + TEMPLATE_DEV_PATH.toURI().toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -37,8 +37,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public ViewResolver viewResolver() {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
-        resolver.setCache(true);
         if (TEMPLATE_DEV_PATH != null) resolver.setCache(false);
+        else resolver.setCache(true);
         resolver.setPrefix("");
         resolver.setSuffix(".ftl");
         resolver.setContentType("text/html; charset=UTF-8");
@@ -48,7 +48,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public FreeMarkerConfigurer freemarkerConfig() throws IOException, TemplateException {
         FreeMarkerConfigurationFactory factory = new FreeMarkerConfigurationFactory();
-        if (TEMPLATE_DEV_PATH != null) factory.setTemplateLoaderPaths(new File(TEMPLATE_DEV_PATH, "templates").toURI().toString());
+        if (TEMPLATE_DEV_PATH != null)
+            factory.setTemplateLoaderPaths(new File(TEMPLATE_DEV_PATH, "templates").toURI().toString());
         else factory.setTemplateLoaderPaths("classpath:/templates/");
         factory.setDefaultEncoding("UTF-8");
         FreeMarkerConfigurer result = new FreeMarkerConfigurer();
@@ -67,13 +68,13 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
                 ignoreAcceptHeader(true).
                 useJaf(false).
                 defaultContentType(MediaType.APPLICATION_JSON).
-                mediaType("xml", MediaType.APPLICATION_XML).
-                mediaType("json", MediaType.APPLICATION_JSON);
+                mediaType("xml", MediaType.APPLICATION_XML);
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        if (TEMPLATE_DEV_PATH != null) registry.addResourceHandler("/resources/**").addResourceLocations(new File(TEMPLATE_DEV_PATH, "static/resources").toURI().toString());
+        if (TEMPLATE_DEV_PATH != null)
+            registry.addResourceHandler("/resources/**").addResourceLocations(new File(TEMPLATE_DEV_PATH, "static/resources").toURI().toString());
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }

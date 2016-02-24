@@ -8,17 +8,15 @@
     </div>
     <div class="row-fluid">
         <div class="well span5 center login-box">
-            <#if pageContext.getParameter("error")??>
+            <#if request.getParameter("error")??>
                 <div class="alert alert-danger" role="alert">帐号/密码错误！</div>
-            <#elseif pageContext.getParameter("captcha")??>
+            <#elseif request.getParameter("captcha")??>
                 <div class="alert alert-danger" role="alert">图形验证码错误！</div>
             <#else>
                 <div class="alert alert-info"> 请输入管理员口令</div>
             </#if>
             <div>
-                <form action="${pageContext.contextPath}/login" method="post" class="form-horizontal">
-                    <input type="hidden" name="session" value="${session}"/>
-                    <input type="hidden" name="ctx" value="${servletContext}"/>
+                <form action="${request.contextPath}/login" method="post" class="form-horizontal">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <fieldset>
                         <div class="input-prepend" title="Username" data-rel="tooltip">
@@ -38,7 +36,7 @@
                                    value=""/>
                         </div>
                         <div>
-                            <img id="_captcha" src="${pageContext.contextPath}/captcha" style="width: 120px;height: 25px;" onclick="$('#_captcha').attr('src',this.src);"/>
+                            <img id="_captcha" src="${request.contextPath}/captcha" style="width: 120px;height: 25px;" onclick="$('#_captcha').attr('src',this.src);"/>
                         </div>
 
                         <div class="clearfix"></div>

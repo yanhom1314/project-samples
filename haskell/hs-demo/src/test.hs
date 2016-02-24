@@ -7,7 +7,6 @@ doubleUs x y = x*2 + y*2
 doubleSn x = if x > 10
 			then x * 2
 			else x
-			
 fib x
 	| x < 2 = x
 	| otherwise = fib (x - 1) + fib (x - 2)
