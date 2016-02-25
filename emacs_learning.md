@@ -11,6 +11,12 @@
 + `SPC h d v`描述变量
 + `SPC :`与`M-x`与`M-m :`所有执行命令的入口
 
+#### Dired Mode
++ `d`标记删除 `D`直接删除
++ `u`撤销标记 `U`撤销所有标记
++ `x`执行删除
++ `C`复制文件 `R`重命名文件
+
 #### Java
 + `~/.spacemacs`增加`java`在`dotspacemacs-configuration-layers`
 + 安装Eclipse、Eclim并运行`eclimd`
