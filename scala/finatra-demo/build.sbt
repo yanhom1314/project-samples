@@ -12,15 +12,15 @@ javaOptions ++= Seq(
   "-Dlog.access.output=/dev/stderr")
 
 resolvers ++= Seq(
-  "OSC" at "http://maven.oschina.net/content/groups/public",
+  //"OSC" at "http://maven.oschina.net/content/groups/public",
   Resolver.sonatypeRepo("releases"),
   "Twitter Maven" at "https://maven.twttr.com",
   "Finatra Repo" at "http://twitter.github.com/finatra"
 )
 
 lazy val versions = new {
-  val finagle = "6.29.0"
-  val finatra = "2.1.3"
+  //val finagle = "6.29.0"
+  val finatra = "2.1.4"
   val logback = "1.1.5"
   val mockito = "1.10.19"
   val scalatest = "2.2.3"

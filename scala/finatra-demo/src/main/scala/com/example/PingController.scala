@@ -12,11 +12,10 @@ class PingController @Inject() (service: ExampleService) extends Controller {
   }
 
   get("/name") { request: Request =>
-    response.ok.body("Bob")
-  }
-
-  get("/foo") { request: Request =>
+    request.headerMap.foreach { t =>
+      println(s"${t._1}:${t._2}")
+    }
     service.myDo(request)
-    "foo"
+    response.ok.body("Bob")
   }
 }
