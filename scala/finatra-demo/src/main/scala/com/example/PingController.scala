@@ -12,11 +12,7 @@ class PingController @Inject() (service: ExampleService) extends Controller {
   }
 
   get("/name") { request: Request =>
-    response.ok.body("Bob")
-  }
-
-  get("/foo") { request: Request =>
     service.myDo(request)
-    "foo"
+    response.ok.body("Bob")
   }
 }
