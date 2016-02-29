@@ -1,4 +1,5 @@
 name := """finatra-demo"""
+
 organization := "com.example"
 
 version := "1.0.0-SNAPSHOT"
@@ -27,7 +28,9 @@ lazy val versions = new {
   val specs2 = "2.3.12"
 }
 
-mainClass in assembly := Some("com.example.ExampleServerMain")
+lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).settings(
+  mainClass in assembly := Some("com.example.ExampleServerMain")
+)
 
 assemblyMergeStrategy in assembly := {
   /**
@@ -75,3 +78,5 @@ libraryDependencies ++= Seq(
   "org.mockito" % "mockito-core" % versions.mockito % "test",
   "org.scalatest" %% "scalatest" % versions.scalatest % "test",
   "org.specs2" %% "specs2" % versions.specs2 % "test")
+
+mainClass:=Some("com.example.ExampleServerMain")

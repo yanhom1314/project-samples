@@ -17,15 +17,19 @@ class UserController @Inject() (service: ExampleService) extends Controller {
 
   get("/users") { request: UsersRequest =>
     println(request.http.headerMap)
-    UsersResponse(request.max,request.startDate,request.verbose)
+    UsersResponse(request.max, request.startDate, request.verbose)
+  }
+
+  get("/users/:id") { request: Request =>
+    "You looked up " + request.params("id")
   }
 }
 
 case class UsersRequest(
-  @Max(100)@QueryParam max: Int,
+  @Max(100) @QueryParam max: Int,
   @PastTime @QueryParam startDate: Option[DateTime],
   @QueryParam verbose: Boolean = false,
   @JsonIgnoreBody @RequestInject http: Request
 )
 
-case class UsersResponse(max:Int,startDate:Option[DateTime],verbose:Boolean = false)
+case class UsersResponse(max: Int, startDate: Option[DateTime], verbose: Boolean = false)
