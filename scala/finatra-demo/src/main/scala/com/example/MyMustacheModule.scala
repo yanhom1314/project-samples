@@ -13,6 +13,7 @@ import com.twitter.inject.TwitterModule
 
 object MyMustacheModule extends TwitterModule {
 
+  val defaultSuffix = ".mustache"
   private val templatesDir = flag("mustache.templates.dir", "templates", "templates resource directory")
   private val templatesSuffix = flag("mustache.templates.suffix", ".mustache", "templates suffix.")
 
@@ -33,10 +34,9 @@ object MyMustacheModule extends TwitterModule {
 
       override def compile(name: String): Mustache = {
         val nameToUse = templatesSuffix.get match {
-          case Some(s) => name.replaceAll(".mustache", s)
+          case Some(s) => name.stripSuffix(defaultSuffix) + s
           case None => name
         }
-        println(s"template name:$nameToUse")
         if (cacheMustacheTemplates) {
           super.compile(nameToUse)
         } else {
@@ -66,8 +66,6 @@ private final class LocalFilesystemDefaultMustacheFactory(
     } else {
       s"/$templatesDirectory/$resourceName"
     }
-
-    println(s"###############filepath:$filepath")
 
     (resolver.getInputStream(filepath) map { inputStream: InputStream =>
       new InputStreamReader(inputStream)
