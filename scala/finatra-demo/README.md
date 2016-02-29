@@ -33,3 +33,4 @@ A minimal [activator](https://www.typesafe.com/get-started) seed template for cr
 ## Mustache Template
 + `Mustache`的缺省从`classpath`获取模版文件，`mustache.templates.dir`的缺省值为`templates`。
 + `local.doc.root`与`doc.root`是互斥的，当设置了`local.doc.root`时设定为从`local file system`获取文件，这个时候`Mustache`是从`local.doc.root`/`mustache.templates.dir`获取文件
++ 新增参数`mustache.templates.suffix`设定模板文件后缀名，缺省为`.mustache`
