@@ -2,7 +2,33 @@
 <html>
     <head>
         <meta charset="utf-8">
-        {{>head}}
+        <title>Hello</title>
+        {{>common/head}}
+        <script>
+            $(function() {
+                $("button#submit").click(function(){
+                    $.ajax({
+                        type: "POST",
+                        url: "foo",
+                        data: $('form.contact').serialize(),
+                        success: function(msg){
+                            $("#thanks").text(msg.message);
+                            $("#thanks").show(600);
+                            $("#myModal").modal('hide');
+                        },
+                        error: function(d){
+                            var m= JSON.parse(d.responseText);
+                            console.log(m.errors);
+                            for(var i=0 ; i<m.errors.length ;i++){
+                                console.log(m.errors[i]);
+                            }
+                            $("#_error").text(m.errors[0]);
+                            $("#_error").show(600);
+                        }
+                    });
+                });
+            });
+        </script>
     </head>
     <body>
         <h1>Foo Page is ok!</h1>
@@ -31,8 +57,52 @@
         <!-- Indicates a dangerous or potentially negative action -->
         <button type="button" class="btn btn-danger">（危险）Danger</button>
 
-        <!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
-        <button type="button" class="btn btn-link">（链接）Link</button>
-        {{>foot}}
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="contact">
+                            <fieldset>
+                                <div class="modal-body">
+                                    <ul class="nav nav-list">
+                                        <li class="nav-header">Name</li>
+                                        <li><input class="input-xlarge" value="krizna" type="text" name="name"></li>
+                                        <li class="nav-header">Age</li>
+                                        <li><input class="input-xlarge" value="11" type="text" name="age"></li>
+                                        <li class="nav-header">Email</li>
+                                        <li><input class="input-xlarge" value="user@krizna.com" type="text" name="email"></li>
+                                        <li class="nav-header">Message</li>
+                                        <li>
+                                            <textarea class="input-xlarge" name="sug" rows="3">
+                                                Thanks for the article and demo
+                                            </textarea>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" id="submit">submit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="thanks" class="alert alert-success" role="alert" style="display: none"></div>
+
+        <div id="_error" class="alert alert-danger" role="alert" style="display: none"></div>
+
+        {{>common/footer}}
     </body>
 </html>
