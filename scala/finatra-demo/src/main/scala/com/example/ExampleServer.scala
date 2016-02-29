@@ -9,14 +9,17 @@ object ExampleServerMain extends ExampleServer
 
 class ExampleServer extends HttpServer {
 
-  override def defaultFinatraHttpPort = ":9988"
+  override val disableAdminHttpServer = true
 
-  override def configureHttp(router: HttpRouter):Unit = {
+  override def defaultFinatraHttpPort = ":80"
+
+  override def configureHttp(router: HttpRouter): Unit = {
     router
       .filter[LoggingMDCFilter[Request, Response]]
       .filter[TraceIdMDCFilter[Request, Response]]
       .filter[CommonFilters]
       .add[PingController]
       .add[HomeController]
+      .add[UserController]
   }
 }
