@@ -17,18 +17,8 @@ class HomeController @Inject() (service: ExampleService) extends Controller {
     response.ok.body("<h1>Home is Ok!</h1>")
   }
 
-  get("/file") { request: Request =>
-    response.ok.file("/public/file123.txt")
-  }
-
-  get("/public/:id") { request: Request =>
-    println(s"file:${request.params("id")}")
-    response.ok.fileOrIndex("/public/"+request.params("id"), "index.html")
-  }
-
-  get("/files/:id") { request: Request =>
-    println(s"${request.params("id")}")
-    request.params("id")
+  get("/static/:*") { request: Request =>
+    response.ok.fileOrIndex("/static/" + request.params("*"), "/static/index.html")
   }
 
   get("/foo") { request: Request =>
@@ -42,7 +32,6 @@ class HomeController @Inject() (service: ExampleService) extends Controller {
   }
 
   post("/foo") { request: FooRequest =>
-    println(request.age + ":" + request.email + ":" + request.name + ":" + request.sug)
     Message("这是搞什么飞机啊！！")
   }
 }
@@ -60,7 +49,6 @@ case class FooRequest(
 ) {
   @MethodValidation
   def validateName = {
-    println(s"name:${name} ${name.length} ${name.length < 6}")
     ValidationResult.validate(name.length < 6, "name length must less 6.")
   }
 }

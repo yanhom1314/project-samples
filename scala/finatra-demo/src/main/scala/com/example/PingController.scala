@@ -8,7 +8,7 @@ class PingController @Inject() (service: ExampleService) extends Controller {
 
   get("/ping") { request: Request =>
     info("ping")
-    "pong"
+    "pong" + System.currentTimeMillis()
   }
 
   get("/name") { request: Request =>

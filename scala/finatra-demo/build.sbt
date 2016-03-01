@@ -20,7 +20,6 @@ resolvers ++= Seq(
 )
 
 lazy val versions = new {
-  //val finagle = "6.29.0"
   val finatra = "2.1.4"
   val logback = "1.1.5"
   val mockito = "1.10.19"
@@ -29,7 +28,7 @@ lazy val versions = new {
 }
 
 lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).settings(
-  mainClass in assembly := Some("com.example.ExampleServerMain")
+  mainClass := Some("com.example.ExampleServerMain")
 )
 
 assemblyMergeStrategy in assembly := {
@@ -78,5 +77,3 @@ libraryDependencies ++= Seq(
   "org.mockito" % "mockito-core" % versions.mockito % "test",
   "org.scalatest" %% "scalatest" % versions.scalatest % "test",
   "org.specs2" %% "specs2" % versions.specs2 % "test")
-
-mainClass:=Some("com.example.ExampleServerMain")

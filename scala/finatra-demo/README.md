@@ -34,3 +34,62 @@ A minimal [activator](https://www.typesafe.com/get-started) seed template for cr
 + `Mustache`的缺省从`classpath`获取模版文件，`mustache.templates.dir`的缺省值为`templates`。
 + `local.doc.root`与`doc.root`是互斥的，当设置了`local.doc.root`时设定为从`local file system`获取文件，这个时候`Mustache`是从`local.doc.root`/`mustache.templates.dir`获取文件
 + 新增参数`mustache.templates.suffix`设定模板文件后缀名，缺省为`.mustache`
+
+
+## Nginx Settings
++ 代理配置:
+
+        #cache begin
+        proxy_buffering on;
+        proxy_cache_valid any 10m;
+        proxy_cache_path /data/cache levels=1:2 keys_zone=my-cache:8m max_size=1000m inactive=600m;
+        proxy_temp_path /data/temp;
+        proxy_buffer_size 4k;
+        proxy_buffers 100 8k;
+        #cache end
+        
+        #upstream
+        upstream demo_server {
+                ip_hash;
+        server 127.0.0.1:8888;
+        }
+
++ `location`配置：
+        
+        location ^~ /static/ {
+            proxy_pass http://demo_server/static/;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Real-PORT $remote_port;
+            
+            proxy_cache my-cache;
+            proxy_cache_valid 200;
+
+            proxy_redirect off;
+            proxy_connect_timeout 90;
+            proxy_send_timeout 90;
+            proxy_read_timeout 90;
+            proxy_buffer_size 4k;
+            proxy_buffers 4 32k;
+            proxy_busy_buffers_size 64k;
+            proxy_temp_file_write_size 64k;
+
+            access_log  /phd/logs/nginx/access_log;
+        }
+        
+        location ^~ /demo/ {
+            proxy_pass http://demo_server/;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Real-PORT $remote_port;
+            proxy_redirect off;
+            proxy_connect_timeout 90;
+            proxy_send_timeout 90;
+            proxy_read_timeout 90;
+            access_log  /phd/logs/nginx/access_log;
+        }
+        
+        
+
+
+
