@@ -33,8 +33,9 @@ class LocalActor extends Actor with ActorLogging {
 }
 
 object LocalActorApp extends App {
-  val config = ConfigFactory.parseFile(new File("client/src/main/resources/application.conf"))
-  //val config = ConfigFactory.parseResources(this.getClass.getClassLoader, "application.conf")
+  //val config = ConfigFactory.parseFile(new File("client/src/main/resources/application.conf"))
+  val config = ConfigFactory.parseResources(this.getClass.getClassLoader, "application.conf")
+  //val config = ConfigFactory.parseString(buffer.mkString(System.lineSeparator()))
 
   println(s"config:${config}")
 
@@ -44,27 +45,18 @@ object LocalActorApp extends App {
   localActor ! "START"
 
   CloseListener(system).start()
-
-  val str = withInputStream("application.conf")(println(_))
-
-  println("##################")
-  println(str)
-
-  def withInputStream(name: String)(call: String => Unit): String = {
-    val buffer = mutable.Buffer[String]()
+  def withInputStream(name: String)(call: String => Unit): Unit = {
     var input: InputStream = null
     try {
-      input = this.getClass.getClassLoader.getResourceAsStream(name)
-
+      input = classOf[LocalActor].getClassLoader.getResourceAsStream(name)
+      println(s"input:${input}")
       Source.fromInputStream(input).getLines.foreach { l =>
         call(l)
-        buffer + l
       }
     } catch {
       case e: Exception => e.printStackTrace()
     } finally {
       if (input != null) input.close()
     }
-    buffer.mkString(System.lineSeparator)
   }
 }
