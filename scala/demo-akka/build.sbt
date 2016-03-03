@@ -1,5 +1,7 @@
 import Build._
 
+scalaVersion := $("scala")
+
 lazy val demo_akka = project.in(file(".")).aggregate(db, server, client)
 
 lazy val db = project.in(file("db")).settings(
