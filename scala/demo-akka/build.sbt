@@ -2,7 +2,7 @@ import Build._
 
 scalaVersion := $("scala")
 
-lazy val demo_akka = project.in(file(".")).aggregate(db, server, client)
+lazy val demo_akka = project.in(file(".")).aggregate(server, client)
 
 lazy val db = project.in(file("db")).settings(
   name := "db",
@@ -32,7 +32,7 @@ lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).settings(
     "junit" % "junit" % $("junit") % "test"
   ))
 
-lazy val client = project.in(file("client")).enablePlugins(SbtDistApp).dependsOn(server, db).settings(
+lazy val client = project.in(file("client")).enablePlugins(SbtDistApp).settings(
   name := "client",
   organization := "org.koala",
   version := $("prod"),

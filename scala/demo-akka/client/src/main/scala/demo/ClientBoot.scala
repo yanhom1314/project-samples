@@ -17,7 +17,7 @@ object ClientBoot extends App {
   loopByActorSelection()
 
   //close after 50 seconds
-  system.scheduler.scheduleOnce(40.seconds)(system.shutdown())(system.dispatcher)
+  system.scheduler.scheduleOnce(40.seconds)(system.terminate())(system.dispatcher)
 
   //create monitor actor on local for actorOf
   def loopByActorOf(): Unit = {
