@@ -4,9 +4,6 @@ import java.util.Scanner
 
 import akka.actor.ActorSystem
 
-import scala.concurrent.Future
-import scala.util.{Failure, Success}
-
 case class CloseListener(val system: ActorSystem) extends Thread {
   override def run = {
     try {
