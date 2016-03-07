@@ -1,22 +1,24 @@
 package controllers
 
+import javax.inject._
+import play.api._
 import play.api.mvc._
 
-class HomeController extends Controller {
+/**
+ * This controller creates an `Action` to handle HTTP requests to the
+ * application's home page.
+ */
+@Singleton
+class HomeController @Inject() extends Controller {
 
-  implicit val myCharset = Codec.javaSupported("utf-8")
-
-  def home(id: Long = 1L, name: String = "HHH") = Action { implicit request =>
-    Redirect(routes.HomeController.index(Some(s"id:${id} name:${name}"))).withSession(request.session + ("home" -> "Ok")).flashing(request.flash + ("home" -> "FLASH HOME"))
+  /**
+   * Create an Action to render an HTML page with a welcome message.
+   * The configuration in the `routes` file means that this method
+   * will be called when the application receives a `GET` request with
+   * a path of `/`.
+   */
+  def index = Action {
+    Ok(views.html.index("Your new application is ready."))
   }
 
-  def index(id: Option[String]) = Action { implicit request =>
-
-    id match {
-      case Some(s) => println(s"id:${s}")
-      case None => println("id:_")
-    }
-
-    Redirect(routes.PersonController.index).withSession(request.session + ("index" -> "Ok")).flashing(request.flash + ("index" -> "FLASH INDEX"))
-  }
 }
