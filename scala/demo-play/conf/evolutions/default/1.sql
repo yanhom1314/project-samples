@@ -1,3 +1,5 @@
+# Users schema
+
 # --- !Ups
 
 create table "people" (
