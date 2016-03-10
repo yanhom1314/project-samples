@@ -35,5 +35,3 @@ object LocalApp extends App {
 
   system.scheduler.scheduleOnce(20.seconds)(system.shutdown())(system.dispatcher)
 }
-
-

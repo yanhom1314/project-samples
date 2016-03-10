@@ -1,16 +1,15 @@
 package demo
 
-import scala.io.StdIn
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.xml.ScalaXmlSupport._
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 
-object HttpApp extends App {
-  print("Hello World!")
+import scala.concurrent.Future
+import scala.io.StdIn
 
+object HttpApp extends App {
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
   implicit val ex = system.dispatcher
@@ -25,21 +24,19 @@ object HttpApp extends App {
 
   val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
 
-  println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
+  println("Server online at http://localhost:8080/\nPress [quit|exit] to stop...")
 
-  closeListener()
+  closeListener(bindingFuture)
 
-  def closeListener(): Unit = {
+  def closeListener(bindingFuture: Future[Http.ServerBinding]): Unit = {
     StdIn.readLine().toLowerCase().trim match {
       case "quit" | "exit" =>
         bindingFuture
           .flatMap(_.unbind()) // trigger unbinding from the port
           .onComplete(_ ⇒ system.terminate()) // and shutdown when done
-
       case l =>
-        println("Please input quit | exit.")
-        closeListener()
-
+        println(s":${l}:Please input quit | exit.")
+        closeListener(bindingFuture)
     }
   }
 }
