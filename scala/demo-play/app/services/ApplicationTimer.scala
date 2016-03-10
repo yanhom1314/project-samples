@@ -1,10 +1,12 @@
 package services
 
 import java.time.{Clock, Instant}
+
+import scala.concurrent.Future
+
 import javax.inject._
 import play.api.Logger
 import play.api.inject.ApplicationLifecycle
-import scala.concurrent.Future
 
 /**
  * This class demonstrates how to run code when the
