@@ -11,7 +11,6 @@ lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).dependsOn
   scalaVersion := $("scala"),
   mainClass := Some("demo.example.boot.ServerBoot"),
   libraryDependencies ++= Seq(
-    "com.typesafe.akka" %% "akka-kernel" % $("akka"),
     "com.typesafe.akka" %% "akka-remote" % $("akka"),
     "ch.qos.logback" % "logback-classic" % $("logback"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
@@ -25,6 +24,9 @@ lazy val client = project.in(file("client")).enablePlugins(SbtDistApp).dependsOn
   scalaVersion := $("scala"),
   mainClass := Some("demo.ClientBoot"),
   libraryDependencies ++= Seq(
+    "com.typesafe.akka" %% "akka-http-core" % $("akka"),
+    "com.typesafe.akka" %% "akka-stream" % $("akka"),
+    "com.typesafe.akka" %% "akka-http-xml-experimental" % $("akka"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
     "junit" % "junit" % $("junit") % "test"
   ))

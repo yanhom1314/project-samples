@@ -1,9 +1,8 @@
+
+import filters.ExampleFilter
 import javax.inject._
 import play.api._
 import play.api.http.HttpFilters
-import play.api.mvc._
-
-import filters.ExampleFilter
 
 /**
  * This class configures filters that run on every request. This
@@ -21,7 +20,8 @@ import filters.ExampleFilter
 @Singleton
 class Filters @Inject() (
   env: Environment,
-  exampleFilter: ExampleFilter) extends HttpFilters {
+  exampleFilter: ExampleFilter
+) extends HttpFilters {
 
   override val filters = {
     // Use the example filter if we're running development mode. If
