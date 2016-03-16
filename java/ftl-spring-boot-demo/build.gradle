@@ -29,6 +29,7 @@ dependencies {
       	    "org.springframework.boot:spring-boot-starter-data-jpa",
             "org.springframework.boot:spring-boot-starter-freemarker",
             "org.springframework.boot:spring-boot-starter-security",
+            "com.h2database:h2:${h2}",
             "com.github.axet:kaptcha:${kaptcha}")
     testCompile("junit:junit")
 }
