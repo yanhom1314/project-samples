@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class          0000000000000000CsrfHeaderFilter implements Filter {
+public class CsrfHeaderFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
