@@ -1,13 +1,12 @@
 package controllers
 
 import javax.inject._
-
 import play.api.mvc._
 
 /**
-  * This controller creates an `Action` to handle HTTP requests to the
-  * application's home page.
-  */
+ * This controller creates an `Action` to handle HTTP requests to the
+ * application's home page.
+ */
 @Singleton
 class HomeController @Inject() extends Controller {
 
@@ -16,7 +15,6 @@ class HomeController @Inject() extends Controller {
   }
 
   def index(id: Option[String]) = Action { implicit request =>
-
     id match {
       case Some(s) => println(s"id:${s}")
       case None => println("id:_")
@@ -24,5 +22,4 @@ class HomeController @Inject() extends Controller {
 
     Redirect(routes.PersonController.index).withSession(request.session + ("index" -> "Ok")).flashing(request.flash + ("index" -> "FLASH INDEX"))
   }
-
 }
