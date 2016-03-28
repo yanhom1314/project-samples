@@ -17,5 +17,6 @@
   (say-hello "yafengli@sina.com")
   (say-hello (lyf-add 445 333))
   (say-hello (lyf-del 444 222))
+  (lib-nice "yafengli@sina.com")
   (println "Listern to 127.0.0.1:9002, Server starting.")
   (run-server app {:port 9002}))

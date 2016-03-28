@@ -16,6 +16,8 @@
   "del x - y"
   [x y]
   (- x y))
+(defn lib-nice [name]
+  (println name))
 (defn say-nice
   "This function is say Nice to your friends!"
   [name]

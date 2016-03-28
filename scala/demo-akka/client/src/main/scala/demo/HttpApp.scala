@@ -13,6 +13,10 @@ object HttpApp extends App {
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
   implicit val ex = system.dispatcher
+
+  val host = "localhost"
+  val port = 80
+
   val route =
     path("hello") {
       get {
@@ -22,9 +26,9 @@ object HttpApp extends App {
       }
     }
 
-  val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
+  val bindingFuture = Http().bindAndHandle(route, host, port)
 
-  println("Server online at http://localhost:8080/\nPress [quit|exit] to stop...")
+  println(s"Server online at http://${host}:$port/\nPress [quit|exit] to stop...")
 
   closeListener(bindingFuture)
 

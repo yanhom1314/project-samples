@@ -27,7 +27,7 @@ A minimal [activator](https://www.typesafe.com/get-started) seed template for cr
 
     sbt
     >assembly
-    java -jar target\scala-2.11\finatra-demo-assembly-x.y.z.jar -admin.port=:8877 -http.port=:80 -local.doc.root=src/main/resources -mustache.templates.dir=templates
+    java -admin.port=:8877 -http.port=:80 -local.doc.root=src/main/resources -mustache.templates.dir=templates -jar target\scala-2.11\finatra-demo-assembly-x.y.z.jar
 
 
 ## Mustache Template
