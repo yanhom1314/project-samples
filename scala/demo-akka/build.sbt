@@ -37,6 +37,7 @@ lazy val message = project.in(file("message")).settings(
   version := $("prod"),
   scalaVersion := $("scala"),
   libraryDependencies ++= Seq(
+    "com.google.inject" % "guice" % $("guice"),
     "com.typesafe.akka" %% "akka-kernel" % $("akka"),
     "com.typesafe.akka" %% "akka-remote" % $("akka"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
