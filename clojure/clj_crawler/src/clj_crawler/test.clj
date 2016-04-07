@@ -6,9 +6,13 @@
 
 (defn say-hello [name]
   (println "Hello " name))
+(defn welcome [name]
+  "What the fucking hell!"
+  (println name))
 
 (defn -main [&args]
   (say-nice "Hello World!")
   (say-hi "Hello Nice!")
   (say "Hello World!")
+  (welcome "YaFengLi")
   (say-hello "YaFengLi"))

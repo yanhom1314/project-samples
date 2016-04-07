@@ -13,18 +13,16 @@ javaOptions ++= Seq(
   "-Dlog.access.output=/dev/stderr")
 
 resolvers ++= Seq(
-  //"OSC" at "http://maven.oschina.net/content/groups/public",
   Resolver.sonatypeRepo("releases"),
   "Twitter Maven" at "https://maven.twttr.com",
   "Finatra Repo" at "http://twitter.github.com/finatra"
 )
 
 lazy val versions = new {
-  val finatra = "2.1.4"
-  val logback = "1.1.5"
+  val finatra = "2.1.5"
+  val logback = "1.1.6"
   val mockito = "1.10.19"
-  val scalatest = "2.2.3"
-  val specs2 = "2.3.12"
+  val scalatest = "2.2.6"
 }
 
 lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).settings(
@@ -75,5 +73,4 @@ libraryDependencies ++= Seq(
   "com.twitter.inject" %% "inject-modules" % versions.finatra % "test" classifier "tests",
 
   "org.mockito" % "mockito-core" % versions.mockito % "test",
-  "org.scalatest" %% "scalatest" % versions.scalatest % "test",
-  "org.specs2" %% "specs2" % versions.specs2 % "test")
+  "org.scalatest" %% "scalatest" % versions.scalatest % "test")
