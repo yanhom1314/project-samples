@@ -1,0 +1,6 @@
+[29/Jan/2016:16:11:41 +0800] Server.httpServe: START, binding to [http://0.0.0.0:8000/]
+[29/Jan/2016:16:12:02 +0800] Server.httpServe: SHUTDOWN
+[29/Jan/2016:16:12:02 +0800] Server.httpServe: BACKEND STOPPED
+[29/Jan/2016:16:12:33 +0800] Server.httpServe: START, binding to [http://0.0.0.0:8000/]
+[29/Jan/2016:16:16:48 +0800] Server.httpServe: SHUTDOWN
+[29/Jan/2016:16:16:48 +0800] Server.httpServe: BACKEND STOPPED

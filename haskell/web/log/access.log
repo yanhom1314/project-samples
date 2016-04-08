@@ -1,0 +1,4 @@
+127.0.0.1 - - [29/Jan/2016:16:11:57 +0800] "GET / HTTP/1.1" 200 - - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36"
+127.0.0.1 - - [29/Jan/2016:16:11:57 +0800] "GET /favicon.ico HTTP/1.1" 404 - "http://127.0.0.1:8000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36"
+127.0.0.1 - - [29/Jan/2016:16:12:37 +0800] "GET /foo HTTP/1.1" 200 - - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36"
+127.0.0.1 - - [29/Jan/2016:16:12:55 +0800] "GET /echo/YaFengLi HTTP/1.1" 200 - - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36"
