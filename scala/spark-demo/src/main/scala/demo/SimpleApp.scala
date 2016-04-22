@@ -21,5 +21,3 @@ object SimpleApp extends MyApp {
     }
   }
 }
-
-

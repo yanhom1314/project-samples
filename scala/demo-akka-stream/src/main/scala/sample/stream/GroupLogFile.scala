@@ -2,11 +2,10 @@ package sample.stream
 
 import java.io.File
 
+import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.io.Framing
 import akka.stream.scaladsl._
-import akka.util.ByteString
 
 object GroupLogFile {
 
@@ -24,23 +23,7 @@ object GroupLogFile {
     // read lines from a log file
     val logFile = new File("e:/tmp/adv_web.log")
 
-    Source.file(logFile).
-      // parse chunks of bytes into lines
-      via(Framing.delimiter(ByteString(fileSeperator), maximumFrameLength = 8094, allowTruncation = true)).
-      map(_.utf8String).
-      // group them by log level
-      groupBy {
-        case LoglevelPattern(level) => level
-        case other                  => "OTHER"
-      }.
-
-      // write lines of each group to a separate file
-      mapAsync(parallelism = 5) {
-        case (level, groupFlow) =>
-          groupFlow.map(line => ByteString(line + System.lineSeparator())).runWith(Sink.file(new File(s"e:/tmp/target/log-$level.txt")))
-      }.
-      runWith(Sink.onComplete { _ =>
-        system.shutdown()
-      })
+    val source: Source[Int, NotUsed] = Source(1 to 100)
+    source.runForeach(i => println(i))(materializer)
   }
 }

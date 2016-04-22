@@ -2,8 +2,7 @@ package sample.stream
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.io.Framing
-import akka.stream.scaladsl.{ Flow, Sink, Source, Tcp }
+import akka.stream.scaladsl.{ Flow, Framing, Sink, Source, Tcp }
 import akka.util.ByteString
 
 import scala.util.{ Failure, Success }
@@ -53,8 +52,8 @@ object TcpEcho {
       .map(_.utf8String.toLowerCase.trim)
       .filter {
         case "quit" =>
-          system.shutdown(); false
-        case _      => true
+          system.terminate(); false
+        case _ => true
       }
       .map(_ + "!!!\n")
       .map(ByteString(_))
@@ -73,7 +72,7 @@ object TcpEcho {
         println("Server started, listening on: " + b.localAddress)
       case Failure(e) =>
         println(s"Server could not bind to $address:$port: ${e.getMessage}")
-        system.shutdown()
+        system.terminate()
     }
 
   }
@@ -92,10 +91,10 @@ object TcpEcho {
       case Success(result) =>
         println(s"Result: " + result.utf8String)
         println("Shutting down client")
-        system.shutdown()
+        system.terminate()
       case Failure(e) =>
         println("Failure: " + e.getMessage)
-        system.shutdown()
+        system.terminate()
     }
   }
 }

@@ -9,9 +9,10 @@ scalaVersion := "2.11.7"
 enablePlugins(SbtDistApp)
 
 libraryDependencies ++= Seq(
-  //"com.typesafe.akka" %% "akka-stream-experimental" % "1.0",
-  "com.typesafe.akka" %% "akka-stream-experimental" % "2.0-M2",
-  "io.reactivex" %% "rxscala" % "0.25.0"
+  //"com.typesafe.akka" %% "akka-stream" % "2.4,4",
+  "com.typesafe.akka" % "akka-stream_2.11" % "2.4.4",
+  "com.typesafe.akka" %% "akka-http-experimental" % "2.4.4",
+  "io.reactivex" %% "rxscala" % "0.26.1"
 )
 
 scalariformSettings
