@@ -4,7 +4,7 @@ organization := "com.example"
 
 version := "1.0.0-SNAPSHOT"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 fork in run := true
 

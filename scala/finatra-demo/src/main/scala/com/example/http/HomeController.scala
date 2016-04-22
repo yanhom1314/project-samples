@@ -1,20 +1,20 @@
-package com.example
+package com.example.http
 
-import com.twitter.finatra.validation.NotEmpty
-import com.twitter.finatra.validation.Size
-import scala.collection.mutable.Buffer
+import javax.inject.Inject
 
+import com.example.service.ExampleService
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.FormParam
 import com.twitter.finatra.response.Mustache
-import com.twitter.finatra.validation.{MethodValidation, ValidationResult}
-import javax.inject.Inject
+import com.twitter.finatra.validation.{MethodValidation, NotEmpty, Size, ValidationResult}
+
+import scala.collection.mutable.Buffer
 
 class HomeController @Inject() (service: ExampleService) extends Controller {
 
   get("/home") { request: Request =>
-    response.ok.body("<h1>Home is Ok!</h1>")
+    response.ok.html("<h1>Home is Ok!</h1>")
   }
 
   get("/static/:*") { request: Request =>

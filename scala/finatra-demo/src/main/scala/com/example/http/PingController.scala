@@ -1,8 +1,10 @@
-package com.example
+package com.example.http
 
+import javax.inject.Inject
+
+import com.example.service.ExampleService
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
-import javax.inject.Inject
 
 class PingController @Inject() (service: ExampleService) extends Controller {
 
@@ -16,6 +18,6 @@ class PingController @Inject() (service: ExampleService) extends Controller {
       println(s"${t._1}:${t._2}")
     }
     service.myDo(request)
-    response.ok.body("Bob")
+    response.ok.plain("Bob")
   }
 }

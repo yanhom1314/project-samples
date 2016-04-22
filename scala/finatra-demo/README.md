@@ -28,7 +28,13 @@ A minimal [activator](https://www.typesafe.com/get-started) seed template for cr
     sbt
     >assembly
     java -admin.port=:8877 -http.port=:80 -local.doc.root=src/main/resources -mustache.templates.dir=templates -jar target\scala-2.11\finatra-demo-assembly-x.y.z.jar
-
+    >distZip
+    cd target/universal/stage
+    bin/finatra-demo.bat -admin.port=:8877 -http.port=:80 -local.doc.root=src/main/resources -mustache.templates.dir=templates
+    
+## 乱码问题
++ 统一采用`UTF-8`编码
++ 增加`-Dfile.encoding=UTF-8`参数    
 
 ## Mustache Template
 + `Mustache`的缺省从`classpath`获取模版文件，`mustache.templates.dir`的缺省值为`templates`。

@@ -1,1 +1,68 @@
-<h1>Index Page Ok!</h1>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Nice !</title>
+    <link rel="stylesheet" href="/static/css/main.css" type="text/css" />
+    <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/vue/1.0.17/vue.js"></script>
+    <script>
+        $(function(){
+            new Vue({
+                el: '#app',
+                data: {
+                    message: 'Hello Vue.js!',
+                    todos: [
+                        { text: 'Learn JavaScript' },
+                        { text: 'Learn Vue.js' },
+                        { text: 'Build Something Awesome' }
+                    ]
+                },
+                methods: {
+                    reverseMessage: function () {
+                        this.message = this.message.split('').reverse().join('')
+                    },
+                    addTodo: function () {
+                        var text = this.newTodo.trim()
+                        if (text) {
+                            this.todos.push({ text: text })
+                            this.newTodo = ''
+                        }
+                    },
+                    removeTodo: function (index) {
+                        this.todos.splice(index, 1)
+                    },
+                    callRemote: function() {
+                        var _self = this;
+                        $.get('/users?max=10&start_date=2014-05-11TZ&verbose=true',function(data){
+                            console.log(data);
+                            console.log(data.start_date);
+                            _self.message = data.start_date;
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+<h1>Hello World!</h1>
+<div id="app">
+    <input v-model="message">{{ message }}
+    <hr/>
+    <button v-on:click="callRemote">Call Remote Json REST Service!</button>
+    <hr/>
+    <button v-on:click="reverseMessage">Reverse Message</button>
+    <hr/>
+    <input v-model="newTodo" v-on:keyup.enter="addTodo">
+    <ul>
+        <li v-for="todo in todos">
+            {{ todo.text }}
+            <button v-on:click="removeTodo($index)">X</button>
+        </li>
+    </ul>
+</div>
+</body>
+
+</html>
