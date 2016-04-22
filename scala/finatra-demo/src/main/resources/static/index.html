@@ -3,19 +3,20 @@
 <head>
     <meta charset="utf-8">
     <title>Nice !</title>
-    <link rel="stylesheet" href="/static/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/main.css" type="text/css"/>
     <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery.form/3.51/jquery.form.min.js"></script>
     <script src="//cdn.bootcss.com/vue/1.0.17/vue.js"></script>
     <script>
-        $(function(){
+        $(function () {
             new Vue({
                 el: '#app',
                 data: {
                     message: 'Hello Vue.js!',
                     todos: [
-                        { text: 'Learn JavaScript' },
-                        { text: 'Learn Vue.js' },
-                        { text: 'Build Something Awesome' }
+                        {text: 'Learn JavaScript'},
+                        {text: 'Learn Vue.js'},
+                        {text: 'Build Something Awesome'}
                     ]
                 },
                 methods: {
@@ -25,23 +26,51 @@
                     addTodo: function () {
                         var text = this.newTodo.trim()
                         if (text) {
-                            this.todos.push({ text: text })
+                            this.todos.push({text: text})
                             this.newTodo = ''
                         }
                     },
                     removeTodo: function (index) {
                         this.todos.splice(index, 1)
                     },
-                    callRemote: function() {
+                    callRemote: function () {
                         var _self = this;
-                        $.get('/users?max=10&start_date=2014-05-11TZ&verbose=true',function(data){
-                            console.log(data);
-                            console.log(data.start_date);
-                            _self.message = data.start_date;
+                        $.get('/users?max=10&start_date=2014-05-11TZ&verbose=true', function (data) {
+                            _self.message = data["start_date"];
                         });
                     }
                 }
             });
+            $(":submit").click(function () {
+                var options = {
+                    url: "/users",
+                    target: "#div2",
+                    beforeSubmit: function validate(formData, jqForm, options) {
+                        var form = jqForm[0];
+
+                        console.log(form.max.value + ":" + form.start_date.value + ":" + form.verbose.value);
+
+                        $('label[for=max]').remove();
+                        $('label[for=start_date]').remove();
+                        $('label[for=verbose]').remove();
+
+                        if (!form.max.value)
+                            $('input[name=max]').after("<label for='max' style='color: red'>捷豹错了！</label>");
+                        if (!form.start_date.value)
+                            $('input[name=start_date]').after("<label for='start_date' style='color: red'>又捷豹错了！</label>");
+
+                        if (!form.verbose.value)
+                            $('input[name=verbose]').after("<label for='verbose' style='color: red'>再捷豹错了！</label>");
+
+                        if (!form.max.value || !form.start_date.value || !form.verbose.value)
+                            return false;
+                    },
+                    success: function () {
+                        alert("ajax请求成功");
+                    }
+                };
+                $("#form1").ajaxForm(options);
+            })
         });
     </script>
 </head>
@@ -62,7 +91,14 @@
             <button v-on:click="removeTodo($index)">X</button>
         </li>
     </ul>
+    <hr/>
+    <form id="form1" method="get" action="#">
+        <input type="text" name="max" value="" placeholder="10"><label style="color: red"></label> <br/>
+        <input type="text" name="start_date" value="" placeholder="2014-05-11TZ"><br/>
+        <input type="text" name="verbose" value="" placeholder="true"><br/>
+        <input type="submit" value="确认"/><br/>
+    </form>
 </div>
-</body>
 
+</body>
 </html>
