@@ -11,6 +11,6 @@ object HelloJacksonYaml {
     val invoice = mapper.readValue(new FileInputStream("src/main/resources/test.yml"), classOf[Invoice])
 
     println(invoice)
-    println(invoice.date + ":" + invoice.post_url)
+    println(invoice.date + ":" + invoice.post_url + ":" + invoice.billTo.given + ":" + invoice.billTo.family + ":" + invoice.billTo.address.city)
   }
 }
