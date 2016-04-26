@@ -19,6 +19,6 @@ object HelloSnakeYaml {
     val y2 = new Yaml(new Constructor(classOf[beans.Invoice]))
     val invoice = y2.loadAs(new FileInputStream("src/main/resources/test.yml"),classOf[beans.Invoice])
     println(invoice)
-    println(invoice.date +":"+invoice.post_url)
+    println(invoice.date +":"+invoice.post_url +":"+invoice.billTo.given+":"+invoice.billTo.family+":"+invoice.billTo.address.city)
   }
 }
