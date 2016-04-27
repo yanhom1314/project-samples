@@ -16,6 +16,8 @@ class Invoice {
   @BeanProperty
   var product: util.List[Product] = _
   @BeanProperty
+  var acmap: util.List[String] = _
+  @BeanProperty
   var tax: Float = 0.0f
   @BeanProperty
   var total: Float = 0.0f
