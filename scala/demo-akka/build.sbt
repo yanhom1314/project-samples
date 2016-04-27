@@ -1,7 +1,5 @@
 import Build._
 
-scalaVersion := $("scala")
-
 lazy val demo_akka = project.in(file(".")).aggregate(server, client,message)
 
 lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).dependsOn(message).settings(
@@ -25,8 +23,8 @@ lazy val client = project.in(file("client")).enablePlugins(SbtDistApp).dependsOn
   mainClass := Some("demo.ClientBoot"),
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-http-core" % $("akka"),
-    "com.typesafe.akka" %% "akka-stream" % $("akka"),
     "com.typesafe.akka" %% "akka-http-xml-experimental" % $("akka"),
+    "com.typesafe.akka" %% "akka-stream" % $("akka"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
     "junit" % "junit" % $("junit") % "test"
   ))

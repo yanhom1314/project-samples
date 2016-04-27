@@ -26,20 +26,28 @@ object HttpApp extends App {
       }
     }
 
-  val bindingFuture = Http().bindAndHandle(route, host, port)
+  val r1 =
+    path("index") {
+      get {
+        complete {
+          <h2>What the fucking hell!</h2>
+        }
+      }
+    }
+  val bindingFuture = Http().bindAndHandle(route ~ r1, host, port)
 
-  println(s"Server online at http://${host}:$port/\nPress [quit|exit] to stop...")
+  println(s"Server online at http://${host}:$port/\nPress [q]uit|[e]xit to stop...")
 
   closeListener(bindingFuture)
 
   def closeListener(bindingFuture: Future[Http.ServerBinding]): Unit = {
     StdIn.readLine().toLowerCase().trim match {
-      case "quit" | "exit" =>
+      case "q" | "e" =>
         bindingFuture
           .flatMap(_.unbind()) // trigger unbinding from the port
           .onComplete(_ ⇒ system.terminate()) // and shutdown when done
       case l =>
-        println(s":${l}:Please input quit | exit.")
+        println(s":${l}:Please input [q]uit | [e]xit.")
         closeListener(bindingFuture)
     }
   }
