@@ -5,11 +5,12 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
+import demo.bean.{Address, MyJsonSupport, Person}
 
 import scala.concurrent.Future
 import scala.io.StdIn
 
-object HttpApp extends App {
+object HttpApp extends App with MyJsonSupport {
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
   implicit val ex = system.dispatcher
@@ -39,8 +40,8 @@ object HttpApp extends App {
       }
     }
 
-  val r2  =
-     get {
+  val r2 =
+    get {
       path("say") {
         parameters("color" ? "red", 'name ? "NB") { (color, name) =>
           complete(s"Say!!! The color is '$color' and the background is $name")
@@ -49,15 +50,22 @@ object HttpApp extends App {
     }
 
   val r3 =
-    get  {
-      path("hi" / Segment / Segment) { (name,age) =>
+    get {
+      path("hi" / Segment / Segment) { (name, age) =>
         complete {
           HttpResponse(entity = HttpEntity(ContentTypes.`text/html(UTF-8)`,s"""<h2>Nice Hello,Mr. $name age is $age !!!!!!</h2>"""))
         }
       }
     }
 
-  val bindingFuture = Http().bindAndHandle(route ~ r1 ~ r2 ~ r3 , host, port)
+  var r4 =
+    get {
+      path("person" / Segment / IntNumber) { (name, age) =>
+        complete(Person(name, age))
+      }
+    }
+
+  val bindingFuture = Http().bindAndHandle(route ~ r1 ~ r2 ~ r3 ~ r4, host, port)
 
   println(s"Server online at http://${host}:$port/\nPress [q]uit|[e]xit to stop...")
 

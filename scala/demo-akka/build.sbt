@@ -24,6 +24,7 @@ lazy val client = project.in(file("client")).enablePlugins(SbtDistApp).dependsOn
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-http-core" % $("akka"),
     "com.typesafe.akka" %% "akka-http-xml-experimental" % $("akka"),
+    "com.typesafe.akka" %% "akka-http-spray-json-experimental" % $("akka"),
     "com.typesafe.akka" %% "akka-stream" % $("akka"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
     "junit" % "junit" % $("junit") % "test"
