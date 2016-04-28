@@ -61,9 +61,14 @@ object HttpApp extends App with MyJsonSupport {
   var r4 =
     get {
       path("person" / Segment / IntNumber) { (name, age) =>
-        complete(Person(name, age))
+        complete(Person(name, age, None))
       }
-    }
+    } ~
+      get {
+        path("address" / Segment / IntNumber) { (a, n) =>
+          complete(Address(a, Some(n)))
+        }
+      }
 
   val bindingFuture = Http().bindAndHandle(route ~ r1 ~ r2 ~ r3 ~ r4, host, port)
 
