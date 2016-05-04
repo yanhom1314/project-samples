@@ -18,6 +18,7 @@ main = do
   print (add' 5 5)
   print (add' 6 6)
   print (add(7,7))
+  putStrLn("Hello," ++ show(add(7,7)) ++ "!")
   print (fac 33)
   print (fac 33)
   let result = add' 11 11
