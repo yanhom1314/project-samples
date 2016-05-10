@@ -1,28 +1,21 @@
-import scalariform.formatter.preferences._
+import Build._
 
 name := """demo-akka-stream"""
 
 version := "1.1"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
-enablePlugins(SbtDistApp)
-
-libraryDependencies ++= Seq(
-  //"com.typesafe.akka" %% "akka-stream" % "2.4,4",
-  "com.typesafe.akka" % "akka-stream_2.11" % "2.4.4",
-  "com.typesafe.akka" %% "akka-http-experimental" % "2.4.4",
-  "io.reactivex" %% "rxscala" % "0.26.1"
-)
-
-scalariformSettings
-
-mainClass := Some("sample.stream.TcpEcho")
-
-ScalariformKeys.preferences := ScalariformKeys.preferences.value
-  .setPreference(AlignSingleLineCaseStatements, true)
-  .setPreference(AlignSingleLineCaseStatements.MaxArrowIndent, 100)
-  .setPreference(DoubleIndentClassDeclaration, true)
-  .setPreference(PreserveDanglingCloseParenthesis, true)
+lazy val root = project.in(file(".")).enablePlugins(SbtDistApp).settings(
+  name := "client",
+  organization := "org.koala",
+  version := $("prod"),
+  scalaVersion := $("scala"),
+  mainClass := Some("sample.stream.TcpEcho"),
+  libraryDependencies ++= Seq(
+    "com.typesafe.akka" %% "akka-stream" % $("akka"),
+    "io.reactivex" %% "rxscala" % $("rxscala"),
+    "org.scalatest" %% "scalatest" % $("scalatest") % "test"
+  ))
 
 fork in run := true

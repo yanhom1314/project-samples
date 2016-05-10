@@ -2,48 +2,46 @@ package sample.stream
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.{ Flow, Framing, Sink, Source, Tcp }
+import akka.stream.scaladsl.{Flow, Framing, Sink, Source, Tcp}
 import akka.util.ByteString
 
-import scala.util.{ Failure, Success }
+import scala.concurrent.ExecutionContextExecutor
+import scala.util.{Failure, Success}
 
 object TcpEcho {
 
   /**
-   * Use without parameters to start both client and
-   * server.
-   *
-   * Use parameters `server 0.0.0.0 6001` to start server listening on port 6001.
-   *
-   * Use parameters `client 127.0.0.1 6001` to start client connecting to
-   * server on 127.0.0.1:6001.
-   *
-   */
+    * Use without parameters to start both client and
+    * server.
+    *
+    * Use parameters `server 0.0.0.0 6001` to start server listening on port 6001.
+    *
+    * Use parameters `client 127.0.0.1 6001` to start client connecting to
+    * server on 127.0.0.1:6001.
+    *
+    */
   def main(args: Array[String]): Unit = {
+    implicit val system = ActorSystem("ServerAndClientSystem")
+    implicit val materializer = ActorMaterializer()
+    implicit val ex = system.dispatcher
+
     if (args.isEmpty) {
-      val system = ActorSystem("ClientAndServer")
       val (address, port) = ("127.0.0.1", 6000)
-      server(system, address, port)
-      client(system, address, port)
+      server(address, port)
+      client(address, port)
     } else {
       val (address, port) =
         if (args.length == 3) (args(1), args(2).toInt)
         else ("127.0.0.1", 6000)
       if (args(0) == "server") {
-        val system = ActorSystem("Server")
-        server(system, address, port)
+        server(address, port)
       } else if (args(0) == "client") {
-        val system = ActorSystem("Client")
-        client(system, address, port)
+        client(address, port)
       }
     }
   }
 
-  def server(system: ActorSystem, address: String, port: Int): Unit = {
-    implicit val sys = system
-    import system.dispatcher
-    implicit val materializer = ActorMaterializer()
-
+  def server(address: String, port: Int)(implicit system: ActorSystem, dispatcher: ExecutionContextExecutor, materializer: ActorMaterializer): Unit = {
     val echo = Flow[ByteString]
       .via(Framing.delimiter(
         ByteString("\n"),
@@ -55,12 +53,11 @@ object TcpEcho {
           system.terminate(); false
         case _ => true
       }
-      .map(_ + "!!!\n")
+      .map(t => s"[${t}]\n")
       .map(ByteString(_))
 
     val handler = Sink.foreach[Tcp.IncomingConnection] { conn =>
       println("Client connected from: " + conn.remoteAddress)
-      //conn handleWith Flow[ByteString]
       conn handleWith echo
     }
 
@@ -77,10 +74,7 @@ object TcpEcho {
 
   }
 
-  def client(system: ActorSystem, address: String, port: Int): Unit = {
-    implicit val sys = system
-    import system.dispatcher
-    implicit val materializer = ActorMaterializer()
+  def client(address: String, port: Int)(implicit system: ActorSystem, dispatcher: ExecutionContextExecutor, materializer: ActorMaterializer): Unit = {
 
     val testInput = ('a' to 'z').map(ByteString(_))
 
@@ -89,7 +83,7 @@ object TcpEcho {
 
     result.onComplete {
       case Success(result) =>
-        println(s"Result: " + result.utf8String)
+        println(s"Result:[${result.utf8String}]")
         println("Shutting down client")
         system.terminate()
       case Failure(e) =>
