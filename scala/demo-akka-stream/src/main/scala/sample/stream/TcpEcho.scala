@@ -42,20 +42,6 @@ object TcpEcho {
   }
 
   def server(address: String, port: Int)(implicit system: ActorSystem, dispatcher: ExecutionContextExecutor, materializer: ActorMaterializer): Unit = {
-    val echo = Flow[ByteString]
-      .via(Framing.delimiter(
-        ByteString("\n"),
-        maximumFrameLength = 256,
-        allowTruncation = true))
-      .map(_.utf8String.toLowerCase.trim)
-      .filter {
-        case "quit" =>
-          system.terminate(); false
-        case _ => true
-      }
-      .map(t => s"[${t}]\n")
-      .map(ByteString(_))
-
     val handler = Sink.foreach[Tcp.IncomingConnection] { conn =>
       println("Client connected from: " + conn.remoteAddress)
       conn handleWith echo
@@ -73,6 +59,27 @@ object TcpEcho {
     }
 
   }
+
+  def echo(implicit system: ActorSystem) = Flow[ByteString]
+    .via(Framing.delimiter(ByteString("$"), maximumFrameLength = 256, allowTruncation = true))
+    .map(_.utf8String.toLowerCase.trim)
+    .filter {
+      case "quit" => system.terminate(); false
+      case _ => true
+    }
+    .map(t => s"[${t}]")
+    .map(ByteString(_))
+
+
+  def binary(implicit system: ActorSystem) = Flow[ByteString]
+    .via(Framing.delimiter(ByteString("$"), maximumFrameLength = 256, allowTruncation = true))
+    .map(_.utf8String.toLowerCase.trim)
+    .filter {
+      case "quit" => system.terminate(); false
+      case _ => true
+    }
+    .map(t => s"[${t}]")
+    .map(ByteString(_))
 
   def client(address: String, port: Int)(implicit system: ActorSystem, dispatcher: ExecutionContextExecutor, materializer: ActorMaterializer): Unit = {
 
