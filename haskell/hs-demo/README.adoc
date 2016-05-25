@@ -15,22 +15,14 @@ v1.0, 2014-01-01
 	$ cabal init
 
 == Build and Run
+* 使用stack
+	
+	$ stack setup
+	$ stack init
+	$ stack build
+	$ stack exec hs-demo		
 * 使用cabal
 
 	$ cabal configure
 	$ cabal build
 	$ cabal run
-
-== Build and Run II
-* 使用cabal sandbox
-
-	$ cabal sandbox init
-	$ cabal install -j
-	$ .cabal-sandbox/bin/hs-demo.exe
-
-== Build and Run III
-* 使用runghc
-
-	$ runghc Setup.hs configure
-	$ runghc Setup.hs build
-	$ dist/build/hs-demo/hs-demo.exe
