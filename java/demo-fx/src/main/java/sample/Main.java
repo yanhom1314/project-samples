@@ -13,12 +13,11 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
 
-        Scene scene = new Scene(root, 300, 275);
+        Scene scene = new Scene(root, 280, 192);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(this.getClass().getClassLoader().getResource("login.css").toExternalForm());
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
