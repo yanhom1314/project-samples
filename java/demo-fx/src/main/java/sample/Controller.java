@@ -25,4 +25,9 @@ public class Controller {
             action_target.setText(MessageFormat.format(bundle.getString("login.err"), user_name.getText()));
         } else action_target.setText(bundle.getString("callback.text"));
     }
+
+    @FXML
+    protected void closeButtonAction(ActionEvent event) {
+        System.exit(0);
+    }
 }

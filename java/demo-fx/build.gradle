@@ -3,13 +3,10 @@ apply plugin: 'java'
 group = "demo.fx"
 version = "${version}"
 
-targetCompatibility = '1.8'
-sourceCompatibility = '1.8'
-
 repositories {
     mavenLocal()
     jcenter()
-    maven { url "maven.oschina.net/content/groups/public" }    
+    maven { url "maven.oschina.net/content/groups/public" }
 }
 
 dependencies {

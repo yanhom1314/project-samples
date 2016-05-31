@@ -22,8 +22,7 @@ import javafx.util.Duration;
 
 import static java.lang.Math.random;
 
-public class ColorfulCircles extends Application {
-
+public class ColorfulCirclesMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
@@ -35,7 +34,7 @@ public class ColorfulCircles extends Application {
         primaryStage.setScene(scene);
 
         //primaryStage.getIcons().add(new Image("http://doc.akka.io/docs/akka/2.4.4/_static/akka_full_color.svg"));
-        primaryStage.getIcons().add(new Image(this.getClass().getClassLoader().getResourceAsStream("icon.jpg")));
+        primaryStage.getIcons().add(new Image(this.getClass().getClassLoader().getResourceAsStream("img/icon.jpg")));
         Group circles = new Group();
 
         for (int i = 0; i < 30; i++) {
