@@ -3,6 +3,7 @@ package demo;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 import java.io.Serializable;
+import java.util.Random;
 
 public class Organization implements Serializable {
     @QuerySqlField(index = true)
@@ -12,6 +13,11 @@ public class Organization implements Serializable {
 
     public Organization(Long id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public Organization(String name) {
+        this.id = System.currentTimeMillis() + new Random().nextInt(1000);
         this.name = name;
     }
 
