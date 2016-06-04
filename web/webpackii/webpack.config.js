@@ -1,14 +1,17 @@
 var webpack = require('webpack');
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
+/**
 var uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({
     compress: {
         warnings: false
     }
 });
+*/
 
 module.exports = {
     //插件项
-    plugins: [commonsPlugin,uglifyJsPlugin],
+    //plugins: [commonsPlugin,uglifyJsPlugin],
+    plugins: [commonsPlugin],
     //页面入口文件配置
     entry: {
         index : './src/js/page/index.js'
