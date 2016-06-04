@@ -29,10 +29,11 @@ module.exports = {
     },
     //其它解决方案配置
     resolve: {
-        root: 'e:/tmp/spring-boot', //绝对路径
+        //root: 'e:/tmp/spring-boot', //绝对路径
         extensions: ['', '.js', '.json', '.scss'],
         alias: {
-            math : 'src/js/lib/math.js'            
+            math : '../../../src/js/lib/math.js',
+            form : '../../../src/js/form/form.js'            
         }
     }
 };
