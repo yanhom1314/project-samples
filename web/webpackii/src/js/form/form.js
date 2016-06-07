@@ -1,6 +1,5 @@
 var $ = require("jquery");
 require("jquery-validation");
-
 // jQuery.validator增加IP验证
 $.validator.addMethod("c_ip", function (value, element) {
     return this.optional(element) || (/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/.test(value) && (RegExp.$1 < 256 && RegExp.$2 < 256 && RegExp.$3 < 256 && RegExp.$4 < 256));

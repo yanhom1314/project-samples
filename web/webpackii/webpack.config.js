@@ -29,7 +29,7 @@ module.exports = {
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.js$/, loader: 'jsx-loader?harmony' },
             { test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
-            { test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=8192'}
+            { test: /\.(jpe?g|png|gif)$/, loader: 'url-loader?limit=8192'}
         ]
     },
     //其它解决方案配置
