@@ -1,7 +1,7 @@
 require('css'); //加载初始化样式
 var $ = require('jquery')
-var draw = require('draw').draw;
+var grid = require('grid').grid;
 $(function () {
-    //Echarts
-    draw('main');
+    //jqGrid
+    grid('list2','pager2','data.json');
 });

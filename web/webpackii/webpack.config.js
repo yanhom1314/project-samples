@@ -15,7 +15,8 @@ module.exports = {
     //页面入口文件配置
     entry: {
         index: './src/js/page/index.js',
-        main: './src/js/page/main.js'
+        main: './src/js/page/main.js',
+        jqgrid: './src/js/page/jqgrid.js',
     },
     //入口文件输出配置
     output: {
@@ -28,7 +29,7 @@ module.exports = {
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.js$/, loader: 'jsx-loader?harmony' },
             { test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
-            { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
+            { test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=8192'}
         ]
     },
     //其它解决方案配置
@@ -37,6 +38,7 @@ module.exports = {
         extensions: ['', '.js', '.json', '.scss'],
         alias: {
             css : '../../../src/css/main.css',
+            grid: '../../../src/js/jqgrid/demo.js',
             math : '../../../src/js/lib/math.js',
             form : '../../../src/js/form/form.js',
             draw: '../../../src/js/echarts/draw.js'            
