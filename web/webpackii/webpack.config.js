@@ -14,7 +14,8 @@ module.exports = {
     plugins: [commonsPlugin],
     //页面入口文件配置
     entry: {
-        index : './src/js/page/index.js'
+        index: './src/js/page/index.js',
+        main: './src/js/page/main.js'
     },
     //入口文件输出配置
     output: {
@@ -35,8 +36,10 @@ module.exports = {
         //root: 'e:/tmp/spring-boot', //绝对路径
         extensions: ['', '.js', '.json', '.scss'],
         alias: {
+            css : '../../../src/css/main.css',
             math : '../../../src/js/lib/math.js',
-            form : '../../../src/js/form/form.js'            
+            form : '../../../src/js/form/form.js',
+            draw: '../../../src/js/echarts/draw.js'            
         }
     }
 };
