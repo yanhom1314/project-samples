@@ -14,13 +14,13 @@ project/project/
 project/target/
 #haskell
 .cabal-sandbox/
-.stack-work
+.stack-work/
 #ensime
 .ensime
 .ensime_cache
 #JS
-node_modules
-bower_components
+node_modules/
+bower_components/
 spm_modules
 #Eclipse
 .gradle/
