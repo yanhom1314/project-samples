@@ -2,21 +2,26 @@
 <html>
 
 <head lang="en">
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- HTTP 1.1 -->
+    <meta http-equiv="pragma" content="no-cache">
+    <!-- HTTP 1.0 -->
+    <meta http-equiv="cache-control" content="no-cache">
     <title>Validation</title>
+    <script src="//cdn.jsdelivr.net/jquery/2.2.4/jquery.min.js"></script>
 </head>
 
 <body>
     <script src="dist/js/page/common.js"></script>
     <script src="dist/js/page/index.js"></script>
-    <form id="_form" action="#" method="post">
+    <form id="_form" action="" method="post">
         <fieldset>
             <legend>Please provide your name, email address (won't be published) and a comment</legend>
             <p>
                 <label for="cname">Name (required, at least 2 characters)</label>
                 <input id="cname" name="name" minlength="2" type="text" required>
             </p>
-             <p>
+            <p>
                 <label for="ip">Ip (ip)</label>
                 <input id="ip" type="text" name="ip" class="ip">
             </p>
@@ -34,7 +39,7 @@
             </p>
             <p>
                 <label for="curl">URL (optional)</label>
-                <input id="curl" type="url" name="url">
+                <input id="curl" type="text" name="url" class="required url">
             </p>
             <p>
                 <label for="ccomment">Your comment (required)</label>
@@ -45,6 +50,7 @@
             </p>
         </fieldset>
     </form>
-    <hr/>    
+    <hr/>
 </body>
+
 </html>

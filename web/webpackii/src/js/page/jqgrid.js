@@ -1,5 +1,5 @@
 require('css'); //加载初始化样式
-var $ = require('jquery')
+var jQuery = $ = require("jquery");
 var grid = require('grid').grid;
 $(function () {
     //jqGrid

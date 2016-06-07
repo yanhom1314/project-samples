@@ -28,20 +28,25 @@ module.exports = {
         loaders: [
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.js$/, loader: 'jsx-loader?harmony' },
-            { test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
-            { test: /\.(jpe?g|png|gif)$/, loader: 'url-loader?limit=8192'}
+            { test: /\.scss$/, loader: 'style!css!sass?sourceMap' },
+            { test: /\.(jpe?g|png|gif)$/, loader: 'url-loader?limit=8192' }
         ]
+    },
+    externals: {
+        'jquery': 'jQuery',
+        'echarts': 'echarts',
+        'bootstrap':true
     },
     //其它解决方案配置
     resolve: {
         //root: 'e:/tmp/spring-boot', //绝对路径
         extensions: ['', '.js', '.json', '.scss'],
         alias: {
-            css : '../../../src/css/main.css',
+            css: '../../../src/css/main.css',
             grid: '../../../src/js/jqgrid/demo.js',
-            math : '../../../src/js/lib/math.js',
-            form : '../../../src/js/form/form.js',
-            draw: '../../../src/js/echarts/draw.js'            
+            math: '../../../src/js/lib/math.js',
+            form: '../../../src/js/form/form.js',
+            draw: '../../../src/js/echarts/draw.js'
         }
     }
 };
