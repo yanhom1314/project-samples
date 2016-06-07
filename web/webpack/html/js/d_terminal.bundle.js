@@ -1,1 +1,81 @@
-!function(n){function o(e){if(t[e])return t[e].exports;var r=t[e]={exports:{},id:e,loaded:!1};return n[e].call(r.exports,r,r.exports,o),r.loaded=!0,r.exports}var t={};return o.m=n,o.c=t,o.p="",o(0)}([function(n,o,t){t(!function(){var n=new Error('Cannot find module "term.js"');throw n.code="MODULE_NOT_FOUND",n}()),window.addEventListener("load",function(){var n=io.connect();n.on("connect",function(){var o=new Terminal({cols:80,rows:24,screenKeys:!0});o.on("data",function(o){n.emit("data",o)}),o.on("title",function(n){document.title=n}),o.open(document.body),o.write("[31mWelcome to term.js![m\r\n"),n.on("data",function(n){o.write(n)}),n.on("disconnect",function(){o.destroy()})})},!1)}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"term.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	window.addEventListener('load', function() {
+	  var socket = io.connect();
+	  socket.on('connect', function() {
+	    var term = new Terminal({
+	      cols: 80,
+	      rows: 24,
+	      screenKeys: true
+	    });
+	 
+	    term.on('data', function(data) {
+	      socket.emit('data', data);
+	    });
+	 
+	    term.on('title', function(title) {
+	      document.title = title;
+	    });
+	 
+	    term.open(document.body);
+	 
+	    term.write('\x1b[31mWelcome to term.js!\x1b[m\r\n');
+	 
+	    socket.on('data', function(data) {
+	      term.write(data);
+	    });
+	 
+	    socket.on('disconnect', function() {
+	      term.destroy();
+	    });
+	  });
+	}, false);
+
+
+/***/ }
+/******/ ]);

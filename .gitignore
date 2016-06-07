@@ -14,6 +14,7 @@ project/project/
 project/target/
 #haskell
 .cabal-sandbox/
+.stack-work
 #ensime
 .ensime
 .ensime_cache
