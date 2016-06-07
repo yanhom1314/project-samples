@@ -1,17 +1,15 @@
 var webpack = require('webpack');
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
-/**
 var uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({
     compress: {
         warnings: false
     }
 });
-*/
 
 module.exports = {
     //插件项
-    //plugins: [commonsPlugin,uglifyJsPlugin],
-    plugins: [commonsPlugin],
+    plugins: [commonsPlugin,uglifyJsPlugin],
+    //plugins: [commonsPlugin],
     //页面入口文件配置
     entry: {
         index: './src/js/page/index.js',
@@ -32,11 +30,11 @@ module.exports = {
             { test: /\.(jpe?g|png|gif)$/, loader: 'url-loader?limit=8192' }
         ]
     },
-    externals: {
-        'jquery': 'jQuery',
-        'echarts': 'echarts',
-        'bootstrap':true
-    },
+    // externals: {
+    //     'jquery': 'jQuery',
+    //     'echarts': 'echarts',
+    //     'bootstrap':true
+    // },
     //其它解决方案配置
     resolve: {
         //root: 'e:/tmp/spring-boot', //绝对路径

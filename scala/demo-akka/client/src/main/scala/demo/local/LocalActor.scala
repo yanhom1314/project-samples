@@ -33,9 +33,7 @@ class LocalActor extends Actor with ActorLogging {
 }
 
 object LocalActorApp extends App {
-  //val config = ConfigFactory.parseFile(new File("client/src/main/resources/application.conf"))
   val config = ConfigFactory.parseResources(this.getClass.getClassLoader, "application.conf")
-  //val config = ConfigFactory.parseString(buffer.mkString(System.lineSeparator()))
 
   println(s"config:${config}")
 
