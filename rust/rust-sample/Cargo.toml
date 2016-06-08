@@ -1,4 +1,4 @@
 [package]
-name = "rust-sample"
+name = "hello_world"
 version = "0.1.0"
 authors = ["ya_feng_li <ya_feng_li@163.com>"]
