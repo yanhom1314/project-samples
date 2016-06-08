@@ -20,7 +20,7 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root, 300, 200);
         primaryStage.setScene(scene);
-        scene.getStylesheets().add(this.getClass().getClassLoader().getResource("css/login.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("css/login.css").toExternalForm());
         primaryStage.show();
     }
 
