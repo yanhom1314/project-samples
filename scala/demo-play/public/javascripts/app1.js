@@ -7,7 +7,7 @@ webpackJsonp([0],[
 
 	window.onload = function() {
 	    console.log("Hello World!");
-	    console.log($("#message").html());
+	    console.log($("body").html());
 	};
 
 

@@ -26,7 +26,7 @@
       }
     </dl>
     <dl>
-      <dd><label>Age</label></dd>
+      <dt><label>Age</label></dt>
       <dd><input type="text" name="age" value="@person("age").value"></dd>
       @if(person.error("age").isDefined) {
         <dd class="error">@messages(person.error("age").get.message, person.error("age").get.args: _*)</dd>
