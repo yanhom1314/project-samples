@@ -3,7 +3,7 @@
 @import helper._
 
 @main("Welcome to Play") {
-  <script type='text/javascript' src='@routes.Assets.versioned("javascripts/index.js")'></script>
+  <script src="@routes.Assets.versioned("javascripts/app2.js")"></script>
   <ul id="persons"></ul>
   @form(routes.PersonController.addPerson) {
     <div class="ui icon input">
@@ -20,20 +20,23 @@
   <form action="@routes.PersonController.addPerson()" method="post">
     <dl>
       <dt><label>Name</label></dt>
-      <dd><input type="text" name="name"></dd>
+      <dd><input type="text" name="name" value="@person("name").value"></dd>
       @if(person.error("name").isDefined) {
-        <dd style="color:red">@messages(person.error("name").get.message, person.error("name").get.args: _*)</dd>
+        <dd class="error">@messages(person.error("name").get.message, person.error("name").get.args: _*)</dd>
       }
     </dl>
     <dl>
       <dd><label>Age</label></dd>
-      <dd><input type="text" name="age"></dd>
+      <dd><input type="text" name="age" value="@person("age").value"></dd>
+      @if(person.error("age").isDefined) {
+        <dd class="error">@messages(person.error("age").get.message, person.error("age").get.args: _*)</dd>
+      }
     </dl>
     <input type="submit" value="Add New Person" class="ui primary  button"/>
   </form>
   <ul>
   @for(e <- person.errors) {
-    <li>@e.key |@e.message | @e.args | @messages(e.message, e.args: _*)</li>
+    <li class="error">@e.key |@e.message [@e.args] | @messages(e.message, e.args: _*)</li>
   }
   </ul>
 

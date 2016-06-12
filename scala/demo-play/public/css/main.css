@@ -1,0 +1,44 @@
+
+body {
+    background-color: burlywood;
+    font-size: 12px;
+}
+
+.error {
+    font-size: 8px;
+    color: red;
+}
+
+dl {
+    clear: both;
+    padding: 10px;
+}
+
+dt {
+    float: left;
+    width: 60px;
+    font-weight: bold;
+}
+
+dd {
+    float: left;
+    margin-left: 10px;
+}
+
+.info {
+    display: none;
+}
+
+.buttons {
+    clear: both;
+    padding: 10px;
+}
+
+.name {
+    display: inline-block;
+    width: 120px;
+}
+
+.age {
+    display: inline-block;
+}

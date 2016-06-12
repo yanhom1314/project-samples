@@ -1,5 +1,7 @@
 import Build._
 
+scalaVersion := $("scala")
+
 lazy val demo_akka = project.in(file(".")).aggregate(server, client, message)
 
 lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).dependsOn(message).settings(

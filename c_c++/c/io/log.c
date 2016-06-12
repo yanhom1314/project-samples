@@ -14,8 +14,7 @@ typedef struct
 	char datestr[LEN];
 } log_t;
 
-int  
-read(const char *filename){
+int read(const char *filename){
 	FILE *fp=fopen(filename,"r");
 	if(fp==NULL){
 		perror("The file read is NULL.");
@@ -33,32 +32,31 @@ read(const char *filename){
 		return 0;
 	}
 }
-	void
-write (const char *filename,int count)
+void write (const char *filename,int count)
 {
 	FILE *fp = fopen (filename, "a+");
 	int i=count;
 	while (1)
-	{
-		time_t t;
-		t = time (NULL);
+    {
+      time_t t;
+      t = time (NULL);
 
-		struct tm *tt = localtime (&t);
+      struct tm *tt = localtime (&t);
 
-		log_t log[1];
-		memset(log[0].number,'\0',LEN) ;
-		memset(log[0].number,'\0',LEN) ;
-		sprintf (log[0].number,"%d",++i);
-		sprintf (log[0].datestr, " %d-%d-%d %d:%d:%d\n", 1900+tt->tm_year, tt->tm_mon,
-				tt->tm_mday, tt->tm_hour,tt->tm_min,tt->tm_sec);
-		fwrite (log, sizeof (log_t), 1, fp);
-		fflush (fp);
-		sleep (1);
-	}
+      log_t log[1];
+      memset(log[0].number,'\0',LEN) ;
+      memset(log[0].number,'\0',LEN) ;
+      sprintf (log[0].number,"%d",++i);
+      sprintf (log[0].datestr, " %d-%d-%d %d:%d:%d\n", 1900+tt->tm_year, tt->tm_mon,
+               tt->tm_mday, tt->tm_hour,tt->tm_min,tt->tm_sec);
+      fwrite (log, sizeof (log_t), 1, fp);
+      fflush (fp);
+      sleep (1);
+    }
 	fclose (fp);
 }
 
-	int
+int
 main ()
 {
 	char filename[] = "/tmp/lyf.log";

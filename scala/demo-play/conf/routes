@@ -2,6 +2,9 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+#demo
+GET         /demo                controllers.DemoController.demo
+
 # An example controller showing a sample home page
 GET         /home                controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")
 GET         /index               controllers.HomeController.index(id:Option[String])
