@@ -64,7 +64,7 @@ object HttpApp extends App with MyJsonSupport {
     get {
       path("hi" / Segment / Segment) { (name, age) =>
         complete {
-          HttpResponse(entity = HttpEntity(ContentTypes.`text/html(UTF-8)`,s"""<h2>Nice Hello,Mr. $name age is $age !!!!!!</h2>"""))
+          HttpResponse(entity = HttpEntity(ContentTypes.`text/html(UTF-8)`, s"""<h2>Nice Hello,Mr. $name age is $age !!!!!!</h2>"""))
         }
       }
     }
@@ -85,8 +85,8 @@ object HttpApp extends App with MyJsonSupport {
       ctx.complete {
         HttpResponse(entity = HttpEntity(`application/javascript(UTF-8)`, cacheJs + addJs))
       }
-    else
-      ctx.complete(HttpResponse(status = StatusCodes.NotFound, entity = HttpEntity(ContentTypes.`text/html(UTF-8)`, s"${ctx.request.uri.path} Not found.")))
+      else
+        ctx.complete(HttpResponse(status = StatusCodes.NotFound, entity = HttpEntity(ContentTypes.`text/html(UTF-8)`, s"${ctx.request.uri.path} Not found.")))
   }
 
   val bindingFuture = Http().bindAndHandle(route ~ r1 ~ r2 ~ r3 ~ r4 ~ r5, host, port)
