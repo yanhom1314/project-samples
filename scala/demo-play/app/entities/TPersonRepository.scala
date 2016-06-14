@@ -1,4 +1,4 @@
-package models
+package entities
 
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository

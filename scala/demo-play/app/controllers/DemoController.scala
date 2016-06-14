@@ -2,32 +2,32 @@ package controllers
 
 import javax.inject._
 
-import models.TPersonRepository
+import entities.TPersonRepository
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import services.SpringContextLoader
+
+import scala.collection.JavaConversions._
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
   * application's home page.
   */
 @Singleton
-class DemoController @Inject()(val springContextLoader: SpringContextLoader, val messagesApi: MessagesApi) extends Controller with I18nSupport {
+class DemoController @Inject()(val sc: SpringContextLoader, val personRepository: TPersonRepository, val messagesApi: MessagesApi) extends Controller with I18nSupport {
 
-  import springContextLoader.ctx
+  import sc._
 
   def demo() = Action { implicit request =>
-    println(springContextLoader.ctx)
-    if (springContextLoader.ctx != null) {
-      println("################################")
-      springContextLoader.ctx.getBeanDefinitionNames.foreach(println(_))
-      println("################################")
-      val repo = ctx.getBean(classOf[TPersonRepository])
-      println(s"repo:${repo} count:${repo.count()}")
-      println("################################")
-      import scala.collection.JavaConversions._
-      repo.findAll().foreach(t => println(s"id:${t.id} name:${t.name} age:${t.age}"))
-    }
+    println("################################")
+    ctx.getBeanDefinitionNames.foreach( n => println(s"name:${n} type:${ctx.getBean(n).getClass.getName}"))
+    println("################################")
+    val repo = bean(classOf[TPersonRepository])
+    println(s"repo:${repo} count:${repo.count()}")
+    println("################################")
+    println(s"personRepository:${personRepository.count()}")
+    println("################################")
+    repo.findAll().foreach(t => println(s"id:${t.id} name:${t.name} age:${t.age}"))
     Ok(views.html.demo())
   }
 }
