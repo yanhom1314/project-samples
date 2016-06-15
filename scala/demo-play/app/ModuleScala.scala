@@ -19,6 +19,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 class ModuleScala extends AbstractModule {
 
   import scala.collection.JavaConversions._
+  import scala.reflect.runtime.universe._
 
   override def configure() = {
     println("conf/application.conf:[play.modules.enabled += \"ModuleScala\"].")
@@ -31,16 +32,21 @@ class ModuleScala extends AbstractModule {
   }
 
   def loop(dir: File, ctx: ApplicationContext): Unit = {
+
+
     dir.listFiles(new FileFilter {
       override def accept(f: File): Boolean = f.isDirectory || (f.getName.indexOf("Repository") > 0 && f.getName.endsWith(".class"))
     }).foreach { f =>
       if (f.isFile) {
         val cn = s"${dir.getName}.${f.getName.replace(".class", "")}"
         println(cn)
+        val ms = runtimeMirror(classOf[ModuleScala].getClassLoader).moduleSymbol(Class.forName(cn))
 
-        val cc = Class.forName(cn)
-        type c = Class[_]
-        bind(classOf[c]).toInstance(ctx.getBean(classOf[c]))
+        //val c = ms.getClass
+        val c = Class.forName(cn)
+        Package.getPackage("")
+
+        bind(c).toInstance(ctx.getBean(c))
         //        if (cn.indexOf(classOf[TPersonRepository].getName) >= 0) {
         //          val c = classOf[TPersonRepository]
         //          bind(c).toInstance(ctx.getBean(c))
