@@ -1,12 +1,11 @@
-package dal
+package models
 
-import javax.inject.{ Inject, Singleton }
+import javax.inject.{Inject, Singleton}
+
 import play.api.db.slick.DatabaseConfigProvider
 import slick.driver.JdbcProfile
 
-import models.Person
-
-import scala.concurrent.{ Future, ExecutionContext }
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  * A repository for people.

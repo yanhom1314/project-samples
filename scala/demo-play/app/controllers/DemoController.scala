@@ -16,18 +16,12 @@ import scala.collection.JavaConversions._
 @Singleton
 class DemoController @Inject()(val sc: SpringContextLoader, val personRepository: TPersonRepository, val messagesApi: MessagesApi) extends Controller with I18nSupport {
 
-  import sc._
-
   def demo() = Action { implicit request =>
-    println("################################")
-    ctx.getBeanDefinitionNames.foreach( n => println(s"name:${n} type:${ctx.getBean(n).getClass.getName}"))
-    println("################################")
-    val repo = bean(classOf[TPersonRepository])
-    println(s"repo:${repo} count:${repo.count()}")
     println("################################")
     println(s"personRepository:${personRepository.count()}")
     println("################################")
-    repo.findAll().foreach(t => println(s"id:${t.id} name:${t.name} age:${t.age}"))
+    personRepository.findAll().foreach(t => println(s"id:${t.id} name:${t.name} age:${t.age}"))
+    println("################################")
     Ok(views.html.demo())
   }
 }

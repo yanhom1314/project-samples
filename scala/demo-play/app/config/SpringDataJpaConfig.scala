@@ -10,7 +10,7 @@ import org.springframework.orm.jpa.JpaTransactionManager
 @Configuration
 @EnableJpaRepositories(basePackages = Array("entities"))
 @ComponentScan(Array("entities"))
-class AppConfig {
+class SpringDataJpaConfig {
   @Bean def entityManagerFactory(): EntityManagerFactory = Persistence.createEntityManagerFactory("default")
 
   @Bean def hibernateExceptionTranslator(): HibernateExceptionTranslator = new HibernateExceptionTranslator()
