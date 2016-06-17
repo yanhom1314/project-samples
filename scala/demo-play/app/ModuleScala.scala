@@ -3,6 +3,7 @@ import java.time.Clock
 
 import com.google.inject.AbstractModule
 import config.SpringDataJpaConfig
+import entities.TPersonRepository
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
@@ -46,11 +47,11 @@ class ModuleScala extends AbstractModule {
         val c = Class.forName(cn)
         Package.getPackage("")
 
-        bind(c).toInstance(ctx.getBean(c))
-        //        if (cn.indexOf(classOf[TPersonRepository].getName) >= 0) {
-        //          val c = classOf[TPersonRepository]
-        //          bind(c).toInstance(ctx.getBean(c))
-        //        }
+        //bind(c).toInstance(ctx.getBean(c))  //TODO error
+        if (cn.indexOf(classOf[TPersonRepository].getName) >= 0) {
+          val c = classOf[TPersonRepository]
+          bind(c).toInstance(ctx.getBean(c))
+        }
       }
       else loop(f, ctx)
     }
