@@ -26,5 +26,9 @@ object InitH2DBMain extends Service {
     Seq("Alice", "Bob", "Chris") foreach { name =>
       sql"insert into members (name, created_at) values (${name}, current_timestamp)".update.apply()
     }
+
+    Seq("Alice", "Bob", "Chris") foreach { name =>
+      sql"insert into t_person (name, age) values (${name}, ${Math.random() * 200})".update.apply()
+    }
   }
 }

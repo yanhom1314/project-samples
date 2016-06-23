@@ -4,6 +4,7 @@ import java.io.File
 import java.sql.Connection
 import javax.persistence.Persistence
 
+import com.querydsl.codegen.SimpleSerializerConfig
 import com.querydsl.jpa.codegen.JPADomainExporter
 import scalikejdbc.DBSession
 

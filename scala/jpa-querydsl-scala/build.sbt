@@ -8,6 +8,7 @@ scalaVersion := $("scala")
 
 libraryDependencies ++= Seq(
   "com.google.inject" % "guice" % $("guice"),
+  "com.google.inject.extensions" % "guice-persist" % $("guice"),
   "com.querydsl" % "querydsl-scala" % $("querydsl"),
   "com.querydsl" % "querydsl-sql-codegen" % $("querydsl"),
   "com.querydsl" % "querydsl-jpa-codegen" % $("querydsl") exclude("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api"),
