@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
   "com.querydsl" % "querydsl-jpa-codegen" % $("querydsl") exclude("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api"),
   "org.hibernate" % "hibernate-entitymanager" % $("hibernate"),
   "org.scalikejdbc" %% "scalikejdbc" % $("scalikejdbc"),
+  "com.zaxxer" % "HikariCP" % $("HikariCP"),
   "com.h2database" % "h2" % $("h2"),
   "org.scalatest" %% "scalatest" % $("scalatest") % "test")
 

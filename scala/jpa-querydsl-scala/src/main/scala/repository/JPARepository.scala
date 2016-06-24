@@ -9,30 +9,29 @@ import com.querydsl.jpa.impl.{JPADeleteClause, JPAQuery}
 
 import scala.reflect._
 
-abstract class JPARepository[T: Manifest, ID] extends Repository[T, ID] {
+abstract class JPARepository[T, ID](implicit ct: ClassTag[T]) {
 
   val em: Provider[EntityManager]
 
-  val ct = classTag[T].runtimeClass
+  //val ct = classTag[T].runtimeClass
+  //val ct = runtimeMirror(getClass.getClassLoader).runtimeClass(tt.tpe.typeSymbol.asClass)
+  val c = ct.runtimeClass
 
   protected def selectFrom(entity: EntityPath[T]): JPAQuery[T] = select(entity).from(entity)
 
-
   protected def select(select: Expression[T]): JPAQuery[T] = new JPAQuery(em.get(), HQLTemplates.DEFAULT).select(select)
-
 
   protected def delete(entity: EntityPath[_]): JPADeleteClause = new JPADeleteClause(em.get(), entity, HQLTemplates.DEFAULT)
 
+  def detach(entity: T): Unit = em.get().detach(entity)
 
-  protected def detach(entity: T): Unit = em.get().detach(entity)
+  def findById(id: ID): T = em.get().find(c, id).asInstanceOf[T]
 
-  override def findById(id: ID): T = em.get().find(ct, id).asInstanceOf[T]
+  def find[E](t: Class[E], id: ID): E = em.get().find(t, id)
 
-  protected def find[E](t: Class[E], id: ID): E = em.get().find(t, id)
+  def persist[E](entity: E): Unit = em.get().persist(entity)
 
-  protected def persist[E](entity: E): Unit = em.get().persist(entity)
+  def merge[E](entity: E): E = em.get().merge(entity)
 
-  protected def merge[E](entity: E): E = em.get().merge(entity)
-
-  protected def remove(entity: T) = em.get().remove(entity)
+  def remove(entity: T) = em.get().remove(entity)
 }
