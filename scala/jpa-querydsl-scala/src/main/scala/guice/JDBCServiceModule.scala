@@ -43,7 +43,7 @@ class JDBCServiceModule extends AbstractModule {
                  @Named("jdbc.password") password: String,
                  @Named("jdbc.url") url: String,
                  @Named("jdbc.driver") driver: String,
-                 @Named("dataSourceClassName") dataSourceClassName: String): DataSource = {
+                 @Named("dataSourceClassName") dataSourceClassName: String): HikariDataSource = {
 
     println(s"${user} ${password} ${url} ${driver}")
     Class.forName(driver)

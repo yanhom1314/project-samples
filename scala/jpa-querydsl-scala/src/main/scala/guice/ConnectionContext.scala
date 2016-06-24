@@ -2,10 +2,11 @@ package guice
 
 import java.sql.Connection
 import javax.inject.{Inject, Singleton}
-import javax.sql.DataSource
+
+import com.zaxxer.hikari.HikariDataSource
 
 @Singleton
-class ConnectionContext @Inject()(val dataSource: DataSource) {
+class ConnectionContext @Inject()(val dataSource: HikariDataSource) {
 
   val connHolder = new ThreadLocal[Connection]()
 
@@ -30,6 +31,7 @@ class ConnectionContext @Inject()(val dataSource: DataSource) {
         conn.rollback()
         e.printStackTrace()
     } finally {
+      connHolder.remove()
       conn.close()
     }
     result
