@@ -11,11 +11,9 @@ import scala.reflect._
 
 abstract class JPARepository[T, ID](implicit ct: ClassTag[T]) {
 
-  val em: Provider[EntityManager]
+  protected val em: Provider[EntityManager]
 
-  //val ct = classTag[T].runtimeClass
-  //val ct = runtimeMirror(getClass.getClassLoader).runtimeClass(tt.tpe.typeSymbol.asClass)
-  val c = ct.runtimeClass
+  protected val c = ct.runtimeClass
 
   protected def selectFrom(entity: EntityPath[T]): JPAQuery[T] = select(entity).from(entity)
 

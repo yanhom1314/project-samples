@@ -18,7 +18,7 @@ object GuiceJPAMain extends Service {
     val jpaInitializer = injector.getInstance(classOf[JpaInitializer])
     val personRepository = injector.getInstance(classOf[PersonRepository])
     try {
-      println(s"personRepository:${personRepository.toString} class:${personRepository.c.getCanonicalName}")
+      println(s"personRepository:${personRepository.toString}")
       println("size:" + personRepository.all.size())
       personRepository.all.foreach(p => println(s"${p.id} ${p.name} ${p.age}"))
 

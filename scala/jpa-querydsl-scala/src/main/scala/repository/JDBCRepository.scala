@@ -10,7 +10,7 @@ import guice.ConnectionContext
 /**
   * Created by YaFengLi on 2016/6/23.
   */
-abstract class JDBCRepository {
+trait JDBCRepository {
 
   val configuration: Configuration
   val connectionContext: ConnectionContext

@@ -7,7 +7,9 @@ import repository.PersonRepository
 class JPAServiceModule extends AbstractModule {
   override def configure(): Unit = {
     install(new JpaPersistModule("h2").properties(System.getProperties()))
-    bind(classOf[JpaInitializer]).asEagerSingleton()
-    bind(classOf[PersonRepository]).in(Scopes.SINGLETON)
+    //Use @Singleton @ImplementBy instead of
+
+    //bind(classOf[JpaInitializer]).asEagerSingleton()
+    //bind(classOf[PersonRepository]).in(Scopes.SINGLETON)
   }
 }
