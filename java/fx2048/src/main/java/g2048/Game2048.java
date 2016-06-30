@@ -20,7 +20,7 @@ public class Game2048 extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         root = FXMLLoader.load(getClass().getClassLoader().getResource("fx2048.fxml"));
-        Bounds gameBounds = gm.getLayoutBounds();
+        Bounds gameBounds = root.getLayoutBounds();
 
         //left head icon
         primaryStage.getIcons().add(new Image(this.getClass().getClassLoader().getResourceAsStream("img/icon.jpg")));
@@ -61,7 +61,7 @@ public class Game2048 extends Application {
 
     @Override
     public void stop() {
-        gm.saveRecord();
+        //root.saveRecord();
     }
 
     /**
