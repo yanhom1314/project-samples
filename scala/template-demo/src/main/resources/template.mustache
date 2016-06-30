@@ -1,0 +1,10 @@
+{{>index}}
+<hr/>
+{{>common/head}}
+{{#items}}
+    Name: {{name}}
+    Price: {{price}}
+    {{#features}}
+        Feature: {{description}}
+    {{/features}}
+{{/items}}
