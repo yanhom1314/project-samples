@@ -11,11 +11,18 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Game2048 extends Application {
     private Parent root;
+
+    static {
+        // Downloaded from https://01.org/clear-sans/blogs
+        // The font may be used and redistributed under the terms of the Apache License, Version 2.0.
+        Font.loadFont(game2048.Game2048.class.getClassLoader().getResource("font/ClearSans-Bold.ttf").toExternalForm(), 10.0);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {

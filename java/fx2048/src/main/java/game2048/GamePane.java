@@ -26,7 +26,7 @@ public class GamePane extends StackPane {
     static {
         // Downloaded from https://01.org/clear-sans/blogs
         // The font may be used and redistributed under the terms of the Apache License, Version 2.0.
-        Font.loadFont(Game2048.class.getClassLoader().getResource("ClearSans-Bold.ttf").toExternalForm(), 10.0);
+        Font.loadFont(Game2048.class.getClassLoader().getResource("font/ClearSans-Bold.ttf").toExternalForm(), 10.0);
     }
 
     public GamePane() {
