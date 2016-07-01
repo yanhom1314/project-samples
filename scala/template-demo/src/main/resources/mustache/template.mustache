@@ -1,10 +1,12 @@
-{{>index}}
-<hr/>
 {{>common/head}}
 {{#items}}
     Name: {{name}}
     Price: {{price}}
     {{#features}}
-        Feature: {{description}}
+        Feature: {{&description}} | {{{description}}}
     {{/features}}
 {{/items}}
+
+{{^repos}}
+    No repos :)
+{{/repos}}
