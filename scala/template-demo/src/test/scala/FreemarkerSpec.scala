@@ -20,7 +20,6 @@ class FreemarkerSpec extends FlatSpec with Matchers {
     //    val map = new util.HashMap[String,util.List[String]]()
     //    map.put("items",new util.ArrayList[String]())
     //    map.get("items").addAll(util.Arrays.asList("1","2","3"))
-
     val writer = new StringWriter()
     template.process(map, writer)
     println(writer.toString)
