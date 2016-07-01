@@ -22,7 +22,6 @@ public class Game2048 extends Application {
     public void start(Stage primaryStage) throws Exception {
         Font.loadFont(Game2048.class.getClassLoader().getResource("font/ClearSans-Bold.ttf").toExternalForm(), 10.0);
         root = FXMLLoader.load(getClass().getClassLoader().getResource("fx2048.fxml"));
-        root.getStylesheets().add("css/game.css");
 
         Bounds gameBounds = root.getLayoutBounds();
 

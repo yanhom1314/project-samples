@@ -1,30 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import java.net.URL?>
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="g2048.GameController">
-    <stylesheets>
-        <URL value="@css/game.css"/>
-    </stylesheets>
-    <children>
-        <Group fx:id="manager"/>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-            <children>
-                <Button fx:id="mSave" mnemonicParsing="false" onAction="#handleSaveButtonAction" text="Save Session"/>
-                <Button fx:id="mRestore" mnemonicParsing="false" onAction="#handleRestoreButtonAction" text="Restore Session"/>
-                <Button fx:id="mPause" mnemonicParsing="false" onAction="#handlePauseButtonAction" text="Pause Game"/>
-                <Button fx:id="mReplay" mnemonicParsing="false" onAction="#handleReplayButtonAction" text="Try Again"/>
-                <Button fx:id="mInfo" mnemonicParsing="false" onAction="#handleInfoButtonAction" text="About the Game"/>
-                <Button fx:id="mQuit" mnemonicParsing="false" onAction="#handleQuitButtonAction" text="Quit Game"/>
-            </children>
-            <opaqueInsets>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-            </opaqueInsets>
-        </HBox>
-    </children>
-</StackPane>
+<?import game2048.GamePane?>
+
+<GamePane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/game.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="g2048.GameController" />
