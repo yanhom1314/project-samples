@@ -13,6 +13,7 @@
   [& args]
   (say-nice "yafengli.dream@gmail.com")
   (say-hello "yafengli@sina.com")
+  (say-hello "ya_feng_li@aliyum.com")
   (say-hi "ya_feng_li@163.com")
   (say-hello "yafengli@sina.com")
   (say-hello (lyf-add 445 333))
