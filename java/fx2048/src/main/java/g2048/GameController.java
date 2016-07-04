@@ -30,7 +30,7 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Init....");
-        gamePane.getChildren().add(gameManager);
+//        gamePane.getChildren().add(gameManager);
 //
 //        ChangeListener<Number> resize = (ov, v, v1) -> {
 //            double scale = Math.min((gamePane.getWidth() - MARGIN) / gameBounds.getWidth(), (gamePane.getHeight() - MARGIN) / gameBounds.getHeight());
