@@ -15,9 +15,7 @@ public class GamePaneII extends StackPane {
 
     public GamePaneII() {
         try {
-
             getChildren().add(gameManager);
-
             ChangeListener<Number> resize = (ov, v, v1) -> {
                 double scale = Math.min((getWidth() - MARGIN) / gameBounds.getWidth(), (getHeight() - MARGIN) / gameBounds.getHeight());
                 gameManager.setScale(scale);

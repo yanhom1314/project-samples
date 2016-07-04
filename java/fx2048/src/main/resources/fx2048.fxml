@@ -11,7 +11,7 @@
         <URL value="@css/game.css" />
     </stylesheets>
     <children>
-        <HBox prefHeight="100.0" prefWidth="200.0">
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
                 <Button id="mSave" fx:id="mSave" mnemonicParsing="false" onAction="#handleSaveButtonAction" prefHeight="40.0" prefWidth="40.0" text="Save Session">
                     <tooltip>
