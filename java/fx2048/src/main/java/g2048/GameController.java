@@ -13,7 +13,7 @@ import static g2048.GameVals.gameManager;
 
 public class GameController implements Initializable {
     @FXML
-    private StackPane gamePane; //private GamePane gamePane;
+    private StackPane gamePane;
     @FXML
     private Button mSave;
     @FXML
@@ -29,14 +29,26 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("gamePane:" + gamePane);
-        System.out.println("mSave:" + mSave);
-        System.out.println("gameManager:" + gameManager);
+        System.out.println("Init....");
+        gamePane.getChildren().add(gameManager);
+//
+//        ChangeListener<Number> resize = (ov, v, v1) -> {
+//            double scale = Math.min((gamePane.getWidth() - MARGIN) / gameBounds.getWidth(), (gamePane.getHeight() - MARGIN) / gameBounds.getHeight());
+//            gameManager.setScale(scale);
+//            gameManager.setLayoutX((gamePane.getWidth() - gameBounds.getWidth()) / 2d);
+//            gameManager.setLayoutY((gamePane.getHeight() - gameBounds.getHeight()) / 2d);
+//        };
+//        gamePane.widthProperty().addListener(resize);
+//        gamePane.heightProperty().addListener(resize);
+//
+//        addKeyHandler(gamePane);
+//        addSwipeHandlers(gamePane);
+//        gamePane.setFocusTraversable(true);
+//        gamePane.setOnMouseClicked(e -> gamePane.requestFocus());
     }
 
     @FXML
     public void handleSaveButtonAction(ActionEvent e) {
-
         System.out.println("e:" + e.getEventType());
         gameManager.saveSession();
     }
