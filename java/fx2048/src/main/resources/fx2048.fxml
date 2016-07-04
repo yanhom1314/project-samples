@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import g2048.GamePane?>
+<?import g2048.GamePaneII?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.HBox?>
-<?import java.net.URL?>
-<GamePane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="game-root" stylesheets="@css/game.css"
-          xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="g2048.GameController">
+
+<GamePaneII fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="game-root" stylesheets="@css/game.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="g2048.GameController">
     <stylesheets>
-        <URL value="@css/game.css"/>
+        <URL value="@css/game.css" />
     </stylesheets>
     <children>
         <HBox prefHeight="100.0" prefWidth="200.0">
             <children>
-                <Button id="mSave" mnemonicParsing="false" text="Save Session" prefWidth="40.0" prefHeight="40.0">
+                <Button id="mSave" fx:id="mSave" mnemonicParsing="false" onAction="#handleSaveButtonAction" prefHeight="40.0" prefWidth="40.0" text="Save Session">
                     <tooltip>
-                        <Tooltip text="Save Session"/>
+                        <Tooltip text="Save Session" />
                     </tooltip>
                 </Button>
             </children>
         </HBox>
     </children>
-</GamePane>
+</GamePaneII>

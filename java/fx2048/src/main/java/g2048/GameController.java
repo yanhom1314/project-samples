@@ -1,13 +1,12 @@
 package g2048;
 
-import game2048.GamePane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public class GameController {
     @FXML
-    private GamePane root;
+    private GamePaneII gamePane;
     @FXML
     private Button mSave;
     @FXML
@@ -23,31 +22,35 @@ public class GameController {
 
     @FXML
     public void handleSaveButtonAction(ActionEvent e) {
-        root.getGameManager().saveSession();
+        System.out.println("gamePane:" + gamePane);
+        System.out.println("gameManager:" + gamePane.getGameManager());
+        System.out.println("e:" + e.getEventType());
+
+        gamePane.getGameManager().saveSession();
     }
 
     @FXML
     public void handleRestoreButtonAction(ActionEvent e) {
-        root.getGameManager().restoreSession();
+        gamePane.getGameManager().restoreSession();
     }
 
     @FXML
     public void handlePauseButtonAction(ActionEvent e) {
-        root.getGameManager().pauseGame();
+        gamePane.getGameManager().pauseGame();
     }
 
     @FXML
     public void handleReplayButtonAction(ActionEvent e) {
-        root.getGameManager().tryAgain();
+        gamePane.getGameManager().tryAgain();
     }
 
     @FXML
     public void handleInfoButtonAction(ActionEvent e) {
-        root.getGameManager().aboutGame();
+        gamePane.getGameManager().aboutGame();
     }
 
     @FXML
     public void handleQuitButtonAction(ActionEvent e) {
-        root.getGameManager().quitGame();
+        gamePane.getGameManager().quitGame();
     }
 }

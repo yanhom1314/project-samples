@@ -15,12 +15,12 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class Game2048 extends Application {
+public class Game2048II extends Application {
     private Parent root;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Font.loadFont(Game2048.class.getClassLoader().getResource("font/ClearSans-Bold.ttf").toExternalForm(), 10.0);
+        Font.loadFont(Game2048II.class.getClassLoader().getResource("font/ClearSans-Bold.ttf").toExternalForm(), 10.0);
         root = FXMLLoader.load(getClass().getClassLoader().getResource("fx2048.fxml"));
 
         Bounds gameBounds = root.getLayoutBounds();
