@@ -9,7 +9,7 @@ module.exports = {
             },
             output: {
                 comments: false,
-            },
+            }
         })
     ],
     entry: {

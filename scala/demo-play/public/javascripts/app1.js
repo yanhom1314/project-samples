@@ -1,1 +1,1 @@
-webpackJsonp([0],[function(o,l,n){n(1);$=n(5);window.onload=function(){console.log("Hello World!"),console.log($("body").html())}}]);
+webpackJsonp([0],[function(o,n,l){var c=l(1),e=l(2).add;window.onload=function(){console.log("Hello World!"),console.log("jQuery:"+c),console.log(e(12,7)),console.log(c("body").html())}},,function(o,n){o.exports={add:function(o,n){return o+n}}}]);
