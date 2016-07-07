@@ -15,9 +15,7 @@ apply plugin: 'spring-boot'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-configurations {
-    jaxb
-}
+
 jar {
     baseName = 'gs-accessing-data-rest'
     version = '0.1.0'
@@ -33,20 +31,9 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web",
-            "org.springframework.boot:spring-boot-starter-thymeleaf",
-            "org.springframework.boot:spring-boot-starter-security",
-            "org.springframework.boot:spring-boot-starter-redis",
-            "org.springframework.boot:spring-boot-starter-data-rest",
-            "org.springframework.boot:spring-boot-starter-data-jpa",
-            "org.springframework.ws:spring-ws-core",
-            "org.springframework.boot:spring-boot-starter-test",
-            "com.h2database:h2:${h2}")
-    
-    jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+configurations {
+    jaxb
 }
-
 
 task genJaxb {
     ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
@@ -84,3 +71,22 @@ task genJaxb {
         }
     }
 }
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web",
+            "org.springframework.boot:spring-boot-starter-thymeleaf",
+            "org.springframework.boot:spring-boot-starter-security",
+            "org.springframework.boot:spring-boot-starter-redis",
+            "org.springframework.boot:spring-boot-starter-data-rest",
+            "org.springframework.boot:spring-boot-starter-data-jpa",
+            "org.springframework.ws:spring-ws-core",
+            "com.github.axet:kaptcha:${kaptcha}",
+            "com.h2database:h2:${h2}")
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
+
+    jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+
