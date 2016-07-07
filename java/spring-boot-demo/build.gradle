@@ -1,18 +1,16 @@
 buildscript {
     repositories {
         mavenLocal()
-        jcenter()        
-        maven {
-            url 'https://repo.spring.io/libs-milestone'
-        }
+        jcenter()
+        maven { url "http://repo.spring.io/libs-release" }
+        maven { url 'https://repo.spring.io/libs-milestone' }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${spring}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${spring_boot}")
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'spring-boot'
 
 jar {
     baseName = 'gs-accessing-data-rest'
@@ -21,10 +19,9 @@ jar {
 
 repositories {
     mavenLocal()
-    jcenter()    
-    maven {
-        url 'https://repo.spring.io/libs-milestone'
-    } 
+    jcenter()
+    maven { url "http://repo.spring.io/libs-release" }
+    maven { url 'https://repo.spring.io/libs-milestone' }
 }
 
 sourceCompatibility = 1.8
