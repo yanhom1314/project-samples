@@ -36,7 +36,7 @@ configurations {
 }
 
 task genJaxb {
-    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.sourcesDir = "src/main/java"
     ext.classesDir = "${buildDir}/classes/jaxb"
     ext.schema = "http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl"
 
