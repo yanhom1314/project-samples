@@ -12,31 +12,13 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-
-
-jar {
-    baseName = 'gs-accessing-data-rest'
-    version = '0.1.0'
-}
-
-repositories {
-    mavenLocal()
-    jcenter()
-    maven { url "http://repo.spring.io/libs-release" }
-    maven { url 'https://repo.spring.io/libs-milestone' }
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 configurations {
     jaxb
 }
 
 task genJaxb {
-    ext.sourcesDir = "src/main/java"
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
     ext.classesDir = "${buildDir}/classes/jaxb"
     ext.schema = "http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl"
 
@@ -72,6 +54,22 @@ task genJaxb {
     }
 }
 
+jar {
+    baseName = 'gs-accessing-data-rest'
+    version = '0.1.0'
+    from genJaxb.classesDir
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+    maven { url "http://repo.spring.io/libs-release" }
+    maven { url 'https://repo.spring.io/libs-milestone' }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web",
             "org.springframework.boot:spring-boot-starter-thymeleaf",
@@ -80,6 +78,7 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-data-rest",
             "org.springframework.boot:spring-boot-starter-data-jpa",
             "org.springframework.ws:spring-ws-core",
+            "org.thymeleaf.extras:thymeleaf-extras-springsecurity4:${thymeleaf}",
             "com.github.axet:kaptcha:${kaptcha}",
             "com.h2database:h2:${h2}")
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
