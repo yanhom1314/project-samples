@@ -14,7 +14,7 @@ public class DemoController {
     @Autowired
     private RedisDemo redisDemo;
 
-    @RequestMapping("/")
+    @RequestMapping("")
     public String index() {
         return "demo/index";
     }

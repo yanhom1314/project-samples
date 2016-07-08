@@ -22,7 +22,7 @@ public class CustomerController {
         } else return null;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Customer> list() {
         final List<Customer> list = new ArrayList<Customer>();
         Iterator<Customer> iterable = repository.findAll().iterator();
@@ -33,7 +33,7 @@ public class CustomerController {
         return list;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
     public void add(@RequestBody Customer customer) {
         System.out.println("3");
         repository.save(customer);
