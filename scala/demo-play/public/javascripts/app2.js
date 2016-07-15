@@ -1,1 +1,0 @@
-webpackJsonp([1],[function(n,o,e){e(1);$=e(5);window.onload=function(){console.log("Hello World2!"),console.log($("body").html()),$.get("/demo/persons",function(n){$.each(n,function(n,o){var e=$("<div>").addClass("name").text(o.name),a=$("<div>").addClass("age").text(o.age);$("#persons").append($("<li>").append(e).append(a))})})}}]);

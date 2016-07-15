@@ -1,1 +1,0 @@
-webpackJsonp([0],[function(o,l,n){n(1);$=n(5);window.onload=function(){console.log("Hello World!"),console.log($("body").html())}}]);
