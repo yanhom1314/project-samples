@@ -8,9 +8,9 @@ A minimal [activator](https://www.typesafe.com/get-started) seed template for cr
 ## sbt-assembly & sbt-native-packager
 + add the next content to `build.sbt`
 
-        addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.2")
+        addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.3")
 
-        addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.0-RC1")
+        addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.1")
 
 + `assembly` task `MERGE ERROR` add the next content to `build.sbt`:
 
@@ -27,11 +27,13 @@ A minimal [activator](https://www.typesafe.com/get-started) seed template for cr
 
     sbt
     >assembly
-    java -admin.port=:8877 -http.port=:80 -local.doc.root=src/main/resources -mustache.templates.dir=templates -jar target\scala-2.11\finatra-demo-assembly-x.y.z.jar
+    java -Dfile.encoding=UTF-8 -jar target\scala-2.11\finatra-demo-assembly-x.y.z.jar -admin.port=:8877 -http.port=:80 
     >distZip
     cd target/universal/stage
-    bin/finatra-demo.bat -admin.port=:8877 -http.port=:80 -local.doc.root=src/main/resources -mustache.templates.dir=templates
+    bin/finatra-demo.bat -admin.port=:8877 -http.port=:80
     
+__如果需要及时刷新页面请增加参数项：`-local.doc.root=src/main/resources -mustache.templates.dir=templates`__    
+
 ## 乱码问题
 + 统一采用`UTF-8`编码
 + 增加`-Dfile.encoding=UTF-8`参数    

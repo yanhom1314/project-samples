@@ -5,11 +5,11 @@ import javax.inject.Singleton
 
 import com.github.mustachejava.{DefaultMustacheFactory, Mustache, MustacheFactory}
 import com.google.inject.Provides
-import com.twitter.finatra.annotations.Flag
 import com.twitter.finatra.http.internal.marshalling.mustache.ScalaObjectHandler
 import com.twitter.finatra.http.modules.DocRootModule
 import com.twitter.finatra.http.routing.FileResolver
 import com.twitter.inject.TwitterModule
+import com.twitter.inject.annotations.Flag
 
 object MyMustacheModule extends TwitterModule {
 

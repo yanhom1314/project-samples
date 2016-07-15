@@ -11,8 +11,8 @@ spring:
             show-sql: true
             ddl-auto: update
     redis:
-        host: 192.168.0.97
+        host: 192.168.0.98
         port: 6379
 server:
     context-path: /console
-    port: 9001
+    port: 80
