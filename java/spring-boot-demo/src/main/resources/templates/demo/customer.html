@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <title>Content page 1</title>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function _load_(_url, _method, _data) {
+            var _csrf = /*[[${_csrf.token}]]*/ '/customer';
+            $.ajax({
+                type: _method,
+                url: _url,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(_data),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', _csrf);//解决csrf
+                },
+                success: function (d) {
+                    console.log(d);
+                    $("#_content").text(d);
+                }
+            });
+        }
+        $(function () {
+            var path = /*[[@{/customer}]]*/ '/customer';
+            console.log("path:" + path);
+            $("#_init").click(function () {
+                _load_(path + "/all", "GET");
+            });
+            $("#_get").click(function () {
+                _load_(path + "/1", "GET");
+            });
+
+            $("#_post").click(function () {
+                _load_(path + "/add", "POST", {"firstName": "Frodo", "lastName": "Baggins"});
+            });
+            $("#_put").click(function () {
+                _load_(path + "/1", "PUT", {"firstName": "Frodo2", "lastName": "Baggins2"});
+            });
+            $("#_patch").click(function () {
+                _load_(path + "/1", "PATCH", {"firstName": "Bilbo Jr."});
+            });
+            $("#_delete").click(function () {
+                _load_(path + "/1", "DELETE");
+            });
+        });
+        /*]]>*/
+    </script>
+</head>
+<body>
+<section layout:fragment="content">
+    <h4>curl -i http://localhost:9001/console/customer</h4>
+
+    <h4>curl -i -X POST -H "Content-Type: application/json" -d {"firstName":"Test","lastName":"Test2"} http://localhost:9001/console/customer</h4>
+    <ul>
+        <li><a id="_post" href="javascript:void(0);" th:text="#{add}">增加</a><br/></li>
+        <li><a id="_get" href="javascript:void(0);" th:text="#{get}"></a><br/></li>
+        <li><a id="_init" href="javascript:void(0);" th:text="#{get.all}"></a><br/></li>
+        <li><a id="_put" href="javascript:void(0);">PUT Method</a><br/></li>
+        <li><a id="_patch" href="javascript:void(0);">PATCH Method</a><br/></li>
+        <li><a id="_delete" href="javascript:void(0);">DELETE Method</a><br/></li>
+    </ul>
+    <div id="_content">显示内容</div>
+</section>
+<footer>
+    <p layout:fragment="custom-footer">This is some footer content from content page 1</p>
+</footer>
+</body>
+</html>

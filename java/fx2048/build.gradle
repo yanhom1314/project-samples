@@ -8,9 +8,19 @@ jar {
     manifest {
         attributes 'Main-Class': 'game2048.Game2048'
     }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    testCompile 'junit:junit:$junit'
+    compile("com.google.inject:guice:$guice")
+    testCompile "junit:junit:$junit"
+}
+
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
