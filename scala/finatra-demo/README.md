@@ -10,7 +10,7 @@ A minimal [activator](https://www.typesafe.com/get-started) seed template for cr
 
         addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.3")
 
-        addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.1")
+        addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.2")
 
 + `assembly` task `MERGE ERROR` add the next content to `build.sbt`:
 
