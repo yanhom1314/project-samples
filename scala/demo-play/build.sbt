@@ -11,7 +11,7 @@ scalaVersion := "2.11.8"
 libraryDependencies ++= Seq(
   jdbc,
   cache,
-  ws,  
+  ws,
   "com.typesafe.play" %% "play-slick" % $("play-slick"),
   "io.sinq" %% "sinq-jpa" % $("sinq"),
   "org.springframework.data" % "spring-data-jpa" % $("spring-data-jpa"),
