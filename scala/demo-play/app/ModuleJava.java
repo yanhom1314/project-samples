@@ -18,13 +18,6 @@ public class ModuleJava extends AbstractModule {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringDataJpaConfig.class);
         System.out.println("conf/application.conf:[play.modules.enabled += \"ModuleJava\".");
         try {
-            Enumeration<URL> resources = this.getClass().getClassLoader().getResources("entities/*");
-            System.out.println("resources:" + resources.hasMoreElements());
-            while (resources.hasMoreElements()) {
-                URL u = resources.nextElement();
-                System.out.println(u.getFile());
-            }
-
             URL u = this.getClass().getClassLoader().getResource("entities");
             URLConnection conn = u.openConnection();
 

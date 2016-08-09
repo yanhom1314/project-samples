@@ -12,9 +12,10 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
+  "org.postgresql" % "postgresql" % $("postgresql"),
+  "org.springframework.data" % "spring-data-jpa" % $("spring-data-jpa"),
+  "org.hibernate" % "hibernate-hikaricp" % $("hibernate"),
   "com.typesafe.play" %% "play-slick" % $("play-slick"),
   "io.sinq" %% "sinq-jpa" % $("sinq"),
-  "org.springframework.data" % "spring-data-jpa" % $("spring-data-jpa"),
-  "org.postgresql" % "postgresql" % $("postgresql"),
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )
