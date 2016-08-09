@@ -33,8 +33,6 @@ class ModuleScala extends AbstractModule {
   }
 
   def loop(dir: File, ctx: ApplicationContext): Unit = {
-
-
     dir.listFiles(new FileFilter {
       override def accept(f: File): Boolean = f.isDirectory || (f.getName.indexOf("Repository") > 0 && f.getName.endsWith(".class"))
     }).foreach { f =>
