@@ -4,11 +4,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.File;
+import java.net.JarURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class ModuleJava extends AbstractModule {
     @Override
@@ -16,31 +18,43 @@ public class ModuleJava extends AbstractModule {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringDataJpaConfig.class);
         System.out.println("conf/application.conf:[play.modules.enabled += \"ModuleJava\".");
         try {
-            Enumeration<URL> resource = this.getClass().getClassLoader().getResources("entities");
+            URL u = this.getClass().getClassLoader().getResource("entities");
+            URLConnection conn = u.openConnection();
 
-            while (resource.hasMoreElements()) {
-                URL u = resource.nextElement();
-                File dir = new File(u.getFile());
-                List<String> list = new ArrayList<>();
-                loop(dir, list);
-                list.forEach(c -> {
-                    try {
-                        Class t = Class.forName(c);
-                        bind(t).toInstance(ctx.getBean(t));
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            if (conn instanceof JarURLConnection) {
+                try (JarFile jar = ((JarURLConnection) conn).getJarFile()) {
+                    Enumeration<JarEntry> entries = jar.entries();
+                    while (entries.hasMoreElements()) {
+                        String entry = entries.nextElement().getName();
+                        if (entry.indexOf("entities") >= 0) {
+                            try {
+                                System.out.println("name:" + entry.replaceAll("/", ".").replace(".class", ""));
+                                Class t = Class.forName(entry.replaceAll("/", ".").replace(".class", ""));
+                                bind(t).toInstance(ctx.getBean(t));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                });
-            }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else loop(new File(u.getFile()), ctx);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void loop(File dir, List<String> list) {
-        Arrays.stream(dir.listFiles(f -> f.isDirectory() || (f.getName().indexOf("Repository") > 0 && f.getName().endsWith(".class")))).forEach(f -> {
-            if (f.isFile()) list.add(dir.getName() + "." + f.getName().replace(".class", ""));
-            else loop(f, list);
+    public void loop(File dir, ApplicationContext ctx) {
+        Arrays.stream(dir.listFiles(f -> f.exists() && (f.isDirectory() || (f.getName().indexOf("Repository") > 0 && f.getName().endsWith(".class"))))).forEach(f -> {
+            if (f.isFile()) {
+                try {
+                    Class t = Class.forName(dir.getName() + "." + f.getName().replace(".class", ""));
+                    bind(t).toInstance(ctx.getBean(t));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else loop(f, ctx);
         });
     }
 }
