@@ -1,5 +1,7 @@
-var $ = require('jquery');
-require("main");
+var $ = jQuery = require('jquery');
+
+require("bootstrap-css");
+require("main-css");
 
 window.onload = function () {
     console.log("Hello World2!");

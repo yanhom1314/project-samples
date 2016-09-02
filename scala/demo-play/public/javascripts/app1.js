@@ -1,6 +1,7 @@
 var $ = jQuery = require("jquery");
 
-require("main");
+require("bootstrap-css");
+require("main-css");
 
 var add = require('math').add;
 
