@@ -1,7 +1,7 @@
 package demo
 
 import akka.actor._
-import demo.actor.ActorContaints._
+import demo.actor.ActorConstants._
 
 import scala.collection.mutable
 

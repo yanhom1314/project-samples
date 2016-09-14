@@ -10,8 +10,8 @@ import scala.concurrent.duration.FiniteDuration;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import static demo.actor.ActorContaints.CLIENT_ACTOR_SYSTEM;
-import static demo.actor.ActorContaints.HELLO_ACTOR;
+import static demo.actor.ActorConstants.CLIENT_ACTOR_SYSTEM;
+import static demo.actor.ActorConstants.HELLO_ACTOR;
 
 public class ServerJavaBoot {
 

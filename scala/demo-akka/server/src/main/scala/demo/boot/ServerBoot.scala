@@ -4,7 +4,7 @@ import java.io.File
 
 import akka.actor.{ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
-import demo.actor.ActorContaints._
+import demo.actor.ActorConstants._
 import demo.actor.{SayHello, SayHi}
 
 import scala.concurrent.duration._
@@ -22,5 +22,5 @@ object ServerBoot extends App {
   }
 
   //shutdown
-  system.scheduler.scheduleOnce(20.seconds)(system.shutdown())(system.dispatcher)
+  system.scheduler.scheduleOnce(15.seconds)(system.terminate())(system.dispatcher)
 }

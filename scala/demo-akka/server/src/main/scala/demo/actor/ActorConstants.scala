@@ -1,6 +1,6 @@
 package demo.actor
 
-object ActorContaints {
+object ActorConstants {
   val REMOTE_ACTOR_SYSTEM = "demo2ActorSystem"
   val CLIENT_ACTOR_SYSTEM = "clientActorSystem"
 
