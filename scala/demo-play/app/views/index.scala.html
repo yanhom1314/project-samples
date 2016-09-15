@@ -2,8 +2,8 @@
 
 @import helper._
 
-@main("Welcome to Play") {
-    <script src="@routes.Assets.versioned("javascripts/app2.js")"></script>
+@layout.main("Welcome to Play") {
+    <script src="@routes.Assets.versioned("javascripts/app2.min.js")"></script>
     <ul id="persons"></ul>
     @form(routes.PersonController.addPerson) {
         <div class="ui icon input">
@@ -13,7 +13,7 @@
         @inputText(person("age"))
         </div>
         <div class="buttons">
-            <input type="submit" value="Add New Person" class="ui primary  button"/>
+            <input type="submit" value="Add New Person" class="btn btn-primary"/>
         </div>
     }
 
@@ -32,7 +32,9 @@
                 <dd class="error">@messages(person.error("age").get.message, person.error("age").get.args: _*)</dd>
             }
         </dl>
-        <input type="submit" value="Add New Person" class="ui primary  button"/>
+        <dl>
+            <dt><input type="submit" value="Add New Person" class="btn btn-primary"/></dt>
+        </dl>
     </form>
     <ul>
     @for(e <- person.errors) {
@@ -62,5 +64,16 @@
             <li>index:@flash.get("index")</li>
             <li>user:@flash.get("user")</li>
         </ul>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn">Left</button>
+        <button class="btn">Middle</button>
+        <button class="btn">Right</button>
+    </div>
+    <div class="jumbotron">
+        <h1>Hello, world!</h1>
+        <p>...</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
     </div>
 }

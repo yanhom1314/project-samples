@@ -14,7 +14,6 @@ class ModuleScala extends AbstractModule {
     // Use the system clock as the default implementation of Clock
     bind(classOf[Clock]).toInstance(Clock.systemDefaultZone)
 
-
     setup(classOf[TPersonRepository])
   }
 

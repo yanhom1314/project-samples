@@ -25,13 +25,14 @@ module.exports = {
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.js$/, loader: 'jsx-loader?harmony'},
             {test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
-            {test: /\.(jpe?g|png|gif)$/, loader: 'url-loader?limit=8192'}
+            {test: /\.(eot|woff|woff2|ttf|svg|jpe?g|png|gif)$/, loader: 'url-loader?limit=8192'}
         ]
     },
     //其它解决方案配置
     resolve: {
         alias: {
-            'main': '../css/main.css',
+            'main-css': '../css/main.css',
+            'bootstrap-css': '../../node_modules/bootstrap/dist/css/bootstrap.min.css',
             'math': './lib/math.js'
         }
     }

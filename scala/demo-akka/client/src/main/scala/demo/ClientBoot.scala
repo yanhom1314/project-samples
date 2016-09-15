@@ -2,11 +2,9 @@ package demo
 
 import java.io.File
 
-import akka.actor.{ActorSystem, Props}
+import akka.actor.ActorSystem
 import com.typesafe.config.ConfigFactory
-import demo.MonitorActorSelectionActor._
-import demo.MonitorStatus._
-import demo.actor.ActorContaints._
+import demo.actor.ActorConstants._
 
 import scala.concurrent.duration._
 
@@ -21,26 +19,13 @@ object ClientBoot extends App {
 
   //create monitor actor on local for actorOf
   def loopByActorOf(): Unit = {
-    val actor = system.actorOf(Props[MonitorStatus], "monitorActor")
-    println(s"actorOf:${actor.path}")
-    system.scheduler.schedule(1.seconds, 2.seconds) {
-      println(s"###scan ACTORS_QUEUE:${ACTOR_M.size}###")
-      ACTOR_M.foreach { e =>
-        println(s"name:${e._1} path:${e._2.path} actor:${e._2}")
-        e._2 ! s"[${System.currentTimeMillis()}]"
-      }
-    }(system.dispatcher)
+    val r1 = LoopActorByOf(system)
+    system.scheduler.schedule(1.seconds, 3.seconds, r1)(system.dispatcher)
   }
 
   //create monitor actor on local for actorSelection
   def loopByActorSelection(): Unit = {
-    val actor = system.actorOf(Props[MonitorActorSelectionActor], "monitorActorSelectionActor")
-    println(s"actorSelection:${actor.path}")
-    system.scheduler.schedule(2.seconds, 2.seconds) {
-      ACTORS.foreach { e =>
-        println(s"name:${e.anchorPath.name} path:${e.anchorPath}")
-        e ! s"[${System.currentTimeMillis()}]"
-      }
-    }(system.dispatcher)
+    val r2 = LoopActorBySelection(system)
+    system.scheduler.schedule(2.seconds, 3.seconds, r2)(system.dispatcher)
   }
 }

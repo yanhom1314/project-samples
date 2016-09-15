@@ -36,7 +36,7 @@ object ConsoleApp extends App {
 
   event {
     println("exit.")
-    system.shutdown()
+    system.terminate()
     sys.exit(0)
   }
   println(msg)
