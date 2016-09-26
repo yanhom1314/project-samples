@@ -11,11 +11,6 @@ Golang 测试
 						  
 		export GOPATH=/phd/bin/go:/test_go //window set GOPATH=d:\Tools\go;e:\Github\project-samples\go
 
-+ 编译安装`pkg`库文件：
-		
-		go install newmath
-		go install mathii
-
 + 编译安装`bin`执行文件：
 
 		go install hello		
@@ -29,3 +24,14 @@ Golang 测试
 
 		bin/modanywhere
 		>curl http://127.0.0.1:8080/	
+		
++ 编译安装`pkg`库文件：
+        		
+        		go install newmath
+        		go install mathii
+
+
++ 动态库
+
+			go build -x -v -ldflags "-s -w" -buildmode=c-shared -o libnice.so nice				
+			gcc -I../ -L../ -lnice -o main main.c

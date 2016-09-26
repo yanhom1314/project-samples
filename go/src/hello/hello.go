@@ -14,6 +14,7 @@ func main() {
 	fmt.Printf("Hello World!\n")
 	fmt.Printf("Number:%d\n", result)
 	mathii.SayHi("YaFengLi")
+	mathii.SayHello("YaFengLi")
 	ReadLine("e:/tmp/test.c",processLine)
 }
 

@@ -1,7 +1,11 @@
 package mathii
 
-import "fmt"	
+import "fmt"
 
 func SayHi(name string) {
-	fmt.Println("Hello " + name + "!")	
+	fmt.Println("Hi " + name + "!")
+}
+
+func SayHello(name string) {
+	fmt.Print("Hello " + name + "!")
 }
