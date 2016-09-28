@@ -13,7 +13,8 @@ Golang 测试
 
 + 编译安装`bin`执行文件：
 
-		go install hello		
+		go install hello
+		go install demo			
 		go install modanywhere
 
 + 测试运行：
