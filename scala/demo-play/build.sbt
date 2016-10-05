@@ -18,5 +18,5 @@ libraryDependencies ++= Seq(
   "dom4j" % "dom4j" % $("dom4j"),
   "com.typesafe.play" %% "play-slick" % $("play-slick"),
   //"io.sinq" %% "sinq-jpa" % $("sinq"),
-  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
+  "org.scalatestplus.play" %% "scalatestplus-play" % $("scalatestplus") % Test
 )
