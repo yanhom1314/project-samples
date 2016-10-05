@@ -28,5 +28,4 @@ public class Module extends AbstractModule {
         // bind your injections here!
         
     }
-
 }

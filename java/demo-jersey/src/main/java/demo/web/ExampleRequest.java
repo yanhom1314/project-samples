@@ -13,8 +13,7 @@ public class ExampleRequest {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String example(@PathParam("example") String example) {
-       System.out.println("Working???");
-       return example + "!!!!";
+        System.out.println("Working???");
+        return example + "!!!!";
     }
-
 }

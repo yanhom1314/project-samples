@@ -50,3 +50,4 @@ GTAGS
 
 #haskell
 .stack-work
+/java/demo-jersey/.nb-gradle/
