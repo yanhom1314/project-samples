@@ -11,7 +11,7 @@ public class HomeRequest {
 
     @Path("{username}")
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_HTML)
     public String example(@PathParam("username") String username) {
         System.out.println("HomeRequest is Working???");
         return username + "!!!!";
