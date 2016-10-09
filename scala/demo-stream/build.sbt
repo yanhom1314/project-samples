@@ -4,10 +4,10 @@ name := """demo-stream"""
 
 version := "1.1"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-stream-experimental" % "2.0.1"
+  "com.typesafe.akka" %% "akka-stream" % "2.4.11"
 )
 
 scalariformSettings

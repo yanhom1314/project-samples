@@ -21,7 +21,6 @@ object Hello {
       }
       */
 
-
       val fs = args(0)
 
       f_r.findFirstMatchIn(new File(fs).getName) match {
@@ -30,7 +29,8 @@ object Hello {
 
           var r = m.nextRecord()
           while (r != null) {
-            println(r)
+            println(r.toString)
+            println(s"${r.getName}${if(r.getName.length()<8) "\t\t\t" else if(r.getName.length()<16) "\t\t" else "\t"}${r.getTTL}\t${DClass.string(r.getDClass)}\t${Type.string(r.getType)}\t${r.rdataToString()}")
             r = m.nextRecord()
           }
         case None =>
