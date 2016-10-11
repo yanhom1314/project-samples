@@ -1,19 +1,15 @@
-name := """demo-dnsjava"""
+import Build._
+import sbt.Keys._
 
-version := "1.0"
-
-scalaVersion := "2.11.8"
-
-
-enablePlugins(SbtDistApp)
-
-mainClass := Some("com.example.Hello")
-
-// Change this to another test framework if you prefer
-libraryDependencies ++= Seq(
-  "dnsjava" % "dnsjava" % "2.1.7",
-  "io.undertow" % "undertow-core" % "1.4.3.Final",
-  "io.undertow" % "undertow-servlet" % "1.4.3.Final",
-  "io.undertow" % "undertow-websockets-jsr" % "1.4.3.Final",
-  "org.scalatest" %% "scalatest" % "2.2.4" % "test")
-
+lazy val root = project.in(file(".")).enablePlugins(SbtDistApp).settings(
+  name := """demo-dnsjava""",
+  version := "1.0",
+  scalaVersion := "2.11.8",
+  mainClass := Some("com.example.Hello"),
+  libraryDependencies ++= Seq(
+    "dnsjava" % "dnsjava" % $("dnsjava"),
+    "io.undertow" % "undertow-core" % $("undertow"),
+    "io.undertow" % "undertow-servlet" % $("undertow"),
+    "io.undertow" % "undertow-websockets-jsr" % $("undertow"),
+    "org.scalatest" %% "scalatest" % $("scalatest") % "test")
+)

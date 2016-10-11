@@ -9,17 +9,7 @@ object Hello {
 
   def main(args: Array[String]): Unit = {
     println("Hello, world!")
-
-
     if (args.length >= 1) {
-      /*
-      val addr = Address.getByName("www.dnsjava.org")
-      println(addr.getHostAddress + " " + addr.getHostName)
-
-      new Lookup("gmail.com", Type.MX).run().filter(t => t.isInstanceOf[MXRecord]).map(_.asInstanceOf[MXRecord]).foreach { r =>
-        println(s"Host ${r.getTarget}  has preference ${r.getPriority}")
-      }
-      */
 
       val fs = args(0)
 
@@ -29,18 +19,13 @@ object Hello {
 
           var r = m.nextRecord()
           while (r != null) {
-            println(r.toString)
-            println(s"${r.getName}${if(r.getName.length()<8) "\t\t\t" else if(r.getName.length()<16) "\t\t" else "\t"}${r.getTTL}\t${DClass.string(r.getDClass)}\t${Type.string(r.getType)}\t${r.rdataToString()}")
+            println(s"${r.getName}${if (r.getName.length() < 8) "\t\t\t" else if (r.getName.length() < 16) "\t\t" else "\t"}${r.getTTL}\t${DClass.string(r.getDClass)}\t${Type.string(r.getType)}\t${r.rdataToString()}")
+            //(0 until (r.getName.labels() - 1)).foreach { i => print(s"${i} ${r.getName.getLabelString(i)} ") }
+            //println()
             r = m.nextRecord()
           }
         case None =>
       }
-
-      /*
-      val xfr = ZoneTransferIn.newAXFR(new Name("."), "114.114.114.114", null)
-      val records = xfr.run()
-      records.foreach(println(_))
-      */
     }
   }
 }

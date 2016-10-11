@@ -12,7 +12,7 @@ public class DemoApplication extends Application<DemoConfiguration> {
 
     @Override
     public String getName() {
-        return "Demo";
+        return "hello";
     }
 
     @Override
