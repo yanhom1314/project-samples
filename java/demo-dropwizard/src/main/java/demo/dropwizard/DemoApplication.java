@@ -4,6 +4,7 @@ import demo.dropwizard.resources.HelloWorldResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.dropwizard.views.ViewBundle;
 
 public class DemoApplication extends Application<DemoConfiguration> {
 
@@ -19,6 +20,7 @@ public class DemoApplication extends Application<DemoConfiguration> {
     @Override
     public void initialize(final Bootstrap<DemoConfiguration> bootstrap) {
         // TODO: application initialization
+        bootstrap.addBundle(new ViewBundle<DemoConfiguration>());
     }
 
     @Override

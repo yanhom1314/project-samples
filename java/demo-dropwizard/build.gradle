@@ -30,12 +30,12 @@ repositories {
 }
 
 dependencies {
-    compile (
-       "io.dropwizard:dropwizard-core:$dropwizard",
-       "io.dropwizard:dropwizard-hibernate:$dropwizard",
-       "io.dropwizard:dropwizard-migrations:$dropwizard",
-       "io.dropwizard:dropwizard-auth:$dropwizard",
-       'com.h2database:h2:1.3.168'    )
+    compile("io.dropwizard:dropwizard-core:$dropwizard",
+            "io.dropwizard:dropwizard-hibernate:$dropwizard",
+            "io.dropwizard:dropwizard-views-freemarker:$dropwizard",
+            "io.dropwizard:dropwizard-migrations:$dropwizard",
+            "io.dropwizard:dropwizard-auth:$dropwizard",
+            'com.h2database:h2:1.3.168')
 }
 
 // Configure the oneJar task
