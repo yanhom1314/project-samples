@@ -8,6 +8,7 @@ lazy val root = project.in(file(".")).enablePlugins(SbtDistApp).settings(
   mainClass := Some("com.example.Hello"),
   libraryDependencies ++= Seq(
     "dnsjava" % "dnsjava" % $("dnsjava"),
+    "com.google.guava" % "guava" % $("guava"),
     "io.undertow" % "undertow-core" % $("undertow"),
     "io.undertow" % "undertow-servlet" % $("undertow"),
     "io.undertow" % "undertow-websockets-jsr" % $("undertow"),
