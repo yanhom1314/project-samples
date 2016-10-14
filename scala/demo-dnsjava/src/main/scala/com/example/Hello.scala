@@ -65,14 +65,15 @@ object Hello {
     println(s"labels size:${name.labels()}")
     (0 until name.labels()).foreach(i => print(i + ":" + name.getLabelString(i) + " "))
     println()
-    (1 to 2).foreach(i => try {
-      println(name.wild(i).toString)
-    } catch {
-      case e: Exception => e.printStackTrace()
-    })
+
+    val buffer = mutable.ListBuffer[String]()
+
+    domain("a.b.www.baidu.com.", buffer)
+    buffer.reverse.foreach(println(_))
   }
 
-  def domain(dn: String, buffer: mutable.Buffer[String]): Unit = {
+  def domain(dn: String, buffer: mutable.ListBuffer[String]): Unit = {
     buffer += dn
+    if (!InternetDomainName.from(dn).isTopPrivateDomain) domain(dn.substring(dn.indexOf(".") + 1), buffer)
   }
 }
