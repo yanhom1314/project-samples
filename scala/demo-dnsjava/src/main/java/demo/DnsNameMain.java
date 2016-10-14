@@ -17,9 +17,14 @@ public class DnsNameMain {
 
         try {
             Name name = Name.fromString(dn + ".");
-            System.out.println(dn);
-            System.out.println("prefix:" + name.getLabelString(0));
-            System.out.println("domain:" + Name.fromString(name.toString().substring(name.toString().indexOf(".") + 1)).toString(true));
+            System.out.println("domain:" + dn);
+            String prefix = name.getLabelString(0);
+            System.out.println("prefix:" + prefix);
+            Name subName = Name.fromString(name.toString().substring(name.toString().indexOf(".") + 1));
+            System.out.println("check parent:" + InternetDomainName.from(subName.toString()).parent().equals(InternetDomainName.from(dn)));
+            System.out.println("parent domain:" + subName.toString(true));
+            System.out.println("parent domain:" + InternetDomainName.from(dn).parent().toString());
+            System.out.println("top domain:" + InternetDomainName.from(dn).topPrivateDomain().toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
