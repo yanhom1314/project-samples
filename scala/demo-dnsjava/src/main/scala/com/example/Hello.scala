@@ -8,7 +8,7 @@ import org.xbill.DNS._
 import scala.collection.mutable
 
 object Hello {
-  val f_r = """([^s]+\.)hosts""".r
+  val f_r = """([^\s]+\.)hosts""".r
 
   def main(args: Array[String]): Unit = {
     println("Hello, world!")
@@ -22,15 +22,16 @@ object Hello {
 
           var r = m.nextRecord()
           while (r != null) {
-            println(s"${r.getName}${if (r.getName.length() < 8) "\t\t\t" else if (r.getName.length() < 16) "\t\t" else "\t"}${r.getTTL}\t${DClass.string(r.getDClass)}\t${Type.string(r.getType)}\t${r.rdataToString()}")
-            (0 until (r.getName.labels() - 1)).foreach { i => print(s"${i} ${r.getName.getLabelString(i)} ") }
-            println()
+            println(s"${r.getName}${tabPrint(r.getName.toString())}${r.getTTL}\t${DClass.string(r.getDClass)}\t${Type.string(r.getType)}\t${r.rdataToString()}")
             r = m.nextRecord()
           }
         case None =>
       }
     }
+    //printDNS()
+  }
 
+  def printDNS(): Unit = {
     println("a.b.www.baidu.com. " + InternetDomainName.from("a.b.www.baidu.com.").isTopPrivateDomain.toString)
     println("mp3.baidu.com. " + InternetDomainName.from("mp3.baidu.com.").isTopPrivateDomain.toString)
     println("baidu.com. " + InternetDomainName.from("baidu.com.").isTopPrivateDomain.toString)
@@ -75,5 +76,15 @@ object Hello {
   def domain(dn: String, buffer: mutable.ListBuffer[String]): Unit = {
     buffer += dn
     if (!InternetDomainName.from(dn).isTopPrivateDomain) domain(dn.substring(dn.indexOf(".") + 1), buffer)
+  }
+
+
+  def tabPrint(name: String): String = {
+    val buffer = new StringBuffer("\t")
+    if (name.length < 8) buffer.append("\t")
+    if (name.length < 16) buffer.append("\t")
+    if (name.length < 24) buffer.append("\t")
+    if (name.length < 32) buffer.append("\t")
+    buffer.toString
   }
 }
