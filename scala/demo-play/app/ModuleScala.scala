@@ -2,7 +2,7 @@ import java.time.Clock
 
 import com.google.inject.AbstractModule
 import config.SpringDataJpaConfig
-import entities.TPersonRepository
+import entities.{TAddressRepository, TPersonRepository}
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 class ModuleScala extends AbstractModule {
@@ -15,6 +15,7 @@ class ModuleScala extends AbstractModule {
     bind(classOf[Clock]).toInstance(Clock.systemDefaultZone)
 
     setup(classOf[TPersonRepository])
+    setup(classOf[TAddressRepository])
   }
 
   private def setup[T](c: Class[T]): Unit = {

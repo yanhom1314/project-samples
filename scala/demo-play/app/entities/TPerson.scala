@@ -10,8 +10,10 @@ import javax.persistence._
   */
 @Entity
 @Table(name = "people")
-class TPerson {
-  @Id  @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = _
+class TPerson extends TModel {
   var name: String = _
   var age: Int = _
+
+  @OneToOne(cascade = Array(CascadeType.MERGE))
+  var address: TAddress = _
 }
