@@ -6,7 +6,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.repository.Repository
 
 class ModuleScala extends AbstractModule {
-  val PKG_PREFIX_NAME = "entities"
   lazy val ctx = new AnnotationConfigApplicationContext(classOf[SpringDataJpaConfig])
 
   override def configure() = {
