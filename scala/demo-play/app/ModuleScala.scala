@@ -14,15 +14,8 @@ class ModuleScala extends AbstractModule {
     // Use the system clock as the default implementation of Clock
     bind(classOf[Clock]).toInstance(Clock.systemDefaultZone)
 
-    //setup(classOf[TPersonRepository])
-    //setup(classOf[TAddressRepository])
-
     ctx.getBeanNamesForType(classOf[Repository[_, _]]).map(ctx.getType(_)).foreach {
       case c: Class[Repository[_, _]@unchecked] => bind(c).toInstance(ctx.getBean(c))
     }
-  }
-
-  private def setup[T](c: Class[T]): Unit = {
-    bind(c).toInstance(ctx.getBean(c))
   }
 }
