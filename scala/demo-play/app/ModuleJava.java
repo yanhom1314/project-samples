@@ -8,45 +8,57 @@ import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
+import java.util.Collections;
 import java.util.jar.JarFile;
+import java.util.stream.Stream;
 
 public class ModuleJava extends AbstractModule {
+    public static final String PKG_PREFIX_NAME = "entities";
+    public static final String REPOSITORY_SUFFIX_NAME = "Repository";
+    ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringDataJpaConfig.class);
+
     @Override
     protected void configure() {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringDataJpaConfig.class);
         System.out.println("conf/application.conf:[play.modules.enabled += \"ModuleJava\".");
+        Stream.of(ctx.getBeanDefinitionNames()).filter(t -> t.endsWith(REPOSITORY_SUFFIX_NAME)).forEach(n -> {
+            try {
+                Class c = Class.forName(PKG_PREFIX_NAME + "." + n);
+                bind(c).toInstance(ctx.getBean(c));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        //scanJarFile();
+    }
+
+
+    public void scanJarFile() {
         try {
             URL u = this.getClass().getClassLoader().getResource("entities");
             URLConnection conn = u.openConnection();
 
             if (conn instanceof JarURLConnection) {
                 try (JarFile jar = ((JarURLConnection) conn).getJarFile()) {
-                    Enumeration<JarEntry> entries = jar.entries();
-                    while (entries.hasMoreElements()) {
-                        String entry = entries.nextElement().getName();
-                        if (entry.indexOf("entities") >= 0) {
-                            try {
-                                System.out.println("name:" + entry.replaceAll("/", ".").replace(".class", ""));
-                                Class t = Class.forName(entry.replaceAll("/", ".").replace(".class", ""));
-                                bind(t).toInstance(ctx.getBean(t));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                    Collections.list(jar.entries()).stream().filter(e -> e.getName().indexOf(PKG_PREFIX_NAME) >= 0).forEach(entry -> {
+                        String name = entry.getName();
+                        try {
+                            Class t = Class.forName(name.replaceAll("/", ".").replace(".class", ""));
+                            bind(t).toInstance(ctx.getBean(t));
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else loop(new File(u.getFile()), ctx);
+            } else loop(new File(u.getFile()));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void loop(File dir, ApplicationContext ctx) {
-        Arrays.stream(dir.listFiles(f -> f.exists() && (f.isDirectory() || (f.getName().indexOf("Repository") > 0 && f.getName().endsWith(".class"))))).forEach(f -> {
+    private void loop(File dir) {
+        Arrays.stream(dir.listFiles(f -> f.isDirectory() || (f.isFile() && f.getName().endsWith(REPOSITORY_SUFFIX_NAME + ".class")))).forEach(f -> {
             if (f.isFile()) {
                 try {
                     Class t = Class.forName(dir.getName() + "." + f.getName().replace(".class", ""));
@@ -54,7 +66,7 @@ public class ModuleJava extends AbstractModule {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else loop(f, ctx);
+            } else loop(f);
         });
     }
 }

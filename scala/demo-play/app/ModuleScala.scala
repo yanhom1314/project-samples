@@ -6,7 +6,8 @@ import entities.{TAddressRepository, TPersonRepository}
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 class ModuleScala extends AbstractModule {
-
+  val REPOSITORY_SUFFIX_NAME = "Repository"
+  val PKG_PREFIX_NAME = "entities"
   lazy val ctx = new AnnotationConfigApplicationContext(classOf[SpringDataJpaConfig])
 
   override def configure() = {
