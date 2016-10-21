@@ -31,7 +31,6 @@ module.exports = {
     //其它解决方案配置
     resolve: {
         alias: {
-            'main-css': '../../css/main.css',
             'bootstrap-css': '../../../node_modules/bootstrap/dist/css/bootstrap.min.css',
             'jquery-ui-css': '../../../node_modules/jquery-ui/themes/base/all.css',
             'free-jqgrid-css': '../../../node_modules/free-jqgrid/css/ui.jqgrid.min.css',

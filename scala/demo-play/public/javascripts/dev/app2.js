@@ -1,7 +1,6 @@
 var $ = jQuery = require('jquery');
 
 require("bootstrap-css");
-require("main-css");
 
 require("datatables-css");
 require("datatables");
@@ -19,7 +18,36 @@ window.onload = function () {
 
     //data table
     $('#example').DataTable({
-        "ajax": '/demo/datatables',
+        "language":{
+            "decimal":        "",
+            "emptyTable":     "没有数据",
+            "info":           "显示 _START_ 到 _END_ 共 _TOTAL_ 条记录",
+            "infoEmpty":      "显示 0 到 0 共 0 条记录",
+            "infoFiltered":   "(filtered from _MAX_ total entries)",
+            "infoPostFix":    "",
+            "thousands":      ",",
+            "lengthMenu":     "显示 _MENU_ 记录",
+            "loadingRecords": "载入中...",
+            "processing":     "处理中...",
+            "search":         "查询:",
+            "zeroRecords":    "没发现记录",
+            "paginate": {
+                "first":      "首页",
+                "last":       "末页",
+                "next":       "下一页",
+                "previous":   "上一页"
+            },
+            "aria": {
+                "sortAscending":  ": activate to sort column ascending",
+                "sortDescending": ": activate to sort column descending"
+            }
+        },
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": '/demo/datatables',
+            "type": "GET"
+        },
         "columns": [
             {"data": "id"},
             {"data": "firstName"},

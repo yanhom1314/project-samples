@@ -40,11 +40,13 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     Ok(Json.toJson(list))
   }
 
-  def datatables() = Action { implicit request =>
+  def datatables(draw: Int, start: Int, length: Int) = Action { implicit request =>
     import third.datatables.DataTablesData._
 
-    val list = DataTablesData(ListBuffer[DemoData]())
-    (0 to 12).foreach { i => list.data += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }
+    request.queryString.toList.sortBy(t => t._1).foreach { t => println(t._1 + ":" + t._2.map(v => v).mkString(" ")) }
+
+    val list = DataTablesData(draw, 102, 102, ListBuffer[DemoData]())
+    (start.toInt until start.toInt + length).foreach { i => list.data += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }
     Ok(Json.toJson(list))
   }
 }
