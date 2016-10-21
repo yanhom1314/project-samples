@@ -5,9 +5,9 @@ require("bootstrap-css");
 require("datatables-css");
 require("datatables");
 
-window.onload = function () {
-    console.log("Hello World2!");
-    console.log($("body").html());
+require("main-css");
+
+window.onload = function () {        
     $.get('/demo/persons', function (data) {
         $.each(data, function (i, d) {
             var name = $("<div>").addClass("name").text(d.name);

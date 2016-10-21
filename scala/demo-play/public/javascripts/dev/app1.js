@@ -1,7 +1,6 @@
 var $ = jQuery = require("jquery");
 
 require("bootstrap-css");
-
 //require("jquery-ui");
 //require("jquery-ui-css");
 
@@ -9,8 +8,9 @@ require("free-jqgrid-css");
 require("free-jqgrid-locale-cn");
 require("free-jqgrid");
 
-var add = require('math').add;
+require("main-css");
 
+var add = require('math').add;
 
 function resizeGrid(){   
 	var width = $(window).width() * 0.8;	
