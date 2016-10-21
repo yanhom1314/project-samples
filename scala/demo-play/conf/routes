@@ -4,6 +4,7 @@
 
 #demo
 GET         /demo                controllers.DemoController.demo
+GET         /jqgrid              controllers.DemoController.jqgrid
 
 # An example controller showing a sample home page
 GET         /home                controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")

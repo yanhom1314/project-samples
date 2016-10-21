@@ -4,10 +4,13 @@ import javax.inject._
 
 import entities.TPersonRepository
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.libs.json.Json
 import play.api.mvc._
 import services.SpringContextLoader
+import third.jqgrid.{DemoData, JqGridData}
 
 import scala.collection.JavaConversions._
+import scala.collection.mutable.ListBuffer
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
@@ -26,5 +29,12 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     println(s"age > 12 :${personRepo.findAllByAge(12)}")
     println("################################")
     Ok(views.html.demo())
+  }
+
+  def jqgrid() = Action { implicit request =>
+    import JqGridData._
+    val list = JqGridData(2, 1, 13, ListBuffer[DemoData]())
+    (0 to 12).foreach { i => list.rows += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }
+    Ok(Json.toJson(list))
   }
 }

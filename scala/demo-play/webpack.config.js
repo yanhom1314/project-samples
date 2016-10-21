@@ -2,7 +2,7 @@ const webpack = require('webpack');
 
 module.exports = {
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('main.js'),
+        new webpack.optimize.CommonsChunkPlugin('main.min.js'),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -13,8 +13,8 @@ module.exports = {
         })
     ],
     entry: {
-        app1: './public/javascripts/app1.js',
-        app2: './public/javascripts/app2.js'
+        app1: './public/javascripts/dev/app1.js',
+        app2: './public/javascripts/dev/app2.js'
     },
     output: {
         path: './public/javascripts',
@@ -31,9 +31,12 @@ module.exports = {
     //其它解决方案配置
     resolve: {
         alias: {
-            'main-css': '../css/main.css',
-            'bootstrap-css': '../../node_modules/bootstrap/dist/css/bootstrap.min.css',
-            'math': './lib/math.js'
+            'main-css': '../../css/main.css',
+            'bootstrap-css': '../../../node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'jquery-ui-css': '../../../node_modules/jquery-ui/themes/base/all.css',
+            'free-jqgrid-css': '../../../node_modules/free-jqgrid/css/ui.jqgrid.min.css',
+            'free-jqgrid-locale-cn': '../../../node_modules/free-jqgrid/js/i18n/grid.locale-cn.min.js',
+            'math': '../lib/math.js'
         }
     }
 };
