@@ -11,14 +11,18 @@ require("free-jqgrid");
 
 var add = require('math').add;
 
-window.onload = function () {
-    console.log("Hello World!");
-    console.log("jQuery:"+$);
-    console.log(add(12, 7));
-    console.log($("body").html());
-    //jqgrid
 
-    jQuery("#list2").jqGrid({
+function resizeGrid(){   
+	var width = $(window).width() * 0.8;	
+    $("#list2").setGridWidth(width);
+	console.log("width:"+width);
+	return width;
+}
+
+window.onload = function () {   
+    console.log(add(12, 7));   
+    //jqgrid
+	jQuery("#list2").jqGrid({
    	    url:'jqgrid',
 	    datatype: "json",
    	    colNames:['id','firstName','lastName', 'address'],
@@ -28,13 +32,16 @@ window.onload = function () {
    		    {name:'lastName',index:'lastName', width:100},
    		    {name:'address',index:'address', width:150, sortable:false}
    	    ],
+		width: resizeGrid(),
    	    rowNum:10,
    	    rowList:[10,20,30],
    	    pager: '#pager2',
-   	    sortname: 'id',
+   	    sortname: 'id',		
         viewrecords: true,
         sortorder: "desc",
         caption:"JSON Example"
     });
     jQuery("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
+	
+	$(window).resize(resizeGrid);
 };
