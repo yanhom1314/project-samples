@@ -36,6 +36,7 @@ module.exports = {
             'jquery-ui-css': '../../../node_modules/jquery-ui/themes/base/all.css',
             'free-jqgrid-css': '../../../node_modules/free-jqgrid/css/ui.jqgrid.min.css',
             'free-jqgrid-locale-cn': '../../../node_modules/free-jqgrid/js/i18n/grid.locale-cn.min.js',
+            'datatables-css': '../../../node_modules/datatables/media/css/jquery.dataTables.min.css',
             'math': '../lib/math.js'
         }
     }

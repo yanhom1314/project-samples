@@ -7,7 +7,9 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json.Json
 import play.api.mvc._
 import services.SpringContextLoader
-import third.jqgrid.{DemoData, JqGridData}
+import third.DemoData
+import third.datatables.DataTablesData
+import third.jqgrid.JqGridData
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ListBuffer
@@ -35,6 +37,14 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     import JqGridData._
     val list = JqGridData(2, 1, 13, ListBuffer[DemoData]())
     (0 to 12).foreach { i => list.rows += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }
+    Ok(Json.toJson(list))
+  }
+
+  def datatables() = Action { implicit request =>
+    import third.datatables.DataTablesData._
+
+    val list = DataTablesData(ListBuffer[DemoData]())
+    (0 to 12).foreach { i => list.data += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }
     Ok(Json.toJson(list))
   }
 }

@@ -1,4 +1,4 @@
-package third.jqgrid
+package third
 
 import play.api.libs.json.Json
 
