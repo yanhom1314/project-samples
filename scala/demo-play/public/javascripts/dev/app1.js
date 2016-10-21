@@ -1,8 +1,8 @@
 var $ = jQuery = require("jquery");
 
-require("bootstrap-css");
-require("free-jqgrid-css");
-require("main-css");
+//require("bootstrap-css");
+//require("free-jqgrid-css");
+//require("main-css");
 
 require("jquery-ui");
 require("jquery-ui-css");

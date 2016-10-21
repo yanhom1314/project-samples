@@ -1,5 +1,6 @@
 logs
 target
+*.lock
 /.idea
 /.idea_modules
 /.classpath
