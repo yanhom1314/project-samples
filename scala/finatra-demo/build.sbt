@@ -38,6 +38,7 @@ libraryDependencies ++= Seq(
   "com.twitter" %% "finatra-slf4j" % $("finatra"),
   "com.twitter" %% "inject-server" % $("finatra"),
   "com.twitter" %% "inject-app" % $("finatra"),
-  "ch.qos.logback" % "logback-classic" % $("logback"),
+  "org.freemarker" % "freemarker" % $("freemarker"),
+    "ch.qos.logback" % "logback-classic" % $("logback"),
   "org.mockito" % "mockito-core" % $("mockito") % "test",
   "org.scalatest" %% "scalatest" % $("scalatest") % "test")
