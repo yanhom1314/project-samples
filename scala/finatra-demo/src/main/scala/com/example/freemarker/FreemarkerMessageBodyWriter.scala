@@ -17,6 +17,15 @@ class FreemarkerMessageBodyWriter @Inject()(freemarkerService: FreemarkerService
       MediaType.HTML_UTF_8,
       freemarkerService.createBuffer(
         templateLookup.getTemplateName(obj),
-        getScope(obj))
+        getScope(obj)))
+  }
+
+  /* Private */
+
+  private def getScope(obj: Any): Any = {
+    obj match {
+      case c: FreemarkerBodyComponent => c.data
+      case _ => obj
+    }
   }
 }
