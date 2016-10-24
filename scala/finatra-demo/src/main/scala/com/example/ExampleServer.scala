@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.http.{HomeController, PingController, UserController}
+import com.example.http.{HomeController, PingController, UserController, ViewController}
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
@@ -23,5 +23,6 @@ class ExampleServer extends HttpServer {
       .add[PingController]
       .add[HomeController]
       .add[UserController]
+      .add[ViewController]
   }
 }
