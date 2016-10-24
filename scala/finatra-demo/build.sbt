@@ -36,6 +36,7 @@ libraryDependencies ++= Seq(
   "com.twitter" %% "finatra-http" % $("finatra"),
   "com.twitter" %% "finatra-httpclient" % $("finatra"),
   "com.twitter" %% "finatra-slf4j" % $("finatra"),
+  "com.twitter" %% "finatra-thrift" % $("finatra"),
   "com.twitter" %% "inject-server" % $("finatra"),
   "com.twitter" %% "inject-app" % $("finatra"),
   "org.freemarker" % "freemarker" % $("freemarker"),

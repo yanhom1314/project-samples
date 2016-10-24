@@ -47,20 +47,6 @@ object MyMustacheModule extends TwitterModule {
     }
   }
 
-  @Provides
-  @Singleton
-  def provideFreemarkerConfig(resolver: FileResolver,
-                              @Flag("local.doc.root") localDocRoot: String): FreemarkerFactory = {
-
-    val factory = new FreemarkerFactory()
-
-    new File(localDocRoot) match {
-      case f: File if f != null && f.isDirectory => factory.configuration.setDirectoryForTemplateLoading(new File(localDocRoot))
-      case _ => factory.configuration.setClassLoaderForTemplateLoading(this.getClass.getClassLoader, "templates")
-    }
-
-    factory
-  }
 }
 
 /**

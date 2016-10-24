@@ -2,6 +2,7 @@ package com.example.http
 
 import javax.inject.Inject
 
+import com.example.filter.UserFilter
 import com.example.service.ExampleService
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
@@ -18,8 +19,9 @@ class UserController @Inject()(service: ExampleService) extends Controller {
     UsersResponse(request.max, request.startDate, request.verbose)
   }
 
-  get("/users/:id") { request: Request =>
-    response.ok.html("You looked up " + request.params("id"))
+  filter[UserFilter].get("/users/:id") { request: Request =>
+    import com.example.filter.UserContext._
+    response.ok.html("You looked up " + request.params("id") + s" user id:${request.user.id}")
   }
 }
 

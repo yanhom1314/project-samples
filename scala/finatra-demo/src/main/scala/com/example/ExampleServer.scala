@@ -16,6 +16,7 @@ class ExampleServer extends HttpServer {
   override def defaultFinatraHttpPort = ":80"
 
   override def configureHttp(router: HttpRouter): Unit = {
+    addFrameworkModule(FreemarkerModule)
     router
       .filter[LoggingMDCFilter[Request, Response]]
       .filter[TraceIdMDCFilter[Request, Response]]
