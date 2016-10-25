@@ -3,7 +3,6 @@ package com.example
 import java.io._
 import javax.inject.Singleton
 
-import com.example.freemarker.FreemarkerFactory
 import com.github.mustachejava.{DefaultMustacheFactory, Mustache, MustacheFactory}
 import com.google.inject.Provides
 import com.twitter.finatra.http.internal.marshalling.mustache.ScalaObjectHandler

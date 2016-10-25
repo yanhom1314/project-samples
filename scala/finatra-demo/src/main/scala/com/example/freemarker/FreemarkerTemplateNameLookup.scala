@@ -2,8 +2,6 @@ package com.example.freemarker
 
 import java.util.concurrent.ConcurrentHashMap
 
-import com.twitter.finatra.response.Mustache
-
 import scala.collection.JavaConverters._
 
 /**
@@ -26,8 +24,8 @@ private[freemarker] class FreemarkerTemplateNameLookup {
 
   private def lookupViaAnnotation(viewObj: Any): String = {
     classToTemplateNameCache.getOrElseUpdate(viewObj.getClass, {
-      val mustacheAnnotation = viewObj.getClass.getAnnotation(classOf[Mustache])
-      mustacheAnnotation.value + ".mustache"
+      val freemarkerAnnotation = viewObj.getClass.getAnnotation(classOf[Freemarker])
+      freemarkerAnnotation.value + ".ftl"
     })
   }
 }
