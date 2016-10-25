@@ -14,8 +14,6 @@ class ExampleServer extends HttpServer {
 
   override def mustacheModule = MyMustacheModule
 
-  //override protected def messageBodyModule = MyMessageBodyModule
-
   override val disableAdminHttpServer = true
 
   override def defaultFinatraHttpPort = ":80"

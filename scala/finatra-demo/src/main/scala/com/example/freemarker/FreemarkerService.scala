@@ -6,20 +6,19 @@ import javax.inject.{Inject, Singleton}
 
 import com.twitter.io.Buf
 
-/**
-  * Created by LYF on 2016/10/23.
-  */
 @Singleton
-class FreemarkerService @Inject()(factory: FreemarkerFactory) {
+class FreemarkerService @Inject()(factory: FreemarkerConfigurationFactory) {
 
   private[freemarker] def createBuffer(templateName: String, obj: Any): Buf = {
-    val template = factory.configuration.getTemplate(templateName)
-
     val outputStream = new ByteArrayOutputStream(1024)
     val writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)
     try {
+      val template = factory.configuration.getTemplate(templateName)
       template.process(obj, writer)
-    } finally {
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
+    finally {
       writer.close()
     }
 
@@ -27,10 +26,13 @@ class FreemarkerService @Inject()(factory: FreemarkerFactory) {
   }
 
   def createString(templateName: String, obj: Any): String = {
-    val template = factory.configuration.getTemplate(templateName)
-
     val writer = new StringWriter()
-    template.process(obj, writer)
+    try {
+      val template = factory.configuration.getTemplate(templateName)
+      template.process(obj, writer)
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
 
     writer.toString
   }

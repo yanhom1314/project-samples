@@ -4,9 +4,6 @@ import java.util.concurrent.ConcurrentHashMap
 
 import scala.collection.JavaConverters._
 
-/**
-  * Created by LYF on 2016/10/23.
-  */
 private[freemarker] class FreemarkerTemplateNameLookup {
   private val classToTemplateNameCache = new ConcurrentHashMap[Class[_], String]().asScala
 

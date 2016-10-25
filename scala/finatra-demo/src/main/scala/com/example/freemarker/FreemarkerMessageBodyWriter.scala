@@ -1,13 +1,13 @@
 package com.example.freemarker
 
+import java.util
 import javax.inject.{Inject, Singleton}
 
 import com.google.common.net.MediaType
 import com.twitter.finatra.http.marshalling.{MessageBodyWriter, WriterResponse}
 
-/**
-  * Created by LYF on 2016/10/23.
-  */
+import scala.collection.JavaConverters._
+
 @Singleton
 class FreemarkerMessageBodyWriter @Inject()(freemarkerService: FreemarkerService,
                                             templateLookup: FreemarkerTemplateNameLookup)
@@ -17,15 +17,14 @@ class FreemarkerMessageBodyWriter @Inject()(freemarkerService: FreemarkerService
       MediaType.HTML_UTF_8,
       freemarkerService.createBuffer(
         templateLookup.getTemplateName(obj),
-        getScope(obj)))
+        transToJavaMap(obj)))
   }
 
   /* Private */
-
-  private def getScope(obj: Any): Any = {
-    obj match {
-      case c: FreemarkerBodyComponent => c.data
-      case _ => obj
-    }
+  private def transToJavaMap(obj: Any): util.Map[String, Any] = {
+    (Map[String, Any]() /: obj.getClass.getDeclaredFields) { (a, f) =>
+      f.setAccessible(true)
+      a + (f.getName -> f.get(obj))
+    } asJava
   }
 }

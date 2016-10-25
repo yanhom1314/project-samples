@@ -4,11 +4,8 @@ import javax.inject.Singleton
 
 import freemarker.template.{Configuration, TemplateExceptionHandler}
 
-/**
-  * Created by LYF on 2016/10/23.
-  */
 @Singleton
-class FreemarkerFactory {
+class FreemarkerConfigurationFactory {
   val configuration = new Configuration(Configuration.VERSION_2_3_25)
 
   def apply() {

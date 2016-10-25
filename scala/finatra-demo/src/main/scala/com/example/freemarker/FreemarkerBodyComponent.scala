@@ -1,10 +1,8 @@
 package com.example.freemarker
 
+import java.util
 import javax.inject.Inject
 
 import com.twitter.finatra.http.marshalling.MessageBodyComponent
 
-/**
-  * Created by LYF on 2016/10/23.
-  */
-case class FreemarkerBodyComponent @Inject()(data: Any, template: String) extends MessageBodyComponent
+case class FreemarkerBodyComponent @Inject()(data: util.Map[String, Object], template: String) extends MessageBodyComponent
