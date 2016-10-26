@@ -39,6 +39,8 @@ libraryDependencies ++= Seq(
   "com.twitter" %% "finatra-thrift" % $("finatra"),
   "com.twitter" %% "inject-server" % $("finatra"),
   "com.twitter" %% "inject-app" % $("finatra"),
+  "org.jdbi" % "jdbi" % $("jdbi"),
+  "com.h2database" % "h2" % $("h2"),
   "org.freemarker" % "freemarker" % $("freemarker"),
   "ch.qos.logback" % "logback-classic" % $("logback"),
   "org.mockito" % "mockito-core" % $("mockito") % "test",

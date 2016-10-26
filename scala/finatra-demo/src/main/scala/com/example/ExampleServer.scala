@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.http.{HomeController, PingController, UserController, ViewController}
+import com.example.http._
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
@@ -10,7 +10,7 @@ object ExampleServerMain extends ExampleServer
 
 class ExampleServer extends HttpServer {
 
-  addFrameworkModule(FreemarkerModule)
+  addFrameworkModules(FreemarkerModule, H2Module)
 
   override def mustacheModule = MyMustacheModule
 
@@ -27,5 +27,7 @@ class ExampleServer extends HttpServer {
       .add[HomeController]
       .add[UserController]
       .add[ViewController]
+      .add[DbController]
   }
+
 }

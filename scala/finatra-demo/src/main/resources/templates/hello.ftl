@@ -1,7 +1,7 @@
 <#include "common/public.ftl">
 <#assign menu="m_hello"/>
 
-<@layout ; section>
+<@layout ;section>
     <#if section = "head">
     <div><h1>Hello World:你好!</h1></div>
     <#elseif section = "content" >

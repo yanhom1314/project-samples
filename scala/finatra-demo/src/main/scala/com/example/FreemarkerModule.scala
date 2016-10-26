@@ -28,7 +28,7 @@ object FreemarkerModule extends TwitterModule {
   }
 
   override def singletonStartup(injector: Injector) {
-    println("Configuring FreemarkerMessageManager")
+    logger.info("Configuring FreemarkerMessageManager")
     val manager = injector.instance[MessageBodyManager]
     manager.addByAnnotation[Freemarker, FreemarkerMessageBodyWriter]()
     manager.addByComponentType[FreemarkerBodyComponent, FreemarkerMessageBodyWriter]()

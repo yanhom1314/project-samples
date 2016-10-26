@@ -9,7 +9,6 @@ import com.twitter.finatra.request.FormParam
 import com.twitter.finatra.response.Mustache
 import com.twitter.finatra.validation.{MethodValidation, NotEmpty, Size, ValidationResult}
 
-import scala.beans.BeanProperty
 import scala.collection.mutable.Buffer
 
 class HomeController @Inject()(service: ExampleService) extends Controller {
@@ -65,7 +64,7 @@ case class Demo1View(name: String, persons: List[Person])
 @Mustache("d2")
 case class Demo2View(name: String, persons: List[Person])
 
-case class Person(@BeanProperty name: String, age: Int, address: String)
+case class Person(name: String, age: Int, address: String)
 
 case class FooRequest(
                        @FormParam name: String,
