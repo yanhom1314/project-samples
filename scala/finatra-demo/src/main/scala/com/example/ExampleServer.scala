@@ -9,8 +9,7 @@ import com.twitter.finatra.http.routing.HttpRouter
 object ExampleServerMain extends ExampleServer
 
 class ExampleServer extends HttpServer {
-
-  addFrameworkModules(FreemarkerModule, H2Module)
+  addFrameworkModules(FreemarkerModule, H2Module, SpringDataJpaModule)
 
   override def mustacheModule = MyMustacheModule
 
