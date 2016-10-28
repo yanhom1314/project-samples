@@ -5,20 +5,20 @@ import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-import com.example.filter.{AddCookieFilter, SecureFilter}
+import com.example.filter.{ AddCookieFilter, SecureFilter }
 import com.example.service.ExampleService
-import com.twitter.finagle.http.{Cookie, Request}
+import com.twitter.finagle.http.{ Cookie, Request }
 import com.twitter.finatra.http.Controller
 import com.twitter.util
 
-class PingController @Inject()(service: ExampleService) extends Controller {
+class PingController @Inject() (service: ExampleService) extends Controller {
 
   get("/ping") { request: Request =>
     info("ping")
     "pong" + System.currentTimeMillis()
   }
 
-  filter[SecureFilter].get("/name") { request: Request =>
+  get("/name") { request: Request =>
     request.headerMap.foreach { t =>
       println(s"${t._1}:${t._2}")
     }
