@@ -7,11 +7,11 @@ import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.FormParam
 import com.twitter.finatra.response.Mustache
-import com.twitter.finatra.validation.{MethodValidation, NotEmpty, Size, ValidationResult}
+import com.twitter.finatra.validation.{ MethodValidation, NotEmpty, Size, ValidationResult }
 
 import scala.collection.mutable.Buffer
 
-class HomeController @Inject()(service: ExampleService) extends Controller {
+class HomeController @Inject() (service: ExampleService) extends Controller {
 
   get("/home") { request: Request =>
     response.ok.html("<h1>Home is Ok!</h1>")
@@ -67,11 +67,10 @@ case class Demo2View(name: String, persons: List[Person])
 case class Person(name: String, age: Int, address: String)
 
 case class FooRequest(
-                       @FormParam name: String,
-                       @Size(min = 5, max = 20) @FormParam email: String,
-                       @FormParam age: Int,
-                       @NotEmpty @FormParam sug: String
-                     ) {
+  @FormParam name: String,
+  @Size(min = 5, max = 20)@FormParam email: String,
+  @FormParam age: Int,
+  @NotEmpty @FormParam sug: String) {
   @MethodValidation
   def validateName = {
     ValidationResult.validate(name.length < 6, "name length must less 6.")
