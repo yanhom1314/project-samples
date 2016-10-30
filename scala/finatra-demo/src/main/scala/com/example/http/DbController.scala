@@ -15,7 +15,10 @@ import com.twitter.finatra.validation.Max
 class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: AnotherThingRepository, somethingRepository:SomeThingRepository) extends Controller {
   get("/db/init") { request: Request =>
     dbiWrapper.withRepo[AnotherQuery] { repo =>
-      if (repo.count() < 5) (0 to 5).foreach(i => repo.save(Something(i, s"hello:${i}")))
+      if (repo.count() < 5) (0 to 5).foreach(i => repo.save(Something(i, s"another:${i}")))
+    }
+    dbiWrapper.withRepo[SomethingRepository] { repo =>
+      if (repo.count() < 10) (6 to 10).foreach(i => repo.save(Something(i, s"some:${i}")))
     }
     response.ok.plain("OK DbiWrapper:" + dbiWrapper.toString)
   }
@@ -35,8 +38,8 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
   }
 
   get("/jpa/init") { request: Request =>
-    if (anotherThingRepository.count() <= 0) (0 to 5).foreach(i => anotherThingRepository.save(AnotherThing(i, i.toString, i.toString)))
-    if (somethingRepository.count() <= 0) (0 to 5).foreach(i => somethingRepository.save(SomeThing(i, i.toString, i.toString)))
+    if (anotherThingRepository.count() <= 0) (0 to 5).foreach(i => anotherThingRepository.save(AnotherThing(i, s"jpa:${i}", s"jpa:${i}")))
+    if (somethingRepository.count() <= 0) (0 to 5).foreach(i => somethingRepository.save(SomeThing(i, s"jpa:${i}", s"jpa:${i}")))
     response.ok.plain("Spring Data Jpa:" + anotherThingRepository)
   }
 
