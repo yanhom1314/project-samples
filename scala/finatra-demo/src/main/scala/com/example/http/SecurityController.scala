@@ -27,8 +27,10 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
 
     val username = request.params.get("username").getOrElse("guest")
     val password = request.params.get("password").getOrElse("guest")
+    val remember = request.params.get("remember").getOrElse(false.toString).toBoolean
+
     val token = new UsernamePasswordToken(username, password)
-    token.setRememberMe(true)
+    token.setRememberMe(remember)
 
     request.response.statusCode = Status.Unauthorized.code
     try {

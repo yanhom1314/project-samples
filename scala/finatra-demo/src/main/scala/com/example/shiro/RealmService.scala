@@ -5,9 +5,6 @@ import org.apache.shiro.authz.{AuthorizationInfo, SimpleAuthorizationInfo}
 import org.apache.shiro.realm.AuthorizingRealm
 import org.apache.shiro.subject.PrincipalCollection
 
-/**
-  * Created by YaFengLi on 2016/10/31.
-  */
 class RealmService extends AuthorizingRealm {
 
   override def getName: String = "OwnRealm"

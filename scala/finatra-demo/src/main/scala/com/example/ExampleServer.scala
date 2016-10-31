@@ -1,6 +1,7 @@
 package com.example
 
 import com.example.http._
+import com.google.inject.Module
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
@@ -9,13 +10,11 @@ import com.twitter.finatra.http.routing.HttpRouter
 object ExampleServerMain extends ExampleServer
 
 class ExampleServer extends HttpServer {
-  addFrameworkModules(ShiroModule, FreemarkerModule, H2Module, SpringDataJpaModule)
-
   override def mustacheModule = MyMustacheModule
 
-  override val disableAdminHttpServer = true
-
   override def defaultFinatraHttpPort = ":80"
+
+  override protected def modules: Seq[Module] = Array(ShiroModule, FreemarkerModule, H2Module, SpringDataJpaModule)
 
   override def configureHttp(router: HttpRouter): Unit = {
     router
@@ -29,5 +28,4 @@ class ExampleServer extends HttpServer {
       .add[DbController]
       .add[SecurityController]
   }
-
 }
