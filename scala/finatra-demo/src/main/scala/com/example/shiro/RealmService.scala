@@ -1,14 +1,12 @@
 package com.example.shiro
 
-import javax.inject.Inject
-
 import com.example.jdbc.DbiWrapper
 import org.apache.shiro.authc._
 import org.apache.shiro.authz.{AuthorizationInfo, SimpleAuthorizationInfo}
 import org.apache.shiro.realm.AuthorizingRealm
 import org.apache.shiro.subject.PrincipalCollection
 
-class RealmService @Inject()(dbiWrapper: DbiWrapper) extends AuthorizingRealm {
+case class RealmService(dbiWrapper: DbiWrapper) extends AuthorizingRealm {
 
   override def getName: String = "OwnRealm"
 
