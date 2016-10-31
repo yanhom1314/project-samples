@@ -39,6 +39,7 @@ libraryDependencies ++= Seq(
   "com.twitter" %% "finatra-thrift" % $("finatra"),
   "com.twitter" %% "inject-server" % $("finatra"),
   "com.twitter" %% "inject-app" % $("finatra"),
+  "org.apache.shiro" % "shiro-core" % $("shiro"),
   "com.github.finagle" %% "finagle-oauth2" % $("finagle-oauth2"),
   "org.jdbi" % "jdbi" % $("jdbi"),
   "org.hibernate" % "hibernate-entitymanager" % $("hibernate"),

@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<h1>Menu:[${menu!"not set menu in page:<#assign menu='menu_id'/>"}]</h1>
 <div class="container-fluid">
     <div id="head" class="row"><#nested "head" /></div>
     <div id="content" class="row"><#nested "content" /></div>
