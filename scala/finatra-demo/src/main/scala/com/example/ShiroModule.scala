@@ -12,6 +12,8 @@ object ShiroModule extends TwitterModule {
   protected override def configure(): Unit = {
     try {
       logger.error("My First Apache Shiro Application")
+
+      //new DefaultSecurityManager(realms)
       //1.
       //val factory = new IniSecurityManagerFactory("classpath:shiro.ini")
       val factory = new IniSecurityManagerFactory("classpath:shiro_realm.ini")
@@ -22,6 +24,7 @@ object ShiroModule extends TwitterModule {
         //TODO
         //rs.getRealms.add(new )
       }
+
       //3.
       SecurityUtils.setSecurityManager(securityManager)
     } catch {
