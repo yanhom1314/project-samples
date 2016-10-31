@@ -49,9 +49,9 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
     response.ok.plain(s"Current User:${cu.getPrincipal} is LOGOUT!!!")
   }
 
-  filter[ShiroFilter].get("/admin") { request: Request =>
+  filter[ShiroFilter].get("/console") { request: Request =>
     val cu = SecurityUtils.getSubject
-    if (cu.hasRole("admin")) AdminIndexView(cu)
+    if (cu.hasRole("admin")) ConsoleIndexView(cu)
     else if (cu.hasRole("guest")) GuestIndexView(cu)
     else LoginView()
   }
@@ -61,8 +61,8 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
 @Freemarker("login")
 case class LoginView(user: Subject = null, error: String = null, success: String = null)
 
-@Freemarker("admin/index")
-case class AdminIndexView(user: Subject)
+@Freemarker("console/index")
+case class ConsoleIndexView(user: Subject)
 
 @Freemarker("guest/index")
 case class GuestIndexView(user: Subject)
