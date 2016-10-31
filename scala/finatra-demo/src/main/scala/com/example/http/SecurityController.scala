@@ -15,7 +15,11 @@ import org.apache.shiro.subject.Subject
 class SecurityController @Inject()(service: ExampleService) extends Controller {
 
   get("/login") { request: Request =>
-    LoginView()
+    val cu = SecurityUtils.getSubject
+    if (cu.isAuthenticated) {
+      response.ok.location("/console")
+    }
+    else LoginView()
   }
 
   post("/login") { request: Request =>
