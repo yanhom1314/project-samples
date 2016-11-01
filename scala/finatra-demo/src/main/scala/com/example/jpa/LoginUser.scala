@@ -3,11 +3,10 @@ package com.example.jpa
 import java.util
 import javax.persistence._
 
-
 @Entity
 @Table(name = "t_user")
 class LoginUser extends BaseEntity {
-  @Column
+  @Column(nullable = false, unique = true)
   var username: String = _
 
   @Column
@@ -19,8 +18,10 @@ class LoginUser extends BaseEntity {
   @Column
   var address: String = _
 
-  @ManyToMany(mappedBy = "users")
-  var roles: util.List[Role] = new util.ArrayList[Role]()
+  @ManyToMany(cascade = Array(CascadeType.MERGE), fetch = FetchType.EAGER)
+  @JoinTable(name = "user_role", joinColumns = Array(new JoinColumn(name = "user_id", referencedColumnName = "id")),
+    inverseJoinColumns = Array(new JoinColumn(name = "role_id", referencedColumnName = "id")))
+  var roles: util.List[Role] = _
 }
 
 object LoginUser {

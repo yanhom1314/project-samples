@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.jdbi.dao.SomethingRepository
+import com.example.jdbi.dao.{SomethingRepository, UserRepository}
 import com.twitter.inject.{Injector, TwitterModule}
 import org.h2.jdbcx.JdbcConnectionPool
 import org.h2.tools.Server
@@ -18,6 +18,9 @@ object H2Module extends TwitterModule {
       override def withHandle(handle: Handle): Unit = {
         val repo = handle.attach(classOf[SomethingRepository])
         repo.createSomethingTable()
+
+        val userRepository = handle.attach(classOf[UserRepository])
+        userRepository.createUserTable()
       }
     })
 

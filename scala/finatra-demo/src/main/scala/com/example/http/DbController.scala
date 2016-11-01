@@ -12,6 +12,8 @@ import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.QueryParam
 import com.twitter.finatra.validation.Max
 
+import scala.collection.JavaConversions._
+
 @Singleton
 class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: AnotherThingRepository, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository) extends Controller {
 
@@ -34,15 +36,30 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
   }
 
   get("/jpa/init") { request: Request =>
-    if (anotherThingRepository.count() <= 0) (1 to 10).foreach(i => anotherThingRepository.save(AnotherThing(i, s"jpa:${i}", s"jpa:${i}")))
-    if (loginUserRepository.count() <= 0) {
-      val role = Role("ROLE_USER")
-      roleRepository.save(role)
-      val user = LoginUser("test", "test_123", 12, "NanJing")
-      user.roles.add(role)
-      loginUserRepository.save(user)
+    try {
+      if (anotherThingRepository.count() <= 0) (1 to 10).foreach(i => anotherThingRepository.save(AnotherThing(i, s"jpa:${i}", s"jpa:${i}")))
+      if (roleRepository.count() <= 0) {
+        val role = Role("ROLE_USER")
+        roleRepository.save(role)
+      }
+      if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
+        val user = LoginUser("test", "test_123", 12, "NanJing")
+        user.roles = List(roleRepository.findByRoleName("ROLE_USER"))
+        loginUserRepository.save(user)
+      }
+    } catch {
+      case e: Exception => e.printStackTrace()
     }
     response.ok.plain("Spring Data Jpa:" + anotherThingRepository)
+  }
+
+  get("/jpa/update") { request: Request =>
+    if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
+      val user = LoginUser("test", "test_123", 12, "NanJing")
+      user.roles = List(roleRepository.findByRoleName("ROLE_USER"))
+      loginUserRepository.save(user)
+    }
+    response.ok.plain("Spring Data Jpa:" + loginUserRepository)
   }
 
   get("/jpa/all") { request: Request =>

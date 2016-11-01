@@ -1,13 +1,23 @@
 package com.example.jpa
 
 import java.util
-import javax.persistence._
+import javax.persistence.{Column, _}
 
 @Entity
 @Table(name = "t_role")
-case class Role(@Column var roleName: String) extends BaseEntity {
-  @ManyToMany(cascade = Array(CascadeType.PERSIST))
-  @JoinTable(name = "user_role", joinColumns = Array(new JoinColumn(name = "user_id", referencedColumnName = "id")),
-    inverseJoinColumns = Array(new JoinColumn(name = "role_id", referencedColumnName = "id")))
+class Role extends BaseEntity {
+  @Column(name = "role_name", nullable = false, unique = true)
+  var roleName: String = _
+
+  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
   var users: util.List[LoginUser] = _
 }
+
+object Role {
+  def apply(roleName: String): Role = {
+    val role = new Role()
+    role.roleName = roleName
+    role
+  }
+}
+

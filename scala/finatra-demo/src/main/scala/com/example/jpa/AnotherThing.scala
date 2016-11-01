@@ -3,7 +3,7 @@ package com.example.jpa
 import javax.persistence.{Column, Entity, Table}
 
 @Entity
-@Table(name = "t_another_this")
+@Table(name = "t_another_thing")
 class AnotherThing extends BaseEntity {
   @Column
   var name: String = _
