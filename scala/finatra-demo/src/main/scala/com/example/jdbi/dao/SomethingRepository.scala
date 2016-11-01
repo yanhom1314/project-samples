@@ -1,8 +1,8 @@
-package com.example.jdbc.dao
+package com.example.jdbi.dao
 
 import java.util
 
-import com.example.jdbc.mapper.{Something, SomethingMapper}
+import com.example.jdbi.mapper.{Something, SomethingMapper}
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper
 import org.skife.jdbi.v2.sqlobject.{Bind, BindBean, SqlQuery, SqlUpdate}
 

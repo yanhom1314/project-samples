@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.jdbc.dao.AnotherQuery
+import com.example.jdbi.dao.AnotherQuery
 import com.twitter.inject.{Injector, TwitterModule}
 import org.h2.jdbcx.JdbcConnectionPool
 import org.h2.tools.Server

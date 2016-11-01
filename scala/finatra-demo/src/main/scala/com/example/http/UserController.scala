@@ -1,6 +1,6 @@
 package com.example.http
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import com.example.filter.UserFilter
 import com.example.service.ExampleService
@@ -9,7 +9,7 @@ import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.{JsonIgnoreBody, QueryParam}
 import com.twitter.finatra.validation.{Max, PastTime}
 import org.joda.time.DateTime
-
+@Singleton
 class UserController @Inject()(service: ExampleService) extends Controller {
 
   get("/users") { request: UsersRequest =>

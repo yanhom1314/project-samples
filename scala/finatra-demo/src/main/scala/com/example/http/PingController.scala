@@ -3,14 +3,14 @@ package com.example.http
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
-import com.example.filter.{ AddCookieFilter, SecureFilter }
+import com.example.filter.{AddCookieFilter, SecureFilter}
 import com.example.service.ExampleService
-import com.twitter.finagle.http.{ Cookie, Request }
+import com.twitter.finagle.http.{Cookie, Request}
 import com.twitter.finatra.http.Controller
 import com.twitter.util
-
+@Singleton
 class PingController @Inject() (service: ExampleService) extends Controller {
 
   get("/ping") { request: Request =>

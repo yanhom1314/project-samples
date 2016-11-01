@@ -1,16 +1,16 @@
 package com.example.http
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import com.example.service.ExampleService
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.FormParam
 import com.twitter.finatra.response.Mustache
-import com.twitter.finatra.validation.{ MethodValidation, NotEmpty, Size, ValidationResult }
+import com.twitter.finatra.validation.{MethodValidation, NotEmpty, Size, ValidationResult}
 
 import scala.collection.mutable.Buffer
-
+@Singleton
 class HomeController @Inject() (service: ExampleService) extends Controller {
 
   get("/home") { request: Request =>

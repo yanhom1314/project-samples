@@ -2,9 +2,9 @@ package com.example.http
 
 import javax.inject.{Inject, Singleton}
 
-import com.example.jdbc.DbiWrapper
-import com.example.jdbc.dao.{AnotherQuery, SomethingRepository}
-import com.example.jdbc.mapper.Something
+import com.example.jdbi.DbiWrapper
+import com.example.jdbi.dao.{AnotherQuery, SomethingRepository}
+import com.example.jdbi.mapper.Something
 import com.example.jpa.{AnotherThing, SomeThing, AnotherThingRepository, SomeThingRepository}
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller

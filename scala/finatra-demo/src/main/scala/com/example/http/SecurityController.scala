@@ -1,6 +1,6 @@
 package com.example.http
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 import javax.naming.AuthenticationException
 
 import com.example.filter.ShiroFilter
@@ -11,7 +11,7 @@ import com.twitter.finatra.http.Controller
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.{IncorrectCredentialsException, LockedAccountException, UnknownAccountException, UsernamePasswordToken}
 import org.apache.shiro.subject.Subject
-
+@Singleton
 class SecurityController @Inject()(service: ExampleService) extends Controller {
 
   get("/login") { request: Request =>

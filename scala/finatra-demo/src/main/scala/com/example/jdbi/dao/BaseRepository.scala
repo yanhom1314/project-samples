@@ -1,4 +1,4 @@
-package com.example.jdbc.dao
+package com.example.jdbi.dao
 
 import java.util
 

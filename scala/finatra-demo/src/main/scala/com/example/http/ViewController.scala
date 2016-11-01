@@ -1,7 +1,7 @@
 package com.example.http
 
 import java.util
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 
 import com.example.freemarker.Freemarker
 import com.example.service.ExampleService
@@ -11,9 +11,7 @@ import com.twitter.finatra.http.Controller
 import scala.collection.JavaConversions._
 import scala.collection.mutable
 
-/**
-  * Created by LYF on 2016/10/23.
-  */
+@Singleton
 class ViewController @Inject()(service: ExampleService) extends Controller {
   get("/view") { request: Request =>
     val persons = mutable.Buffer[Person]()

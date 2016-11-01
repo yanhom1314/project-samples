@@ -1,4 +1,4 @@
-package com.example.jdbc.mapper
+package com.example.jdbi.mapper
 
 import java.sql.ResultSet
 
