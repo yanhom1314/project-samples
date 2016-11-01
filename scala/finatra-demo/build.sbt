@@ -46,6 +46,7 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "hibernate-hikaricp" % $("hibernate"),
   "dom4j" % "dom4j" % $("dom4j"),
   "org.springframework.data" % "spring-data-jpa" % $("spring-data-jpa"),
+  "org.postgresql" % "postgresql" % $("postgresql"),
   "com.h2database" % "h2" % $("h2"),
   "org.freemarker" % "freemarker" % $("freemarker"),
   "ch.qos.logback" % "logback-classic" % $("logback"),

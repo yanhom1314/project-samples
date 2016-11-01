@@ -3,61 +3,54 @@ package com.example.http
 import javax.inject.{Inject, Singleton}
 
 import com.example.jdbi.DbiWrapper
-import com.example.jdbi.dao.{AnotherQuery, SomethingRepository}
-import com.example.jdbi.mapper.Something
-import com.example.jpa.repo.{AnotherThingRepository, SomeThingRepository}
-import com.example.jpa.{AnotherThing, SomeThing}
+import com.example.jdbi.dao.{SomethingRepository, UserRepository}
+import com.example.jdbi.mapper.{Something, User}
+import com.example.jpa.repo.{AnotherThingRepository, LoginUserRepository, RoleRepository}
+import com.example.jpa.{AnotherThing, LoginUser, Role}
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.QueryParam
 import com.twitter.finatra.validation.Max
 
 @Singleton
-class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: AnotherThingRepository, somethingRepository: SomeThingRepository) extends Controller {
+class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: AnotherThingRepository, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository) extends Controller {
+
   get("/db/init") { request: Request =>
-    dbiWrapper.withRepo[AnotherQuery] { repo =>
-      if (repo.count() < 5) (0 to 5).foreach(i => repo.save(Something(i, s"another:${i}")))
-    }
     dbiWrapper.withRepo[SomethingRepository] { repo =>
-      if (repo.count() < 10) (6 to 10).foreach(i => repo.save(Something(i, s"some:${i}")))
+      if (repo.count() <= 0) (1 to 10).foreach(i => repo.save(Something(i, s"some:${i}")))
     }
+    dbiWrapper.withRepo[UserRepository] { repo => if (repo.count() <= 0) repo.save(User(1, "test", "test_password", 12, "NanJing")) }
     response.ok.plain("OK DbiWrapper:" + dbiWrapper.toString)
   }
 
-  get("/db/another/all") { request: Request =>
-    dbiWrapper.withRepo[AnotherQuery] { repo =>
-      repo.findAll()
-    }
-  }
-  get("/db/some/all") { request: Request =>
+  get("/db/all") { request: Request =>
     dbiWrapper.withRepo[SomethingRepository] { repo =>
       repo.findAll()
     }
   }
-  get("/db/another/show/:id") { request: IdRequest =>
+
+  get("/db/show/:id") { request: IdRequest =>
     dbiWrapper.withRepo[SomethingRepository](_.findById(request.id))
   }
 
   get("/jpa/init") { request: Request =>
-    if (anotherThingRepository.count() <= 0) (0 to 5).foreach(i => anotherThingRepository.save(AnotherThing(i, s"jpa:${i}", s"jpa:${i}")))
-    if (somethingRepository.count() <= 0) (0 to 5).foreach(i => somethingRepository.save(SomeThing(i, s"jpa:${i}", s"jpa:${i}")))
+    if (anotherThingRepository.count() <= 0) (1 to 10).foreach(i => anotherThingRepository.save(AnotherThing(i, s"jpa:${i}", s"jpa:${i}")))
+    if (loginUserRepository.count() <= 0) {
+      val role = Role("ROLE_USER")
+      roleRepository.save(role)
+      val user = LoginUser("test", "test_123", 12, "NanJing")
+      user.roles.add(role)
+      loginUserRepository.save(user)
+    }
     response.ok.plain("Spring Data Jpa:" + anotherThingRepository)
   }
 
-  get("/jpa/another/find") { request: IdRequest =>
-    anotherThingRepository.findOne(request.id)
-  }
-
-  get("/jpa/another/all") { request: Request =>
+  get("/jpa/all") { request: Request =>
     anotherThingRepository.findAll()
   }
 
-  get("/jpa/some/find") { request: IdRequest =>
-    somethingRepository.findOne(request.id)
-  }
-
-  get("/jpa/some/all") { request: Request =>
-    somethingRepository.findAll()
+  get("/jpa/show/:id") { request: IdRequest =>
+    anotherThingRepository.findOne(request.id)
   }
 }
 

@@ -11,7 +11,7 @@ import org.springframework.orm.jpa.JpaTransactionManager
 @EnableJpaRepositories(basePackages = Array("com.example.jpa.repo"))
 @ComponentScan(Array("com.example.jpa.repo"))
 class SpringDataJpaConfig {
-  @Bean def entityManagerFactory(): EntityManagerFactory = Persistence.createEntityManagerFactory("default")
+  @Bean def entityManagerFactory(): EntityManagerFactory = Persistence.createEntityManagerFactory("postgres") //or h2
 
   @Bean def hibernateExceptionTranslator(): HibernateExceptionTranslator = new HibernateExceptionTranslator()
 
