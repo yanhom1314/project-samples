@@ -3,11 +3,13 @@ package com.example.jdbi.dao
 import java.util
 
 trait BaseRepository[T] {
-  def save(d: T)
+  def createTable(): Unit
 
-  def delete(d: T)
+  def save(d: T): Unit
 
-  def update(d: T)
+  def delete(d: T): Unit
+
+  def update(d: T): Unit
 
   def findAll(): util.List[T]
 

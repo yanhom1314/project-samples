@@ -16,11 +16,8 @@ object H2Module extends TwitterModule {
   protected override def configure(): Unit = {
     dbi.withHandle(new HandleCallback[Unit] {
       override def withHandle(handle: Handle): Unit = {
-        val repo = handle.attach(classOf[SomethingRepository])
-        repo.createSomethingTable()
-
-        val userRepository = handle.attach(classOf[UserRepository])
-        userRepository.createUserTable()
+        handle.attach(classOf[SomethingRepository]).createTable()
+        handle.attach(classOf[UserRepository]).createTable()
       }
     })
 

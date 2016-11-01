@@ -11,15 +11,12 @@ import com.twitter.finatra.http.Controller
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.{IncorrectCredentialsException, LockedAccountException, UnknownAccountException, UsernamePasswordToken}
 import org.apache.shiro.subject.Subject
+
 @Singleton
 class SecurityController @Inject()(service: ExampleService) extends Controller {
 
   get("/login") { request: Request =>
-    val cu = SecurityUtils.getSubject
-    if (cu.isAuthenticated) {
-      response.ok.location("/console")
-    }
-    else LoginView()
+    LoginView()
   }
 
   post("/login") { request: Request =>
@@ -35,6 +32,7 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
     request.response.statusCode = Status.Unauthorized.code
     try {
       cu.login(token)
+      cu.getSession.touch()
       response.ok.plain(s"Current User:${cu.getPrincipal} role:[guest:${cu.hasRole("guest")}] [admin:${cu.hasRole("admin")}]")
     } catch {
       case e: UnknownAccountException => response.unauthorized
@@ -44,9 +42,9 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
     }
   }
 
-  get("/info") { request: Request =>
+  filter[ShiroFilter].get("/info") { request: Request =>
     val cu = SecurityUtils.getSubject
-    response.ok.plain(s"Current User:${cu.getPrincipal} role:[guest:${cu.hasRole("guest")}] [admin:${cu.hasRole("admin")}]")
+    InfoView(cu)
   }
 
   get("/logout") { request: Request =>
@@ -57,18 +55,16 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
 
   filter[ShiroFilter].get("/console") { request: Request =>
     val cu = SecurityUtils.getSubject
-    if (cu.hasRole("admin")) ConsoleIndexView(cu)
-    else if (cu.hasRole("guest")) GuestIndexView(cu)
+    if (cu.isAuthenticated) ManageIndexView(cu)
     else LoginView()
   }
 }
 
+@Freemarker("info")
+case class InfoView(user: Subject = null)
 
 @Freemarker("login")
 case class LoginView(user: Subject = null, error: String = null, success: String = null)
 
-@Freemarker("console/index")
-case class ConsoleIndexView(user: Subject)
-
-@Freemarker("guest/index")
-case class GuestIndexView(user: Subject)
+@Freemarker("manage/index")
+case class ManageIndexView(user: Subject)

@@ -27,6 +27,5 @@ trait SomethingRepository extends BaseRepository[Something] {
   override def count(): Long
 
   @SqlUpdate("create or replace table t_something (id int primary key, name varchar(100))")
-  def createSomethingTable(): Unit
-
+  override def createTable(): Unit
 }
