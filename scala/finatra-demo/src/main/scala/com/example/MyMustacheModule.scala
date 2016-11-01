@@ -21,16 +21,12 @@ object MyMustacheModule extends TwitterModule {
 
   @Provides
   @Singleton
-  def provideMustacheFactory(
-                              resolver: FileResolver,
-                              @Flag("local.doc.root") localDocRoot: String): MustacheFactory = {
-    // templates are cached only if there is no local.doc.root
+  def provideMustacheFactory(resolver: FileResolver, @Flag("local.doc.root") localDocRoot: String): MustacheFactory = {
     val cacheMustacheTemplates = localDocRoot.isEmpty
     val templatesDirectory = templatesDir()
 
     new DefaultMustacheFactory(templatesDirectory) {
       setObjectHandler(new ScalaObjectHandler)
-
 
       override def compile(name: String): Mustache = {
         val nameToUse = templatesSuffix.get match {

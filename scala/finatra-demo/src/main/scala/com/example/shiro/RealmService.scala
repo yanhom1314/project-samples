@@ -1,15 +1,13 @@
 package com.example.shiro
 
-import javax.inject.{Inject, Singleton}
-
 import com.example.jdbi.DbiWrapper
+import com.example.jpa.repo.LoginUserRepository
 import org.apache.shiro.authc._
 import org.apache.shiro.authz.{AuthorizationInfo, SimpleAuthorizationInfo}
 import org.apache.shiro.realm.AuthorizingRealm
 import org.apache.shiro.subject.PrincipalCollection
 
-@Singleton
-case class RealmService @Inject()(dbiWrapper: DbiWrapper) extends AuthorizingRealm {
+case class RealmService(dbiWrapper: DbiWrapper, loginUserRepository: LoginUserRepository) extends AuthorizingRealm {
 
   override def getName: String = "OwnRealm"
 
@@ -31,6 +29,7 @@ case class RealmService @Inject()(dbiWrapper: DbiWrapper) extends AuthorizingRea
   override def doGetAuthenticationInfo(token: AuthenticationToken): AuthenticationInfo = {
     val username = token.getPrincipal.toString
     val password = new String(token.getCredentials().asInstanceOf[Array[Char]])
+    println(s"dbiWrapper:${dbiWrapper} loginUserRepository:${loginUserRepository}")
     println(s"username:${username} password:${password}")
     if (username.equalsIgnoreCase("test") && password.equalsIgnoreCase("test_1")) {
       val info = new SimpleAuthenticationInfo(username, password, getName)

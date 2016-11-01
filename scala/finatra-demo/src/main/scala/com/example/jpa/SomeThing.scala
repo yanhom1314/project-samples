@@ -3,11 +3,11 @@ package com.example.jpa
 import javax.persistence.{Column, Entity, Table}
 
 @Entity
-  @Table(name = "t_some_thing")
-class SomeThing extends Thing {
+@Table(name = "t_some_thing")
+class SomeThing extends BaseEntity {
   @Column
   var name: String = _
-    @Column
+  @Column
   var flag: String = _
 }
 

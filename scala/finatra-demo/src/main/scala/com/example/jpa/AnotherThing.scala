@@ -4,7 +4,7 @@ import javax.persistence.{Column, Entity, Table}
 
 @Entity
 @Table(name = "t_another_this")
-class AnotherThing extends Thing {
+class AnotherThing extends BaseEntity {
   @Column
   var name: String = _
   @Column

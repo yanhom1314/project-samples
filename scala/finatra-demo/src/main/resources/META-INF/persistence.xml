@@ -7,7 +7,13 @@
     <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <!-- All persistence classes must be listed -->
+        <!--
+        <class>com.example.jpa.SomeThing</class>
+
         <class>com.example.jpa.AnotherThing</class>
+        <class>com.example.jpa.LoginUser</class>
+        <class>com.example.jpa.Role</class>
+        -->
         <properties>
             <!-- provider -->
             <property name="hibernate.connection.provider_class" value="com.zaxxer.hikari.hibernate.HikariConnectionProvider"/>

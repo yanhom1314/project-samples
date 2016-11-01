@@ -5,14 +5,15 @@ import javax.inject.{Inject, Singleton}
 import com.example.jdbi.DbiWrapper
 import com.example.jdbi.dao.{AnotherQuery, SomethingRepository}
 import com.example.jdbi.mapper.Something
-import com.example.jpa.{AnotherThing, SomeThing, AnotherThingRepository, SomeThingRepository}
+import com.example.jpa.repo.{AnotherThingRepository, SomeThingRepository}
+import com.example.jpa.{AnotherThing, SomeThing}
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.QueryParam
 import com.twitter.finatra.validation.Max
 
 @Singleton
-class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: AnotherThingRepository, somethingRepository:SomeThingRepository) extends Controller {
+class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: AnotherThingRepository, somethingRepository: SomeThingRepository) extends Controller {
   get("/db/init") { request: Request =>
     dbiWrapper.withRepo[AnotherQuery] { repo =>
       if (repo.count() < 5) (0 to 5).foreach(i => repo.save(Something(i, s"another:${i}")))
