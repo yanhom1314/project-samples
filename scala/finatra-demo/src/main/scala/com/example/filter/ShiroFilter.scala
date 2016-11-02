@@ -18,26 +18,24 @@ class ShiroFilter extends SimpleFilter[Request, Response] with Logging {
     val currentUser = SecurityUtils.getSubject()
     val session = currentUser.getSession()
     try {
-      println(s"id:${session.getId} auth:${currentUser.isAuthenticated} time:${new Date().format("yyyy-MM-dd HH:mm:ss")}")
       session.touch()
-      if (currentUser.isAuthenticated) {
-        println(s"id:${session.getId} lastAccessTime:${session.getLastAccessTime.format("yyyy-MM-dd HH:mm:ss")}")
-        service(request)
-      }
-      else {
-        request.response.statusCode = Status.GatewayTimeout.code
-        Future(request.response)
-      }
     } catch {
       case e: ExpiredSessionException =>
-        println(s"ExpiredSessionException:${session.getId}")
+        logger.error(s"ExpiredSessionException:${session.getId}")
         try {
           currentUser.logout()
         } catch {
-          case e: UnknownSessionException => println(s"UnknownSessionException:${session.getId}")
+          case e: UnknownSessionException => logger.error(s"UnknownSessionException:${session.getId}")
         }
-        request.response.statusCode = Status.GatewayTimeout.code
-        Future(request.response)
+    }
+    if (currentUser.isAuthenticated) {
+      logger.info(s"id:${session.getId} lastAccessTime:${session.getLastAccessTime.format("yyyy-MM-dd HH:mm:ss")}")
+      service(request)
+    }
+    else {
+      request.response.statusCode = Status.TemporaryRedirect.code
+      request.response.location = "/login"
+      Future(request.response)
     }
   }
 }
