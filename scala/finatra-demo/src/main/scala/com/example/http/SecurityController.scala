@@ -10,6 +10,7 @@ import com.twitter.finagle.http.{Request, Status}
 import com.twitter.finatra.http.Controller
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.{IncorrectCredentialsException, LockedAccountException, UnknownAccountException, UsernamePasswordToken}
+import org.apache.shiro.session.UnknownSessionException
 import org.apache.shiro.subject.Subject
 
 @Singleton
@@ -32,19 +33,28 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
     request.response.statusCode = Status.Unauthorized.code
     try {
       cu.login(token)
-      cu.getSession.touch()
-      response.ok.plain(s"Current User:${cu.getPrincipal} role:[guest:${cu.hasRole("guest")}] [admin:${cu.hasRole("admin")}]")
+      response.temporaryRedirect.location("/info").toFuture
     } catch {
-      case e: UnknownAccountException => response.unauthorized
-      case e: IncorrectCredentialsException => response.unauthorized
-      case e: LockedAccountException => response.unauthorized
-      case e: AuthenticationException => response.unauthorized
+      case e: UnknownSessionException =>
+        try {
+          cu.logout()
+        } catch {
+          case e: Exception =>
+        }
+        LoginView(error = Status.GatewayTimeout.reason)
+      case e: UnknownAccountException => LoginView(error = Status.Forbidden.reason)
+      case e: IncorrectCredentialsException => LoginView(error = Status.NonAuthoritativeInformation.reason)
+      case e: LockedAccountException => LoginView(error = Status.Locked.reason)
+      case e: AuthenticationException => LoginView(error = Status.Unauthorized.reason)
     }
   }
 
   filter[ShiroFilter].get("/info") { request: Request =>
-    val cu = SecurityUtils.getSubject
-    InfoView(cu)
+    InfoView(SecurityUtils.getSubject)
+  }
+
+  filter[ShiroFilter].post("/info") { request: Request =>
+    InfoView(SecurityUtils.getSubject)
   }
 
   get("/logout") { request: Request =>

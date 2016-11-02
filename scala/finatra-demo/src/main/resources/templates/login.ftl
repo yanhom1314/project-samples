@@ -12,6 +12,9 @@
             <button type="submit">登录</button>
         </form>
     </div>
+        <#if error??>
+        <p style="color: red">${error}</p>
+        </#if>
     <#else>
     <div>Unsupported section??</div>
     </#if>
