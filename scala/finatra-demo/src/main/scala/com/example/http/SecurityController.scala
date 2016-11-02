@@ -48,12 +48,7 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
       case e: AuthenticationException => LoginView(error = Status.Unauthorized.reason)
     }
   }
-
-  filter[ShiroFilter].get("/info") { request: Request =>
-    InfoView(SecurityUtils.getSubject)
-  }
-
-  filter[ShiroFilter].post("/info") { request: Request =>
+  filter[ShiroFilter].any("/info") { request: Request =>
     InfoView(SecurityUtils.getSubject)
   }
 

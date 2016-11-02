@@ -12,10 +12,13 @@
         isAuthenticated:${user.isAuthenticated()?string}
     </h3>
     <h3>
+        Session ID:${user.session.id}
+    </h3>
+    <h3>
         Session Timeout:${user.session.timeout}
     </h3>
     <h3>
-        Session Timeout:${user.session.lastAccessTime?datetime}
+        Last Access Time:${user.session.lastAccessTime?string("yyyy-MM-dd HH:mm:ss")}
     </h3>
     </#if>
 </@layout>
