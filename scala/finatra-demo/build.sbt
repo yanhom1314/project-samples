@@ -50,5 +50,13 @@ libraryDependencies ++= Seq(
   "com.h2database" % "h2" % $("h2"),
   "org.freemarker" % "freemarker" % $("freemarker"),
   "ch.qos.logback" % "logback-classic" % $("logback"),
+
+  "com.twitter" %% "finatra-http" % $("finatra") % "test" classifier "tests",
+  "com.twitter" %% "inject-server" % $("finatra") % "test" classifier "tests",
+  "com.twitter" %% "inject-app" % $("finatra") % "test" classifier "tests",
+  "com.twitter" %% "inject-core" % $("finatra") % "test" classifier "tests",
+  "com.twitter" %% "inject-modules" % $("finatra") % "test" classifier "tests",
+
   "org.mockito" % "mockito-core" % $("mockito") % "test",
+  "org.specs2" %% "specs2" % "2.3.12" % "test",
   "org.scalatest" %% "scalatest" % $("scalatest") % "test")
