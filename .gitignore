@@ -12,6 +12,10 @@ target/
 mods/
 project/project/
 project/target/
+#gradle
+gradle/
+gradlew
+gradlew.bat
 #haskell
 .cabal-sandbox/
 .stack-work/
@@ -27,6 +31,7 @@ spm_modules
 .settings/
 .classpath
 .project
+.nb-gradle-properties
 *.xmi
 #Intellij IDEA
 .idea/
@@ -51,3 +56,6 @@ GTAGS
 #haskell
 .stack-work
 /java/demo-jersey/.nb-gradle/
+
+#CMake
+CMakeFiles/

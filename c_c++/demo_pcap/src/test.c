@@ -1,7 +1,7 @@
 #include "demo.h"
 #include "hello.h"
 
-char httpbuf[4000];
+char http_buf[4000];
 
 int get_get(char *data, char *buff) {
     int i = 0;
@@ -119,10 +119,10 @@ void packet_info(u_char *arg, const struct pcap_pkthdr *pkthdr, const u_char *pa
                                      sizeof(struct tcphdr));
                     http_len = ntohs(_iphdr->tot_len) - (_iphdr->ihl) * 4 - sizeof(struct tcphdr);
                     if (http_len > 0) if ((*data == 'G') && (*++data == 'E') && (*++data == 'T')) {
-                        memset(httpbuf, 0, 4000);
-                        memcpy(httpbuf, data - 2, http_len);
-                        get_host(httpbuf, hostBuf);
-                        get_get(httpbuf, getBuf);
+                        memset(http_buf, 0, 4000);
+                        memcpy(http_buf, data - 2, http_len);
+                        get_host(http_buf, hostBuf);
+                        get_get(http_buf, getBuf);
                         get_url_page(getBuf, path);
 
                         //print time or send packet

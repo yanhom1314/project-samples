@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.6)
+add_executable(demo_md5 md5.c)
+
+install(TARGETS demo_md5
+	LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+	RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
