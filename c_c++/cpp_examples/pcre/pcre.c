@@ -5,6 +5,8 @@
 #include <pcre.h>
 #include <stdio.h>
 #include <string.h>
+#include <malloc.h>
+
 int main (){
 	char *pPattern = "([a-z]*)Windows([0-9]*)";
 	const char *pError;
