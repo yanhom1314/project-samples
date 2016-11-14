@@ -1,15 +1,25 @@
 import Build._
 
-name := """ignite-demo"""
+name := """geode-demo"""
 
 version := "1.0"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.12.0"
 
-lazy val ignite_demo = (project in file("."))
+lazy val root = (project in file("."))
+
+lazy val demo_data = (project in file("data_java")).settings(
+  libraryDependencies ++= Seq(
+    "org.apache.geode" % "geode-core" % $("geode"),
+    "org.apache.geode" % "geode-json" % $("geode"))
+  )
+
+lazy val geode_demo = (project in file("proc_scala")).dependsOn(demo_data).settings(
+  libraryDependencies ++= Seq(
+    "org.apache.geode" % "geode-core" % $("geode"),
+    "org.apache.geode" % "geode-json" % $("geode"))
+  )
 
 libraryDependencies ++= Seq(
-  "org.apache.ignite" % "ignite-core" % $("ignite"),
-  "org.apache.ignite" % "ignite-spring" % $("ignite"),
-  "org.apache.ignite" % "ignite-indexing" % $("ignite"),
-  "com.h2database" % "h2" % $("h2"))
+  "org.apache.geode" % "geode-core" % $("geode"),
+  "org.apache.geode" % "geode-json" % $("geode"))
