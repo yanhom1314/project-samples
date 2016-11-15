@@ -2,7 +2,7 @@ import java.io.File
 
 import sbt._
 
-object Build extends Build {
+object Build {
   val reg = "(.+)=(.+)".r
   //x.x.x.jar pattern
   val $ = scala.io.Source.fromFile(new File(System.getProperty("user.dir"), "project/build.properties")).getLines()

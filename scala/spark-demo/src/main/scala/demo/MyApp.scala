@@ -1,6 +1,6 @@
 package demo
 
-trait MyApp {
+trait MyApp extends App {
   def time[T](t: T): Unit = {
     val start = System.currentTimeMillis()
     t match {
