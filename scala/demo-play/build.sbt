@@ -2,22 +2,21 @@ import Build._
 
 name := """demo-play"""
 
-version := "1.0-SNAPSHOT"
+version := $("prod")
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.8"
+scalaVersion := $("scalaVersion")
 
 libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
   "org.postgresql" % "postgresql" % $("postgresql"),
-  "org.springframework.data" % "spring-data-jpa" % $("spring-data-jpa"),   
+  "org.springframework.data" % "spring-data-jpa" % $("spring_data_jpa"),   
   "org.hibernate" % "hibernate-hikaricp" % $("hibernate"),
-  "dom4j" % "dom4j" % $("dom4j"),
-  "com.typesafe.play" %% "play-slick" % $("play-slick"),
-  //"io.sinq" %% "sinq-jpa" % $("sinq"),
+  //"dom4j" % "dom4j" % $("dom4j"),
+  "com.typesafe.play" %% "play-slick" % $("play_slick"),  
   "org.scalatestplus.play" %% "scalatestplus-play" % $("scalatestplus") % Test,
   "junit" % "junit" % "4.12" % Test
 )
