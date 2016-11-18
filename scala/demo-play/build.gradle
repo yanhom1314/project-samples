@@ -32,6 +32,5 @@ dependencies {
         "org.postgresql:postgresql:$postgresql",
         "org.springframework.data:spring-data-jpa:$spring_data_jpa",   
         "org.hibernate:hibernate-hikaricp:$hibernate",
-        //"dom4j:dom4j:$dom4j",
         "com.typesafe.play:play-slick_2.11:$play_slick")        
 }
