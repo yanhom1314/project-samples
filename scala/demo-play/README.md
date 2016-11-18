@@ -12,4 +12,4 @@ This project demonstrate how to create a simple CRUD application with Play integ
 ## Build & Run
 
         webpack
-        sbt run        
+        sbt run | gradle runPlayBinary
