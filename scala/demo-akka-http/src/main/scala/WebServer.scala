@@ -32,16 +32,16 @@ object WebServer {
   }
 
   def main(args: Array[String]) {
-
     implicit val system = ActorSystem("my-demo-system")
     implicit val materializer = ActorMaterializer()
     implicit val executionContext = system.dispatcher
+    val duration = FiniteDuration(6, TimeUnit.SECONDS)
 
     val route = path("hello") {
       get {
         complete {
           //Future(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
-          HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>").toStrict(FiniteDuration(6, TimeUnit.SECONDS))
+          HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>").toStrict(duration)
         }
       }
     } ~ get {
@@ -54,7 +54,7 @@ object WebServer {
     } ~ post {
       pathPrefix("create-item" / LongNumber) { id =>
         onComplete(saveOrder(id)) {
-          done => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Create Item is ok.</h1>0").toStrict(FiniteDuration(5, TimeUnit.SECONDS)))
+          done => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Create Item is ok.</h1>0").toStrict(duration))
         }
       }
     }
