@@ -1,13 +1,11 @@
-# Demo
+#### Build
 
-How to start the Demo application
----
+    gradle -q fatJar
 
-1. Run `mvn clean install` to build your application
-1. Start application with `java -jar target/demo-dropwizard-1.0-SNAPSHOT.jar server config.yml`
-1. To check that your application is running enter url `http://localhost:8080`
+#### Run
 
-Health Check
----
+    java -jar build\libs\demo-dropwizard-x.y.z.jar server config.yml
 
-To see your applications health enter url `http://localhost:8081/healthcheck`
+#### Test
+
+    curl http://127.0.0.1:8080/hello/json        
