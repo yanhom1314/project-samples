@@ -1,9 +1,0 @@
-logs
-target
-*.lock
-/.idea
-/.idea_modules
-/.classpath
-/.project
-/.settings
-/RUNNING_PID
