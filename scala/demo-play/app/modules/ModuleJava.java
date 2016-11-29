@@ -1,3 +1,5 @@
+package modules;
+
 import com.google.inject.AbstractModule;
 import config.SpringDataJpaConfig;
 import org.springframework.context.ApplicationContext;
@@ -11,7 +13,7 @@ public class ModuleJava extends AbstractModule {
 
     @Override
     protected void configure() {
-        System.out.println("conf/application.conf:[play.modules.enabled += \"ModuleJava\".");
+        System.out.println("conf/application.conf:[play.modules.enabled += \"modules.ModuleJava\".");
         Stream.of(ctx.getBeanNamesForType(Repository.class)).map(n -> ctx.getType(n)).forEach(c -> bind(c).toInstance(ctx.getBean(c)));
     }
 }

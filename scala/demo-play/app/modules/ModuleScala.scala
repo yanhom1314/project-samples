@@ -1,3 +1,5 @@
+package modules
+
 import java.time.Clock
 
 import com.google.inject.AbstractModule
@@ -9,7 +11,7 @@ class ModuleScala extends AbstractModule {
   lazy val ctx = new AnnotationConfigApplicationContext(classOf[SpringDataJpaConfig])
 
   override def configure() = {
-    println("conf/application.conf:[play.modules.enabled += \"ModuleScala\"].")
+    println("conf/application.conf:[play.modules.enabled += \"modules.ModuleScala\"].")
     // Use the system clock as the default implementation of Clock
     bind(classOf[Clock]).toInstance(Clock.systemDefaultZone)
 
