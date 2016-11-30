@@ -2,13 +2,17 @@ package sample.stream
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.{Flow, Framing, Sink, Source, Tcp}
+import akka.stream.scaladsl.{Flow, Sink, Source, Tcp}
 import akka.util.ByteString
 
-import scala.concurrent.ExecutionContextExecutor
 import scala.util.{Failure, Success}
 
 object TcpEcho {
+  implicit val system = ActorSystem("ClientAndServer")
+
+  import system.dispatcher
+
+  implicit val materializer = ActorMaterializer()
 
   /**
     * Use without parameters to start both client and
@@ -21,33 +25,32 @@ object TcpEcho {
     *
     */
   def main(args: Array[String]): Unit = {
-    implicit val system = ActorSystem("ServerAndClientSystem")
-    implicit val materializer = ActorMaterializer()
-    implicit val ex = system.dispatcher
-
     if (args.isEmpty) {
+      val system = ActorSystem("ClientAndServer")
       val (address, port) = ("127.0.0.1", 6000)
-      server(address, port)
-      client(address, port)
+      server(system, address, port)
+      client(system, address, port)
     } else {
       val (address, port) =
         if (args.length == 3) (args(1), args(2).toInt)
         else ("127.0.0.1", 6000)
       if (args(0) == "server") {
-        server(address, port)
+        val system = ActorSystem("Server")
+        server(system, address, port)
       } else if (args(0) == "client") {
-        client(address, port)
+        val system = ActorSystem("Client")
+        client(system, address, port)
       }
     }
   }
 
-  def server(address: String, port: Int)(implicit system: ActorSystem, dispatcher: ExecutionContextExecutor, materializer: ActorMaterializer): Unit = {
+  def server(system: ActorSystem, address: String, port: Int): Unit = {
     val handler = Sink.foreach[Tcp.IncomingConnection] { conn =>
       println("Client connected from: " + conn.remoteAddress)
-      conn handleWith echo
+      conn handleWith Flow[ByteString]
     }
 
-    val connections = Tcp().bind(address, port)
+    val connections = Tcp(system).bind(address, port)
     val binding = connections.to(handler).run()
 
     binding.onComplete {
@@ -57,40 +60,18 @@ object TcpEcho {
         println(s"Server could not bind to $address:$port: ${e.getMessage}")
         system.terminate()
     }
-
   }
 
-  def echo(implicit system: ActorSystem) = Flow[ByteString]
-    .via(Framing.delimiter(ByteString("$"), maximumFrameLength = 256, allowTruncation = true))
-    .map(_.utf8String.toLowerCase.trim)
-    .filter {
-      case "quit" => system.terminate(); false
-      case _ => true
-    }
-    .map(t => s"[${t}]")
-    .map(ByteString(_))
-
-
-  def binary(implicit system: ActorSystem) = Flow[ByteString]
-    .via(Framing.delimiter(ByteString("$"), maximumFrameLength = 256, allowTruncation = true))
-    .map(_.utf8String.toLowerCase.trim)
-    .filter {
-      case "quit" => system.terminate(); false
-      case _ => true
-    }
-    .map(t => s"[${t}]")
-    .map(ByteString(_))
-
-  def client(address: String, port: Int)(implicit system: ActorSystem, dispatcher: ExecutionContextExecutor, materializer: ActorMaterializer): Unit = {
+  def client(system: ActorSystem, address: String, port: Int): Unit = {
 
     val testInput = ('a' to 'z').map(ByteString(_))
 
-    val result = Source(testInput).via(Tcp().outgoingConnection(address, port)).
+    val result = Source(testInput).via(Tcp(system).outgoingConnection(address, port)).
       runFold(ByteString.empty) { (acc, in) ⇒ acc ++ in }
 
     result.onComplete {
-      case Success(result) =>
-        println(s"Result:[${result.utf8String}]")
+      case Success(successResult) =>
+        println(s"Result: " + successResult.utf8String)
         println("Shutting down client")
         system.terminate()
       case Failure(e) =>

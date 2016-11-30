@@ -29,7 +29,7 @@ object AsyncWiki extends App {
         if (!subscriber.isUnsubscribed) {
           subscriber.onCompleted()
         }
-      } onComplete (_ => system.shutdown())
+      } onComplete (_ => system.terminate())
     })
   }
 
