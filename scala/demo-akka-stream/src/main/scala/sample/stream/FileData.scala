@@ -1,6 +1,7 @@
 package sample.stream
 
 import java.io.File
+import java.util.concurrent.LinkedBlockingQueue
 
 import akka.NotUsed
 import akka.actor.ActorSystem
@@ -11,6 +12,7 @@ object FileData {
   def main(args: Array[String]): Unit = {
     // actor system and implicit materializer
     implicit val system = ActorSystem("Sys")
+    import system.dispatcher
     implicit val materializer = ActorMaterializer()
 
     // execution context
@@ -20,7 +22,13 @@ object FileData {
     // read lines from a log file
     val logFile = new File("e:/tmp/adv_web.log")
 
+    val queue = new LinkedBlockingQueue[Int]()
+    queue.iterator()
+
+
+
     val source: Source[Int, NotUsed] = Source(1 to 100)
-    source.runForeach(i => println(i))(materializer)
+    val f1 = source.runForeach(i => println(i))
+    f1.onComplete { case _ => system.terminate() }
   }
 }

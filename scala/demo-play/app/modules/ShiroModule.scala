@@ -6,11 +6,8 @@ import org.apache.shiro.mgt.DefaultSecurityManager
 import org.apache.shiro.realm.Realm
 import org.apache.shiro.session.mgt.DefaultSessionManager
 import play.api.Logger
+import shiro.RealmService
 
-
-/**
-  * Created by YaFengLi on 2016/11/29.
-  */
 class ShiroModule extends AbstractModule {
   override def configure(): Unit = {
     try {
@@ -22,8 +19,7 @@ class ShiroModule extends AbstractModule {
 
   @Provides
   def getRealm(injector: Injector): Realm = {
-    println(s"##################:${injector}")
-    val realm = injector.getInstance(classOf[Realm])
+    val realm = injector.getInstance(classOf[RealmService])
     println(s"##################:${realm}")
     val securityManager = new DefaultSecurityManager(realm)
 

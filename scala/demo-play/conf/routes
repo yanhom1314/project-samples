@@ -7,6 +7,9 @@ GET         /demo                controllers.DemoController.demo
 GET         /jqgrid              controllers.DemoController.jqgrid
 GET         /datatables          controllers.DemoController.datatables(draw:Int ?= 0, start:Int ?=0, length:Int ?=0)
 
+#secure
+GET         /admin               controllers.AdminController.sayHi(name:String)
+
 # An example controller showing a sample home page
 GET         /home                controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")
 GET         /index               controllers.HomeController.index(id:Option[String])
