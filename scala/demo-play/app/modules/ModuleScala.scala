@@ -12,9 +12,8 @@ class ModuleScala extends AbstractModule {
 
   override def configure() = {
     println("conf/application.conf:[play.modules.enabled += \"modules.ModuleScala\"].")
-    // Use the system clock as the default implementation of Clock
-    bind(classOf[Clock]).toInstance(Clock.systemDefaultZone)
 
+    bind(classOf[Clock]).toInstance(Clock.systemDefaultZone)
     ctx.getBeanNamesForType(classOf[Repository[_, _]]).map(ctx.getType(_)).foreach {
       case c: Class[Repository[_, _]@unchecked] => bind(c).toInstance(ctx.getBean(c))
     }

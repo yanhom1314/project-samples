@@ -13,7 +13,7 @@ trait Secured {
 
   def Role(request: RequestHeader) = request.session.get(SESSION_LOGIN_ROLE)
 
-  def OnAuthorize(onAuthorized: Request[AnyContent] => Result)(onUnauthorized: Request[AnyContent] => (Option[UserDetails], Result)) = Action {
+  def OnAuthorize(onAuthorized: Request[AnyContent] => Result)(onUnauthorized: Request[AnyContent] => (Option[SecureProfile], Result)) = Action {
     implicit request =>
       Name(request) match {
         case Some(_) => onAuthorized(request)
@@ -22,6 +22,10 @@ trait Secured {
           case (Some(u), r) => r.withSession(SESSION_LOGIN_NAME -> u.name, SESSION_LOGIN_ROLE -> u.roles.mkString(SPLIT_ROLE_CHAR))
         }
       }
+  }
+
+  def IsAuthenticated(f: => Result) = Security.Authenticated(Name, Unauthorized) {
+    case _ => Action(f)
   }
 
   def IsAuthenticated(f: => Request[AnyContent] => Result) = Security.Authenticated(Name, Unauthorized) {
@@ -52,8 +56,8 @@ object Secured {
   val SESSION_LOGIN_ROLE = "s_user_role"
 }
 
-case class UserDetails(name: String, roles: Iterable[String] = Seq[String]())
+case class SecureProfile(name: String, roles: Iterable[String] = Seq[String]())
 
-object UserDetails {
-  implicit val format: Format[UserDetails] = Json.format[UserDetails]
+object SecureProfile {
+  implicit val format: Format[SecureProfile] = Json.format[SecureProfile]
 }

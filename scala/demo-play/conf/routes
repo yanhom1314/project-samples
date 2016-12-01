@@ -9,6 +9,10 @@ GET         /datatables          controllers.DemoController.datatables(draw:Int 
 
 #secure
 GET         /admin               controllers.AdminController.sayHi(name:String)
+GET         /home                controllers.Authorize.home
+GET         /login               controllers.Authorize.login
+GET         /logout              controllers.Authorize.logout
+POST        /authenticate        controllers.Authorize.authenticate
 
 # An example controller showing a sample home page
 GET         /home                controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")

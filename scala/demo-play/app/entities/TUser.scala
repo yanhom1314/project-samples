@@ -22,7 +22,4 @@ class TUser extends TModel {
   @JoinTable(name = "user_role", joinColumns = Array(new JoinColumn(name = "user_id", referencedColumnName = "id")),
     inverseJoinColumns = Array(new JoinColumn(name = "role_id", referencedColumnName = "id")))
   var roles: util.List[TRole] = _
-
 }
-
-
