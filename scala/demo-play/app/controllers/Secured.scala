@@ -25,18 +25,18 @@ trait Secured {
   }
 
   def IsAuthenticated(f: => Result) = Security.Authenticated(Name, Unauthorized) {
-    case _ => Action(f)
+    case _ => Action(_ => f)
   }
 
-  def IsAuthenticated(f: => Request[AnyContent] => Result) = Security.Authenticated(Name, Unauthorized) {
+  def IsAuthenticated(f: Request[AnyContent] => Result) = Security.Authenticated(Name, Unauthorized) {
     case _ => Action(implicit request => f(request))
   }
 
-  def IsAuthenticated[A](parser: BodyParser[A])(f: => Request[A] => Result) = Security.Authenticated(Name, Unauthorized) {
+  def IsAuthenticated[A](parser: BodyParser[A])(f: Request[A] => Result) = Security.Authenticated(Name, Unauthorized) {
     case _ => Action(parser)(implicit request => f(request))
   }
 
-  def IsRole(members: Array[String])(f: => Request[AnyContent] => Result) = Security.Authenticated(Role, Unauthorized) {
+  def IsRole(members: Array[String])(f: Request[AnyContent] => Result) = Security.Authenticated(Role, Unauthorized) {
     roleNames =>
       if (roleNames.split(SPLIT_ROLE_CHAR).exists(members.contains(_))) Action(request => f(request)) else Action(Results.Forbidden)
   }
