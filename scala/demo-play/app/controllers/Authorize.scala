@@ -14,18 +14,17 @@ import play.api.{Configuration, Logger}
   * Date: 13-3-8
   * Time: 上午10:16
   */
-class Authorize @Inject()(conf: Configuration, implicit val messagesApi: MessagesApi) extends AdminSecured with CookieLang {
+class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) extends Secured with CookieLang {
 
-  val securt = conf.getString("secure.crt")
+  val secureKey = conf.getString("secure.crt")
 
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,
       "password" -> nonEmptyText,
-      "captcha" -> nonEmptyText
+      "captcha" -> text
     )(Login.apply)(Login.unapply)
   )
-
 
   def login = Action {
     implicit request =>
@@ -36,8 +35,7 @@ class Authorize @Inject()(conf: Configuration, implicit val messagesApi: Message
   }
 
   def admin = IsAuthenticated {
-    implicit request =>
-      Redirect(routes.Authorize.home())
+    Redirect(routes.Authorize.home())
   }
 
   def authenticate = Action {
@@ -47,11 +45,12 @@ class Authorize @Inject()(conf: Configuration, implicit val messagesApi: Message
           loginForm.bindFromRequest().fold(
             errors => BadRequest(views.html.login(errors)),
             user =>
-              if (user.username == "admin" && securt.exists(_.equalsIgnoreCase(user.password)))
+              if (user.username == "admin" && secureKey.exists(_.equalsIgnoreCase(user.password)))
                 Redirect(routes.Authorize.home()).withSession(Secured.SESSION_LOGIN_NAME -> user.username, Secured.SESSION_LOGIN_ROLE -> user.username)
               else {
-                Logger.info(f"#login:${user.username} ${user.password} ${securt.get}")
-                Unauthorized(request)
+                Logger.info(f"#login:${user.username} ${user.password} ${secureKey.get}")
+                //Unauthorized(request)
+                Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
               }
           )
         case Some(username) => Redirect(routes.Authorize.home()).withSession(Secured.SESSION_LOGIN_NAME -> username, Secured.SESSION_LOGIN_ROLE -> username)
@@ -59,8 +58,7 @@ class Authorize @Inject()(conf: Configuration, implicit val messagesApi: Message
   }
 
   def logout = Action {
-    implicit request =>
-      Redirect(routes.Authorize.login()).withNewSession.flashing("success" -> Messages("logout.message"))
+    Redirect(routes.Authorize.login()).withNewSession.flashing("success" -> Messages("logout.message"))
   }
 
   def home = IsAuthenticated {

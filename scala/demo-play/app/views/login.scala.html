@@ -1,76 +1,12 @@
 @(user: Form[Login])(implicit flash: Flash, session: Session, messages: Messages)
 @layout.main("Hello Login!") {
-    <style>
-    body {
-        margin: 100px auto ;
-        width: 480px ;
-        background-color: #0A64A4 ;
-    }
-
-    .main-area {
-        min-height: 40px ;
-        padding-right: 20px ;
-        padding-left: 20px ;
-        background-color: #fff ;
-        background-image: none ;
-        border: 0 ;
-        -webkit-box-shadow: 0 1px 4px rgba (0, 0, 0, 0) ;
-        -moz-box-shadow: 0 1px 4px rgba (0, 0, 0, 0) ;
-        box-shadow: 0 1px 4px rgba (0, 0, 0, 0) ;
-    }
-
-    #login {
-        margin: 50px auto ;
-        padding: 20px 45px 15px 45px ;
-        text-align: left ;
-        width: 480px ;
-        height: 350px ;
-        background: whiteSmoke ;
-        border: 1px solid #d9d9d9 ;
-    }
-
-    #login h2 {
-        font-size: 16px ;
-        line-height: 40px ;
-        height: 20px ;
-        margin: 1em 0 1.8em 0 ;
-        position: relative ;
-        font-weight: bold ;
-        font-family: 微软雅黑 ;
-        letter-spacing: 5px ;
-    }
-
-    #login h2 strong {
-        display: inline-block ;
-        position: absolute ;
-        right: 0 ;
-        top: 1px ;
-        height: 40px ;
-        width: 130px ;
-        vertical-align: middle ;
-        background: transparent url (/admin/ resources /images/ logo_login.png) no-repeat ;
-    }
-
-    #login label {
-        font-weight: bold ;
-        font-size: 12px ;
-    }
-
-    #username_field input, #password_field input {
-        width: 70% ;
-    }
-
-    #captcha_field input {
-        width: 30% ;
-        display: inline ;
-    }
-    </style>
     <div>
         <div id="login">
             <h2> 管理后台登录 <strong></strong></h2>
             @helper.form(action = routes.Authorize.authenticate()) {
                 @helper.inputText(user("username"), '_label -> "登陆名", '_showConstraints -> false, 'class -> "form-control")
                 @helper.inputPassword(user("password"), '_label -> "登陆密码", '_showConstraints -> false, 'class -> "form-control")
+                @helper.inputPassword(user("captcha"), '_label -> "验证码", '_showConstraints -> false, 'class -> "form-control")
                 <input type="submit" value="登陆" class="btn btn-info"/>
                 <input type="reset" value="重置" class="btn btn-default"/>
             }

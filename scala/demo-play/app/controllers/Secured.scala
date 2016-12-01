@@ -1,13 +1,14 @@
 package controllers
 
+import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{Format, Json}
 import play.api.mvc._
 
-trait Secured {
+trait Secured extends Controller with I18nSupport {
 
   import Secured._
 
-  def Unauthorized(request: RequestHeader): Result
+  def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
 
   def Name(request: RequestHeader) = request.session.get(SESSION_LOGIN_NAME)
 
@@ -24,19 +25,19 @@ trait Secured {
       }
   }
 
-  def IsAuthenticated(f: => Result) = Security.Authenticated(Name, Unauthorized) {
+  def IsAuthenticated(f: => Result) = Security.Authenticated(Name, unauthorized) {
     case _ => Action(_ => f)
   }
 
-  def IsAuthenticated(f: Request[AnyContent] => Result) = Security.Authenticated(Name, Unauthorized) {
+  def IsAuthenticated(f: Request[AnyContent] => Result) = Security.Authenticated(Name, unauthorized) {
     case _ => Action(implicit request => f(request))
   }
 
-  def IsAuthenticated[A](parser: BodyParser[A])(f: Request[A] => Result) = Security.Authenticated(Name, Unauthorized) {
+  def IsAuthenticated[A](parser: BodyParser[A])(f: Request[A] => Result) = Security.Authenticated(Name, unauthorized) {
     case _ => Action(parser)(implicit request => f(request))
   }
 
-  def IsRole(members: Array[String])(f: Request[AnyContent] => Result) = Security.Authenticated(Role, Unauthorized) {
+  def IsRole(members: Array[String])(f: Request[AnyContent] => Result) = Security.Authenticated(Role, unauthorized) {
     roleNames =>
       if (roleNames.split(SPLIT_ROLE_CHAR).exists(members.contains(_))) Action(request => f(request)) else Action(Results.Forbidden)
   }
@@ -45,7 +46,7 @@ trait Secured {
     implicit request =>
       Role(request) match {
         case Some(roleNames) => if (roleNames.split(SPLIT_ROLE_CHAR).exists(members.contains(_))) f(request) else Results.Forbidden
-        case None => Unauthorized(request)
+        case None => unauthorized(request)
       }
   }
 }
