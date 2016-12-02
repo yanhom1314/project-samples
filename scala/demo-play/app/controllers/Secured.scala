@@ -6,9 +6,6 @@ import play.api.libs.json.{Format, Json}
 import play.api.mvc._
 
 trait Secured extends Controller with I18nSupport {
-
-  import Secured._
-
   def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
 
   def Name(request: RequestHeader) = if (SecurityUtils.getSubject.isAuthenticated) Some(SecurityUtils.getSubject.getPrincipal.toString) else None
@@ -21,7 +18,7 @@ trait Secured extends Controller with I18nSupport {
         case Some(_) => onAuthorized(request)
         case None => onUnauthorized(request) match {
           case (None, r) => r
-          case (Some(u), r) => r.withSession(SESSION_LOGIN_NAME -> u.name, SESSION_LOGIN_ROLE -> u.roles.mkString(SPLIT_ROLE_CHAR))
+          case (Some(_), r) => r
         }
       }
   }
@@ -47,12 +44,6 @@ trait Secured extends Controller with I18nSupport {
     implicit request =>
       if (members.exists(SecurityUtils.getSubject.hasRole(_))) f(request) else Results.Forbidden
   }
-}
-
-object Secured {
-  val SPLIT_ROLE_CHAR = "\\s"
-  val SESSION_LOGIN_NAME = "s_user_name"
-  val SESSION_LOGIN_ROLE = "s_user_role"
 }
 
 case class SecureProfile(name: String, roles: Iterable[String] = Seq[String]())

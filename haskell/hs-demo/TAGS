@@ -1,0 +1,208 @@
+
+e:/Github/project-samples/haskell/hs-demo/src\test.hs,122
+module Test Test1,2
+doubleMe doubleMe4,5
+doubleUs doubleUs5,6
+doubleSn doubleSn6,7
+fib fib9,10
+main main13,14
+
+e:/Github/project-samples/haskell/hs-demo/src\naiveeq.hs,167
+data Color Color0,1
+data Color = Red Red0,1
+data Color = Red | Green Green0,1
+data Color = Red | Green | BlueBlue0,1
+colorEq colorEq2,3
+colorEq colorEq3,4
+
+e:/Github/project-samples/haskell/hs-demo/src\Main.hs,56
+module Main Main0,1
+main main11,12
+main main13,14
+
+e:/Github/project-samples/haskell/hs-demo/src\io.hs,100
+module Main Main0,1
+main main4,5
+doLoop doLoop8,9
+doRead doRead22,23
+doWrite doWrite27,28
+
+e:/Github/project-samples/haskell/hs-demo/src\Geometry\Sphere.hs,124
+module Geometry.Sphere Geometry.Sphere0,1
+volume volume2,3
+volume volume3,4
+sumArea sumArea5,6
+sumArea sumArea6,7
+
+e:/Github/project-samples/haskell/hs-demo/src\Geometry\Cuboid.hs,179
+module Geometry.Cuboid Geometry.Cuboid0,1
+volume volume2,3
+volume volume3,4
+area area5,6
+area area6,7
+rectangleArea rectangleArea8,9
+rectangleArea rectangleArea9,10
+
+e:/Github/project-samples/haskell/hs-demo/src\Geometry\Cube.hs,108
+module Geometry.Cube Geometry.Cube0,1
+volume volume4,5
+volume volume5,6
+area area7,8
+area area8,9
+
+e:/Github/project-samples/haskell/hs-demo/src\Ext\Util.hs,142
+module Ext.Util Ext.Util0,1
+reverseWords reverseWords2,3
+reverseWords reverseWords3,4
+boomBangs:boomBangs5,6
+boomBangs boomBangs6,7
+
+e:/Github/project-samples/haskell/hs-demo/src\Ext\Tcp.hs,158
+module Ext.Tcp(Ext.Tcp0,1
+start start3,4
+start start4,5
+mainLoop mainLoop10,11
+mainLoop mainLoop11,12
+runConn runConn15,16
+runConn runConn16,17
+
+e:/Github/project-samples/haskell/hs-demo/src\Ext\Math.hs,214
+module Ext.MathExt.Math0,1
+add:add7,8
+add(add8,9
+add' add'10,11
+add' add'11,12
+double double13,14
+double double14,15
+fac fac16,17
+--fac --fac17,18
+fac fac19,20
+_fac _fac21,22
+_fac _fac22,23
+
+e:/Github/project-samples/haskell/hs-demo/Setup.hs,15
+main main1,2
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\test.hs,123
+module Test Test1,2
+doubleMe doubleMe4,5
+doubleUs doubleUs5,6
+doubleSn doubleSn6,7
+fib fib10,11
+main main14,15
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\TcpDemo.hs,147
+module Main Main0,1
+main main3,4
+main main4,5
+mainLoop mainLoop9,10
+mainLoop mainLoop10,11
+runConn runConn14,15
+runConn runConn15,16
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\naiveeq.hs,167
+data Color Color0,1
+data Color = Red Red0,1
+data Color = Red | Green Green0,1
+data Color = Red | Green | BlueBlue0,1
+colorEq colorEq2,3
+colorEq colorEq3,4
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\Main.hs,148
+module Main Main0,1
+main main8,9
+main main10,11
+add:add26,27
+add(add27,28
+add' add'29,30
+add' add'30,31
+fac fac32,33
+fac fac33,34
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\io.hs,100
+module Main Main0,1
+main main4,5
+doLoop doLoop8,9
+doRead doRead22,23
+doWrite doWrite27,28
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\hello.hs,146
+module Main Main0,1
+main main4,5
+main main6,7
+add:add20,21
+add(add21,22
+add' add'23,24
+add' add'24,25
+fac fac26,27
+fac fac27,28
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\Geometry\sphere.hs,112
+module Geometry.Sphere Geometry.Sphere0,1
+volume volume2,3
+volume volume3,4
+area area5,6
+area area6,7
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\Geometry\cuboid.hs,179
+module Geometry.Cuboid Geometry.Cuboid0,1
+volume volume2,3
+volume volume3,4
+area area5,6
+area area6,7
+rectangleArea rectangleArea8,9
+rectangleArea rectangleArea9,10
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\Geometry\cube.hs,108
+module Geometry.Cube Geometry.Cube0,1
+volume volume4,5
+volume volume5,6
+area area7,8
+area area8,9
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\Ext\util.hs,92
+module Ext.Util Ext.Util0,1
+reverseWords reverseWords2,3
+reverseWords reverseWords3,4
+
+e:/Github/project-samples/haskell/hs-demo/out\production\hs-demo\demo.hs,98
+module Main Main0,1
+timeout timeout6,7
+timeout timeout7,8
+main main19,20
+main main21,22
+
+e:/Github/project-samples/haskell/hs-demo/dist\build\autogen\Paths_hs_demo.hs,1052
+module Paths_hs_demo Paths_hs_demo1,2
+catchIO catchIO14,15
+catchIO catchIO15,16
+version version17,18
+version version18,19
+prefix, bindirrel bindirrel19,20
+prefix,prefix19,20
+prefix prefix20,21
+bindirrel bindirrel21,22
+getBinDir getBinDir23,24
+getBinDir getBinDir24,25
+getLibDir getLibDir26,27
+getLibDir getLibDir27,28
+getDataDir getDataDir29,30
+getDataDir getDataDir30,31
+getLibexecDir getLibexecDir32,33
+getLibexecDir getLibexecDir33,34
+getSysconfDir getSysconfDir35,36
+getSysconfDir getSysconfDir36,37
+getDataFileName getDataFileName38,39
+getDataFileName getDataFileName39,40
+getPrefixDirRel getPrefixDirRel43,44
+getPrefixDirRel getPrefixDirRel44,45
+minusFileName minusFileName59,60
+minusFileName minusFileName60,61
+joinFileName joinFileName65,66
+joinFileName joinFileName66,67
+splitFileName splitFileName73,74
+splitFileName splitFileName74,75
+pathSeparator pathSeparator87,88
+pathSeparator pathSeparator88,89
+isPathSeparator isPathSeparator90,91
+isPathSeparator isPathSeparator91,92
