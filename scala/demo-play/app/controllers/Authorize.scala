@@ -3,6 +3,9 @@ package controllers
 import javax.inject.Inject
 
 import models.Login
+import org.apache.shiro.SecurityUtils
+import org.apache.shiro.authc._
+import org.apache.shiro.session.UnknownSessionException
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{Messages, MessagesApi}
@@ -15,8 +18,6 @@ import play.api.{Configuration, Logger}
   * Time: 上午10:16
   */
 class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) extends Secured with CookieLang {
-
-  val secureKey = conf.getString("secure.crt")
 
   val loginForm = Form[Login](
     mapping(
@@ -39,22 +40,36 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
   }
 
   def authenticate = Action {
-    implicit request =>
-      request.session.get(Secured.SESSION_LOGIN_NAME) match {
-        case None =>
-          loginForm.bindFromRequest().fold(
-            errors => BadRequest(views.html.login(errors)),
-            user =>
-              if (user.username == "admin" && secureKey.exists(_.equalsIgnoreCase(user.password)))
-                Redirect(routes.Authorize.home()).withSession(Secured.SESSION_LOGIN_NAME -> user.username, Secured.SESSION_LOGIN_ROLE -> user.username)
-              else {
-                Logger.info(f"#login:${user.username} ${user.password} ${secureKey.get}")
-                //Unauthorized(request)
-                Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
+    implicit request => {
+      loginForm.bindFromRequest().fold(
+        errors => BadRequest(views.html.login(errors)),
+        user => {
+          val cu = SecurityUtils.getSubject
+          val username = user.username
+          val password = user.password
+          val remember = true
+          val token = new UsernamePasswordToken(username, password)
+          token.setRememberMe(remember)
+
+          try {
+            cu.login(token)
+            Redirect(routes.Authorize.home()).withSession(Secured.SESSION_LOGIN_NAME -> username, Secured.SESSION_LOGIN_ROLE -> username)
+          } catch {
+            case e: UnknownSessionException =>
+              try {
+                cu.logout()
+              } catch {
+                case e: Exception => Logger.error(e.getMessage)
               }
-          )
-        case Some(username) => Redirect(routes.Authorize.home()).withSession(Secured.SESSION_LOGIN_NAME -> username, Secured.SESSION_LOGIN_ROLE -> username)
-      }
+              Unauthorized(views.html.login).flashing("error" -> Messages("unauthorized.message"))
+            case UnknownAccountException => Unauthorized(views.html.login).flashing("error" -> Messages("unauthorized.message"))
+            case IncorrectCredentialsException => Forbidden(views.html.login).flashing("error" -> Messages("unauthorized.message"))
+            case LockedAccountException => Unauthorized(views.html.login).flashing("error" -> Messages("unauthorized.message"))
+            case AuthenticationException => NonAuthoritativeInformation(views.html.login).flashing("error" -> Messages("unauthorized.message"))
+          }
+        }
+      )
+    }
   }
 
   def logout = Action {
@@ -62,7 +77,6 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
   }
 
   def home = IsAuthenticated {
-    implicit request =>
-      Ok(s"hello ${Name(request)}")
+    implicit request => Ok(s"hello ${Name(request)}")
   }
 }

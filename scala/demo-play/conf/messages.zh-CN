@@ -59,3 +59,6 @@ error.path.result.multiple=Multiple results for the given path
 #add
 name = 姓名
 age = 年龄
+
+#secure
+unauthorized.message=请核对帐号与密码登录！

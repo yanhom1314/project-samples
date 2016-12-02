@@ -1,5 +1,6 @@
 package controllers
 
+import org.apache.shiro.SecurityUtils
 import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{Format, Json}
 import play.api.mvc._
@@ -10,7 +11,7 @@ trait Secured extends Controller with I18nSupport {
 
   def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
 
-  def Name(request: RequestHeader) = request.session.get(SESSION_LOGIN_NAME)
+  def Name(request: RequestHeader) = if (SecurityUtils.getSubject.isAuthenticated) Some(SecurityUtils.getSubject.getPrincipal.toString) else None
 
   def Role(request: RequestHeader) = request.session.get(SESSION_LOGIN_ROLE)
 

@@ -1,2 +1,6 @@
-name = Name
-age = Age
+#add
+name = 姓名
+age = 年龄
+
+#secure
+unauthorized.message=请核对帐号与密码登录！

@@ -3,6 +3,7 @@ package shiro
 
 import javax.inject.{Inject, Singleton}
 
+import entities.TUserRepository
 import org.apache.shiro.authc._
 import org.apache.shiro.authz.{AuthorizationInfo, SimpleAuthorizationInfo}
 import org.apache.shiro.realm.AuthorizingRealm
@@ -10,7 +11,7 @@ import org.apache.shiro.subject.PrincipalCollection
 import services.Counter
 
 @Singleton
-case class RealmService @Inject()(counter: Counter) extends AuthorizingRealm {
+case class RealmService @Inject()(counter: Counter, userRepo: TUserRepository) extends AuthorizingRealm {
 
   override def getName: String = "MyRealm"
 
