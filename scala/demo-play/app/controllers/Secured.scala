@@ -13,7 +13,7 @@ trait Secured extends Controller with I18nSupport {
 
   def Name(request: RequestHeader) = if (SecurityUtils.getSubject.isAuthenticated) Some(SecurityUtils.getSubject.getPrincipal.toString) else None
 
-  def Role(request: RequestHeader) = request.session.get(SESSION_LOGIN_ROLE)
+  def User(request: RequestHeader) = if (SecurityUtils.getSubject.isAuthenticated) Some(SecurityUtils.getSubject) else None
 
   def OnAuthorize(onAuthorized: Request[AnyContent] => Result)(onUnauthorized: Request[AnyContent] => (Option[SecureProfile], Result)) = Action {
     implicit request =>
@@ -38,17 +38,14 @@ trait Secured extends Controller with I18nSupport {
     case _ => Action(parser)(implicit request => f(request))
   }
 
-  def IsRole(members: Array[String])(f: Request[AnyContent] => Result) = Security.Authenticated(Role, unauthorized) {
-    roleNames =>
-      if (roleNames.split(SPLIT_ROLE_CHAR).exists(members.contains(_))) Action(request => f(request)) else Action(Results.Forbidden)
+  def IsRole(members: String*)(f: Request[AnyContent] => Result) = Security.Authenticated(User, unauthorized) {
+    subject =>
+      if (members.exists(subject.hasRole(_))) Action(request => f(request)) else Action(Results.Forbidden)
   }
 
-  def IsRole[A](members: Array[String])(parser: BodyParser[A])(f: Request[A] => Result) = Action(parser) {
+  def IsRole[A](members: String*)(parser: BodyParser[A])(f: Request[A] => Result) = Action(parser) {
     implicit request =>
-      Role(request) match {
-        case Some(roleNames) => if (roleNames.split(SPLIT_ROLE_CHAR).exists(members.contains(_))) f(request) else Results.Forbidden
-        case None => unauthorized(request)
-      }
+      if (members.exists(SecurityUtils.getSubject.hasRole(_))) f(request) else Results.Forbidden
   }
 }
 
