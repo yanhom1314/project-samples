@@ -19,7 +19,7 @@ import scala.io.StdIn
 object WebServer {
   val cache = mutable.Map[Long, Item]()
 
-  val HTTP_PORT = 80
+  val DEFAULT_HTTP_PORT = 80
 
   final case class Item(name: String, id: Long)
 
@@ -55,14 +55,16 @@ object WebServer {
     } ~ post {
       pathPrefix("create-item" / LongNumber) { id =>
         onComplete(saveOrder(id)) {
-          done => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Create Item is ok.</h1>0").toStrict(duration))
+          _ => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Create Item is ok.</h1>0").toStrict(duration))
         }
       }
     }
 
-    val bindingFuture = Http().bindAndHandle(route, "localhost", HTTP_PORT)
+    val port = if (System.getProperty("http.port") != null) System.getProperty("http.port").toInt else DEFAULT_HTTP_PORT
 
-    println(s"Server online at http://localhost[:${HTTP_PORT}]/\nPress RETURN to stop...")
+    val bindingFuture = Http().bindAndHandle(route, "localhost", port)
+
+    println(s"Server online at http://localhost:${port}/\nPress RETURN to stop...")
     StdIn.readLine()
     bindingFuture.flatMap(_.unbind()).onComplete(_ => system.terminate())
   }
