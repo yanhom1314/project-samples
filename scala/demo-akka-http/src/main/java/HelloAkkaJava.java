@@ -60,15 +60,15 @@ public class HelloAkkaJava {
 
             // Wait 5 seconds for the reply with the 'greeting' message
             final Greeting greeting1 = (Greeting) inbox.receive(Duration.create(5, TimeUnit.SECONDS));
-            System.out.println("Greeting: " + greeting1.message);
+            System.out.println("demo.Greeting: " + greeting1.message);
 
             // Change the greeting and ask for it again
             greeter.tell(new WhoToGreet("typesafe"), ActorRef.noSender());
             inbox.send(greeter, new Greet());
             final Greeting greeting2 = (Greeting) inbox.receive(Duration.create(5, TimeUnit.SECONDS));
-            System.out.println("Greeting: " + greeting2.message);
+            System.out.println("demo.Greeting: " + greeting2.message);
 
-            // after zero seconds, send a Greet message every second to the greeter with a sender of the GreetPrinter
+            // after zero seconds, send a Greet message every second to the greeter with a sender of the demo.GreetPrinter
             final ActorRef greetPrinter = system.actorOf(Props.create(GreetPrinter.class));
             system.scheduler().schedule(Duration.Zero(), Duration.create(1, TimeUnit.SECONDS), greeter, new Greet(), system.dispatcher(), greetPrinter);
         } catch (TimeoutException ex) {

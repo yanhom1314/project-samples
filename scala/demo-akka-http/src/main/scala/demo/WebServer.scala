@@ -1,3 +1,5 @@
+package demo
+
 import java.util.concurrent.TimeUnit
 
 import akka.Done
@@ -10,9 +12,8 @@ import akka.stream.ActorMaterializer
 import spray.json.DefaultJsonProtocol._
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
+import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.io.StdIn
 
 object WebServer {
@@ -24,9 +25,9 @@ object WebServer {
 
   implicit val itemFormat = jsonFormat2(Item)
 
-  def fetchItem(itemId: Long): Future[Option[Item]] = Future(cache.get(itemId))
+  def fetchItem(itemId: Long)(implicit dispatcher: ExecutionContextExecutor): Future[Option[Item]] = Future(cache.get(itemId))
 
-  def saveOrder(itemId: Long): Future[Done] = Future {
+  def saveOrder(itemId: Long)(implicit dispatcher: ExecutionContextExecutor): Future[Done] = Future {
     cache += itemId -> Item(itemId.toString, itemId)
     Done
   }
