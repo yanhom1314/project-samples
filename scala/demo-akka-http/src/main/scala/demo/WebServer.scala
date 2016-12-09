@@ -1,5 +1,6 @@
 package demo
 
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 import akka.Done
@@ -58,7 +59,17 @@ object WebServer {
           _ => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Create Item is ok.</h1>0").toStrict(duration))
         }
       }
+    } ~ path("302") {
+      val locationHeader = headers.Location("http://127.0.0.1/static/test.html")
+      complete(HttpResponse(302, headers = List(locationHeader)))
+    } ~ path("404") {
+      complete(HttpResponse(404, entity = "Unfortunately, the resource couldn't be found."))
+    } ~ get {
+      pathPrefix("static" / Segment) { name =>
+        getFromFile(new File("e:/tmp/key", name))
+      }
     }
+
 
     val port = if (System.getProperty("http.port") != null) System.getProperty("http.port").toInt else DEFAULT_HTTP_PORT
 
