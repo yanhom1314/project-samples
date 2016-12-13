@@ -18,6 +18,8 @@ import play.api.{Configuration, Logger}
   * Time: 上午10:16
   */
 class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) extends Secured with CookieLang {
+  val SESSION_LOGIN_NAME = "s_login_name"
+  val SESSION_LOGIN_ROLE = "s_role_name"
 
   val loginForm = Form[Login](
     mapping(
@@ -29,9 +31,9 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
 
   def login = Action {
     implicit request =>
-      request.session.get(Secured.SESSION_LOGIN_NAME) match {
+      Name(request) match {
+        case Some(username) => Redirect(routes.Authorize.home()).withSession(SESSION_LOGIN_NAME -> username, SESSION_LOGIN_ROLE -> username)
         case None => Ok(views.html.login(loginForm))
-        case Some(username) => Redirect(routes.Authorize.home()).withSession(Secured.SESSION_LOGIN_NAME -> username, Secured.SESSION_LOGIN_NAME -> username)
       }
   }
 
@@ -53,7 +55,7 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
 
           try {
             cu.login(token)
-            Redirect(routes.Authorize.home()).withSession(Secured.SESSION_LOGIN_NAME -> username, Secured.SESSION_LOGIN_ROLE -> username)
+            Redirect(routes.Authorize.home()).withSession(SESSION_LOGIN_NAME -> username, SESSION_LOGIN_ROLE -> username)
           } catch {
             case e: UnknownSessionException =>
               try {
@@ -61,11 +63,11 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
               } catch {
                 case e: Exception => Logger.error(e.getMessage)
               }
-              Unauthorized(views.html.login).flashing("error" -> Messages("unauthorized.message"))
-            case UnknownAccountException => Unauthorized(views.html.login).flashing("error" -> Messages("unauthorized.message"))
-            case IncorrectCredentialsException => Forbidden(views.html.login).flashing("error" -> Messages("unauthorized.message"))
-            case LockedAccountException => Unauthorized(views.html.login).flashing("error" -> Messages("unauthorized.message"))
-            case AuthenticationException => NonAuthoritativeInformation(views.html.login).flashing("error" -> Messages("unauthorized.message"))
+              Unauthorized(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
+            case _: UnknownAccountException => Unauthorized(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
+            case _: IncorrectCredentialsException => Forbidden(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
+            case _: LockedAccountException => Unauthorized(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
+            case _: AuthenticationException => NonAuthoritativeInformation(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
           }
         }
       )
