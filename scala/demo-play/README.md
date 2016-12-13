@@ -7,9 +7,7 @@ This project demonstrate how to create a simple CRUD application with Play integ
 
         play.modules.enabled += "modules.ModuleJava"  #modules.ModuleScala
 
-
-
 ## Build & Run
 
         webpack
-        sbt run | gradle runPlayBinary
+        sbt run

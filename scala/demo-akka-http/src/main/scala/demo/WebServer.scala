@@ -20,7 +20,9 @@ import scala.io.StdIn
 object WebServer {
   val cache = mutable.Map[Long, Item]()
 
-  val DEFAULT_HTTP_PORT = 80
+  val BASE_DIR = if (System.getProperty("http.path") != null) System.getProperty("http.path") else System.getProperty("user.dir") + "/html"
+
+  val HTTP_PORT = if (System.getProperty("http.port") != null) System.getProperty("http.port").toInt else 80
 
   final case class Item(name: String, id: Long)
 
@@ -60,22 +62,22 @@ object WebServer {
         }
       }
     } ~ path("302") {
+      val locationHeader = headers.Location("http://127.0.0.1/301")
+      complete(HttpResponse(302, headers = List(locationHeader)))
+    } ~ path("301") {
       val locationHeader = headers.Location("http://127.0.0.1/static/test.html")
       complete(HttpResponse(302, headers = List(locationHeader)))
     } ~ path("404") {
       complete(HttpResponse(404, entity = "Unfortunately, the resource couldn't be found."))
     } ~ get {
       pathPrefix("static" / Segment) { name =>
-        getFromFile(new File("e:/tmp/key", name))
+        getFromFile(new File(BASE_DIR, name))
       }
     }
 
+    val bindingFuture = Http().bindAndHandle(route, "localhost", HTTP_PORT)
 
-    val port = if (System.getProperty("http.port") != null) System.getProperty("http.port").toInt else DEFAULT_HTTP_PORT
-
-    val bindingFuture = Http().bindAndHandle(route, "localhost", port)
-
-    println(s"Server online at http://localhost:${port}/\nPress RETURN to stop...")
+    println(s"Server[${BASE_DIR}] online at http://localhost:${HTTP_PORT}/\nPress RETURN to stop...")
     StdIn.readLine()
     bindingFuture.flatMap(_.unbind()).onComplete(_ => system.terminate())
   }
