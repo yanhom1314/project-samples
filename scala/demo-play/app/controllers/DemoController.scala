@@ -49,4 +49,8 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     (start.toInt until start.toInt + length).foreach { i => list.data += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }
     Ok(Json.toJson(list))
   }
+
+  def save = Action(parse.json) { request =>
+    Ok("Got: " + (request.body \ "name").as[String])
+  }
 }

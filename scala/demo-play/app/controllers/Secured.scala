@@ -35,17 +35,20 @@ trait Secured extends Controller with I18nSupport {
     _ => Action(parser)(implicit request => f(request))
   }
 
-  def IsRole(f: => Result)(members: String*) = Security.Authenticated(User, unauthorized) {
-    subject => if (members.exists(subject.hasRole(_))) Action(_ => f) else Action(Results.Forbidden)
+  def IsRole(members: String*)(f: => Result) = Security.Authenticated(User, unauthorized) {
+    subject => if (members.exists(subject.hasRole(_))) Action(f) else Action(Results.Forbidden)
   }
 
-  def IsRole(f: Request[AnyContent] => Result)(members: String*) = Security.Authenticated(User, unauthorized) {
-    subject => if (members.exists(subject.hasRole(_))) Action(request => f(request)) else Action(Results.Forbidden)
+  def HasRole(members: String*)(f: Request[AnyContent] => Result) = Security.Authenticated(User, unauthorized) {
+    subject => if (members.exists(subject.hasRole(_))) Action(implicit request => f(request)) else Action(Results.Forbidden)
   }
 
-  def IsRole[A](parser: BodyParser[A])(f: Request[A] => Result)(members: String*) = Action(parser) {
-    implicit request =>
-      if (members.exists(SecurityUtils.getSubject.hasRole(_))) f(request) else Results.Forbidden
+  def IsRole[A](parser: BodyParser[A], members: String*)(f: => Result) = Action(parser) {
+    _ => if (members.exists(SecurityUtils.getSubject.hasRole(_))) f else Results.Forbidden
+  }
+
+  def HasRole[A](parser: BodyParser[A], members: String*)(f: Request[A] => Result) = Action(parser) {
+    implicit request => if (members.exists(SecurityUtils.getSubject.hasRole(_))) f(request) else Results.Forbidden
   }
 }
 
