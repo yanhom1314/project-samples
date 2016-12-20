@@ -9,6 +9,7 @@ GET         /datatables          controllers.DemoController.datatables(draw:Int 
 
 #secure
 GET         /admin               controllers.AdminController.admin(name:String ?= "Anonymous")
+GET         /check/:name         controllers.AdminController.check(name:String)
 GET         /home                controllers.Authorize.home
 GET         /login               controllers.Authorize.login
 GET         /logout              controllers.Authorize.logout

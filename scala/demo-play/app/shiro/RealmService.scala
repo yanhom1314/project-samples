@@ -19,20 +19,32 @@ case class RealmService @Inject()(counter: Counter, userRepo: TUserRepository) e
 
   override def doGetAuthorizationInfo(principals: PrincipalCollection): AuthorizationInfo = {
     val info = new SimpleAuthorizationInfo()
-    //设置权限
-    val un = getAvailablePrincipal(principals)
+    try {
+      //设置权限
+      val un = getAvailablePrincipal(principals)
+    } catch {
+      case e: Exception =>
+        e.printStackTrace()
+    }
     //通过un查找Roles
     //loginUserRepository.findByUsername(un.toString).roles.map(_.roleName).foreach(info.addRole(_))
-
+    info.addRole("ROLE_ADMIN")
     info
   }
 
-  @throws(classOf[Exception])
+  //@throws(classOf[Exception])
   override def doGetAuthenticationInfo(token: AuthenticationToken): AuthenticationInfo = {
-    val username = token.getPrincipal.toString
-    val password = new String(token.getCredentials().asInstanceOf[Array[Char]])
+    try {
+      val username = token.getPrincipal.toString
+      val password = new String(token.getCredentials().asInstanceOf[Array[Char]])
 
-    new SimpleAuthenticationInfo(username, password, getName)
+      new SimpleAuthenticationInfo(username, password, getName)
+    } catch {
+      case e: Exception =>
+        e.printStackTrace()
+        null
+    }
+
     //TODO
 
     //    val user = loginUserRepository.findByUsername(username)

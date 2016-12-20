@@ -6,11 +6,26 @@ import play.api.libs.json.{Format, Json}
 import play.api.mvc._
 
 trait Secured extends Controller with I18nSupport {
+
+  val SESSION_LOGIN_NAME = "s_login_name"
+  val SESSION_LOGIN_ROLE = "s_role_name"
+
   def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
 
-  def Name(request: RequestHeader) = if (SecurityUtils.getSubject.isAuthenticated) Some(SecurityUtils.getSubject.getPrincipal.toString) else None
+  def Name(request: RequestHeader) = User(request) match {
+    case Some(u) => Some(u.getPrincipal.toString)
+    case None => None
+  }
 
-  def User(request: RequestHeader) = if (SecurityUtils.getSubject.isAuthenticated) Some(SecurityUtils.getSubject) else None
+  def User(request: RequestHeader) = try {
+    val subject = SecurityUtils.getSubject
+    if (subject.isAuthenticated) {
+      subject.getSession.touch()
+      Some(subject)
+    } else None
+  } catch {
+    case _: Exception => None
+  }
 
   def OnAuthorize(onAuthorized: Request[AnyContent] => Result)(onUnauthorized: Request[AnyContent] => (Option[SecureProfile], Result)) = Action {
     implicit request =>
@@ -36,19 +51,39 @@ trait Secured extends Controller with I18nSupport {
   }
 
   def IsRole(members: String*)(f: => Result) = Security.Authenticated(User, unauthorized) {
-    subject => if (members.exists(subject.hasRole(_))) Action(f) else Action(Results.Forbidden)
+    subject =>
+      try {
+        if (members.exists(subject.hasRole(_))) Action(f) else Action(Results.Forbidden)
+      } catch {
+        case _: Exception => Action(unauthorized(_))
+      }
   }
 
   def HasRole(members: String*)(f: Request[AnyContent] => Result) = Security.Authenticated(User, unauthorized) {
-    subject => if (members.exists(subject.hasRole(_))) Action(implicit request => f(request)) else Action(Results.Forbidden)
+    subject =>
+      try {
+        if (members.exists(subject.hasRole(_))) Action(implicit request => f(request)) else Action(Results.Forbidden)
+      } catch {
+        case _: Exception => Action(implicit request => unauthorized(request))
+      }
   }
 
   def IsRole[A](parser: BodyParser[A], members: String*)(f: => Result) = Action(parser) {
-    _ => if (members.exists(SecurityUtils.getSubject.hasRole(_))) f else Results.Forbidden
+    implicit request =>
+      try {
+        if (members.exists(SecurityUtils.getSubject.hasRole(_))) f else Results.Forbidden
+      } catch {
+        case _: Exception => unauthorized(request)
+      }
   }
 
   def HasRole[A](parser: BodyParser[A], members: String*)(f: Request[A] => Result) = Action(parser) {
-    implicit request => if (members.exists(SecurityUtils.getSubject.hasRole(_))) f(request) else Results.Forbidden
+    implicit request =>
+      try {
+        if (members.exists(SecurityUtils.getSubject.hasRole(_))) f(request) else Results.Forbidden
+      } catch {
+        case _: Exception => unauthorized(request)
+      }
   }
 }
 

@@ -6,21 +6,14 @@ import models.Login
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc._
 import org.apache.shiro.session.UnknownSessionException
+import org.apache.shiro.subject.Subject
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.{mapping, _}
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc._
 import play.api.{Configuration, Logger}
 
-/**
-  * User: ya_feng_li@163.com
-  * Date: 13-3-8
-  * Time: 上午10:16
-  */
 class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) extends Secured with CookieLang {
-  val SESSION_LOGIN_NAME = "s_login_name"
-  val SESSION_LOGIN_ROLE = "s_role_name"
-
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,
@@ -28,6 +21,7 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
       "captcha" -> text
     )(Login.apply)(Login.unapply)
   )
+
 
   def login = Action {
     implicit request =>
@@ -46,20 +40,21 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
       loginForm.bindFromRequest().fold(
         errors => BadRequest(views.html.login(errors)),
         user => {
-          val cu = SecurityUtils.getSubject
-          val username = user.username
-          val password = user.password
-          val remember = true
-          val token = new UsernamePasswordToken(username, password)
-          token.setRememberMe(remember)
-
+          var cu: Subject = null
           try {
+            cu = SecurityUtils.getSubject
+            val username = user.username
+            val password = user.password
+            val remember = true
+            val token = new UsernamePasswordToken(username, password)
+            token.setRememberMe(remember)
             cu.login(token)
+            cu.getSession.touch()
             Redirect(routes.Authorize.home()).withSession(SESSION_LOGIN_NAME -> username, SESSION_LOGIN_ROLE -> username)
           } catch {
             case e: UnknownSessionException =>
               try {
-                cu.logout()
+                if (cu != null) cu.logout()
               } catch {
                 case e: Exception => Logger.error(e.getMessage)
               }
