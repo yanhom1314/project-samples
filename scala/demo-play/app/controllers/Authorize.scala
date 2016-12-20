@@ -7,11 +7,11 @@ import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc._
 import org.apache.shiro.session.UnknownSessionException
 import org.apache.shiro.subject.Subject
+import play.api.Configuration
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc._
-import play.api.{Configuration, Logger}
 
 class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) extends Secured with CookieLang {
   val loginForm = Form[Login](
@@ -49,14 +49,15 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
             val token = new UsernamePasswordToken(username, password)
             token.setRememberMe(remember)
             cu.login(token)
-            cu.getSession.touch()
             Redirect(routes.Authorize.home()).withSession(SESSION_LOGIN_NAME -> username, SESSION_LOGIN_ROLE -> username)
           } catch {
             case e: UnknownSessionException =>
+              e.printStackTrace()
               try {
                 if (cu != null) cu.logout()
               } catch {
-                case e: Exception => Logger.error(e.getMessage)
+                case e1: Exception =>
+                  e1.printStackTrace()
               }
               Unauthorized(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
             case _: UnknownAccountException => Unauthorized(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
