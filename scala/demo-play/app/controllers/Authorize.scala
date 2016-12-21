@@ -14,6 +14,9 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc._
 
 class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) extends Secured with CookieLang {
+  val SESSION_LOGIN_NAME = "s_login_name"
+  val SESSION_LOGIN_ROLE = "s_role_name"
+
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,
@@ -21,7 +24,6 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
       "captcha" -> text
     )(Login.apply)(Login.unapply)
   )
-
 
   def login = Action {
     implicit request =>
@@ -31,10 +33,6 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
       }
   }
 
-  def admin = IsAuthenticated {
-    Redirect(routes.Authorize.home())
-  }
-
   def authenticate = Action {
     implicit request => {
       loginForm.bindFromRequest().fold(
@@ -42,35 +40,35 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
         user => {
           var cu: Subject = null
           try {
-            cu = SecurityUtils.getSubject
             val username = user.username
             val password = user.password
             val remember = true
             val token = new UsernamePasswordToken(username, password)
             token.setRememberMe(remember)
+
+            cu = SecurityUtils.getSubject
             cu.login(token)
             Redirect(routes.Authorize.home()).withSession(SESSION_LOGIN_NAME -> username, SESSION_LOGIN_ROLE -> username)
           } catch {
-            case e: UnknownSessionException =>
-              e.printStackTrace()
+            case _: UnknownSessionException =>
               try {
-                if (cu != null) cu.logout()
+                cu.logout()
               } catch {
-                case e1: Exception =>
-                  e1.printStackTrace()
+                case e1: Exception => e1.printStackTrace()
               }
-              Unauthorized(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
-            case _: UnknownAccountException => Unauthorized(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
-            case _: IncorrectCredentialsException => Forbidden(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
-            case _: LockedAccountException => Unauthorized(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
-            case _: AuthenticationException => NonAuthoritativeInformation(views.html.login(loginForm)).flashing("error" -> Messages("unauthorized.message"))
+              Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout"))
+            case _: UnknownAccountException => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.1"))
+            case _: IncorrectCredentialsException => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.2"))
+            case _: LockedAccountException => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.3"))
+            case _: AuthenticationException => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.4"))
           }
         }
       )
     }
   }
 
-  def logout = Action {
+  def logout = Action { implicit request =>
+    User(request).foreach(obj => obj.logout())
     Redirect(routes.Authorize.login()).withNewSession.flashing("success" -> Messages("logout.message"))
   }
 

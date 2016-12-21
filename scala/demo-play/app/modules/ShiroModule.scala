@@ -20,9 +20,10 @@ class ShiroModule extends AbstractModule {
   @Provides
   def getRealm(injector: Injector): Realm = {
     val realm = injector.getInstance(classOf[RealmService])
-    println(s"##################:${realm}")
     val securityManager = new DefaultSecurityManager(realm)
-
+    //    val subjectDAO = securityManager.getSubjectDAO.asInstanceOf[DefaultSubjectDAO]
+    //    val sessionStorageEvaluator = subjectDAO.getSessionStorageEvaluator.asInstanceOf[DefaultSessionStorageEvaluator]
+    //    sessionStorageEvaluator.setSessionStorageEnabled(false)
     val sessionManager = new DefaultSessionManager()
     sessionManager.setGlobalSessionTimeout(10000L)
     securityManager.setSessionManager(sessionManager)

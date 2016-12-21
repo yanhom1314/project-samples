@@ -3,4 +3,11 @@ name = 姓名
 age = 年龄
 
 #secure
+logout.message=登出系统！
 unauthorized.message=请核对帐号与密码登录！
+unauthorized.timeout=登录会话过期！
+unauthorized.1=1！
+unauthorized.2=2！
+unauthorized.3=3！
+unauthorized.4=4！
+unauthorized.5=5！

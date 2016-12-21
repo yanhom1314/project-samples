@@ -1,14 +1,14 @@
 package controllers
 
+import java.text.SimpleDateFormat
+
 import org.apache.shiro.SecurityUtils
+import play.api.Logger
 import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{Format, Json}
 import play.api.mvc._
 
 trait Secured extends Controller with I18nSupport {
-
-  val SESSION_LOGIN_NAME = "s_login_name"
-  val SESSION_LOGIN_ROLE = "s_role_name"
 
   def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
 
@@ -19,8 +19,13 @@ trait Secured extends Controller with I18nSupport {
 
   def User(request: RequestHeader) = try {
     val subject = SecurityUtils.getSubject
+    val session = subject.getSession
+    session.touch()
+    if (Logger.isErrorEnabled) {
+      val fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+      println(s"id:${session.getId} start:${fmt.format(session.getStartTimestamp)} time:${fmt.format(session.getLastAccessTime)}")
+    }
     if (subject.isAuthenticated) {
-      subject.getSession.touch()
       Some(subject)
     } else None
   } catch {
