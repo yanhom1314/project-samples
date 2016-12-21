@@ -8,12 +8,13 @@ GET         /jqgrid              controllers.DemoController.jqgrid
 GET         /datatables          controllers.DemoController.datatables(draw:Int ?= 0, start:Int ?=0, length:Int ?=0)
 
 #secure
+GET         /login               controllers.Authorize.login
+POST        /login               controllers.Authorize.authenticate
+GET         /logout              controllers.Authorize.logout
+
+#admin
 GET         /admin               controllers.AdminController.admin(name:String ?= "Anonymous")
 GET         /check/:name         controllers.AdminController.check(name:String)
-GET         /home                controllers.Authorize.home
-GET         /login               controllers.Authorize.login
-GET         /logout              controllers.Authorize.logout
-POST        /authenticate        controllers.Authorize.authenticate
 
 # An example controller showing a sample home page
 GET         /home                controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")
@@ -24,7 +25,6 @@ GET         /count               controllers.CountController.count
 # An example controller showing how to write asynchronous code
 GET         /message             controllers.AsyncController.message
 GET         /sayhi               controllers.AsyncController.sayHi
-
 
 # Home page
 GET         /                    controllers.PersonController.index

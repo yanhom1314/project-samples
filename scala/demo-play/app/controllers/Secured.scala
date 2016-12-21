@@ -1,35 +1,22 @@
 package controllers
 
-import java.text.SimpleDateFormat
-
 import org.apache.shiro.SecurityUtils
-import play.api.Logger
+import org.apache.shiro.subject.Subject
 import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{Format, Json}
 import play.api.mvc._
+import shiro.SubjectHashData
 
 trait Secured extends Controller with I18nSupport {
+  val S_USERNAME = "s_username"
 
   def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
 
-  def Name(request: RequestHeader) = User(request) match {
-    case Some(u) => Some(u.getPrincipal.toString)
-    case None => None
-  }
+  def Name(request: RequestHeader): Option[String] = request.session.get(S_USERNAME)
 
-  def User(request: RequestHeader) = try {
-    val subject = SecurityUtils.getSubject
-    val session = subject.getSession
-    session.touch()
-    if (Logger.isErrorEnabled) {
-      val fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-      println(s"id:${session.getId} start:${fmt.format(session.getStartTimestamp)} time:${fmt.format(session.getLastAccessTime)}")
-    }
-    if (subject.isAuthenticated) {
-      Some(subject)
-    } else None
-  } catch {
-    case _: Exception => None
+  def User(request: RequestHeader): Option[Subject] = Name(request).flatMap { un =>
+    //TODO
+    SubjectHashData.get(un)
   }
 
   def OnAuthorize(onAuthorized: Request[AnyContent] => Result)(onUnauthorized: Request[AnyContent] => (Option[SecureProfile], Result)) = Action {

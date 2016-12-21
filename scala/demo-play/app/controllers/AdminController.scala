@@ -3,20 +3,22 @@ package controllers
 import javax.inject.Inject
 
 import org.apache.shiro.realm.Realm
-import play.api.i18n.MessagesApi
+import play.api.i18n.{Messages, MessagesApi}
 
 class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) extends Secured {
   def admin(name: String) = IsAuthenticated {
-    Ok(s"<h1>Hello Secure ${name}!</h1>")
+    implicit request =>
+      User(request).flatMap(obj => Some(Ok(views.html.admin.index(obj.getPrincipal.toString, obj.getPrincipal.toString))))
+        .getOrElse(Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout")))
   }
 
   def check(name: String) = IsRole("ROLE_ADMIN") {
-    Ok(s"<h1>Hello ${name}:[ROLE_ADMIN]</h1>")
+    Redirect(routes.AdminController.admin(name))
   }
 
   def check1(name: String) = HasRole("ROLE_ADMIN") { implicit request =>
-    println(request)
-    Ok(s"<h1>Hello ${name}:[ROLE_ADMIN]</h1>")
+    User(request).flatMap(obj => Some(Ok(views.html.admin.index(obj.getPrincipal.toString, obj.getPrincipal.toString))))
+      .getOrElse(Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout")))
   }
 
   def check2(name: String) = IsRole(parse.json, "ROLE_ADMIN") {
@@ -25,6 +27,7 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) exte
 
   def check3(name: String) = HasRole(parse.json, "ROLE_ADMIN") { implicit request =>
     println(request)
+    Ok(s"<h1>Hello ${name}:[ROLE_ADMIN]</h1>")
     Ok(s"<h1>Hello ${name}:[ROLE_ADMIN]</h1>")
   }
 }
