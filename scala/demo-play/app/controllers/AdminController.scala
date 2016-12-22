@@ -8,6 +8,7 @@ import play.api.mvc.Action
 import security.Secured
 
 class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) extends Secured {
+
   def admin(name: String) = IsAuthenticated {
     implicit request =>
       User(request).flatMap(obj => Some(Ok(views.html.admin.index(obj.getPrincipal.toString, obj.hasRole("ROLE_ADMIN").toString))))

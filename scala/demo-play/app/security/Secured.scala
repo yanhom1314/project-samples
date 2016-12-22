@@ -17,6 +17,17 @@ trait Secured extends Controller with I18nSupport {
 
   def User(request: RequestHeader): Option[Subject] = Name(request).flatMap { un => SubjectHashData.get(un) }
 
+  def OnAuthorize(onAuthorized: Request[AnyContent] => Result)(onUnauthorized: Request[AnyContent] => (Option[SecuredProfile], Result)) = Action {
+    implicit request =>
+      Name(request) match {
+        case Some(_) => onAuthorized(request)
+        case None => onUnauthorized(request) match {
+          case (None, r) => r 
+          case (Some(_), r) => r
+        }
+      }
+  }
+
   def IsAuthenticated(f: => Result) = Security.Authenticated(Name, unauthorized) {
     _ => Action(_ => f)
   }
