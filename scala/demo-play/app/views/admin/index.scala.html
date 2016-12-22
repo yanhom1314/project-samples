@@ -1,11 +1,9 @@
 @(un: String, role: String)(implicit flash: Flash, session: Session, messages: Messages)
 @layout.main("Hello Login!") {
-    <div>
-        <div id="login">
-            <h2>欢迎[@un : @role]登录!</h2>
-            <ul>
-                <li><a href="@routes.AdminController.check("hello_" + System.currentTimeMillis().toString)">测试</a> </li>
-            </ul>
-        </div>
+    <div id="index">
+        <h2>欢迎[@un : @role]登录!</h2>
+        <ul>
+            <li><a href="@routes.AdminController.check("hello_" + System.currentTimeMillis().toString)">测试</a> </li>
+        </ul>
     </div>
 }

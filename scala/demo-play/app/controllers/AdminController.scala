@@ -4,11 +4,13 @@ import javax.inject.Inject
 
 import org.apache.shiro.realm.Realm
 import play.api.i18n.{Messages, MessagesApi}
+import play.api.mvc.Action
+import security.Secured
 
 class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) extends Secured {
   def admin(name: String) = IsAuthenticated {
     implicit request =>
-      User(request).flatMap(obj => Some(Ok(views.html.admin.index(obj.getPrincipal.toString, obj.getPrincipal.toString))))
+      User(request).flatMap(obj => Some(Ok(views.html.admin.index(obj.getPrincipal.toString, obj.hasRole("ROLE_ADMIN").toString))))
         .getOrElse(Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout")))
   }
 
@@ -29,5 +31,9 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) exte
     println(request)
     Ok(s"<h1>Hello ${name}:[ROLE_ADMIN]</h1>")
     Ok(s"<h1>Hello ${name}:[ROLE_ADMIN]</h1>")
+  }
+
+  def info = Action { implicit request =>
+    Ok(views.html.info())
   }
 }

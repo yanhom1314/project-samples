@@ -13,7 +13,9 @@ POST        /login               controllers.Authorize.authenticate
 GET         /logout              controllers.Authorize.logout
 
 #admin
+GET         /info                controllers.AdminController.info
 GET         /admin               controllers.AdminController.admin(name:String ?= "Anonymous")
+
 GET         /check/:name         controllers.AdminController.check(name:String)
 
 # An example controller showing a sample home page

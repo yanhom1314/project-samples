@@ -1,34 +1,21 @@
-package controllers
+package security
 
+import controllers.routes
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.subject.Subject
 import play.api.i18n.{I18nSupport, Messages}
-import play.api.libs.json.{Format, Json}
 import play.api.mvc._
 import shiro.SubjectHashData
 
 trait Secured extends Controller with I18nSupport {
-  val S_USERNAME = "s_username"
+
+  import SecuredProfile._
 
   def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
 
   def Name(request: RequestHeader): Option[String] = request.session.get(S_USERNAME)
 
-  def User(request: RequestHeader): Option[Subject] = Name(request).flatMap { un =>
-    //TODO
-    SubjectHashData.get(un)
-  }
-
-  def OnAuthorize(onAuthorized: Request[AnyContent] => Result)(onUnauthorized: Request[AnyContent] => (Option[SecureProfile], Result)) = Action {
-    implicit request =>
-      Name(request) match {
-        case Some(_) => onAuthorized(request)
-        case None => onUnauthorized(request) match {
-          case (None, r) => r
-          case (Some(_), r) => r
-        }
-      }
-  }
+  def User(request: RequestHeader): Option[Subject] = Name(request).flatMap { un => SubjectHashData.get(un) }
 
   def IsAuthenticated(f: => Result) = Security.Authenticated(Name, unauthorized) {
     _ => Action(_ => f)
@@ -79,8 +66,6 @@ trait Secured extends Controller with I18nSupport {
   }
 }
 
-case class SecureProfile(name: String, roles: Iterable[String] = Seq[String]())
 
-object SecureProfile {
-  implicit val format: Format[SecureProfile] = Json.format[SecureProfile]
-}
+
+

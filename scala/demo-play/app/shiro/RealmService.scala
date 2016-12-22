@@ -48,7 +48,6 @@ case class RealmService @Inject()(counter: Counter, userRepo: TUserRepository) e
     //TODO
 
     //    val user = loginUserRepository.findByUsername(username)
-    //    val user = loginUserRepository.findByUsername(username)
     //    if (user != null && user.password.equalsIgnoreCase(password)) {
     //      val info = new SimpleAuthenticationInfo(username, password, getName)
     //      info

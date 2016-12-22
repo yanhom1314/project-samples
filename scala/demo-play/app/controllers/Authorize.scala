@@ -11,12 +11,10 @@ import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc._
+import security.{Secured, SecuredProfile}
 import shiro.SubjectHashData
 
 class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) extends Secured with CookieLang {
-  val SESSION_LOGIN_NAME = "s_login_name"
-  val SESSION_LOGIN_ROLE = "s_role_name"
-
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,
@@ -28,7 +26,7 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
   def login = Action {
     implicit request =>
       Name(request) match {
-        case Some(username) => Redirect(routes.AdminController.admin(username)).withSession(SESSION_LOGIN_NAME -> username, SESSION_LOGIN_ROLE -> username)
+        case Some(username) => Redirect(routes.AdminController.admin(username))
         case None => Ok(views.html.login(loginForm))
       }
   }
@@ -49,7 +47,7 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
             cu = SecurityUtils.getSubject
             cu.login(token)
             SubjectHashData.save(username, cu)
-            Redirect(routes.AdminController.admin(username)).withSession(SESSION_LOGIN_NAME -> username, SESSION_LOGIN_ROLE -> username)
+            Redirect(routes.AdminController.admin(username)).withSession(SecuredProfile.S_USERNAME -> username)
           } catch {
             case e: Exception =>
               e.printStackTrace()
