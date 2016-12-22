@@ -13,7 +13,7 @@ trait Secured extends Controller with I18nSupport {
 
   def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
 
-  def Name(request: RequestHeader): Option[String] = request.session.get(S_USERNAME)
+  def Name(request: RequestHeader): Option[String] = request.session.get(S_USERNAME).filter(un => SubjectHashData.get(un).isDefined)
 
   def User(request: RequestHeader): Option[Subject] = Name(request).flatMap { un => SubjectHashData.get(un) }
 
@@ -28,11 +28,11 @@ trait Secured extends Controller with I18nSupport {
       }
   }
 
-  def IsAuthenticated(f: => Result) = Security.Authenticated(Name, unauthorized) {
+  def IsAuthenticated(f: => Result) = Security.Authenticated(User, unauthorized) {
     _ => Action(_ => f)
   }
 
-  def IsAuthenticated(f: Request[AnyContent] => Result) = Security.Authenticated(Name, unauthorized) {
+  def IsAuthenticated(f: Request[AnyContent] => Result) = Security.Authenticated(User, unauthorized) {
     _ => Action(implicit request => f(request))
   }
 
