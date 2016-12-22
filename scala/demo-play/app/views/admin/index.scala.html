@@ -3,7 +3,21 @@
     <div id="index">
         <h2>欢迎[@un : @role]登录!</h2>
         <ul>
-            <li><a href="@routes.AdminController.check("hello_" + System.currentTimeMillis().toString)">测试</a> </li>
+            <li><a href="@routes.AdminController.check(un + "_" + System.currentTimeMillis().toString)">Check</a> </li>
+            <li><a href="@routes.AdminController.check1(un + "_" + System.currentTimeMillis().toString)">Check1</a> </li>
+            <li>
+                <form id="form_1" action="@routes.AdminController.check2" method="post">
+                    <input name="un" value=""/>
+                    <button id="bt_1" type="button" class="button">提交</button>
+                </form>
+            </li>
+            <li>
+                <form id="form_2" action="@routes.AdminController.check3" method="post">
+                    <input name="un" value=""/>
+                    <button id="bt_2" type="button" class="button">提交</button>
+                </form>
+            </li>
         </ul>
     </div>
+    <script src="@routes.Assets.versioned("javascripts/app3.min.js")"></script>
 }

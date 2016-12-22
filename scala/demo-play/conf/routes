@@ -17,6 +17,9 @@ GET         /info                controllers.AdminController.info
 GET         /admin               controllers.AdminController.admin(name:String ?= "Anonymous")
 
 GET         /check/:name         controllers.AdminController.check(name:String)
+GET         /check1/:name        controllers.AdminController.check1(name:String)
+POST        /check2              controllers.AdminController.check2
+POST        /check3              controllers.AdminController.check3
 
 # An example controller showing a sample home page
 GET         /home                controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")

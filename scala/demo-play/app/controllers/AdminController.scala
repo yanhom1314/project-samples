@@ -11,8 +11,7 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) exte
 
   def admin(name: String) = IsAuthenticated {
     implicit request =>
-      User(request).flatMap(obj => Some(Ok(views.html.admin.index(obj.getPrincipal.toString, obj.hasRole("ROLE_ADMIN").toString))))
-        .getOrElse(Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout")))
+      User(request).fold(Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout"))) { o => Ok(views.html.admin.index(o.getPrincipal.toString, o.hasRole("ROLE_ADMIN").toString)) }
   }
 
   def check(name: String) = IsRole("ROLE_ADMIN") {
@@ -20,21 +19,22 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) exte
   }
 
   def check1(name: String) = HasRole("ROLE_ADMIN") { implicit request =>
-    User(request).flatMap(obj => Some(Ok(views.html.admin.index(obj.getPrincipal.toString, obj.getPrincipal.toString))))
-      .getOrElse(Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout")))
-  }
-
-  def check2(name: String) = IsRole(parse.json, "ROLE_ADMIN") {
-    Ok(s"<h1>Hello ${name}:[ROLE_ADMIN]</h1>")
-  }
-
-  def check3(name: String) = HasRole(parse.json, "ROLE_ADMIN") { implicit request =>
     println(request)
-    Ok(s"<h1>Hello ${name}:[ROLE_ADMIN]</h1>")
-    Ok(s"<h1>Hello ${name}:[ROLE_ADMIN]</h1>")
+    Ok(s"<h1>Hello1 ${name}:[ROLE_ADMIN]</h1>")
+  }
+
+  def check2 = IsRole(parse.json, "ROLE_ADMIN") { body =>
+    val un = (body \ "un").as[String]
+    Ok(s"<h1>Hello2 ${un}:${body.toString()}:[ROLE_ADMIN]</h1>")
+  }
+
+  def check3 = HasRole(parse.json, "ROLE_ADMIN") { implicit request =>
+    val body = request.body
+    val un = (body \ "un").as[String]
+    Ok(s"<h1>Hello3 ${un}:${body.toString()}:[ROLE_ADMIN]</h1>")
   }
 
   def info = Action { implicit request =>
-    Ok(views.html.info())
+    Ok(views.html.info(request.session.data))
   }
 }

@@ -14,11 +14,12 @@ module.exports = {
     ],
     entry: {
         app1: './public/javascripts/dev/app1.js',
-        app2: './public/javascripts/dev/app2.js'
+        app2: './public/javascripts/dev/app2.js',
+        app3: './public/javascripts/dev/app3.js'
     },
     output: {
         path: './public/javascripts',
-        filename: '[name].min.js',
+        filename: '[name].min.js'
     },
     module: {
         loaders: [
