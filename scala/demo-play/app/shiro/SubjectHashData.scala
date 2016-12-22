@@ -25,6 +25,7 @@ object SubjectHashData {
   }
 
   def get(un: String): Option[Subject] = {
+    println(s"un:${un} ${cache.get(un).hasRole("ROLE_ADMIN")}")
     if (cache.containsKey(un)) Some(cache.get(un)) else None
   }
 }

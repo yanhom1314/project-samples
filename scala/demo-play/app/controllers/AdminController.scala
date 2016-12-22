@@ -37,4 +37,10 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) exte
   def info = Action { implicit request =>
     Ok(views.html.info(request.session.data))
   }
+
+  def json = Action(parse.json) { implicit request =>
+    val body = request.body
+    val un = (body \ "un").as[String]
+    Ok(s"un:${un} name:${Name(request)} body:${body}")
+  }
 }

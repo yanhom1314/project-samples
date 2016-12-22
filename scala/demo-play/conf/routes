@@ -20,6 +20,7 @@ GET         /check/:name         controllers.AdminController.check(name:String)
 GET         /check1/:name        controllers.AdminController.check1(name:String)
 POST        /check2              controllers.AdminController.check2
 POST        /check3              controllers.AdminController.check3
+POST        /json                controllers.AdminController.json
 
 # An example controller showing a sample home page
 GET         /home                controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")
