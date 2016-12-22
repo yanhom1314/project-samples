@@ -22,7 +22,7 @@ trait Secured extends Controller with I18nSupport {
       Name(request) match {
         case Some(_) => onAuthorized(request)
         case None => onUnauthorized(request) match {
-          case (None, r) => r 
+          case (None, r) => r
           case (Some(_), r) => r
         }
       }

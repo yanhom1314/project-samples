@@ -12,6 +12,7 @@ object SubjectHashData {
   val cache = new ConcurrentHashMap[String, Subject]()
 
   def save(un: String, subject: Subject) = {
+    if (cache.containsKey(un)) cache.remove(un)
     cache.put(un, subject)
   }
 
