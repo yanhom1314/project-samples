@@ -4,8 +4,9 @@ import javax.inject.Inject
 
 import org.apache.shiro.realm.Realm
 import play.api.i18n.{Messages, MessagesApi}
+import play.api.libs.json.Json
 import play.api.mvc.Action
-import security.Secured
+import security.{Secured, SecuredProfile}
 
 class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) extends Secured {
 
@@ -25,13 +26,15 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) exte
 
   def check2 = IsRole(parse.json, "ROLE_ADMIN") { body =>
     val un = (body \ "un").as[String]
-    Ok(s"<h1>Hello2 ${un}:${body.toString()}:[ROLE_ADMIN]</h1>")
+    val profile = SecuredProfile(un, Seq("ROLE_ADMIN "))
+    Ok(Json.toJson(profile))
   }
 
   def check3 = HasRole(parse.json, "ROLE_ADMIN") { implicit request =>
     val body = request.body
     val un = (body \ "un").as[String]
-    Ok(s"<h1>Hello3 ${un}:${body.toString()}:[ROLE_ADMIN]</h1>")
+    val profile = SecuredProfile(un, Seq("ROLE_ADMIN "))
+    Ok(Json.toJson(profile))
   }
 
   def info = Action { implicit request =>
