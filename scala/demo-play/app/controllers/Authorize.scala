@@ -49,9 +49,7 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
             SubjectHashData.save(username, cu)
             Redirect(routes.AdminController.admin(username)).withSession(SecuredProfile.S_USERNAME -> username)
           } catch {
-            case e: Exception =>
-              e.printStackTrace()
-              Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout"))
+            case _: Exception => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
           }
         }
       )

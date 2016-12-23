@@ -25,10 +25,6 @@ class ShiroModule extends AbstractModule {
     val sessionStorageEvaluator = subjectDAO.getSessionStorageEvaluator.asInstanceOf[DefaultSessionStorageEvaluator]
     sessionStorageEvaluator.setSessionStorageEnabled(false)
 
-//    val sessionManager = new DefaultSessionManager()
-//    sessionManager.setGlobalSessionTimeout(20000L)
-//    securityManager.setSessionManager(sessionManager)
-
     SecurityUtils.setSecurityManager(securityManager)
     realm
   }

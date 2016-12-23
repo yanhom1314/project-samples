@@ -27,7 +27,8 @@ $(function () {
 
         alert(JSON.stringify(f1.serializeObject()));
         $.ajax({
-            url: "/demo/json",
+            //url: "/demo/json",
+            url: f1.attr("action"),
             type: "POST",
             dataType: "json",
             contentType: 'application/json',
@@ -51,6 +52,13 @@ $(function () {
             success: function (data) {
                 alert(data);
             }
+        });
+    });
+
+    $("#bt_3").click(function () {
+        var f3 = $("#form_3");
+        $.get("/demo/check/" + f3.serializeObject().name, function (d) {
+            alert(d);
         });
     });
 });

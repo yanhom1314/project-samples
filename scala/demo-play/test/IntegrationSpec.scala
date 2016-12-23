@@ -1,24 +1,25 @@
-import org.specs2.mutable._
-import org.specs2.runner._
-import org.junit.runner._
 
-import play.api.test._
-import play.api.test.Helpers._
+import org.junit.runner.RunWith
+import org.scalatest._
+import org.scalatest.junit.JUnitRunner
 
-/**
- * add your integration spec here.
- * An integration test will fire up a whole play application in a real (or headless) browser
- */
+import scala.collection.mutable
+
 @RunWith(classOf[JUnitRunner])
-class IntegrationSpec extends Specification {
+class IntegrationSpec extends FlatSpec with Matchers {
 
-  "Application" should {
+  "A Stack" should "pop values in last-in-first-out order" in {
+    val stack = new mutable.Stack[Int]
+    stack.push(1)
+    stack.push(2)
+    stack.pop() should be(2)
+    stack.pop() should be(1)
+  }
 
-    "work from within a browser" in new WithBrowser {
-
-      browser.goTo("http://localhost:" + port)
-
-      browser.pageSource must contain("Add Person")
+  it should "throw NoSuchElementException if an empty stack is popped" in {
+    val emptyStack = new mutable.Stack[Int]
+    a[NoSuchElementException] should be thrownBy {
+      emptyStack.pop()
     }
   }
 }
