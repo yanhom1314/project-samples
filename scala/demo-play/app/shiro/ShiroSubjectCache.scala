@@ -12,7 +12,7 @@ import scala.concurrent.duration._
   * can use like Redis Or PostgreSQL Database System save the info.
   */
 @Singleton
-class SubjectHashData @Inject()(conf: Configuration, cache: CacheApi) {
+class ShiroSubjectCache @Inject()(conf: Configuration, cache: CacheApi) {
   val time_out = conf.getLong("play.http.session.maxAge").getOrElse(300000L)
 
   def save(un: String, subject: Subject) = {

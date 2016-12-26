@@ -11,9 +11,9 @@ import play.api.data.Forms.{mapping, _}
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc._
 import security.{Secured, SecuredProfile}
-import shiro.SubjectHashData
+import shiro.ShiroSubjectCache
 
-class Authorize @Inject()(val messagesApi: MessagesApi, val data: SubjectHashData) extends Secured with CookieLang {
+class Authorize @Inject()(val messagesApi: MessagesApi, val secureData: ShiroSubjectCache) extends Secured with CookieLang {
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,
@@ -45,7 +45,7 @@ class Authorize @Inject()(val messagesApi: MessagesApi, val data: SubjectHashDat
 
             cu = SecurityUtils.getSubject
             cu.login(token)
-            data.save(username, cu)
+            secureData.save(username, cu)
             Redirect(routes.AdminController.admin(username)).withSession(SecuredProfile.S_USERNAME -> username)
           } catch {
             case _: Exception => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
@@ -56,7 +56,7 @@ class Authorize @Inject()(val messagesApi: MessagesApi, val data: SubjectHashDat
   }
 
   def logout = Action { implicit request =>
-    Name(request).foreach(un => data.logout(un))
+    Name(request).foreach(un => secureData.logout(un))
     Redirect(routes.Authorize.login()).withNewSession.flashing("success" -> Messages("logout.message"))
   }
 }

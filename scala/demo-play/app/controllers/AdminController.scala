@@ -7,9 +7,9 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import security.{Secured, SecuredProfile}
-import shiro.SubjectHashData
+import shiro.ShiroSubjectCache
 
-class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi, val data: SubjectHashData) extends Secured {
+class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi, val secureData: ShiroSubjectCache) extends Secured {
 
   def admin(name: String) = IsAuthenticated {
     implicit request =>
