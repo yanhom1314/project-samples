@@ -7,8 +7,9 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.libs.json.Json
 import play.api.mvc.Action
 import security.{Secured, SecuredProfile}
+import shiro.SubjectHashData
 
-class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) extends Secured {
+class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi, val data: SubjectHashData) extends Secured {
 
   def admin(name: String) = IsAuthenticated {
     implicit request =>
@@ -16,12 +17,12 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) exte
   }
 
   def check(name: String) = IsRole(name) {
-    Ok(s"ROLE:${name} is OK.")
+    Ok(s"<h1>ROLE:${name} is OK.</h1>")
   }
 
   def check1(name: String) = HasRole(name) { implicit request =>
     println(request)
-    Ok(s"<h1>Hello1 ${name}:[ROLE_ADMIN]</h1>")
+    Ok(s"<h1>Hello ROLE:[${name}]</h1>")
   }
 
   def check2 = IsRole(parse.json, "ROLE_ADMIN") { body =>
@@ -38,7 +39,7 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi) exte
   }
 
   def info = Action { implicit request =>
-    Ok(views.html.info(request.session.data))
+    User(request).fold(Forbidden("Nothing"))(s => Ok(views.html.info(request.session.data, s)))
   }
 
   def json = Action(parse.json) { implicit request =>

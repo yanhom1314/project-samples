@@ -1,30 +1,30 @@
 package shiro
 
-import java.util.concurrent.ConcurrentHashMap
+import javax.inject.{Inject, Singleton}
 
 import org.apache.shiro.subject.Subject
+import play.api.Configuration
+import play.api.cache.CacheApi
+
+import scala.concurrent.duration._
 
 /**
   * can use like Redis Or PostgreSQL Database System save the info.
   */
-object SubjectHashData {
-
-  val cache = new ConcurrentHashMap[String, Subject]()
+@Singleton
+class SubjectHashData @Inject()(conf: Configuration, cache: CacheApi) {
+  val time_out = conf.getLong("play.http.session.maxAge").getOrElse(300000L)
 
   def save(un: String, subject: Subject) = {
-    if (cache.containsKey(un)) cache.remove(un)
-    cache.put(un, subject)
+    cache.set(un, subject, time_out.milliseconds)
   }
 
   def logout(un: String) = {
-    if (cache.containsKey(un)) {
-      val subject = cache.get(un)
-      cache.remove(un)
-      subject.logout()
-    }
+    cache.get[Subject](un).foreach(sub => sub.logout())
+    cache.remove(un)
   }
 
   def get(un: String): Option[Subject] = {
-    if (cache.containsKey(un)) Some(cache.get(un)) else None
+    cache.get[Subject](un)
   }
 }

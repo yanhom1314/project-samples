@@ -4,19 +4,20 @@ import controllers.routes
 import org.apache.shiro.subject.Subject
 import play.api.i18n.{I18nSupport, Messages}
 import play.api.mvc._
+import security.SecuredProfile.S_USERNAME
 import shiro.SubjectHashData
 
 trait Secured extends Controller with I18nSupport {
 
-  import SecuredProfile._
+  def data: SubjectHashData
 
   def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
 
   def Role(subject: Subject, roles: String*): Boolean = roles.exists(subject.hasRole(_))
 
-  def Name(request: RequestHeader): Option[String] = request.session.get(S_USERNAME).filter(un => SubjectHashData.get(un).isDefined)
+  def Name(request: RequestHeader): Option[String] = request.session.get(S_USERNAME).filter(un => data.get(un).isDefined)
 
-  def User(request: RequestHeader): Option[Subject] = Name(request).flatMap { un => SubjectHashData.get(un) }
+  def User(request: RequestHeader): Option[Subject] = Name(request).flatMap { un => data.get(un) }
 
   def IsAuthenticated(f: => Result) = Security.Authenticated(User, unauthorized) {
     _ => Action(_ => f)

@@ -1,9 +1,10 @@
-@(data: Map[String, String])(implicit flash: Flash, session: Session, messages: Messages)
-@import shiro.SubjectHashData
+@import org.apache.shiro.subject.Subject
+@(data: Map[String, String], subject: Subject)(implicit flash: Flash, session: Session, messages: Messages)
 
 @layout.main("Hello Login!") {
     <div>
         <h2>session:@data</h2>
-        <h2>subject:@SubjectHashData.cache</h2>
+        <h2>subject:@subject</h2>
+        <h2>username:@subject.getPrincipal.toString</h2>
     </div>
 }

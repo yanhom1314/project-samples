@@ -6,7 +6,6 @@ import models.Login
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc._
 import org.apache.shiro.subject.Subject
-import play.api.Configuration
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
 import play.api.i18n.{Messages, MessagesApi}
@@ -14,7 +13,7 @@ import play.api.mvc._
 import security.{Secured, SecuredProfile}
 import shiro.SubjectHashData
 
-class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) extends Secured with CookieLang {
+class Authorize @Inject()(val messagesApi: MessagesApi, val data: SubjectHashData) extends Secured with CookieLang {
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,
@@ -46,7 +45,7 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
 
             cu = SecurityUtils.getSubject
             cu.login(token)
-            SubjectHashData.save(username, cu)
+            data.save(username, cu)
             Redirect(routes.AdminController.admin(username)).withSession(SecuredProfile.S_USERNAME -> username)
           } catch {
             case _: Exception => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
@@ -57,7 +56,7 @@ class Authorize @Inject()(conf: Configuration, val messagesApi: MessagesApi) ext
   }
 
   def logout = Action { implicit request =>
-    Name(request).foreach(un => SubjectHashData.logout(un))
+    Name(request).foreach(un => data.logout(un))
     Redirect(routes.Authorize.login()).withNewSession.flashing("success" -> Messages("logout.message"))
   }
 }
