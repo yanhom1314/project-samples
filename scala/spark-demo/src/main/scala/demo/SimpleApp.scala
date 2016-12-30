@@ -26,8 +26,6 @@ object SimpleApp extends App {
     }
   }
   else sys.error(s"Usage:./spark-submit --class demo.SimpleApp x.y.z.jar [/path/file]")
-
-
 }
 
 trait ArrayStringOrdering extends Ordering[Array[String]] {

@@ -12,7 +12,8 @@ object StreamingApp extends App {
   val conf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")
   val ssc = new StreamingContext(conf, Seconds(60))
 
-  val lines = ssc.socketTextStream(hostname, port)
+  //val lines = ssc.socketTextStream(hostname, port)
+  val lines = ssc.textFileStream("/tmp/file")
 
   val words = lines.flatMap(_.split(" "))
 
@@ -21,6 +22,7 @@ object StreamingApp extends App {
 
   // Print the first ten elements of each RDD generated in this DStream to the console
   //wordCounts.print()
+  wordCounts.print()
   wordCounts.saveAsTextFiles("file:///tmp/test", "hello")
 
   ssc.start() // Start the computation
