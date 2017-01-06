@@ -5,6 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object SimpleApp extends App {
 
   final val split_str = """|"""
+  final val ip = "106.59.58.20"
 
   implicit object ArrayString extends ArrayStringOrdering
 
@@ -27,6 +28,9 @@ object SimpleApp extends App {
         case e => println(s"ERROR:$e")
       }
     }
+
+    val ip_m = logData.filter(_.contains(ip)).map(_ => ip -> 1)
+    ip_m.reduceByKey(_ + _).saveAsTextFile("file:/tmp/test_result")
   }
   else sys.error(s"Usage:./spark-submit --master spark://172.16.9.43:7707 --class demo.SimpleApp x.y.z.jar [/path/file]")
 }

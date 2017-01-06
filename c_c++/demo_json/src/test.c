@@ -60,7 +60,7 @@ void dofile(char *filename) {
 struct record {
     const char *precision;
     double lat, lon;
-    const char *address, *city, *state, *zip, *country;
+    const char *address, *city, *state, *zip, *country, *code;
 };
 
 /* Create a bunch of objects as demonstration. */
@@ -78,8 +78,8 @@ void create_objects() {
     int ids[4] = {116, 943, 234, 38793};
     /* Our array of "records": */
     struct record fields[2] = {
-            {"zip", 37.7668,   -1.223959e+2, "", "SAN FRANCISCO", "CA", "94107", "US"},
-            {"zip", 37.371991, -1.22026e+2,  "", "SUNNYVALE",     "CA", "94085", "US"}};
+            {"zip", 37.7668,   -1.223959e+2, "", "SAN FRANCISCO", "CA", "94107", "US","100011"},
+            {"zip", 37.371991, -1.22026e+2,  "", "SUNNYVALE",     "CA", "94085", "US","100012"}};
 
     /* Here we construct some JSON standards, from the JSON site. */
 
@@ -148,6 +148,7 @@ void create_objects() {
         cJSON_AddStringToObject(fld, "State", fields[i].state);
         cJSON_AddStringToObject(fld, "Zip", fields[i].zip);
         cJSON_AddStringToObject(fld, "Country", fields[i].country);
+        cJSON_AddStringToObject(fld, "Code", fields[i].code);
     }
 
 /*	cJSON_ReplaceItemInObject(cJSON_GetArrayItem(root,1),"City",cJSON_CreateIntArray(ids,4)); */
@@ -165,7 +166,7 @@ int main(int argc, const char *argv[]) {
     char text2[] = "[\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"]";
     char text3[] = "[\n    [0, -1, 0],\n    [1, 0, 0],\n    [0, 0, 1]\n	]\n";
     char text4[] = "{\n		\"Image\": {\n			\"Width\":  800,\n			\"Height\": 600,\n			\"Title\":  \"View from 15th Floor\",\n			\"Thumbnail\": {\n				\"Url\":    \"http:/*www.example.com/image/481989943\",\n				\"Height\": 125,\n				\"Width\":  \"100\"\n			},\n			\"IDs\": [116, 943, 234, 38793]\n		}\n	}";
-    char text5[] = "[\n	 {\n	 \"precision\": \"zip\",\n	 \"Latitude\":  37.7668,\n	 \"Longitude\": -122.3959,\n	 \"Address\":   \"\",\n	 \"City\":      \"SAN FRANCISCO\",\n	 \"State\":     \"CA\",\n	 \"Zip\":       \"94107\",\n	 \"Country\":   \"US\"\n	 },\n	 {\n	 \"precision\": \"zip\",\n	 \"Latitude\":  37.371991,\n	 \"Longitude\": -122.026020,\n	 \"Address\":   \"\",\n	 \"City\":      \"SUNNYVALE\",\n	 \"State\":     \"CA\",\n	 \"Zip\":       \"94085\",\n	 \"Country\":   \"US\"\n	 }\n	 ]";
+    char text5[] = "[\n	 {\n	 \"precision\": \"zip\",\n	 \"Latitude\":  37.7668,\n	 \"Longitude\": -122.3959,\n	 \"Address\":   \"\",\n	 \"City\":      \"SAN FRANCISCO\",\n	 \"State\":     \"CA\",\n	 \"Zip\":       \"94107\",\n	 \"Country\":   \"US\"\n	 },\n	 {\n	 \"precision\": \"zip\",\n	 \"Latitude\":  37.371991,\n	 \"Longitude\": -122.026020,\n	 \"Address\":   \"\",\n	 \"City\":      \"SUNNYVALE\",\n	 \"State\":     \"CA\",\n	 \"Zip\":       \"94085\",\n	 \"Country\":   \"US\",\n \"Code\",\"10010\"\n	 }\n	 ]";
 
     /* Process each json textblock by parsing, then rebuilding: */
     doit(text1);
