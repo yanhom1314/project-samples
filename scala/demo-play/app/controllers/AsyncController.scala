@@ -3,6 +3,7 @@ package controllers
 import javax.inject._
 
 import akka.actor.ActorSystem
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import play.twirl.api.Html
 
@@ -20,7 +21,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
   *                    asynchronous code.
   */
 @Singleton
-class AsyncController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller {
+class AsyncController @Inject()(actorSystem: ActorSystem, val messagesApi: MessagesApi)(implicit exec: ExecutionContext) extends Controller with I18nSupport {
 
   /**
     * Create an Action that returns a plain text message after a delay
@@ -34,9 +35,7 @@ class AsyncController @Inject()(actorSystem: ActorSystem)(implicit exec: Executi
     getFutureMessage(1.second).map { msg => Ok(msg) }
   }
 
-  def sayHi = Action.async {
-    getFutureHtml(4.second).map(r => Ok(r))
-  }
+  def sayHi = Action.async { implicit request => getFutureHtml(4.second).map(r => Ok(r)) }
 
   private def getFutureMessage(delayTime: FiniteDuration): Future[String] = {
     val promise: Promise[String] = Promise[String]()
@@ -46,7 +45,7 @@ class AsyncController @Inject()(actorSystem: ActorSystem)(implicit exec: Executi
     promise.future
   }
 
-  private def getFutureHtml(delayTime: FiniteDuration): Future[Html] = {
+  private def getFutureHtml(delayTime: FiniteDuration)(implicit request: RequestHeader): Future[Html] = {
     val promise: Promise[Html] = Promise[Html]()
     val start = System.currentTimeMillis()
     actorSystem.scheduler.scheduleOnce(delayTime) {

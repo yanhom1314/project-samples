@@ -7,6 +7,8 @@ require("datatables");
 
 require("main-css");
 
+var add = require('math').add;
+
 window.onload = function () {        
     $.get('/demo/persons', function (data) {
         $.each(data, function (i, d) {

@@ -9,7 +9,7 @@ scalaVersion := $("scalaVersion")
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 libraryDependencies ++= Seq(
-  jdbc,
+  //jdbc,
   cache,
   ws,
   "org.apache.shiro" % "shiro-core" % $("shiro"),

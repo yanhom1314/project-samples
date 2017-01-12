@@ -13,7 +13,7 @@ import scala.concurrent.duration._
   */
 @Singleton
 class ShiroSubjectCache @Inject()(conf: Configuration, cache: CacheApi) {
-  val time_out = conf.getLong("play.http.session.maxAge").getOrElse(300000L)
+  val time_out = conf.getLong("play.http.session.maxAge").getOrElse(30000L)
 
   def save(un: String, subject: Subject) = {
     cache.set(un, subject, time_out.milliseconds)

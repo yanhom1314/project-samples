@@ -31,21 +31,21 @@ trait Secured extends Controller with I18nSupport {
     _ => Action(parser)(implicit request => f(request))
   }
 
-  def IsRole(members: String*)(f: => Result) = Security.Authenticated(User, unauthorized) {
-    subject =>
+  def IsRole(members: String*)(f: => Result) = Action {
+    implicit request =>
       try {
-        if (Role(subject, members: _*)) Action(f) else Action(Results.Forbidden)
+        if (User(request).exists(subject => Role(subject, members: _*))) f else Results.Forbidden
       } catch {
-        case _: Exception => Action(unauthorized(_))
+        case _: Exception => unauthorized(request)
       }
   }
 
-  def HasRole(members: String*)(f: Request[AnyContent] => Result) = Security.Authenticated(User, unauthorized) {
-    subject =>
+  def HasRole(members: String*)(f: Request[AnyContent] => Result) = Action {
+    implicit request =>
       try {
-        if (Role(subject, members: _*)) Action(implicit request => f(request)) else Action(Results.Forbidden)
+        if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
       } catch {
-        case _: Exception => Action(implicit request => unauthorized(request))
+        case _: Exception => unauthorized(request)
       }
   }
 
