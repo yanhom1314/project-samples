@@ -1,10 +1,5 @@
 var $ = jQuery = require("jquery");
 
-require("bootstrap-css");
-require("main-css");
-
-var add = require('math').add;
-
 $(function () {
     $("#bt_1").click(function () {
         $.jsonSubmit("form_1", function (data) {

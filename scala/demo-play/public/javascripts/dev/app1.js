@@ -1,14 +1,14 @@
 var $ = jQuery = require("jquery");
 
-require("bootstrap-css");
-//require("jquery-ui");
+//css can use cdn(recommend)
+//require("bootstrap-css");
 //require("jquery-ui-css");
+//require("free-jqgrid-css");
+//require("main-css");
 
-require("free-jqgrid-css");
+require("jquery-ui");
 require("free-jqgrid-locale-cn");
 require("free-jqgrid");
-
-require("main-css");
 
 var add = require('math').add;
 

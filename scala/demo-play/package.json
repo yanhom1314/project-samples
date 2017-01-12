@@ -16,7 +16,7 @@
     "css-loader": "^0.23.1",
     "datatables": "^1.10.12",
     "file-loader": "^0.8.5",
-    "free-jqgrid": "^4.13.4",
+    "free-jqgrid": "^4.13.6",
     "jquery": "^3.0.0",
     "jquery-ui": "^1.12.1",
     "jsgrid": "^1.5.2",

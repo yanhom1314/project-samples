@@ -1,13 +1,8 @@
 var $ = jQuery = require('jquery');
 
-require("bootstrap-css");
+//require("datatables-css");
 
-require("datatables-css");
 require("datatables");
-
-require("main-css");
-
-var add = require('math').add;
 
 window.onload = function () {        
     $.get('/demo/persons', function (data) {

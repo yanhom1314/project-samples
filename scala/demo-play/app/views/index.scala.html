@@ -3,7 +3,9 @@
 @import helper._
 
 @layout.main("Welcome to Play") {
+
     <script src="@routes.Assets.versioned("javascripts/app2.min.js")"></script>
+
     <ul id="persons"></ul>
     @form(routes.PersonController.addPerson) {
         <div class="ui icon input">
