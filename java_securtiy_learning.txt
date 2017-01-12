@@ -1,0 +1,98 @@
+安全技术
+基于信息安全的考虑，在一些场景我们需要对信息的传输，访问、认证等进行控制，而加密技术是安全范畴之内非常重要的内容。
+
+加密
+加密的目的是防止信息在传输过程中被第三者访问或者篡改等。
+
+加密技术是其它安全服务技术的基础，其他安全穿插使用相当广泛。所以在学习软件安全技术之前了解各种加密技术是相当重要的。
+
+比如场景：
+
+A传输o信息给B，A同时将o信息的MD5消息od摘要传给B，这时候B将受到o信息进行MD5消息摘要后与od比较，发现一致，则o信息在传输过程中没有丢失，内容时完整的。
+
+消息摘要
+MD5：是MD4的一个更安全的版本，同时速度更快。也产生128位的摘要值。
+SHA：安全哈希算法，产生一个160位的摘要值。 
+SHA-1：在克服SHA的一些缺陷基础上形成的哈希算法。
+SHA-256、SHA-383和SHA-512提供更长的指纹，大小分别是256位、383位和512位。
+MAC：消息认证码，使用秘密密钥和消息摘要算法来创建消息摘要。 
+
+如MD5和SHA这种消息摘要算法只能保证信息传输的完整性，但是无法防止信息被篡改。
+而消息摘要认证算法就可以验证信息的完整性与不被篡改性。
+String text="消息正文";
+//md5消息摘要
+MessageDigest md5=MessageDigest.getInstance("md5");
+md5.update(text.getBytes();
+byte[] od=md5.digest();
+
+问题：A在向B传输o信息与od消息摘要时被某打酱油的C截取了，C修改o信息为oc信息，od消息摘要为ocd消息摘要传给B，B对od信息与ocd消息摘要进行校验，发现内容是完整的，但是信息已经被修改了。
+这种情况消息摘要认证就有用武之地了，
+A,B共同持有相同的密钥，A将o消息与om消息摘要认证传输给B，这时即使被C截取到，由于C不知道A,B持有的密钥，不能对篡改后的信息计算出正确消息摘要认证码，所以B可以判断信息的完整性与是否被篡改。
+
+//mac消息摘要认证
+KeyGenerator kg = KeyGenerator.getInstance("HmacMD5");
+//A,B共同持有key；
+SecretKey key = kg.generateKey();
+
+//消息摘要认证
+Mac mac = Mac.getInstance("HmacMD5");
+mac.init(key);
+mac.update(plainText.getBytes());
+byte[] om=mac.doFinal()
+
+
+问题：C这个打酱油的截取了o信息，虽然他不能篡改了，但是丫看到内容了，这如果个工资单，亦或者是中石化的茅台采购发票，丫发到天涯还得了~~SO，继续~~
+
+对称加密
+A与B拥有相同的密钥，A将需要共享的信息加密后的密文传输给B，这个时候C截取到也没鸟用了，不知道密钥，不知道密文的真实内容，闹心吧。
+
+BASE64Encoder be = new BASE64Encoder();
+BASE64Decoder bd = new BASE64Decoder();
+//			KeyGenerator kg = KeyGenerator.getInstance("DES");
+//			SecretKey key = kg.generateKey();
+//			String keyStr = be.encode(key.getEncode());
+//上面的代码是使用key，下面的代码使用已存在的key
+String keyStr = "LIMaBAEE99w=";
+SecretKey key = new SecretKeySpec(bd.decodeBuffer(keyStr), "DES");
+//加密
+Cipher cp = Cipher.getInstance("DES");
+cp.init(Cipher.ENCRYPT_MODE, key);
+
+String str = be.encode(cp.doFinal(plainText.getBytes()));
+System.out.println(str);
+//解密
+cp.init(Cipher.DECRYPT_MODE, key);
+byte[] bs = cp.doFinal(bd.decodeBuffer(str));
+System.out.println(new String(bs));
+
+问题：A这个人不讲究，将自己的密钥告诉了C，这回C截取到密文他爽了，用密钥解密，茅台产油又暴露了，不能接受！So，继续~~
+
+非对称加密
+
+A获取B提供的公钥并被C知晓，A将需要共享的信息加密后的密文传输给B，这个时候C又截取到了密文，但是只有拥有私钥的B能够解密密文，C傻眼了。。
+
+BASE64Decoder bd = new BASE64Decoder();
+BASE64Encoder be = new BASE64Encoder();
+//获取配对公钥/私钥
+KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+kpg.initialize(512);
+KeyPair kp = kpg.genKeyPair();
+PrivateKey privateKey = kp.getPrivate();
+PublicKey publicKey = kp.getPublic();
+//加密
+Cipher cp = Cipher.getInstance("RSA");
+cp.init(Cipher.ENCRYPT_MODE, publicKey);
+
+String str = be.encode(cp.doFinal(plainText.getBytes()));
+System.out.println(str);
+//解密
+cp.init(Cipher.DECRYPT_MODE, privateKey);
+System.out.println(new String(cp.doFinal(bd.decodeBuffer(str))));
+
+byte[] bys = key.getEncoded(); //获得密钥的二进制表示数据，普通的做法将内容存储到文件或者将其序列化。
+//读取key
+SecretKey loadKey=new SecretKeySpec(key.getEncoded(),"DES");
+//或者
+KeySpec keySpec = new DESKeySpec(bys);
+SecretKeyFactory factory = SecretKeyFactory.getInstance("DES");
+SecretKey key = factory.generateSecret(keySpec);

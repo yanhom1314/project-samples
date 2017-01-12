@@ -1,0 +1,6 @@
+EclipseFP
+http://eclipsefp.sf.net/updates
+Erlang
+http://erlide.org/update/
+ScalaMilestone
+http://download.scala-ide.org/releases-juno-29/milestone/site

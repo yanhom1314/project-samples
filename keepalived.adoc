@@ -1,0 +1,156 @@
+= CentOS 7下安装KeepAlived笔记
+== 安装(主/备机相同)
+* 下载源码并编译安装：
+
+   wget -c http://www.keepalived.org/software/keepalived-1.2.19.tar.gz
+   tar zxf keepalived-1.2.19.tar.gz
+   cd keepalived-1.2.19
+   ./configure
+   make && make install
+
+* 编译安装生成文件：
+** 编译可以指定参数--prefix=设置安装路径，缺省安装在/usr/local目录下；
+** 文件，以安装目录为根目录：
+
+   sbin/keepalived                           ;; 执行命令
+   bin/genhash                               ;; 执行命令
+   etc/keepalived/keepalived.conf            ;; 配置文件
+   etc/rc.d/init.d/keepalived                ;; 启动脚本
+   etc/keepalived/samples/                   ;; 配置文件范例 
+** 复制配置与命令
+
+   mkdir /etc/keepalived
+   cp sbin/keepalived /usr/sbin/
+   cp bin/genhash /usr/sbin/
+   cp etc/rc.d/init.d/keepalived /etc/rc.d/init.d/
+   cp etc/keepalived/keepalived.conf /etc/keepalived/
+   cp etc/sysconfig/keepalived /etc/sysconfig/
+
+* 在CentOS 5上安装之前，请先更新openssl与kernel-headers
+
+  yum update -y openssl
+  yum install -y openssl-devel
+  yum install -y kernel-headers
+
+== 配置
+** 编辑MASTER与BACKUP的配置
+
+.etc/keepalived/keepalived.conf
+[source,txt]
+-----------
+global_defs {
+   notification_email {                                               ;; 收到通知消息的邮件列表
+     email
+     email
+   }
+   notification_email_from Alexandre.Cassen@firewall.loc              ;; 邮件发送者
+   smtp_server 192.168.200.1                                          ;; 远程SMTP服务器地址
+   smtp_connect_timeout 30                                            ;; SMTP服务器连接超时时间
+   router_id LVS_DEVEL                                                ;; 路由ID:alphanum，全局唯一
+}
+
+vrrp_instance VI_1 {
+   state MASTER                                                       ;; 只有MASTER和BACKUP 2种状态，主为MASTER，从为BACKUP，使用大写
+   interface eth0                                                     ;; 网络接口
+   virtual_router_id 50                                               ;; 分组ID:num
+   nopreempt                                                         
+   priority 100                                                       ;; VRRP路由权重，数字越大，优先级越高
+   advert_int 1                                                       ;; MASTER与BACKUP负载均衡器之间同步检查的时间间隔，单位是秒
+   virtual_ipaddress {                                                ;; 虚拟ip地址virtual_ipaddress,可以定义多个
+       192.168.200.11
+   }
+}
+
+;; virtual_server 可以不用
+virtual_server 10.10.10.2 1358 {
+    delay_loop 6
+    lb_algo rr 
+    lb_kind NAT
+    persistence_timeout 50
+    protocol TCP
+
+    sorry_server 192.168.200.200 1358
+
+    real_server 192.168.200.2 1358 {
+        weight 1
+        HTTP_GET {
+            url { 
+              path /testurl3/test.jsp
+              digest 640205b7b0fc66c1ea91c463fac6334d
+            }
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+        }
+    }
+}
+-----------
+
+.MASTER
+[source,txt]
+-----------------
+global_defs {
+  router_id NodeA
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface eth0
+    virtual_router_id 51
+    priority 100
+    advert_int 1
+    virtual_ipaddress {
+			  192.168.0.99
+    }
+}
+-----------------
+
+.BACKUP
+[source,txt]
+-----------------
+global_defs {
+  #router_id NodeA
+  router_id NodeB
+}
+
+vrrp_instance VI_1 {
+    #state MASTER   ;; MASTER和BACKUP
+    state BACKUP
+    interface eth0  ;; 启动虚IP的设备
+    virtual_router_id 51
+    #priority 100     ;;权限比重 一般MASTER比BACKUP数字要大
+    priority 99
+    advert_int 1
+    virtual_ipaddress {
+			  192.168.0.99
+    }
+}
+-----------------
+
+* 注意：
+
+  global中的router_id 与 vrrpd设置中的virtual_router_id搞混淆了，解释一下：
+  router_id：是全局定义，定义的是该设备的一个名称
+  virtual_router_id：是用来分组的，RFC文档中有下面这段话，即一个分组一个id号，并且一个接口可以同时属于多个分组，即多个实例名对应多个id号，分清楚。范围（1-255）
+
+* 配置好MASTER与BACKUP的/etc/keepalived/keepalived.conf内容，主要区别在state与router_id。
+
+== 运行 
+
+* MASTER
+   service keepalived start
+
+* BACKUP
+   service keepalived start
+
+== 测试 
+1. 在主服务器上新建一个网页，内容为 192.168.111.223
+2. 在备用服务器上新建一个网页，内容为 192.168.111.100
+3. 启动主备服务器的http服务和Keepalived服务
+4. 通过浏览数，输入虚拟IP地址 192.168.111.150
+        页面显示为 192.168.111.223
+5. 关闭主服务器的Keepalived服务，通过浏览器输入IP地址192.168.111.150
+        页面显示为 192.168.111.100
+6. 再次启动主服务器的Keepalived服务，通过浏览器输入IP地址192.168.111.150
+        页面显示为 192.168.111.223
+

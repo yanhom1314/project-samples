@@ -1,0 +1,26 @@
+在Spring MVC中国际化处理可以使用注册拦截器：
+
+<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
+</mvc:interceptors>
+<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="en_US"/>
+<!-- <bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver" 
+	id="localeResolver" p:cookieName="locale" /> -->
+	
+Interceptor
+也可以使用ControllerClassNameHandlerMapping的注册拦截器处理国际化，不过上一种更简洁。
+<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
+<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >
+	<property name="interceptors">
+		<list>
+			<ref bean="localeChangeInterceptor" />
+		</list>
+	</property>
+</bean>
+
+Resolver
+这样当使用lang作为参数的时候，LocaleChangeInterceptor将lang参数内容改变地区。如XXX?lang=zh_CN，将语言自动转换为zh_CN。
+
+可以使用SessionLocaleResolver/CookieLocaleResolver，但是不能使用默认的AcceptHeaderLocaleResolver，
+因为在Spring当前版本的源码中，这个类的setLocale方法默认是抛出异常，如果要使用可以继承后重写该方法。

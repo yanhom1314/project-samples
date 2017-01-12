@@ -1,0 +1,164 @@
+﻿;;设置HOME路径
+(setenv "HOME" "C:/Tools/emacs")
+;;(setenv "EMACS_SERVER_FILE" "C:/Tools/emacs/.emacs.d/server/server")
+
+;;设置字体
+;;Setting English Font
+(set-face-attribute 'default nil :font "Monaco 9")  
+;;Chinese Font 
+(dolist (charset '(kana han symbol cjk-misc bopomofo))   
+(set-fontset-font (frame-parameter nil 'font) 
+          charset (font-spec :family "Yahei Consolas Hybird" :size 9)))
+
+
+;;不显示启动页面   
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ecb-layout-window-sizes nil)
+ '(ecb-options-version "2.40")
+ '(inhibit-startup-screen t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;;Color Theme 
+(add-to-list 'load-path "~/.emacs.d/color-theme") 
+(require 'color-theme) 
+(color-theme-initialize) 
+;;(color-theme-gnome2)
+(color-theme-ld-dark)
+
+;;启动单进程Server
+(server-start)
+
+;;启动自动最大化(数据自己调整，注意格式，如(top . 0)，圆点前后都要留有空格)
+(defun w32-restore-frame () 
+"Restore a minimized frame" 
+(interactive) 
+(w32-send-sys-command 61728)) 
+
+(defun w32-maximize-frame () 
+"Maximize the current frame" 
+(interactive) 
+(w32-send-sys-command 61488)) 
+(w32-maximize-frame) 
+
+;;空白干净的页面
+(setq initial-scratch-message "") 
+
+;;显示行数
+(global-linum-mode t)
+;;不生成备份文件
+(setq make-backup-files nil)
+;;跳转到某一行C-c C-g
+(define-key global-map "\C-c\C-g" 'goto-line)
+
+;;cedet
+(load-file "~/.emacs.d/cedet/common/cedet.el")
+(global-ede-mode 1)                      ; Enable the Project management system
+(semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion 
+(global-srecode-minor-mode 1)            ; Enable template insertion menu
+;;ECB
+(add-to-list 'load-path "~/.emacs.d/ecb")
+(load-file "~/.emacs.d/ecb/ecb.el")
+(require 'ecb)
+;; 自动启动ecb，并且不显示每日提示
+(setq stack-trace-on-error t)
+(setq ecb-auto-activate t
+     ecb-tip-of-the-day nil)
+;;禁用启动信息
+(setq inhibit-startup-message t)
+;;关闭烦人的出错时的提示声
+(setq visible-bell t) 
+
+
+;;; 各窗口间切换
+(global-set-key [M-left] 'windmove-left)
+(global-set-key [M-right] 'windmove-right)
+(global-set-key [M-up] 'windmove-up)
+(global-set-key [M-down] 'windmove-down)
+
+;;;; 隐藏和显示ecb窗口
+(define-key global-map [(control f1)] 'ecb-hide-ecb-windows)
+(define-key global-map [(control f2)] 'ecb-show-ecb-windows)
+(define-key global-map "\M-`" 'ecb-restore-default-window-sizes);;
+
+;;;; 使某一ecb窗口最大化
+(define-key global-map "\M-1" 'ecb-maximize-window-directories)
+(define-key global-map "\M-2" 'ecb-maximize-window-sources)
+(define-key global-map "\C-c3" 'ecb-maximize-window-methods)
+(define-key global-map "\C-c4" 'ecb-maximize-window-history)
+;;;; 恢复原始窗口布局
+
+(put 'upcase-region 'disabled nil)
+
+;;编程haskell支持
+(load "~/.emacs.d/haskell-mode/haskell-site-file")
+
+;;字体 启动 编码
+(set-language-environment 'UTF-8) 
+(set-locale-environment "UTF-8") 
+(set-default-font "Lucida Console") 
+;;(set-fontset-font "fontset-default" 'unicode '("WenQuanYi Zen Hei" . "unicode-ttf"))
+
+(tool-bar-mode -1)
+;;(menu-bar-mode -1)
+(setq inhibit-startup-message t)
+(setq initial-scratch-message "")
+
+;;设定不产生备份文件
+(setq make-backup-files nil)
+;;自动保存模式
+;;(setq auto-save-mode nil)
+;;不生成临时文件
+(setq-default make-backup-files nil)
+
+;;启动0.5秒后自动最大化 （windows下）
+(run-with-idle-timer 0.1 nil 'w32-send-sys-command 61488)
+;;(w32-send-sys-command 61488)
+
+;;系统本身内置的智能自动补全括号
+(electric-pair-mode t)
+
+(defun emacs-maximize ()  
+  "Maximize emacs window in windows os"  
+  (interactive)  
+  (w32-send-sys-command 61488))        ; WM_SYSCOMMAND #xf030 maximize  
+(defun emacs-minimize ()  
+  "Minimize emacs window in windows os"  
+  (interactive)  
+  (w32-send-sys-command #xf020))    ; #xf020 minimize  
+(defun emacs-normal ()  
+  "Normal emacs window in windows os"  
+  (interactive)  
+  (w32-send-sys-command #xf120))    ; #xf120 normalimize  
+  
+;; (emacs-maximize)  
+(global-set-key (kbd  "C-x C-z") 'emacs-maximize)
+(global-set-key (kbd  "C-x z") 'emacs-minimize)
+
+;;Add the path to list
+(add-to-list 'load-path "~/.emacs.d/scala-mode/")
+(add-to-list 'load-path "~/.emacs.d/clojure-mode/")
+(add-to-list 'load-path "~/.emacs.d/evil")
+
+;;Evil
+(require 'evil)
+(evil-mode 1)
+
+;;Clojure
+(require 'clojure-mode)
+
+;;Scala
+(require 'scala-mode2)
+
+;;显示时间  
+(display-time-mode t)  
+;;启动Emacs Server  
+(server-start)  

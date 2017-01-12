@@ -1,0 +1,7 @@
+#生成KEY
+openssl genrsa -des3 -out greatbit.key 2048
+#生成证书请求
+openssl req -new -key greatbit.key -out greatbit.csr
+#生成自签名证书
+openssl x509 -req -in greatbit.csr -signkey greatbit.key -out greatbit.crt -days 30
+

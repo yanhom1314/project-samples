@@ -1,0 +1,102 @@
+﻿AspectJ
+1.AspectJ可以说是一个代码生成工具（Code Generator），按照编写的AOP要将业务的代码织入到你的类中。
+2.AspectJ定义了专门的语法用来定义代码生成规则。
+3.使用AspectJ自己的语法编译工具，编译的结果生成二进制的Java Class 文件，但是在运行的时候CLASSPATH中需要包含 AspectJ 的一个 jar 文件（Runtime lib）。
+
+
+例子：
+Message.java
+public class Message {
+	private String _id = "What the fuck!";
+	public void deliver(String name) {
+		System.out.println(name);
+	}
+	public String sayHello(String name) {
+		return String.format("Hello %s.", name);
+	}
+}
+1.使用Aspectj 专门的语法。
+MessageAspect.aj
+privileged aspect MessageAspect {                                                       //------@1
+	
+	pointcut sayHello(String name) : execution(* Message.sayHello(..))&&args(name);     //------@2
+	
+	before(String value):sayHello(value){                                               //------@3
+		System.out.printf("arg:%s\n", value);                                           //-------@a
+		Object[] objs=thisJoinPoint.getArgs();                                          //-------@b
+		for(Object obj:objs){
+			System.out.println("***********");
+			System.out.println(obj);
+			System.out.println("***********");
+		}
+		System.out.println("#########Before#########");
+	}
+	
+	String around(Message msg,String value) : sayHello(value) && this(msg){		        //-------@c
+		System.out.printf("####%s####\n",msg._id);                                      //-------@d
+		String obj=proceed(msg,value);                                                  //-------@e
+		System.out.println("####1####");
+		return obj;                                                                     //-------@f
+	}
+	public void Message.sayHi(String msg){...}                                          //-------@h
+}
+
+2.使用Aspectj提供的注解，这样可以得到大多数Java IDE的支持。
+MessageAop.java
+@Aspect
+public class MessageAop {
+
+	@Pointcut("execution(* Message.sayHello(..))&&args(name)")
+	public void sayHello(String name) {
+	}
+	@Before("sayHello(name)")
+	public void sayHelloBefore(String name){
+		System.out.printf("#before#,arg=%s\n",name);
+	}
+}
+
+3.与Spring Intergration。
+Spring Configuration文件
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<bean id="mas" class="MessageAopSpring"/>
+	<bean id="target" class="Message"/>	
+	<aop:config>
+		<aop:aspect ref="mas">
+			<aop:pointcut id="target" expression="execution(* Message.*(..))"/>
+			<aop:after pointcut-ref="target" method="print"/>
+			<aop:before pointcut-ref="target" method="print"/>
+		</aop:aspect>
+	</aop:config>
+</beans>
+
+public class MessageAopSpring {
+	public void print() {
+		System.out.println("****************************");
+	}
+}
+
+public class Message {
+	public void display() {
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
+	}
+}
+
+AspectJ结构:
+@1：定义Aspect
+@2：定义切面(pointcut);
+@3：定义通知(advice);
+
+讲解：
+@a：直接获取参数；
+@b：使用JointPoint获取参数；
+@c：环绕织入(around)方法，定义参数和返回类型；
+@d：使用privileged修饰的Aspect可以访问Class中的私有属性和方法；
+@e：调用方法；
+@f：返回调用结果；
+@h: 为Message增加方法
+

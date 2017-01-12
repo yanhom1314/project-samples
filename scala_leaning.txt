@@ -1,0 +1,476 @@
+﻿支持纯面向对象或面向函数编程的完全兼容JVM的静态类型语言。
+伴随你成长，拥抱变化！
+
+一切都是对象
+123.toBytes
+函数也是对象
+def say(call:() => Unit):Unit = {
+	while(true){
+		call()
+		Thread.sleep(1000)
+	}
+}
+call为函数形参，表示无参数返回Unit的函数调用。
+
+
+类型参数中协变(+)、逆变(-)、类型上界(<:)和类型下界(>:)的使用
+
+scala 中是用 [] 代替 java 中的<> 表达泛型。
+协变(covariant)的定义: 假设有类G(或者接口和特征) 和类型T1,T2  。 在T1是T2的子类的情况下， 如果G<T1> 也是G2<T2>的子类，则类G是协变的。
+逆变(contravariance)的定义:	假设有类 G 和类型T1,T2, 在T1 是T2的子类的情况，如果G[T2]是G[T1]的子类， 则G为逆变。
+
+在类的协变定义中，不能直接使用泛型定义方法，如：
+trait CoVar[+T] {
+	def f(t: T):Unit
+}
+1）trait Queue[T] {} 
+这是非变情况。这种情况下，当类型S是类型A的子类型，则Queue[S]不可认为是Queue[A]的子类型或父类型，这种情况是和Java一样的。 
+
+2）trait Queue[+T] {} 
+这是协变情况。这种情况下，当类型S是类型A的子类型，则Queue[S]也可以认为是Queue[A}的子类型，即Queue[S]可以泛化为Queue[A]。也就是被参数化类型的泛化方向与参数类型的方向是一致的，所以称为协变。 
+
+3）trait Queue[-T] {} 
+这是逆变情况。这种情况下，当类型S是类型A的子类型，则Queue[A]反过来可以认为是Queue[S}的子类型。也就是被参数化类型的泛化方向与参数类型的方向是相反的，所以称为逆变。 
+
+在trait、class中使用了协变（+）、逆变（-）则成员方法在使用泛型时就必须使用边界。
+a)trait Queue[+T]{
+	def fun[U >: T](u:U):Unit
+}
+>:是类型下边界定义，表示U为T以及T的父类。类型下界只能在协变定义中使用，因为协变是自上而下，必须定义下边界。
+
+b)trait Queue[-T]{
+	def fun[U <: T](u:U):Unit
+}
+<:是类型上边界定义，表示U为T以及T的子类。类型上界只能在逆变定义中使用，逆变是自下而上，必须定义上边界。
+
+边界的范例：
+
+case class A(val name:String) { override def toString = name}
+case class B(override val name:String) extends A(name)
+case class C(override val name:String) extends B(name)
+case class D(val name:String) { override def toString = name}
+
+def +:[T >: B](t:T):Unit = println(t)
+
+当在函数+:的定义使用>:边界，如果在调用时不定义参数的类型，则Any都可以作为入参；
++:(new A("A"))
++:(new B("B"))
++:(new C("C"))
++:(new D("D"))
+这样调用是可以编译并执行的，结果就是打印：
+A
+B
+C
+D
+但是如果使用
++:[A](new A("A"))
++:[B](new B("B"))
++:[C](new C("C"))//编译错误，修改+:[B](new C("C"))可以编译
++:[D](new D("D"))//编译错误，修改+:[B](new D("D"))仍然不可编译
+所以，在下边界(lower bound)的使用中，建议指定成员函数的泛型类型，如+:[B]或者+:[A]，不要省略
+
+在上边界(upper bound)中有些不同
+def -:[T <: B](t:T):Unit = println(t)
+当如下调用时
+-:(new A("A"))//编译错误,使用-:[A](new A("A"))相同
+-:(new B("B"))
+-:(new C("C"))
+-:(new D("D"))//编译错误,使用-:[D](new D("D"))相同
+
+
+class A(val name: String) {
+  override def toString(): String = {
+    return name
+  }
+}
+
+class B(name: String) extends A(name)
+
+trait ChangeA[+T] {
+  def fun[U >: T](instance: U): Unit = {
+    println("#Add#%s".format(instance))
+  }
+}
+
+trait ChangeD[-T] {
+  def fun[U <: T](instance: U): Unit = {
+    println("#Del#%s".format(instance))
+  }
+}
+
+object ChangeMain extends App {
+  val b = new B("B")
+  val a = new A("A")
+
+  val la = new ChangeA[B] {}
+  val lab: ChangeA[A] = la
+  val ld = new ChangeD[A] {}
+  val lda: ChangeD[B] = ld
+
+  println("B为A子类:")
+  print("协变B：")
+  la.fun(b)
+  print("协变A：")
+  lab.fun(a)
+  print("逆变A：")
+  ld.fun(a)
+  print("逆变B：")
+  lda.fun(b)
+}
+
+变量
+定义变量有val与var两种方式，区别在于val与java中final变量类似，初始化后不可以再赋值；
+
+val name="Jhon" //name值在整个系统运行期间仅为"Jhon"
+name="Smith" //编译器会报错
+
+var name_r="Jhon" 
+name_r="Smith" //name_r值被重新赋予"Smith"值
+
+数组Array、元组、列表List、集合Set与映射Map
+数组的索引是放在()括号中，而不是[]方括号中，因为在scala中获取数组的元素也是一种方法调用，可以理解为
+users(0)被转换成users.apply(0)。
+val users=Array("one","two","three")
+println(users(0).toLowerCase)
+println(users(1).toUpperCase)
+数组是可变的，列表与元组是不可变的，集合与映射提供了可变/不可变两种版本；
+对于需要新增元素的List可以用::添加然后调用reverse方法；或者使用ListBuffer的+=方法添加然后toList获取列表。
+val list=List(1,2,3)
+val a_list=4::list
+a_list.reverse.foreach(println)
+
+val buffer=ListBuffer(1,2,3)
+buffer += 4
+buffer += 5
+buffer.toList.foreach(println)
+
+函数
+当调用的方法仅有一个参数时，可以不带括号，例如
+for(i<- 0 to 2){...}//其中0 to 2被转换成(0).to(2)
+注意不可以写println 10，但是可以用Console println 10
+方法不应有副作用，方法唯一的效果应该是计算并返回值，而不是在其内部修改值。
+
+闭包
+class Test(_msg:String,_age:Int){
+    def msg=_msg
+    def age=_age
+    def withSay(call:(String,Int)=>Unit):Unit = {
+    	println("1")
+	call(this.msg,this.age)
+    	println("2")
+    }
+}
+object Hello extends App{
+    val test=new Test("Hello World",12)
+    test.withSay { 
+        (name,age) => 
+	    println(name+"|"+age)
+    }
+}
+函数也是对象。实际上函数f: (ArgType1,...ArgTypeN)=>ReturnTyp是以类FunctionN[ArgType1,..., ArgTypeN, ReturnType]的实例形式被定义的。N是表示参数个数的正整数。如果是1个参数的话则是Function1[ArgType1, ReturnType]。
+def double(n:Int):Int = n * 2
+上述函数基本上与下述定义是等同的。
+object double extends Function1[Int, Int] {
+	def apply(n: Int): Int = n * 2
+}
+double(10) //20
+
+分号
+语句末尾的分号可选；单行多语句需要使用分号分开。
+trait
+trait Buffer {
+    type T 
+}
+
+trait的堆叠操作特性进行切面编程
+
+trait Service {
+  def action(): Unit
+}
+
+trait BeforeService extends Service {
+  abstract override def action(): Unit = {
+    println("Before")
+    super.action()
+  }
+}
+
+trait AfterService extends Service {
+  abstract override def action(): Unit = {
+    super.action()
+    println("After")
+  }
+}
+
+class ServiceImp extends Service {
+  override def action(): Unit = {
+    println("Job")
+  }
+}
+
+object ServiceObj extends App {
+  val s = new ServiceImp  with BeforeService with AfterService
+  s.action()
+}
+
+class 
+
+class Test(x:Int,y:Int){
+	override def toString()=x+"/"+y
+	def this(x:Int)=this(x,1)//从构造器
+}
+没有主体可以不用大括号
+
+object
+
+伴生类
+class Hello{
+
+}
+伴生对象
+object Hello{
+}
+互为伴生。
+
+隐式转换implicit
+implicit只能在值(values)，参数(variables)，方法(methods)，伴生对象(object)中使用，隐式转换的作用：
+1.扩展或增加你困扰的Lirary
+case class IntTimes(val t:Int){
+	def times(f:(Int)=>Unit):Unit = {
+		for(i <- 0 to t){
+			f(i)
+		}
+	}
+}
+object IntTimes{
+	implicit def int2times(t:Int) = new IntTimes(t)
+}
+
+object Test extends App{
+	import IntTimes._
+	/*也可以直接定义隐式方法*/
+	//implicit def int2times(t:Int) = new IntTimes(t)
+	
+	12.times { println(_)}
+}
+
+
+2.适配或扩展一个对象
+
+case class Blah(msg:String)(implicit m:String) {
+	def sayHi = println("%s say %s".format(msg,m))
+}
+
+
+
+trait Filter[A] {
+  def filter(input: A)(f: A => Boolean): Option[A]
+}
+object Filtering {
+  def filter[A](input: A)(f: A => Boolean)(implicit filter: Filter[A]): Option[A] = {
+    filter.filter(input)(f)
+  }
+}
+
+比如String类型实例，可以通过隐式转换用filter方法。
+object Test extends App {
+  val str = "Functions"
+  implicit object StringFilter extends Filter[String] {
+    def filter(input: String)(f: String => Boolean): Option[String] = {
+      if (f(input)) Some(input) else None
+    }
+  }
+  //或者使用下面的方法
+  implicit def stringFilter =new Filter[String] {
+    def filter(input: String)(f: String => Boolean): Option[String] = {
+      if (f(input)) Some(input) else None
+    }
+  }
+  val test = Filtering.filter(str)(a => true)
+}
+
+函数与闭包
+Scala中的函数也是对象，函数也可以作为函数的参数；
+
+定义函数
+def add(x:Int,y:Int) = x + y
+
+Curry化
+def add(x:Int) = (y:Int)) =>x +y
+或者
+def add(x:Int)(y:Int) = x +y
+
+Curry化函数不仅限于你定义的函数，也可以将已存在的函数Curry化。
+def add(x:Int,y:Int) = x + y
+//val addCurried=Function.curried(add _)//已经deprecated
+val addCurried=(add _).curried
+add(1,2) //3
+addCurried(1)(2) //3
+
+Uncurry化函数
+def add(x:Int)(y:Int)) = x +y
+val addUncurried=Function.uncurried(add _)
+add(3)(4)//7
+addUncurried(3,4)//7
+
+部分函数
+def process[A](filter:A=>Boolean)(list:List[A]):List[A] = {
+  lazy val recurse = process(filter) _
+ 
+  list match {
+    case head::tail => if (filter(head)) {
+      head::recurse(tail)
+    } else {
+      recurse(tail)
+    }
+ 
+    case Nil => Nil
+  }
+}
+ 
+val even = (a:Int) => a % 2 == 0
+ 
+val numbersAsc = 1::2::3::4::5::Nil
+val numbersDesc = 5::4::3::2::1::Nil
+ 
+process(even)(numbersAsc)   // [2, 4]
+process(even)(numbersDesc)  // [4, 2]
+//也可以使用下面的写法，其中_为函数占位符
+val processEvents=process(even) _
+processEvents(numbersAsc) //[2,4]
+processEvents(numbersDesc) //[4,2]
+
+不使用Currying的函数
+
+def add(x:Int,y:Int,z:Int) = x + y +z
+val addFive = add(5,_:Int,_:Int)
+addFive(3,1) //9
+val addFive2 = (y:Int,z:Int) => add(5,y,z)
+addFive2(3,1) //9
+
+类型中的函数继承
+
+trait可以extend函数，例如：
+trait Action extends (String => String)
+
+object Action {
+  def apply(block: => String): String = {
+    "Test"
+  }
+
+  def apply(block: String => String): String = {
+    block("Test")
+  }
+}
+
+函数apply与unapply的使用
+如果可以定义CASE class，例如：
+case class Apple(price:Int,weight:Int)
+则可以通过模式匹配来获取和设置对象值：
+val apple=Apple(12,34)
+val Apple(p,w)=apple
+println(p+":"+w)//打印12:34值
+有一些情况在不定义CASE CLASS或者不能定义CASE CLASS的情况下可以使用unapply（Extraction method）与apply（Injection method）：
+例如有需要从"name,age,addr"中的字符串中获取学生的name,age,addr:
+object Student {
+	def unapply(str:String):Option[(String,String,String)] = {
+		val splits = str.split(",")
+    	if (splits.length == 3) Some(splits(0), splits(1), splits(2)) else None
+	}
+	def apply(name:String,age:String,addr:String):String = {
+		name+","+age+","+addr
+	}
+}
+val Stduent(name,age,addr)="lyf,18,NanJing"
+println(name+":"+age+":"+addr)//打印name、age、addr值
+val str=Student("lyf","12","NanJing")
+println(str)//打印str值
+
+apply为注入方法，unapply为提取方法
+
+
+目录/文件处理
+import java.io._
+import scala.io.Source
+
+val fileHere=new File("path").listFiles
+def fileLines(file:File)={
+	fromFile(file).getLines.toList
+}
+def grep(pattern:String)={
+	for {
+		file <- fileHere  //第一层嵌套枚举file
+		if file.getName.endsWith(".conf")//过滤条件，多个条件以;分隔
+		line <- fileLines(file)
+		if line.trim.matches(pattern)
+	}println(file+":"+line)
+}
+grep(".*2\\.2\\.2\\.2.*")
+
+警告：
+更大的自由，带来更大的风险，请慎重使用技巧，并牢记自己能力带来的责任。
+代码简洁只是目的的一种，更重要的是易读，易维护拓展。
+
+
+classOf、isInstanceOf、asInstanceOf
+把classOf[T]看成Java里的T.class, obj.isInstanceOf[T]看成 obj instanceof T, obj.asInstanceOf[T]看成(T)obj
+
+Any,AnyVal,AnyRef
+Scala中没有像java中的基础类型（int，byte，short）等，Scala中存在单一的根类Any，java中的基础类型如int，byte等继承的是AnyVal类，
+而java中的class则继承的是AnyRef类。
+Any
+|
+|---AnyVal
+|      |---Byte(相当于Java的byte)
+|      |---Short(相当于Java的short)
+|      |---Char(相当于Java的char)
+|      |---Int(相当于Java的int)
+|      |---Long(相当于Java的long)
+|      |---Float(相当于Java的float)
+|      |---Double(相当于Java的double)
+|      |---Boolean(相当于Java的boolean)
+|      |---Unit(相当于Java的void)
+|---AnyRef（相当于java中的java.lang.Object）
+       |---String
+       |---:::
+
+Nothing, Null, Nil, None, Unit 
+Nothing 是trait，定义为：final trait Nothing extends Any。
+Nothing处于Scala类型体系的最底层，是所有类型(Any)的子类型，Nothing没有实例，如果一个方法抛出异常，则异常的返回值类型就是Nothing。
+
+Null 是trait，定义为：final trait Null extends AnyRef 。Null是所有引用类型(AnyRef)的子类型，唯一的一个实例是null。 
+
+Nil 是case object，定义为case object Nil extends List[Nothing]， 代表一个空list。由于Scala中的List是协变的，因此无论T是何种类型，Nil都是List[T]的实例。
+
+None 是case object，定义为：case object None extends Option[Nothing]，代表不存在的值。
+
+Unit 是class，定义为：abstract final class Unit extends AnyVal。Unit跟Java中的void相当，当一个方法不返回任何值的时候，那么方法的类型是Unit。Unit唯一的一个实例是().
+
+使用Option、Some、None避免NullpointException
+创建Option[T]对象
+val st: Option[String] = Some("Hello World")
+val nt: Option[String] = None
+println(st.getOrElse("").length)
+println(nt.getOrElse("").length)
+
+判断是Some还是None可以使用类方法isDefined，不过建议使用Pattern Matching。
+if(st.isDefined){
+	println(st.get.length)
+}
+st match {
+	case Some(ct) => println(ct.length)
+	case None =>
+}
+
+Option[T]是个容器，可以map，foreach，filter等方法。
+println(st.filter(p => p.length >10).getOrElse(""))
+
+获取泛型类型
+在class定义中可以使用Manifest，例如：
+class A[T: Manifest] {
+	def getType = implicitly[Manifest[T]].erasure
+}
+new A[String].getType
+
+
+flatMap map foreach
