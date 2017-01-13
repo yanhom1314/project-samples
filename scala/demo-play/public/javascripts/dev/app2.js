@@ -35,8 +35,8 @@ window.onload = function () {
                 "previous":   "上一页"
             },
             "aria": {
-                "sortAscending":  ": activate to sort column ascending",
-                "sortDescending": ": activate to sort column descending"
+                "sortAscending":  ": 列升序排序",
+                "sortDescending": ": 列降序排序"
             }
         },
         "processing": true,

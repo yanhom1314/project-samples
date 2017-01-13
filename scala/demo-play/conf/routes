@@ -4,7 +4,7 @@
 
 #demo
 GET         /demo                controllers.DemoController.demo
-GET         /jqgrid              controllers.DemoController.jqgrid
+POST        /jqgrid              controllers.DemoController.jqgrid
 GET         /datatables          controllers.DemoController.datatables(draw:Int ?= 0, start:Int ?=0, length:Int ?=0)
 
 #secure
