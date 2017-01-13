@@ -3,7 +3,6 @@ package controllers
 import javax.inject._
 
 import entities.TPersonRepository
-import models.JqGridForm
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -12,7 +11,7 @@ import play.api.mvc._
 import services.SpringContextLoader
 import third.DemoData
 import third.datatables.DataTablesData
-import third.jqgrid.JqGridData
+import third.jqgrid.{JqGridData, JqGridForm}
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ListBuffer
@@ -63,8 +62,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
       (start to (if (start + o.rows <= records) start + o.rows else records)).foreach { i => list.rows += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }
 
       Ok(Json.toJson(list))
-    }
-    )
+    })
   }
 
   def datatables(draw: Int, start: Int, length: Int) = Action { implicit request =>
