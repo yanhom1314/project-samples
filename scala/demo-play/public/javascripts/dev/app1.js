@@ -19,7 +19,7 @@ function resizeGrid() {
     return width;
 }
 
-window.onload = function () {
+$(function () {
     console.log(add(12, 7));
     //jqgrid
     jQuery("#list2").jqGrid({
@@ -45,4 +45,4 @@ window.onload = function () {
     jQuery("#list2").jqGrid('navGrid', '#pager2', {edit: false, add: false, del: false});
 
     $(window).resize(resizeGrid);
-};
+});

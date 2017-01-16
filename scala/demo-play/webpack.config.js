@@ -15,7 +15,8 @@ module.exports = {
     entry: {
         app1: './public/javascripts/dev/app1.js',
         app2: './public/javascripts/dev/app2.js',
-        app3: './public/javascripts/dev/app3.js'
+        app3: './public/javascripts/dev/app3.js',
+        flash: './public/javascripts/dev/flash.js'
     },
     output: {
         path: './public/javascripts',

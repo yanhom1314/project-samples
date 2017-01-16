@@ -3,9 +3,11 @@
     <div id="login">
         <h2> 管理后台登录 <strong></strong></h2>
         @helper.form(action = routes.Authorize.authenticate()) {
-            @helper.inputText(user("username"), '_label -> "登陆名", '_showConstraints -> false, 'class -> "form-control")
-            @helper.inputPassword(user("password"), '_label -> "登陆密码", '_showConstraints -> false, 'class -> "form-control")
-            @helper.inputPassword(user("captcha"), '_label -> "验证码", '_showConstraints -> false, 'class -> "form-control")
+            <div class="form-group">
+                @helper.inputText(user("username"), '_label -> "登陆名", '_showConstraints -> false, 'class -> "form-control")
+                @helper.inputPassword(user("password"), '_label -> "登陆密码", '_showConstraints -> false, 'class -> "form-control")
+                @helper.inputPassword(user("captcha"), '_label -> "验证码", '_showConstraints -> false, 'class -> "form-control")
+            </div>
             <input type="submit" value="登陆" class="btn btn-info"/>
             <input type="reset" value="重置" class="btn btn-default"/>
         }

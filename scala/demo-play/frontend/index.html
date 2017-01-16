@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <!--
+    <script src="//unpkg.com/jquery/dist/jquery.min.js"></script>
+    <script src="//unpkg.com/vue/dist/vue.min.js"></script>
+    -->
+    <!--
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/fetch/2.0.1/fetch.min.js"></script>
+    <script src="//cdn.bootcss.com/vue/2.1.8/vue.min.js"></script>
+    -->
+    <script src="//cdn.bootcss.com/vue/2.1.8/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    {{ message }}
+</div>
+<div id="app-2">
+  <span v-bind:title="message">
+    Hover your mouse over me for a few seconds to see my dynamically bound title!
+  </span>
+</div>
+<div id="app-3">
+    <p v-if="seen">Now you see me</p>
+</div>
+<div id="app-4">
+    <ol>
+        <li v-for="t in list">
+            {{ t.text }}
+        </li>
+    </ol>
+</div>
+<div id="app-5">
+    <p>{{ message }}</p>
+    <button v-on:click="reverseMessage">Reverse Message</button>
+
+
+</div>
+<div id="app-6">
+    <p>{{ message }}</p>
+    <input v-model="message">
+    <button v-on:click="toUpper">大写</button>
+    <button v-on:click="toLower">小写</button>
+    <button v-on:click="ajax">Ajax</button>
+    <button v-on:click="html">Html</button>
+
+    <div v-html="content"></div>
+</div>
+<div id="app-7">
+    <ol>
+        <!-- Create an instance of the todo-item component -->
+        <todo-item v-for="item in list" v-bind:todo="item"></todo-item>
+    </ol>
+</div>
+
+<!---->
+<script src="/js/index.min.js"></script>
+</body>
+</html>
