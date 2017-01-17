@@ -1,3 +1,2 @@
+var $ = jQuery = require("jquery");
 
-require('vue');
-require("whatwg-fetch");

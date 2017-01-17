@@ -1,12 +1,27 @@
-//var Vue = require('vue');
+require("jquery");
 
-require('Vue');
-require("whatwg-fetch");
+var u = require("vue");
+var f = require("fetch");
+
+console.log("$:" + $.ajax()+" "+jQuery.ajax());
+console.log("u:" + new u({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        }
+    }));
+console.log("f:" + f('/data/hello.json').then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        app6.message = JSON.stringify(data);
+    }).catch(function (e) {
+        console.log("Oops, error");
+    }));
 
 var app1 = new Vue({
-    el: '#app',
+    el: '#app1',
     data: {
-        message: 'Hello Vue!'
+        message: 'Hello Vue in app-1!'
     }
 });
 
