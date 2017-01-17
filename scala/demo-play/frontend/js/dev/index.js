@@ -3,7 +3,7 @@
 require('Vue');
 require("whatwg-fetch");
 
-var app = new Vue({
+var app1 = new Vue({
     el: '#app',
     data: {
         message: 'Hello Vue!'

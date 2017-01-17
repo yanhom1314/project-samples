@@ -25,10 +25,12 @@ A minimal [activator](https://www.typesafe.com/get-started) seed template for cr
 
 ## 编译运行
 
-    sbt
-    >assembly
++ `sbt assembly`
+    
     java -Dfile.encoding=UTF-8 -jar target\scala-2.11\finatra-demo-assembly-x.y.z.jar -admin.port=:8877 -http.port=:80 
-    >distZip
+    
++ `sbt distZip`
+
     cd target/universal/stage
     bin/finatra-demo.bat -admin.port=:8877 -http.port=:80
     

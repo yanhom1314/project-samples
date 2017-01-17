@@ -10,9 +10,7 @@ scalaVersion := "2.11.8"
 
 fork in run := true
 
-javaOptions ++= Seq(
-  "-Dlog.service.output=/dev/stderr",
-  "-Dlog.access.output=/dev/stderr")
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
 lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).enablePlugins(JavaAppPackaging).settings(
   mainClass := Some("com.example.ExampleServerMain")
@@ -23,7 +21,7 @@ assemblyMergeStrategy in assembly := {
   case PathList("javax", "servlet", xs@_*) => MergeStrategy.last
   case PathList(ps@_*) if ps.last endsWith ".html" => MergeStrategy.first
   case "application.conf" => MergeStrategy.concat
-  case "unwanted.txt" => MergeStrategy.discard
+  case "unwanted.txt" | "changelog.txt" => MergeStrategy.discard
   case "BUILD" => MergeStrategy.first
   case x =>
     val oldStrategy = (assemblyMergeStrategy in assembly).value
@@ -44,7 +42,8 @@ libraryDependencies ++= Seq(
   "org.jdbi" % "jdbi" % $("jdbi"),
   "org.hibernate" % "hibernate-entitymanager" % $("hibernate"),
   "org.hibernate" % "hibernate-hikaricp" % $("hibernate"),
-  "dom4j" % "dom4j" % $("dom4j"),
+  "org.threeten" % "threetenbp" % $("threetenbp"),
+  //"dom4j" % "dom4j" % $("dom4j"),
   "org.springframework.data" % "spring-data-jpa" % $("spring-data-jpa"),
   "org.postgresql" % "postgresql" % $("postgresql"),
   "com.h2database" % "h2" % $("h2"),
