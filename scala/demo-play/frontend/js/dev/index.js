@@ -115,3 +115,13 @@ var app7 = new Vue({
     }
 });
 
+
+//window.onload
+$(function () {
+    $("#_close").click(function () {
+        console.log("_close");
+    });
+    $("#_save").click(function () {
+        console.log("_save");
+    });
+});
