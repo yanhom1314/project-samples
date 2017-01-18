@@ -22,7 +22,7 @@ This project demonstrate how to create a simple CRUD application with Play integ
         npm init
         
         //安装vue的依赖
-        npm install vue --save              
+        npm install vue vee-validate --save
         
         //安装babel的ES6 Loader 的开发依赖
         npm install babel babel-core babel-loader babel-preset-es2015 vue-loader vue-template-compiler --save-dev

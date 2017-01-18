@@ -1,22 +1,47 @@
 require("jquery");
+require("vue");
+require("fetch");
 
-var u = require("vue");
-var f = require("fetch");
+var VeeValidate = require("vee-validate");
+var message = require("vee-locale-cn");
 
-console.log("$:" + $.ajax()+" "+jQuery.ajax());
-console.log("u:" + new u({
-        el: '#app',
-        data: {
-            message: 'Hello Vue!'
+const config = {
+    errorBagName: 'errors', // change if property conflicts.
+    fieldsBagName: 'fields',
+    delay: 0,
+    locale: 'cn',
+    dictionary: {
+        cn: {
+            message
         }
-    }));
-console.log("f:" + f('/data/hello.json').then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        app6.message = JSON.stringify(data);
-    }).catch(function (e) {
-        console.log("Oops, error");
-    }));
+    },
+    strict: true
+};
+Vue.use(VeeValidate, config);
+
+//
+// console.log("$:" + $.ajax() + " " + jQuery.ajax());
+// console.log("u:" + new u({
+//         el: '#app',
+//         data: {
+//             message: 'Hello Vue!'
+//         }
+//     }));
+// console.log("VeeValidate:"+VeeValidate);
+// console.log("f:" + f('/data/hello.json').then(function (response) {
+//         return response.json();
+//     }).then(function (data) {
+//         app6.message = JSON.stringify(data);
+//     }).catch(function (e) {
+//         console.log("Oops, error");
+//     }));
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        message: 'Hello Vue!'
+    }
+});
 
 var app1 = new Vue({
     el: '#app1',
@@ -115,6 +140,9 @@ var app7 = new Vue({
     }
 });
 
+var app8 = new Vue({
+    el: "#app8"
+});
 
 //window.onload
 $(function () {

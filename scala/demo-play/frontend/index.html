@@ -17,6 +17,11 @@
     <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="//cdn.bootcss.com/fetch/2.0.1/fetch.min.js"></script>
     <script src="//cdn.bootcss.com/vue/2.1.8/vue.min.js"></script>
+    <script src="//cdn.bootcss.com/vee-validate/2.0.0-beta.18/vee-validate.min.js"></script>
+    <script src="//cdn.bootcss.com/vee-validate/2.0.0-beta.18/locale/zh_CN.js"></script>
+    <script>
+        Vue.use(VeeValidate); // good to go.
+    </script>
 </head>
 <body>
 <div id="app">
@@ -42,17 +47,17 @@
 </div>
 <div id="app-5">
     <p>{{ message }}</p>
-    <button v-on:click="reverseMessage">Reverse Message</button>
+    <button @click="reverseMessage">Reverse Message</button>
 
 
 </div>
 <div id="app-6">
     <p>{{ message }}</p>
     <input v-model="message">
-    <button v-on:click="toUpper">大写</button>
-    <button v-on:click="toLower">小写</button>
-    <button v-on:click="ajax">Ajax</button>
-    <button v-on:click="html">Html</button>
+    <button @click="toUpper">大写</button>
+    <button @click="toLower">小写</button>
+    <button @click="ajax">Ajax</button>
+    <button @click="html">Html</button>
 
     <div v-html="content"></div>
 </div>
@@ -68,7 +73,6 @@
     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
         Launch demo modal
     </button>
-
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -86,6 +90,20 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="app8">
+    <div class="column is-12">
+        <label class="label" for="email">Email</label>
+        <input id="email" name="email" type="text" v-validate data-vv-rules="required|email" :class="{'input': true, 'is-danger': errors.has('email') }" placeholder="Email">
+        <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+    </div>
+
+    <div class="column is-12">
+        <label class="label" for="name">Name</label>
+        <input id="name" name="name" type="text" v-validate data-vv-rules="required|alpha" :class="{'input': true, 'is-danger': errors.has('name') }" placeholder="Name">
+        <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
     </div>
 </div>
 

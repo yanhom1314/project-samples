@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.1.8",
-    "whatwg-fetch": "^2.0.1"
+    "vee-validate": "^2.0.0-beta.18",
+    "vue": "^2.1.8"
   },
   "devDependencies": {
     "babel": "^6.5.2",
