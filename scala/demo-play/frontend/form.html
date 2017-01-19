@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <title>Title</title>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/fetch/2.0.1/fetch.min.js"></script>
     <script src="//cdn.bootcss.com/vue/2.1.8/vue.min.js"></script>
     <script src="//cdn.bootcss.com/vee-validate/2.0.0-beta.18/vee-validate.min.js"></script>
 </head>
@@ -24,8 +26,9 @@
         <span v-show="errors.has('mobile')" class="help is-danger">{{ errors.first('mobile') }}</span>
     </div>
 </div>
-
-<!--  -->
+<a href="http://www.cnblogs.com/xxwang/p/6104715.html" target="_blank">[转]Vue2.0表单校验组件vee-validate的使用</a>
+<!-- -->
+<script src="/js/common.min.js"></script>
 <script src="/js/form.min.js"></script>
 </body>
 </html>

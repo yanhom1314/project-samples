@@ -1,37 +1,6 @@
-import fetch from 'fetch';
-import Vue from 'vue';
-import VeeValidate from 'vee-validate';
-import messagesCN from 'vee-locale-cn';
+import {Vue, Validator, fetch, jQuery, $} from "./vue_set";
 
-const config = {
-    errorBagName: 'errors', // change if property conflicts.
-    fieldsBagName: 'fields',
-    delay: 0,
-    locale: 'cn',
-    dictionary: {
-        cn: {
-            messages: messagesCN
-        }
-    }
-};
-Vue.use(VeeValidate, config);
-
-//
-// console.log("$:" + $.ajax() + " " + jQuery.ajax());
-// console.log("u:" + new u({
-//         el: '#app',
-//         data: {
-//             message: 'Hello Vue!'
-//         }
-//     }));
-// console.log("VeeValidate:"+VeeValidate);
-// console.log("f:" + f('/data/hello.json').then(function (response) {
-//         return response.json();
-//     }).then(function (data) {
-//         app6.message = JSON.stringify(data);
-//     }).catch(function (e) {
-//         console.log("Oops, error");
-//     }));
+console.log("$:jQuery:" + jQuery + " " + $);
 
 var app = new Vue({
     el: '#app',

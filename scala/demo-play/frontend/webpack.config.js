@@ -2,17 +2,17 @@ const webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-    // plugins: [
-    //     new webpack.optimize.CommonsChunkPlugin('common.min.js'),
-    //     new webpack.optimize.UglifyJsPlugin({
-    //         compress: {
-    //             warnings: false,
-    //         },
-    //         output: {
-    //             comments: false,
-    //         }
-    //     })
-    // ],
+    plugins: [
+        new webpack.optimize.CommonsChunkPlugin('common.min.js'),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false,
+        //     },
+        //     output: {
+        //         comments: false,
+        //     }
+        // })
+    ],
     entry: {
         index: './js/dev/index.js',
         demo: './js/dev/demo.js',

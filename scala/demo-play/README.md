@@ -16,8 +16,7 @@ This project demonstrate how to create a simple CRUD application with Play integ
            
         //全局安装webpack
         npm install webpack -g
-        npm install vue whatwg-fetch --save        
-       
+        
         //初始化package.json
         npm init
         
@@ -29,4 +28,24 @@ This project demonstrate how to create a simple CRUD application with Play integ
         
         //安装html loacer 的开发依赖
         npm install html-loader --save-dev
+
+#### vee-validate
+
++ `webpack.config.js`:
+
+        ...
+        module: {
+                loaders: [
+                    {
+                        test:/\.js$/,
+                        loader: 'babel-loader',
+                        query: {
+                            presets: ['es2015']
+                        }
+                    }
+                ]
+        }
+        ...
+        
+        
         
