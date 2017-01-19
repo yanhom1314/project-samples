@@ -25,7 +25,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: path.join(__dirname, 'es6'),
+                test:/\.js$/,
                 loader: 'babel-loader',
                 query: {
                     presets: ['es2015']
@@ -35,8 +35,9 @@ module.exports = {
     },
     //其它解决方案配置
     resolve: {
+        extensions: ['', '.js', '.json', '.coffee'],
         alias: {
-            'vee-locale-cn': '../../node_modules/vee-validate/dist/locale/zh_CN.js'
+            'vee-locale-cn': '../../node_modules/vee-validate/dist/locale/zh_CN'
         }
     },
     externals: {

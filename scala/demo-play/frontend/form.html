@@ -18,6 +18,11 @@
         <input id="name" name="name" type="text" v-validate data-vv-rules="required|alpha" :class="{'input': true, 'is-danger': errors.has('name') }" placeholder="Name">
         <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
     </div>
+    <div class="column is-12">
+        <label class="label" for="mobile">Mobile</label>
+        <input id="mobile" name="mobile" type="text" placeholder="Mobile" v-validate data-vv-rules="required|mobile" :class="{'input': true, 'is-danger': errors.has('mobile') }">
+        <span v-show="errors.has('mobile')" class="help is-danger">{{ errors.first('mobile') }}</span>
+    </div>
 </div>
 
 <!--  -->

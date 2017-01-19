@@ -1,9 +1,7 @@
-require("jquery");
-require("vue");
-require("fetch");
-
-var VeeValidate = require("vee-validate");
-var message = require("vee-locale-cn");
+import fetch from 'fetch';
+import Vue from 'vue';
+import VeeValidate from 'vee-validate';
+import messagesCN from 'vee-locale-cn';
 
 const config = {
     errorBagName: 'errors', // change if property conflicts.
@@ -12,10 +10,9 @@ const config = {
     locale: 'cn',
     dictionary: {
         cn: {
-            message
+            messages: messagesCN
         }
-    },
-    strict: true
+    }
 };
 Vue.use(VeeValidate, config);
 
