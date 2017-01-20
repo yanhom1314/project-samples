@@ -1,0 +1,35 @@
+Configuring hack2-contrib-2015.5.4...
+Building hack2-contrib-2015.5.4...
+Preprocessing library hack2-contrib-2015.5.4...
+[ 1 of 23] Compiling Hack2.Contrib.Middleware.XForwardedForToRemoteHost ( src\Hack2\Contrib\Middleware\XForwardedForToRemoteHost.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\XForwardedForToRemoteHost.o )
+[ 2 of 23] Compiling Hack2.Contrib.Middleware.Inspect ( src\Hack2\Contrib\Middleware\Inspect.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\Inspect.o )
+[ 3 of 23] Compiling Hack2.Contrib.Middleware.IOConfig ( src\Hack2\Contrib\Middleware\IOConfig.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\IOConfig.o )
+[ 4 of 23] Compiling Hack2.Contrib.Mime ( src\Hack2\Contrib\Mime.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Mime.o )
+[ 5 of 23] Compiling Hack2.Contrib.Middleware.Debug ( src\Hack2\Contrib\Middleware\Debug.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\Debug.o )
+[ 6 of 23] Compiling Hack2.Contrib.Middleware.Config ( src\Hack2\Contrib\Middleware\Config.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\Config.o )
+[ 7 of 23] Compiling Hack2.Contrib.Middleware.Censor ( src\Hack2\Contrib\Middleware\Censor.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\Censor.o )
+[ 8 of 23] Compiling Hack2.Contrib.Middleware.Cascade ( src\Hack2\Contrib\Middleware\Cascade.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\Cascade.o )
+[ 9 of 23] Compiling Hack2.Contrib.Constants ( src\Hack2\Contrib\Constants.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Constants.o )
+[10 of 23] Compiling Hack2.Contrib.AirBackports ( src\Hack2\Contrib\AirBackports.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\AirBackports.o )
+
+src\Hack2\Contrib\AirBackports.hs:40:14: Warning:
+    In the use of ‘readTime’
+    (imported from Data.Time, but defined in time-1.5.0.1:Data.Time.Format.Parse):
+    Deprecated: "use "parseTimeOrError True" instead"
+[11 of 23] Compiling Hack2.Contrib.Utils ( src\Hack2\Contrib\Utils.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Utils.o )
+[12 of 23] Compiling Hack2.Contrib.Middleware.URLMap ( src\Hack2\Contrib\Middleware\URLMap.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\URLMap.o )
+[13 of 23] Compiling Hack2.Contrib.Response ( src\Hack2\Contrib\Response.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Response.o )
+[14 of 23] Compiling Hack2.Contrib.Middleware.NotFound ( src\Hack2\Contrib\Middleware\NotFound.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\NotFound.o )
+[15 of 23] Compiling Hack2.Contrib.Middleware.BounceFavicon ( src\Hack2\Contrib\Middleware\BounceFavicon.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\BounceFavicon.o )
+[16 of 23] Compiling Hack2.Contrib.Middleware.ContentLength ( src\Hack2\Contrib\Middleware\ContentLength.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\ContentLength.o )
+[17 of 23] Compiling Hack2.Contrib.Middleware.ContentType ( src\Hack2\Contrib\Middleware\ContentType.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\ContentType.o )
+[18 of 23] Compiling Hack2.Contrib.Middleware.Head ( src\Hack2\Contrib\Middleware\Head.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\Head.o )
+[19 of 23] Compiling Hack2.Contrib.Middleware.UserMime ( src\Hack2\Contrib\Middleware\UserMime.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\UserMime.o )
+[20 of 23] Compiling Hack2.Contrib.Middleware.File ( src\Hack2\Contrib\Middleware\File.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\File.o )
+[21 of 23] Compiling Hack2.Contrib.Request ( src\Hack2\Contrib\Request.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Request.o )
+[22 of 23] Compiling Hack2.Contrib.Middleware.SimpleAccessLogger ( src\Hack2\Contrib\Middleware\SimpleAccessLogger.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\SimpleAccessLogger.o )
+[23 of 23] Compiling Hack2.Contrib.Middleware.Static ( src\Hack2\Contrib\Middleware\Static.hs, .stack-work\dist\2672c1f3\build\Hack2\Contrib\Middleware\Static.o )
+In-place registering hack2-contrib-2015.5.4...
+Installing library in
+E:\Github\project-samples\haskell\hs-demo\.stack-work\install\e4ebb170\lib\x86_64-windows-ghc-7.10.3\hack2-contrib-2015.5.4-HN9ESazyFYmHUGp5hjaDwV
+Registering hack2-contrib-2015.5.4...

@@ -1,0 +1,21 @@
+Warning: hack2-handler-snap-server.cabal: Unknown fields: build-depends (line
+10)
+Fields allowed in this section:
+name, version, cabal-version, build-type, license, license-file,
+license-files, copyright, maintainer, stability, homepage,
+package-url, bug-reports, synopsis, description, category, author,
+tested-with, data-files, data-dir, extra-source-files,
+extra-tmp-files, extra-doc-files
+Configuring hack2-handler-snap-server-2015.3.9...
+Building hack2-handler-snap-server-2015.3.9...
+Preprocessing library hack2-handler-snap-server-2015.3.9...
+[1 of 1] Compiling Hack2.Handler.SnapServer ( src\Hack2\Handler\SnapServer.hs, .stack-work\dist\2672c1f3\build\Hack2\Handler\SnapServer.o )
+
+src\Hack2\Handler\SnapServer.hs:120:11: Warning:
+    In the use of ‘Snap.getRequestBody’
+    (imported from Snap.Core, but defined in snap-core-0.9.8.0:Snap.Internal.Types):
+    Deprecated: "As of 0.6, please use 'readRequestBody' instead"
+In-place registering hack2-handler-snap-server-2015.3.9...
+Installing library in
+E:\Github\project-samples\haskell\hs-demo\.stack-work\install\e4ebb170\lib\x86_64-windows-ghc-7.10.3\hack2-handler-snap-server-2015.3.9-DAebjvoiGLsCyBJhtb8Kzn
+Registering hack2-handler-snap-server-2015.3.9...

@@ -1,0 +1,32 @@
+import System.Nemesis.Env
+import Air.Env
+import Prelude ()
+
+main = run - do
+
+  clean
+    [ "**/*.hi"
+    , "**/*.o"
+    , "manifest"
+    ]
+
+  desc "prepare cabal dist"
+  task "dist" - do
+    sh "cabal clean"
+    sh "cabal configure"
+    sh "cabal sdist"
+
+  desc "start console"
+  task "i" (sh "ghci -isrc -Wall src/maid.hs")
+
+  desc "put all .hs files in manifest"
+  task "manifest" - do
+    sh "find . | grep 'hs$' > manifest"
+
+  desc "show sloc"
+  task "stat" - do
+    sh "cloc -match-f=hs$ --quiet src --no3"
+
+  desc "run"
+  task "run" - do
+    sh "runghc -isrc src/maid.hs"

@@ -1,0 +1,8 @@
+Installing executable(s) in
+E:\Github\project-samples\haskell\hs-demo\.cabal-sandbox\bin
+mpiling Geometry.Cuboid  ( src\Geometry\Cuboid.hs, dist\dist-sandbox-84458669\build\hs-demo\hs-demo-tmp\Geometry\Cuboid.o )
+[2 of 5] Compiling Ext.Util         ( src\Ext\Util.hs, dist\dist-sandbox-84458669\build\hs-demo\hs-demo-tmp\Ext\Util.o )
+[3 of 5] Compiling Geometry.Cube    ( src\Geometry\Cube.hs, dist\dist-sandbox-84458669\build\hs-demo\hs-demo-tmp\Geometry\Cube.o )
+[4 of 5] Compiling Geometry.Sphere  ( src\Geometry\Sphere.hs, dist\dist-sandbox-84458669\build\hs-demo\hs-demo-tmp\Geometry\Sphere.o )
+[5 of 5] Compiling Main             ( src\Main.hs, dist\dist-sandbox-84458669\build\hs-demo\hs-demo-tmp\Main.o )
+Linking dist/dist-sandbox-84458669\build\hs-demo\hs-demo.exe ...

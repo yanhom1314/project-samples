@@ -1,0 +1,65 @@
+
+==================== FINAL INTERFACE ====================
+2017-01-10 03:00:00.5369869 UTC
+
+interface main@main:Ext.Math 7103
+  interface hash: 532cc9b202b8ada5927ee8f5d5c6c875
+  ABI hash: 8a6d9e9e1a2976cf4f42853bd789c434
+  export-list hash: 9ef4c17849ca3e7dc3871d88db2c4808
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 7a583cb090672d7ac429a78087baa51b
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Ext.Math.add
+  Ext.Math.add'
+  Ext.Math.double
+  Ext.Math.fac
+module dependencies:
+package dependencies: base-4.8.2.0* ghc-prim-0.4.0.0
+                      integer-gmp-1.0.0.0
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Monoid
+                         base-4.8.2.0:Data.Type.Equality base-4.8.2.0:GHC.Generics
+import  -/  base-4.8.2.0:GHC.Num 9f42750c866f5832ca565146bd660c60
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+import  -/  integer-gmp-1.0.0.0:GHC.Integer.Type 906b37a40029a8b67c803fa4b303a827
+21607cda4f50569ad21631a4a7478cfb
+  _fac ::
+    GHC.Integer.Type.Integer
+    -> GHC.Integer.Type.Integer -> GHC.Integer.Type.Integer
+  {- Arity: 2, Strictness: <S,U><S,U> -}
+95f7acef21fe471d3ebe2800bb66f1c1
+  add :: (GHC.Types.Int, GHC.Types.Int) -> GHC.Types.Int
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(SS),1*U(1*U(U),1*U(U))>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ ds :: (GHC.Types.Int, GHC.Types.Int) ->
+                 case ds of wild { (,) x y -> GHC.Num.$fNumInt_$c+ x y }) -}
+0dbb09912a326e27dfe138a9ea8a79b4
+  add' :: GHC.Types.Int -> GHC.Types.Int -> GHC.Types.Int
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U(U)><S,1*U(U)>m,
+     Unfolding: InlineRule (0, True, True) GHC.Num.$fNumInt_$c+ -}
+68b1ef481b19aec0053ecef653e38176
+  double :: GHC.Types.Int -> GHC.Types.Int
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,U(U)>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ x :: GHC.Types.Int -> GHC.Num.$fNumInt_$c+ x x) -}
+3725f8ed56a8463fd45914e3156447b8
+  fac :: GHC.Integer.Type.Integer -> GHC.Integer.Type.Integer
+  {- Arity: 1, Strictness: <S,U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ n :: GHC.Integer.Type.Integer ->
+                 Ext.Math._fac n Ext.Math.fac1) -}
+ac14ea14b846517aa230d5dbb35024d5
+  fac1 :: GHC.Integer.Type.Integer
+  {- HasNoCafRefs, Unfolding: (__integer 1) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+

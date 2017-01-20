@@ -1,0 +1,30 @@
+Building old-time-1.1.0.3...
+Preprocessing library old-time-1.1.0.3...
+Time.hsc: In function 'main':
+Time.hsc:361:5: error: 'struct tm' has no member named 'tm_zone'
+Time.hsc:362:5: error: 'struct tm' has no member named 'tm_gmtoff'
+compiling dist\dist-sandbox-84458669\build\System\Time_hsc_make.c failed (exit code 1)
+command was: D:\Tools\minghc\ghc-7.10.2\mingw\bin\gcc.exe -c dist\dist-sandbox-84458669\build\System\Time_hsc_make.c -o dist\dist-sandbox-84458669\build\System\Time_hsc_make.o -D__GLASGOW_HASKELL__=710 -Dmingw32_BUILD_OS=1 -Dx86_64_BUILD_ARCH=1 -Dmingw32_HOST_OS=1 -Dx86_64_HOST_ARCH=1 -Iinclude -Idist/dist-sandbox-84458669\build\autogen -include dist/dist-sandbox-84458669\build\autogen\cabal_macros.h -ID:\Tools\minghc\ghc-7.10.2\lib\base_GDytRqRVSUX7zckgKqJjgw\include -ID:\Tools\minghc\ghc-7.10.2\lib\integ_2aU3IZNMF9a7mQ0OzsZ0dS\include -ID:\Tools\minghc\ghc-7.10.2\lib/include -ID:\Tools\minghc\ghc-7.10.2/lib/include/
+dint.h... yes
+checking for unistd.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking sys/timeb.h usability... yes
+checking sys/timeb.h presence... yes
+checking for sys/timeb.h... yes
+checking time.h usability... yes
+checking time.h presence... yes
+checking for time.h... yes
+checking for ftime... yes
+checking for gmtime_r... yes
+checking for localtime_r... yes
+checking for gettimeofday... yes
+checking whether struct tm is in sys/time.h or time.h... time.h
+checking for struct tm.tm_zone... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking for sys/time.h... (cached) yes
+checking whether altzone is declared... no
+configure: creating ./config.status
+config.status: creating include/HsTimeConfig.h
+configure: WARNING: unrecognized options: --with-compiler, --with-gcc

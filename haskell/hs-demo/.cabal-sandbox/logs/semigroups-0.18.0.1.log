@@ -1,0 +1,6 @@
+Registering semigroups-0.18.0.1...
+ject-samples\haskell\hs-demo\.cabal-sandbox\x86_64-windows-ghc-7.10.2\semigroups-0.18.0.1-JFY48pwG5NAKkalkWeHKCJ
+ dist\dist-sandbox-84458669\build\Data\List\NonEmpty.o )
+[2 of 3] Compiling Data.Semigroup   ( src-ghc7\Data\Semigroup.hs, dist\dist-sandbox-84458669\build\Data\Semigroup.o )
+[3 of 3] Compiling Data.Semigroup.Generic ( src\Data\Semigroup\Generic.hs, dist\dist-sandbox-84458669\build\Data\Semigroup\Generic.o )
+In-place registering semigroups-0.18.0.1...

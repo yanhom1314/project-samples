@@ -1,0 +1,6 @@
+Registering monad-journal-0.7.1...
+ject-samples\haskell\hs-demo\.cabal-sandbox\x86_64-windows-ghc-7.10.2\monad-journal-0.7.1-7WxyIYG1jJsBNbGpQO5wvY
+Class.hs, dist\dist-sandbox-84458669\build\Control\Monad\Journal\Class.o )
+[2 of 3] Compiling Control.Monad.Trans.Journal ( Control\Monad\Trans\Journal.hs, dist\dist-sandbox-84458669\build\Control\Monad\Trans\Journal.o )
+[3 of 3] Compiling Control.Monad.Journal ( Control\Monad\Journal.hs, dist\dist-sandbox-84458669\build\Control\Monad\Journal.o )
+In-place registering monad-journal-0.7.1...

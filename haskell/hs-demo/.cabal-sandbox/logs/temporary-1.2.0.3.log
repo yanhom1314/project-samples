@@ -1,0 +1,6 @@
+Registering temporary-1.2.0.3...
+roject-samples\haskell\hs-demo\.cabal-sandbox\x86_64-windows-ghc-7.10.2\temporary-1.2.0.3-HuHKxSr00So8futlrErsn0
+ception.hs, dist\dist-sandbox-84458669\build\Distribution\Compat\Exception.o )
+[2 of 3] Compiling Distribution.Compat.TempFile ( Distribution\Compat\TempFile.hs, dist\dist-sandbox-84458669\build\Distribution\Compat\TempFile.o )
+[3 of 3] Compiling System.IO.Temp   ( System\IO\Temp.hs, dist\dist-sandbox-84458669\build\System\IO\Temp.o )
+In-place registering temporary-1.2.0.3...

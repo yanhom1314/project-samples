@@ -1,0 +1,9 @@
+Registering network-uri-2.6.0.3...
+ject-samples\haskell\hs-demo\.cabal-sandbox\x86_64-windows-ghc-7.10.2\network-uri-2.6.0.3-LFMzacKIfjmC6gRt5N3aSz
+-84458669\build\Network\URI.o )
+
+Network\URI.hs:129:1: Warning:
+    The import of ¡®Data.Traversable¡¯ is redundant
+      except perhaps to import instances from ¡®Data.Traversable¡¯
+    To import instances alone, use: import Data.Traversable()
+In-place registering network-uri-2.6.0.3...

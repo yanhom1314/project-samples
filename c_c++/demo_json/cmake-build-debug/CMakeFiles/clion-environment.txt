@@ -1,0 +1,2 @@
+ToolSet: w64 5.0@D:\Tools\msys2\mingw64
+CMake: 3.7.0@D:\Tools\msys2\mingw64\bin\cmake.exe

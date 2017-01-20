@@ -1,0 +1,76 @@
+
+==================== FINAL INTERFACE ====================
+2017-01-10 03:00:01.066586 UTC
+
+interface main@main:Main 7103
+  interface hash: b6301c0213a63a903bea08012b3eba79
+  ABI hash: 5920b07c2c1b1666f22bfb7b93f3f601
+  export-list hash: 46f0917bdf30efecb0171064e05f0625
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 1396546b5e520ed36691016ac6281c27
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Main.main
+module dependencies: Ext.Math Ext.Tcp Ext.Util Geometry.Cube
+                     Geometry.Cuboid Geometry.Sphere
+package dependencies: base-4.8.2.0 ghc-prim-0.4.0.0
+                      integer-gmp-1.0.0.0 network-2.6.2.1@netwo_JvRqUnCVngAETdubChvApm
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+         network-2.6.2.1@netwo_JvRqUnCVngAETdubChvApm:Network.Socket
+         network-2.6.2.1@netwo_JvRqUnCVngAETdubChvApm:Network.Socket.Types
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Monoid
+                         base-4.8.2.0:Data.Type.Equality base-4.8.2.0:GHC.Generics
+import  -/  base-4.8.2.0:GHC.Base a4939789b2cfd60b36ed163e56a623cd
+import  -/  base-4.8.2.0:GHC.List 0c736920522bbd14b770342776012ab6
+import  -/  base-4.8.2.0:GHC.Show 0e1d8380a8fb0cfb07ebeda3b70cbf38
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+import  -/  base-4.8.2.0:System.IO 638c10c4fd4901a0aca5b77c9f14123d
+import  -/  base-4.8.2.0:Text.Printf 0276d4e7547f991f04a90f6b1e7f1f46
+import  -/  ghc-prim-0.4.0.0:GHC.Types 6b27fb3fdbd0e3f0925a4496c66513bb
+import  -/  Ext.Math 8a6d9e9e1a2976cf4f42853bd789c434
+  exports: 9ef4c17849ca3e7dc3871d88db2c4808
+  add 95f7acef21fe471d3ebe2800bb66f1c1
+  add' 0dbb09912a326e27dfe138a9ea8a79b4
+  double 68b1ef481b19aec0053ecef653e38176
+  fac 3725f8ed56a8463fd45914e3156447b8
+import  -/  Ext.Tcp 6de47bf6b81d6c0128e08c1eb375a5d0
+  exports: d953bf22da3de7fbad2bc908cb0e870e
+import  -/  Ext.Util 841044a274b8c769119446f5af451507
+  exports: 65709767b4d15227f97a10e37fe6e601
+  boomBangs 7bb004bc18bd23a0717a18531e8c2d6f
+  reverseWords 84e66c902b4e4b179944337fca79064f
+import  -/  Geometry.Cube c8b46105e38fd47e224c9c361388c611
+  exports: f0acedbde8fe65dac691d0fbe4fcc4b3
+  area b847c0fb1c2a2d87035358816da23d80
+import  -/  Geometry.Sphere 487d84bbbbcf6e6cd4a12f8c2c1172fc
+  exports: 26a5470c7326af311dc92b065831f8b1
+  sumArea c00809ef6e02a4efbf987ee13a870573
+ee6590a2ab0ffaa5074d93f2d3fc4c03
+  main :: GHC.Types.IO ()
+  {- Arity: 1, Strictness: <L,U>,
+     Unfolding: InlineRule (0, True, True)
+                Main.main1 `cast` (Sym (GHC.Types.NTCo:IO[0] <()>_R)) -}
+e3bd864fe81295cabb6b36ca45539f6f
+  main1 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1, Strictness: <L,U> -}
+e0cb4c8d876273838c3b9b94e525a859
+  main2 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1,
+     Unfolding: (GHC.TopHandler.runMainIO1
+                   @ ()
+                   Main.main1 `cast` (Sym (GHC.Types.NTCo:IO[0] <()>_R))) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+

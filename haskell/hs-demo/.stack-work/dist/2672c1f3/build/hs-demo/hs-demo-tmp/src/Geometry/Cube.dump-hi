@@ -1,0 +1,48 @@
+
+==================== FINAL INTERFACE ====================
+2017-01-10 03:00:00.7964052 UTC
+
+interface main@main:Geometry.Cube 7103
+  interface hash: 5752500a3ab16fdb4c6aa708475bb4ce
+  ABI hash: c8b46105e38fd47e224c9c361388c611
+  export-list hash: f0acedbde8fe65dac691d0fbe4fcc4b3
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: d5583d8f9222577027e54ce7312b112b
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Geometry.Cube.area
+  Geometry.Cube.volume
+module dependencies: Geometry.Cuboid
+package dependencies: base-4.8.2.0* ghc-prim-0.4.0.0
+                      integer-gmp-1.0.0.0
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Monoid
+                         base-4.8.2.0:Data.Type.Equality base-4.8.2.0:GHC.Generics
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+import  -/  Geometry.Cuboid 88025eae22c6031ea651799950596827
+  exports: 3d3a71592106b913dd8689be27a89f34
+  area 19c9f3fe146910db0a2d3c46f11d1281
+  volume 394a271459f2632563cc554edbcd6ce3
+b847c0fb1c2a2d87035358816da23d80
+  area :: GHC.Types.Float -> GHC.Types.Float
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,U(U)>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ side :: GHC.Types.Float ->
+                 Geometry.Cuboid.area side side side) -}
+d5c06df7af7f1beea481a1daa043d196
+  volume :: GHC.Types.Float -> GHC.Types.Float
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,U(U)>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ side :: GHC.Types.Float ->
+                 Geometry.Cuboid.volume side side side) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+

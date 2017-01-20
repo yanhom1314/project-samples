@@ -1,0 +1,16 @@
+Warning: maid.cabal: Unknown fields: build-depends (line 13)
+Fields allowed in this section:
+name, version, cabal-version, build-type, license, license-file,
+license-files, copyright, maintainer, stability, homepage,
+package-url, bug-reports, synopsis, description, category, author,
+tested-with, data-files, data-dir, extra-source-files,
+extra-tmp-files, extra-doc-files
+Configuring maid-2014.10.14...
+Building maid-2014.10.14...
+Preprocessing executable 'maid' for maid-2014.10.14...
+[1 of 3] Compiling Web.Maid.DefaultCSSStyle ( src\Web\Maid\DefaultCSSStyle.hs, .stack-work\dist\2672c1f3\build\maid\maid-tmp\Web\Maid\DefaultCSSStyle.o )
+[2 of 3] Compiling Web.Maid.ApacheMimeTypes ( src\Web\Maid\ApacheMimeTypes.hs, .stack-work\dist\2672c1f3\build\maid\maid-tmp\Web\Maid\ApacheMimeTypes.o )
+[3 of 3] Compiling Main             ( src\maid.hs, .stack-work\dist\2672c1f3\build\maid\maid-tmp\Main.o )
+Linking .stack-work\dist\2672c1f3\build\maid\maid.exe ...
+Installing executable(s) in
+E:\Github\project-samples\haskell\hs-demo\.stack-work\install\e4ebb170\bin

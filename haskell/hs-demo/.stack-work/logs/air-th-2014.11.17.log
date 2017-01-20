@@ -1,0 +1,28 @@
+Warning: air-th.cabal: Unknown fields: build-depends (line 9)
+Fields allowed in this section:
+name, version, cabal-version, build-type, license, license-file,
+license-files, copyright, maintainer, stability, homepage,
+package-url, bug-reports, synopsis, description, category, author,
+tested-with, data-files, data-dir, extra-source-files,
+extra-tmp-files, extra-doc-files
+Configuring air-th-2014.11.17...
+Building air-th-2014.11.17...
+Preprocessing library air-th-2014.11.17...
+[1 of 5] Compiling Air.Data.Record.SimpleLabel.TH ( src\Air\Data\Record\SimpleLabel\TH.hs, .stack-work\dist\2672c1f3\build\Air\Data\Record\SimpleLabel\TH.o )
+[2 of 5] Compiling Air.TH.Air       ( src\Air\TH\Air.hs, .stack-work\dist\2672c1f3\build\Air\TH\Air.o )
+[3 of 5] Compiling Air.TH.Default   ( src\Air\TH\Default.hs, .stack-work\dist\2672c1f3\build\Air\TH\Default.o )
+[4 of 5] Compiling Air.TH.Here      ( src\Air\TH\Here.hs, .stack-work\dist\2672c1f3\build\Air\TH\Here.o )
+
+src\Air\TH\Here.hs:12:3: Warning:
+    Fields of ‘QuasiQuoter’ not initialised: quoteType, quoteDec
+    In the expression:
+      QuasiQuoter {quoteExp = litE . stringL, quotePat = litP . stringL}
+    In an equation for ‘here’:
+        here
+          = QuasiQuoter
+              {quoteExp = litE . stringL, quotePat = litP . stringL}
+[5 of 5] Compiling Air.TH           ( src\Air\TH.hs, .stack-work\dist\2672c1f3\build\Air\TH.o )
+In-place registering air-th-2014.11.17...
+Installing library in
+E:\Github\project-samples\haskell\hs-demo\.stack-work\install\e4ebb170\lib\x86_64-windows-ghc-7.10.3\air-th-2014.11.17-LCmpbfs1A46CJLOhAidwVC
+Registering air-th-2014.11.17...

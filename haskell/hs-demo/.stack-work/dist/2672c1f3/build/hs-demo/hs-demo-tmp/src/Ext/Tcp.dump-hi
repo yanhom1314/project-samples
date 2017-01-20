@@ -1,0 +1,101 @@
+
+==================== FINAL INTERFACE ====================
+2017-01-10 03:00:00.4489277 UTC
+
+interface main@main:Ext.Tcp 7103
+  interface hash: c0acb1dfd099bacb403b615435922664
+  ABI hash: 6de47bf6b81d6c0128e08c1eb375a5d0
+  export-list hash: d953bf22da3de7fbad2bc908cb0e870e
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 7a583cb090672d7ac429a78087baa51b
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Ext.Tcp.start
+module dependencies:
+package dependencies: base-4.8.2.0 ghc-prim-0.4.0.0
+                      integer-gmp-1.0.0.0 network-2.6.2.1@netwo_JvRqUnCVngAETdubChvApm
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+         network-2.6.2.1@netwo_JvRqUnCVngAETdubChvApm:Network.Socket
+         network-2.6.2.1@netwo_JvRqUnCVngAETdubChvApm:Network.Socket.Types
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Monoid
+                         base-4.8.2.0:Data.Type.Equality base-4.8.2.0:GHC.Generics
+import  -/  base-4.8.2.0:Control.Concurrent 8a4787cfed5492856418e8eab496fadb
+import  -/  base-4.8.2.0:GHC.Conc.Sync e56817ef33471434aa51ef212cff6db1
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+import  -/  base-4.8.2.0:System.IO 638c10c4fd4901a0aca5b77c9f14123d
+import  -/  ghc-prim-0.4.0.0:GHC.Types 6b27fb3fdbd0e3f0925a4496c66513bb
+import  -/  network-2.6.2.1@netwo_JvRqUnCVngAETdubChvApm:Network.Socket 49bb16607700aaa61f1ea346988766be
+import  -/  network-2.6.2.1@netwo_JvRqUnCVngAETdubChvApm:Network.Socket.Types bee8156c6418ab89915ba14938ec31b5
+7fddfae056e51b6c9c4b893f76a0b2c3
+  $wa ::
+    Foreign.C.Types.CInt
+    -> Network.Socket.Types.Family
+    -> Network.Socket.Types.SocketType
+    -> Network.Socket.Types.ProtocolNumber
+    -> GHC.Prim.MVar#
+         GHC.Prim.RealWorld Network.Socket.Types.SocketStatus
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 6, Strictness: <L,U(U)><L,U><L,U><L,U(U)><L,U><L,U>,
+     Inline: [0] -}
+76dfa3b663b454903aa4fd766b1b1dab
+  start :: GHC.Types.IO ()
+  {- Arity: 1, Strictness: <L,U>,
+     Unfolding: InlineRule (0, True, True)
+                Ext.Tcp.start1 `cast` (Sym (GHC.Types.NTCo:IO[0] <()>_R)) -}
+02b19721571dea151397fa8b83e138be
+  start1 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1, Strictness: <L,U>,
+     Unfolding: (\ s :: GHC.Prim.State# GHC.Prim.RealWorld[OneShot] ->
+                 case Network.Socket.$wa19
+                        Network.Socket.Types.AF_INET
+                        Network.Socket.Types.Stream
+                        0
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of ww { Network.Socket.Types.MkSocket ww1 ww2 ww3 ww4 ww5 ->
+                 case Network.Socket.$wa3
+                        ww1
+                        ww5
+                        Ext.Tcp.start3
+                        ipv of ds2 { (#,#) ipv2 ipv3 ->
+                 case Network.Socket.$wa9
+                        ww1
+                        ww5
+                        Ext.Tcp.start2
+                        ipv2 of ds3 { (#,#) ipv4 ipv5 ->
+                 case ww5 of ww7 { GHC.MVar.MVar ww8 ->
+                 Ext.Tcp.$wa ww1 ww2 ww3 ww4 ww8 ipv4 } } } } }) -}
+4ad45b34b25aaea1ab9bf2d654aa6123
+  start2 :: GHC.Types.Int
+  {- HasNoCafRefs, Unfolding: (GHC.Types.I# 10240) -}
+b4827fdc89f0b4b8ab32c13009f0a9dd
+  start3 :: Network.Socket.Types.SockAddr
+  {- Unfolding: (Network.Socket.Types.SockAddrInet
+                   Ext.Tcp.start4
+                   Network.Socket.iNADDR_ANY) -}
+1d67dccca11a36cee20cb95b44668e14
+  start4 :: Network.Socket.Types.PortNumber
+  {- Unfolding: (case {__pkg_ccall network-2.6.2.1@netwo_JvRqUnCVngAETdubChvApm htons GHC.Prim.Word#
+                                                                                      -> GHC.Prim.State#
+                                                                                           GHC.Prim.RealWorld
+                                                                                      -> (# GHC.Prim.State#
+                                                                                              GHC.Prim.RealWorld,
+                                                                                            GHC.Prim.Word# #)}
+                        __word 4242
+                        GHC.Prim.realWorld# of wild1 { (#,#) ds ds1 ->
+                 (GHC.Word.W16# (GHC.Prim.narrow16Word# ds1))
+                   `cast`
+                 (Sym (Network.Socket.Types.NTCo:PortNumber[0])) }) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+

@@ -1,0 +1,62 @@
+Configuring snap-server-0.9.5.1...
+Building snap-server-0.9.5.1...
+Preprocessing library snap-server-0.9.5.1...
+[ 1 of 16] Compiling Snap.Internal.Http.Server.Address ( src\Snap\Internal\Http\Server\Address.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server\Address.o )
+[ 2 of 16] Compiling Snap.Internal.Http.Server.Backend ( src\Snap\Internal\Http\Server\Backend.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server\Backend.o )
+[ 3 of 16] Compiling Snap.Internal.Http.Server.HttpPort ( src\Snap\Internal\Http\Server\HttpPort.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server\HttpPort.o )
+
+src\Snap\Internal\Http\Server\HttpPort.hs:15:1: Warning:
+    The import of ‘Foreign’ is redundant
+      except perhaps to import instances from ‘Foreign’
+    To import instances alone, use: import Foreign()
+[ 4 of 16] Compiling Snap.Internal.Http.Server.TLS ( src\Snap\Internal\Http\Server\TLS.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server\TLS.o )
+[ 5 of 16] Compiling Snap.Internal.Http.Server.ListenHelpers ( src\Snap\Internal\Http\Server\ListenHelpers.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server\ListenHelpers.o )
+[ 6 of 16] Compiling Snap.Internal.Http.Parser ( src\Snap\Internal\Http\Parser.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Parser.o )
+
+src\Snap\Internal\Http\Parser.hs:24:1: Warning:
+    Module ‘Data.Attoparsec’ is deprecated:
+      This module will be removed in the next major release.
+
+src\Snap\Internal\Http\Parser.hs:30:1: Warning:
+    The qualified import of ‘Data.ByteString.Lazy.Char8’ is redundant
+      except perhaps to import instances from ‘Data.ByteString.Lazy.Char8’
+    To import instances alone, use: import Data.ByteString.Lazy.Char8()
+[ 7 of 16] Compiling Paths_snap_server ( .stack-work\dist\2672c1f3\build\autogen\Paths_snap_server.hs, .stack-work\dist\2672c1f3\build\Paths_snap_server.o )
+[ 8 of 16] Compiling Snap.Internal.Http.Server.Date ( src\Snap\Internal\Http\Server\Date.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server\Date.o )
+[ 9 of 16] Compiling Control.Concurrent.Extended ( src\Control\Concurrent\Extended.hs, .stack-work\dist\2672c1f3\build\Control\Concurrent\Extended.o )
+[10 of 16] Compiling Snap.Internal.Http.Server.TimeoutManager ( src\Snap\Internal\Http\Server\TimeoutManager.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server\TimeoutManager.o )
+[11 of 16] Compiling Snap.Internal.Http.Server.SimpleBackend ( src\Snap\Internal\Http\Server\SimpleBackend.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server\SimpleBackend.o )
+
+src\Snap\Internal\Http\Server\SimpleBackend.hs:28:1: Warning:
+    The import of ‘GHC.Conc’ is redundant
+      except perhaps to import instances from ‘GHC.Conc’
+    To import instances alone, use: import GHC.Conc()
+[12 of 16] Compiling System.FastLogger ( src\System\FastLogger.hs, .stack-work\dist\2672c1f3\build\System\FastLogger.o )
+
+src\System\FastLogger.hs:31:1: Warning:
+    The import of ‘Data.Monoid’ is redundant
+      except perhaps to import instances from ‘Data.Monoid’
+    To import instances alone, use: import Data.Monoid()
+[13 of 16] Compiling Snap.Internal.Http.Server ( src\Snap\Internal\Http\Server.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server.o )
+
+src\Snap\Internal\Http\Server.hs:38:1: Warning:
+    The import of ‘Data.Monoid’ is redundant
+      except perhaps to import instances from ‘Data.Monoid’
+    To import instances alone, use: import Data.Monoid()
+[14 of 16] Compiling Snap.Internal.Http.Server.Config ( src\Snap\Internal\Http\Server\Config.hs, .stack-work\dist\2672c1f3\build\Snap\Internal\Http\Server\Config.o )
+
+src\Snap\Internal\Http\Server\Config.hs:22:1: Warning:
+    The import of ‘Data.Char’ is redundant
+      except perhaps to import instances from ‘Data.Char’
+    To import instances alone, use: import Data.Char()
+[15 of 16] Compiling Snap.Http.Server.Config ( src\Snap\Http\Server\Config.hs, .stack-work\dist\2672c1f3\build\Snap\Http\Server\Config.o )
+[16 of 16] Compiling Snap.Http.Server ( src\Snap\Http\Server.hs, .stack-work\dist\2672c1f3\build\Snap\Http\Server.o )
+
+src\Snap\Http\Server.hs:27:1: Warning:
+    The import of ‘Data.List’ is redundant
+      except perhaps to import instances from ‘Data.List’
+    To import instances alone, use: import Data.List()
+In-place registering snap-server-0.9.5.1...
+Installing library in
+C:\Users\YaFengLi\AppData\Roaming\stack\snapshots\9207a9de\lib\x86_64-windows-ghc-7.10.3\snap-server-0.9.5.1-CKbOgNlrj5UJtGmhtF78mC
+Registering snap-server-0.9.5.1...

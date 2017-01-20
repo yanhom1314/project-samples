@@ -1,0 +1,13 @@
+Registering fclabels-2.0.2.3...
+project-samples\haskell\hs-demo\.cabal-sandbox\x86_64-windows-ghc-7.10.2\fclabels-2.0.2.3-5JuYl5UHAG1IVexeybwVOI
+-sandbox-84458669\build\Data\Label\Point.o )
+[ 2 of 10] Compiling Data.Label.Poly  ( src\Data\Label\Poly.hs, dist\dist-sandbox-84458669\build\Data\Label\Poly.o )
+[ 3 of 10] Compiling Data.Label.Mono  ( src\Data\Label\Mono.hs, dist\dist-sandbox-84458669\build\Data\Label\Mono.o )
+[ 4 of 10] Compiling Data.Label.Derive ( src\Data\Label\Derive.hs, dist\dist-sandbox-84458669\build\Data\Label\Derive.o )
+[ 5 of 10] Compiling Data.Label.Partial ( src\Data\Label\Partial.hs, dist\dist-sandbox-84458669\build\Data\Label\Partial.o )
+[ 6 of 10] Compiling Data.Label.Failing ( src\Data\Label\Failing.hs, dist\dist-sandbox-84458669\build\Data\Label\Failing.o )
+[ 7 of 10] Compiling Data.Label.Total ( src\Data\Label\Total.hs, dist\dist-sandbox-84458669\build\Data\Label\Total.o )
+[ 8 of 10] Compiling Data.Label.Monadic ( src\Data\Label\Monadic.hs, dist\dist-sandbox-84458669\build\Data\Label\Monadic.o )
+[ 9 of 10] Compiling Data.Label       ( src\Data\Label.hs, dist\dist-sandbox-84458669\build\Data\Label.o )
+[10 of 10] Compiling Data.Label.Base  ( src\Data\Label\Base.hs, dist\dist-sandbox-84458669\build\Data\Label\Base.o )
+In-place registering fclabels-2.0.2.3...
