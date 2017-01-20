@@ -1,3 +1,0 @@
-D:\Tools\msys2\mingw64\bin\cmake.exe -E remove -f CMakeFiles\demo_json.dir/objects.a
-D:\Tools\msys2\mingw64\bin\ar.exe cr CMakeFiles\demo_json.dir/objects.a @CMakeFiles\demo_json.dir\objects1.rsp
-D:\Tools\msys2\mingw64\bin\gcc.exe  -g   -Wl,--whole-archive CMakeFiles\demo_json.dir/objects.a -Wl,--no-whole-archive  -o demo_json.exe -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\demo_json.dir\linklibs.rsp

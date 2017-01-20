@@ -54,3 +54,4 @@ pkg/
 
 #CMake
 CMakeFiles/
+cmake-build-debug/
