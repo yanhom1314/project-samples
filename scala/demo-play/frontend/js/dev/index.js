@@ -66,24 +66,22 @@ var app6 = new Vue({
             if (window.confirm("To lower!"))
                 this.message = this.message.toLowerCase();
         },
-        ajax: function () {
-            var msg = this.message;
+        ajax: () => {
             fetch('/data/hello.json').then(function (response) {
                 return response.json();
             }).then(function (data) {
                 app6.message = JSON.stringify(data);
             }).catch(function (e) {
-                console.log("Oops, error");
+                console.log("Exception:" + e);
             });
         },
-        html: function () {
-            var msg = this.message;
+        html: () => {
             fetch('/nothing.html').then(function (response) {
                 return response.text();
             }).then(function (text) {
                 app6.content = text;
             }).catch(function (e) {
-                console.log("Oops, error");
+                console.log("Exception:" + e);
             });
         }
     }
@@ -104,10 +102,6 @@ var app7 = new Vue({
             {text: 'Whatever else humans are supposed to eat'}
         ]
     }
-});
-
-var app8 = new Vue({
-    el: "#app8"
 });
 
 //window.onload

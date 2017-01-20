@@ -22,5 +22,21 @@ Validator.extend('mobile', isMobile);
 // });
 
 var app1 = new Vue({
-    el: "#app1"
+    el: "#app1",
+    data: {},
+    methods: {
+        validateBeforeSubmit() {
+            // Validate All returns a promise and provides the validation result.
+            this.$validator.validateAll().then(success => {
+                if (!success) {
+                    // handle error
+                    return;
+                }
+                else {
+                    alert('From Submitted!');
+                    // form submit
+                }
+            });
+        }
+    }
 });
