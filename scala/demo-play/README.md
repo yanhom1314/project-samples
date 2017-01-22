@@ -30,7 +30,10 @@ This project demonstrate how to create a simple CRUD application with Play integ
         //安装html loacer 的开发依赖
         npm install html-loader --save-dev
 
-#### vee-validate
+#### vue vee-validate
++ [vue](https://github.com/vuejs/vue)
++ [vue-loader](https://github.com/vuejs/vue-loader)
++ [vee-validate](https://github.com/logaretm/vee-validate)
 
 
         
