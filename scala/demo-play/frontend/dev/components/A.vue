@@ -14,11 +14,10 @@
 </template>
 
 <script>
-import { getMessage } from '../services/message'
 export default {
   data () {
     return {
-      msg: getMessage()
+      msg: "Hello world!"
     }
   }
 }

@@ -16,12 +16,18 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
+    <div id=""></div>
   </div>
 </template>
 
 <script>
+import A from './components/A.vue';
+import B from './components/B.vue';
+import Counter from './components/Counter.vue';
+
 export default {
   name: 'app',
+  components:[A,B],
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
