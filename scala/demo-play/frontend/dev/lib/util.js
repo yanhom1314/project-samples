@@ -2,7 +2,7 @@ import Vue from "vue";
 import $ from "jquery";
 import jQuery from "jquery";
 import fetch from "fetch";
-import VeeValidate, {Validator} from "vee-validate";
+import VeeValidate,{Validator} from "vee-validate";
 import messagesCN from "vee-locale-cn";
 
 const config = {

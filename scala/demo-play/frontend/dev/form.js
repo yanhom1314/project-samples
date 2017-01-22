@@ -1,4 +1,4 @@
-import {Vue, Validator} from "./vue_set";
+import {Vue, Validator} from "./lib/util";
 
 //自定义验证
 const isMobile = {

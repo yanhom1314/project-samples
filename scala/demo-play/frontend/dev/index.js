@@ -1,4 +1,4 @@
-import {Vue, Validator, fetch, jQuery, $} from "./vue_set";
+import {Vue, fetch, jQuery, $} from "./lib/util";
 
 console.log("$:jQuery:" + jQuery + " " + $);
 
@@ -45,8 +45,7 @@ var app5 = new Vue({
     },
     methods: {
         reverseMessage: function () {
-            if (window.confirm("确定执行吗？"))
-                this.message = this.message.split('').reverse().join('');
+            if (window.confirm("确定执行吗？")) this.message = this.message.split('').reverse().join('');
         }
     }
 });

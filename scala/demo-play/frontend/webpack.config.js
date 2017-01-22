@@ -14,9 +14,10 @@ module.exports = {
         // })
     ],
     entry: {
-        index: './js/dev/index.js',
-        demo: './js/dev/demo.js',
-        form: './js/dev/form.js'
+        index: './dev/index.js',
+        demo: './dev/demo.js',
+        form: './dev/form.js',
+        loader: './dev/loader.js'
     },
     output: {
         path: './js/',
@@ -25,11 +26,15 @@ module.exports = {
     module: {
         loaders: [
             {
-                test:/\.js$/,
+                test: /\.js$/,
                 loader: 'babel-loader',
                 query: {
                     presets: ['es2015']
                 }
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue'
             }
         ]
     },
