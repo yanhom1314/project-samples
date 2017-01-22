@@ -38,9 +38,13 @@ module.exports = {
             }
         ]
     },
+    // babel: {
+    //     presets: ['es2015'],
+    //     plugins: ['transform-runtime']
+    // },
     //其它解决方案配置
     resolve: {
-        extensions: ['', '.js', '.json', '.coffee'],
+        extensions: ['', '.js', '.json', '.coffee', '.vue'],
         alias: {
             'vee-locale-cn': '../../node_modules/vee-validate/dist/locale/zh_CN'
         }

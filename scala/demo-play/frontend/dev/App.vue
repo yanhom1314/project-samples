@@ -1,37 +1,19 @@
-<template lang="jade">
-div
-  img(class="logo", src="./assets/logo.png")
-  h1 {{msg}}
-  comp-a
-  comp-b
-  counter
+<template>
+  <div class="example">{{ msg }}</div>
 </template>
 
 <script>
-import CompA from './components/A.vue'
-import CompB from './components/B.vue'
-import Counter from './components/Counter.vue'
 export default {
   data () {
     return {
-      msg: 'Hello from vue-loader!'
+      msg: 'Hello world!'
     }
-  },
-  components: {
-    CompA,
-    CompB,
-    Counter
   }
 }
 </script>
 
-<style lang="stylus">
-font-stack = Helvetica, sans-serif
-primary-color = #999
-body
-  font 100% font-stack
-  color primary-color
-.logo
-  width 40px
-  height 40px
+<style>
+.example {
+  color: red;
+}
 </style>
