@@ -58,7 +58,6 @@ module.exports = {
         historyApiFallback: true,
         noInfo: true
     },
-    devtool: '#eval-source-map',
     //其它解决方案配置
     resolve: {
         alias: {
