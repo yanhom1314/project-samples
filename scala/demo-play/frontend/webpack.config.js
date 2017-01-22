@@ -3,7 +3,7 @@ var path = require('path');
 
 module.exports = {
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('common.min.js'),
+        new webpack.optimize.CommonsChunkPlugin('common'),
         // new webpack.optimize.UglifyJsPlugin({
         //     compress: {
         //         warnings: false,
@@ -20,31 +20,47 @@ module.exports = {
         loader: './dev/loader.js'
     },
     output: {
-        path: './js/',
+        path: path.resolve(__dirname, './js'),
+        publicPath: '/js/',
         filename: '[name].min.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
+                        // the "scss" and "sass" values for the lang attribute to the right configs here.
+                        // other preprocessors should work out of the box, no loader config like this nessessary.
+                        'scss': 'vue-style-loader!css-loader!sass-loader',
+                        'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+                    }
+                    // other vue-loader options go here
                 }
             },
             {
-                test: /\.vue$/,
-                loader: 'vue'
+                test: /\.js$/,
+                loader: 'babel-loader',
+                //exclude: /node_modules/,
+            },
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]?[hash]'
+                }
             }
         ]
     },
-    // babel: {
-    //     presets: ['es2015'],
-    //     plugins: ['transform-runtime']
-    // },
+    devServer: {
+        historyApiFallback: true,
+        noInfo: true
+    },
+    devtool: '#eval-source-map',
     //其它解决方案配置
     resolve: {
-        extensions: ['', '.js', '.json', '.coffee', '.vue'],
         alias: {
             'vee-locale-cn': '../../node_modules/vee-validate/dist/locale/zh_CN'
         }
