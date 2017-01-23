@@ -10,5 +10,23 @@
 <!-- -->
 <script src="/js/common.min.js"></script>
 <script src="/js/loader.min.js"></script>
+
+<script>
+    var a = [];
+    var b = [];
+    for (let i = 0; i < 10; i++) {
+        b[i] = i;
+        a[i] = function () {
+            console.log(i);
+        };
+    }
+    a[3](); // 10
+    a[6]();
+    a[9]();
+
+    console.log(b[3]);
+    console.log(b[6]);
+    console.log(b[9]);
+</script>
 </body>
 </html>
