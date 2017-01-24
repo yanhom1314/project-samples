@@ -26,6 +26,10 @@ var app1 = new Vue({
     data: {},
     methods: {
         validateBeforeSubmit() {
+            var x = $("form").serializeArray();
+            $.each(x, function(i, field){
+                $("#results").append(field.name + ":" + field.value + "<br/>");
+            });
             // Validate All returns a promise and provides the validation result.
             this.$validator.validateAll().then(success => {
                 if (!success) {
