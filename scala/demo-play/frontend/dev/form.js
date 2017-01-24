@@ -1,4 +1,4 @@
-import {Vue, Validator} from "./lib/util";
+import {Vue, Validator, $} from "./lib/util";
 
 //自定义验证
 const isMobile = {
@@ -33,10 +33,23 @@ var app1 = new Vue({
                     return;
                 }
                 else {
-                    alert('From Submitted!');
                     // form submit
+                    $("#myModal").modal("show");
                 }
             });
         }
     }
+});
+
+$(function () {
+    $("#_close").click(function () {
+        console.log("_close");
+        $('#myModal').modal("hide");//toggle show hide
+    });
+    $("#_save").click(function () {
+        var action = $("form").attr("action");
+        console.log("_save action:" + action);
+        console.log("form data:" + JSON.stringify($("form").serializeObject()));
+        $('#myModal').modal('hide');
+    });
 });
