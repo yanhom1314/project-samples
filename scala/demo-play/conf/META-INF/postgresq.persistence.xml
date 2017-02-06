@@ -12,6 +12,8 @@
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value=""/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
             <!-- HikariCP -->
@@ -19,10 +21,8 @@
             <property name="hibernate.hikari.minimumIdle" value="20"/>
             <property name="hibernate.hikari.maximumPoolSize" value="100"/>
             <property name="hibernate.hikari.idleTimeout" value="30000"/>
-            <property name="hibernate.hikari.dataSourceClassName" value="org.h2.jdbcx.JdbcDataSource"/>
-            <property name="hibernate.hikari.dataSource.url" value="jdbc:h2:mem:test"/>
-            <property name="hibernate.hikari.dataSource.user" value="sa"/>
-            <property name="hibernate.hikari.dataSource.password" value=""/>
+            <property name="hibernate.hikari.dataSourceClassName" value="org.postgresql.ds.PGPoolingDataSource"/>
+            <property name="hibernate.hikari.dataSource.url" value="jdbc:postgresql://192.168.0.98:5432/testdb"/>
         </properties>
     </persistence-unit>
 </persistence>

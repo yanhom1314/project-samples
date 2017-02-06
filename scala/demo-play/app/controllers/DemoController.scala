@@ -3,6 +3,7 @@ package controllers
 import javax.inject._
 
 import entities.TPersonRepository
+import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -54,7 +55,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     jqGridForm.bindFromRequest().fold(_ => Results.BadRequest, o => {
       import JqGridData._
 
-      println(s"_search:${o._search} nd:${o.nd} rows:${o.rows} page:${o.page} sidx:${o.sidx} sord:${o.sord} searchField:${o.searchField} searchString:${o.searchString} searchOper:${o.searchOper}")
+      Logger.info(s"_search:${o._search} nd:${o.nd} rows:${o.rows} page:${o.page} sidx:${o.sidx} sord:${o.sord} searchField:${o.searchField} searchString:${o.searchString} searchOper:${o.searchOper}")
       val start = o.rows * (o.page - 1) + 1
       val records = 36
 
@@ -68,7 +69,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
   def datatables(draw: Int, start: Int, length: Int) = Action { implicit request =>
     import third.datatables.DataTablesData._
 
-    request.queryString.toList.sortBy(t => t._1).foreach { t => println(t._1 + ":" + t._2.map(v => v).mkString(" ")) }
+    request.queryString.toList.sortBy(t => t._1).foreach { t => Logger.info(t._1 + ":" + t._2.map(v => v).mkString(" ")) }
 
     val list = DataTablesData(draw, 102, 102, ListBuffer[DemoData]())
     (start.toInt until start.toInt + length).foreach { i => list.data += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }

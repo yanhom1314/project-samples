@@ -3,6 +3,7 @@ package controllers
 import javax.inject._
 
 import models.PersonRepository
+import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
@@ -28,8 +29,8 @@ class PersonController @Inject()(repo: PersonRepository, val messagesApi: Messag
     * The index action.
     */
   def index = Action { implicit request =>
-    request.session.data.toSeq.foreach(e => println(s"session: ${e._1}:${e._2}"))
-    request.flash.data.toSeq.foreach(e => println(s"flash: ${e._1}:${e._2}"))
+    request.session.data.toSeq.foreach(e => Logger.info(s"session: ${e._1}:${e._2}"))
+    request.flash.data.toSeq.foreach(e => Logger.info(s"flash: ${e._1}:${e._2}"))
     Ok(views.html.index(personForm)).withSession(request.session + ("user" -> "YaFengLi"))
   }
 

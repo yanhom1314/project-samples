@@ -78,8 +78,8 @@ void create_objects() {
     int ids[4] = {116, 943, 234, 38793};
     /* Our array of "records": */
     struct record fields[2] = {
-            {"zip", 37.7668,   -1.223959e+2, "", "SAN FRANCISCO", "CA", "94107", "US","100011"},
-            {"zip", 37.371991, -1.22026e+2,  "", "SUNNYVALE",     "CA", "94085", "US","100012"}};
+            {"zip", 37.7668,   -1.223959e+2, "", "SAN FRANCISCO", "CA", "94107", "US", "100011"},
+            {"zip", 37.371991, -1.22026e+2,  "", "SUNNYVALE",     "CA", "94085", "US", "100012"}};
 
     /* Here we construct some JSON standards, from the JSON site. */
 

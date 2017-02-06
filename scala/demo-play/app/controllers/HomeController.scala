@@ -2,6 +2,7 @@ package controllers
 
 import javax.inject._
 
+import play.api.Logger
 import play.api.mvc._
 
 /**
@@ -17,8 +18,8 @@ class HomeController @Inject() extends Controller {
 
   def index(id: Option[String]) = Action { implicit request =>
     id match {
-      case Some(s) => println(s"id:${s}")
-      case None => println("id:_")
+      case Some(s) => Logger.info(s"id:${s}")
+      case None => Logger.info("id:_")
     }
 
     Redirect(routes.PersonController.index).withSession(request.session + ("index" -> "Ok")).flashing(request.flash + ("index" -> "FLASH INDEX"))

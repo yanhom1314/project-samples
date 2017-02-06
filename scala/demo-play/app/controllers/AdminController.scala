@@ -21,7 +21,6 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi, val 
   }
 
   def check1(name: String) = HasRole(name) { implicit request =>
-    println(request)
     Ok(s"<h1>Hello ROLE:[${name}]</h1>")
   }
 
