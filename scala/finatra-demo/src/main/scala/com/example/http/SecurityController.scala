@@ -6,7 +6,7 @@ import javax.naming.AuthenticationException
 import com.example.filter.ShiroFilter
 import com.example.freemarker.Freemarker
 import com.example.service.ExampleService
-import com.twitter.finagle.http.{Request, Status}
+import com.twitter.finagle.http.{Request, Response, Status}
 import com.twitter.finatra.http.Controller
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.{IncorrectCredentialsException, LockedAccountException, UnknownAccountException, UsernamePasswordToken}
@@ -30,7 +30,7 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
     val token = new UsernamePasswordToken(username, password)
     token.setRememberMe(remember)
 
-    request.response.statusCode = Status.Unauthorized.code
+    Response(request).statusCode = Status.Unauthorized.code
     try {
       cu.login(token)
       response.temporaryRedirect.location("/info").toFuture

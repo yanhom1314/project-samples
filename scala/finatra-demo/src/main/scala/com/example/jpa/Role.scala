@@ -3,12 +3,16 @@ package com.example.jpa
 import java.util
 import javax.persistence.{Column, _}
 
+import scala.beans.BeanProperty
+
 @Entity
 @Table(name = "t_role")
 class Role extends BaseEntity {
+  @BeanProperty
   @Column(name = "role_name", nullable = false, unique = true)
   var roleName: String = _
 
+  @BeanProperty
   @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
   var users: util.List[LoginUser] = _
 }

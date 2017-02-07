@@ -3,21 +3,28 @@ package com.example.jpa
 import java.util
 import javax.persistence._
 
+import scala.beans.BeanProperty
+
 @Entity
 @Table(name = "t_user")
 class LoginUser extends BaseEntity {
+  @BeanProperty
   @Column(nullable = false, unique = true)
   var username: String = _
 
+  @BeanProperty
   @Column
   var password: String = _
 
+  @BeanProperty
   @Column
   var age: Int = _
 
+  @BeanProperty
   @Column
   var address: String = _
 
+  @BeanProperty
   @ManyToMany(cascade = Array(CascadeType.MERGE), fetch = FetchType.EAGER)
   @JoinTable(name = "user_role", joinColumns = Array(new JoinColumn(name = "user_id", referencedColumnName = "id")),
     inverseJoinColumns = Array(new JoinColumn(name = "role_id", referencedColumnName = "id")))

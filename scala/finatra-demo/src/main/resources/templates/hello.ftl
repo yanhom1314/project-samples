@@ -5,7 +5,7 @@
     <#if section = "head">
     <div><h1>Hello World:你好!</h1></div>
     <#elseif section = "content" >
-    <h3>${name?if_exists}</h3>
+    <h3>${name!}</h3>
     <div>
         <#list persons as t>
             <li>${t.name()}|${t.age()}|${t.address()}</li>

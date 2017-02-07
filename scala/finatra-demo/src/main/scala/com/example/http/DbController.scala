@@ -18,10 +18,14 @@ import scala.collection.JavaConversions._
 class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: AnotherThingRepository, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository) extends Controller {
 
   get("/db/init") { request: Request =>
-    dbiWrapper.withRepo[SomethingRepository] { repo =>
-      if (repo.count() <= 0) (1 to 10).foreach(i => repo.save(Something(i, s"some:${i}")))
+    try {
+      dbiWrapper.withRepo[SomethingRepository] { repo =>
+        if (repo.count() <= 0) (1 to 10).foreach(i => repo.save(Something(i, s"some:${i}")))
+      }
+      dbiWrapper.withRepo[UserRepository] { repo => if (repo.count() <= 0) repo.save(User(1, "test1", "123456", 12, "NanJing")) }
+    } catch {
+      case e: Exception => e.printStackTrace()
     }
-    dbiWrapper.withRepo[UserRepository] { repo => if (repo.count() <= 0) repo.save(User(1, "test", "test_password", 12, "NanJing")) }
     response.ok.plain("OK DbiWrapper:" + dbiWrapper.toString)
   }
 
@@ -40,10 +44,12 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
       if (anotherThingRepository.count() <= 0) (1 to 10).foreach(i => anotherThingRepository.save(AnotherThing(i, s"jpa:${i}", s"jpa:${i}")))
       if (roleRepository.count() <= 0) {
         val role = Role("ROLE_USER")
+        role.id = 1
         roleRepository.save(role)
       }
       if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
-        val user = LoginUser("test", "test_123", 12, "NanJing")
+        val user = LoginUser("test2", "123456", 12, "NanJing")
+        user.id = 1
         user.roles = List(roleRepository.findByRoleName("ROLE_USER"))
         loginUserRepository.save(user)
       }

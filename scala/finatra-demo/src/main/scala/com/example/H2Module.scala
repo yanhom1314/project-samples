@@ -10,14 +10,17 @@ import org.skife.jdbi.v2.{DBI, Handle}
 
 object H2Module extends TwitterModule {
   val server = Server.createTcpServer()
-  val ds = JdbcConnectionPool.create("jdbc:h2:mem:test", "sa", "")
-  val dbi = new DBI(ds)
+  lazy val ds = JdbcConnectionPool.create("jdbc:h2:~/test", "sa", "")
+  lazy val dbi = new DBI(ds)
 
   protected override def configure(): Unit = {
     dbi.withHandle(new HandleCallback[Unit] {
       override def withHandle(handle: Handle): Unit = {
-        handle.attach(classOf[SomethingRepository]).createTable()
-        handle.attach(classOf[UserRepository]).createTable()
+        val sr = handle.attach(classOf[SomethingRepository])
+        val ur = handle.attach(classOf[UserRepository])
+        //if jpa not create table
+        //sr.createTable()
+        //ur.createTable()
       }
     })
 

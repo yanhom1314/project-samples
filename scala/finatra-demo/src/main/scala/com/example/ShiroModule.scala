@@ -3,7 +3,7 @@ package com.example
 import javax.inject.{Inject, Singleton}
 
 import com.example.jdbi.DbiWrapper
-import com.example.jpa.repo.LoginUserRepository
+import com.example.jpa.repo.{LoginUserRepository, RoleRepository}
 import com.example.shiro.RealmService
 import com.google.inject.Provides
 import com.twitter.inject.{Injector, TwitterModule}
@@ -30,7 +30,7 @@ object ShiroModule extends TwitterModule {
   @Provides
   @Singleton
   @Inject()
-  def getRealm(dbiWrapper: DbiWrapper, loginUserRepository: LoginUserRepository): Realm = {
-    RealmService(dbiWrapper, loginUserRepository)
+  def getRealm(dbiWrapper: DbiWrapper, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository): Realm = {
+    RealmService(dbiWrapper, loginUserRepository, roleRepository)
   }
 }

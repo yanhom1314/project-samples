@@ -19,10 +19,11 @@ lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).enableP
 assemblyMergeStrategy in assembly := {
   case x if x.endsWith("io.netty.versions.properties") => MergeStrategy.first
   case PathList("javax", "servlet", xs@_*) => MergeStrategy.last
+  case PathList(ps@_*) if ps.last endsWith ".class" => MergeStrategy.first  
   case PathList(ps@_*) if ps.last endsWith ".html" => MergeStrategy.first
-  case "application.conf" => MergeStrategy.concat
-  case "unwanted.txt" | "changelog.txt" => MergeStrategy.discard
-  case "BUILD" => MergeStrategy.first
+  case "application.conf" => MergeStrategy.first
+  case "unwanted.txt" | "changelog.txt" | "BUILD"=> MergeStrategy.discard      
+  case x if x.endsWith("spring.factories") => MergeStrategy.first
   case x =>
     val oldStrategy = (assemblyMergeStrategy in assembly).value
     oldStrategy(x)
