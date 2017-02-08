@@ -48,7 +48,7 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
         roleRepository.save(role)
       }
       if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
-        val user = LoginUser("test2", "123456", 12, "NanJing")
+        val user = LoginUser("test", "123456", 12, "NanJing")
         user.id = 1
         user.roles = List(roleRepository.findByRoleName("ROLE_USER"))
         loginUserRepository.save(user)

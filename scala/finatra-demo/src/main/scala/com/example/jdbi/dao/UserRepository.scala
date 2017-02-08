@@ -26,5 +26,6 @@ trait UserRepository extends BaseRepository[User] {
   @SqlQuery("select * from t_user where id=:id")
   override def findById(@Bind("id") id: Long): User
 
+  @SqlQuery("select count(*) from t_user")
   override def count(): Long
 }
