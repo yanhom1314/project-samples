@@ -14,7 +14,8 @@ configurations {
 task genJaxb {
     ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
     ext.classesDir = "${buildDir}/classes/jaxb"
-    ext.schema = "http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl"
+    //ext.schema = "http://wsf.cdyne.com/WeatherWS/Weather.asmx?wsdl"
+    ext.schema="http://webservice.36wu.com/ExpressService.asmx?wsdl"
 
     outputs.dir classesDir
 
@@ -25,8 +26,7 @@ task genJaxb {
             mkdir(dir: sourcesDir)
             mkdir(dir: classesDir)
 
-            xjc(destdir: sourcesDir, schema: schema,
-                    package: "hello.wsdl") {
+            xjc(destdir: sourcesDir, schema: schema,                    package: "hello.wsdl") {
                 arg(value: "-wsdl")
                 produces(dir: sourcesDir, includes: "**/*.java")
             }
@@ -61,7 +61,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web",
             "org.springframework.boot:spring-boot-starter-thymeleaf",
             "org.springframework.boot:spring-boot-starter-security",
-            "org.springframework.boot:spring-boot-starter-redis",
+            "org.springframework.boot:spring-boot-starter-data-redis",
             "org.springframework.boot:spring-boot-starter-data-rest",
             "org.springframework.boot:spring-boot-starter-data-jpa",
             "org.springframework.ws:spring-ws-core",

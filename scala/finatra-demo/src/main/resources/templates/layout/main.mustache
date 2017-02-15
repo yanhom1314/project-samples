@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-
 </head>
 <body>
 <div>
@@ -15,33 +14,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{{$title}}{{/title}}</title>
-    {{>common/head}}
-    <script>
-        $(function () {
-            $("button#submit").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: "foo",
-                    data: $('form.contact').serialize(),
-                    success: function (msg) {
-                        $("#thanks").text(msg.message);
-                        $("#thanks").show(600);
-                        $("#myModal").modal('hide');
-                    },
-                    error: function (d) {
-                        var m = JSON.parse(d.responseText);
-                        console.log(m.errors);
-                        for (var i = 0; i < m.errors.length; i++) {
-                            console.log(m.errors[i]);
-                        }
-                        $("#_error").text(m.errors[0]);
-                        $("#_error").show(600);
-                    }
-                });
-            });
-        });
-    </script>
+<title>{{$title}}{{/title}}</title>
+{{>common/head}}
+    <script src="/static/js/main.js"></script>
 </head>
 <body>
 {{$body}}{{/body}}

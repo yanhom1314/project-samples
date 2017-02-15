@@ -8,7 +8,7 @@
   <appender name="SERVICE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>target/${log.service.output}</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>service-%d{yyyy-MM-dd}.%i</fileNamePattern>
+      <fileNamePattern>target/service-%d{yyyy-MM-dd}.%i</fileNamePattern>
       <timeBasedFileNamingAndTriggeringPolicy
           class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
         <maxFileSize>50MB</maxFileSize>
@@ -23,7 +23,7 @@
   <appender name="ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>target/${log.access.output}</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>access-%d{yyyy-MM-dd}.%i</fileNamePattern>
+      <fileNamePattern>target/access-%d{yyyy-MM-dd}.%i</fileNamePattern>
       <timeBasedFileNamingAndTriggeringPolicy
           class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
         <maxFileSize>50MB</maxFileSize>
