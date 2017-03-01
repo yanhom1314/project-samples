@@ -1,26 +1,15 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-</head>
-<body>
-<div>
-
-</div>
-</body>
-</html>
-
-<!DOCTYPE HTML>
-<html>
-<head>
-    <meta charset="utf-8">
-<title>{{$title}}{{/title}}</title>
-{{>common/head}}
+    <title>{{$title}}{{/title}}</title>
+    {{! 头文件 }}
+    {{>../common/head}}
     <script src="/static/js/main.js"></script>
 </head>
 <body>
-{{$body}}{{/body}}
-{{! 脚文件}}
-{{>common/footer}}
+    {{$body}}{{/body}}
+    {{! 脚文件}}
+    {{>../common/footer}}
 </body>
 </html>
