@@ -14,8 +14,7 @@ module.exports = {
         // })
     ],
     entry: {
-        index: './dev/index.js',
-        demo: './dev/demo.js',
+        index: './dev/index.js',        
         form: './dev/form.js',
         loader: './dev/loader.js'
     },

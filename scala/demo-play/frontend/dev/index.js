@@ -102,24 +102,3 @@ var app7 = new Vue({
         ]
     }
 });
-
-//window.onload
-$(function () {
-    $("#_close").click(function () {
-        console.log("id:" + $("form").attr("id"));
-        console.log("_close");
-        $('#myModal').modal("hide");
-    });
-    $("#_save").click(function () {
-        var id = $("form").attr("id");
-        var action = $("form").attr("action");
-        console.log("id:" + id);
-        console.log("action:" + action);
-
-        console.log(JSON.stringify($("form").serializeObject()));
-
-        console.log("_save");
-        $('#myModal').modal('toggle')
-        //$('#myModal').modal("hide");
-    });
-});

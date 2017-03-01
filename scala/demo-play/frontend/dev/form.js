@@ -26,10 +26,7 @@ var app1 = new Vue({
     data: {},
     methods: {
         validateBeforeSubmit() {
-            var x = $("form").serializeArray();
-            $.each(x, function(i, field){
-                $("#results").append(field.name + ":" + field.value + "<br/>");
-            });
+            var x = $("form").serializeArray();            
             // Validate All returns a promise and provides the validation result.
             this.$validator.validateAll().then(success => {
                 if (!success) {
@@ -38,6 +35,9 @@ var app1 = new Vue({
                 }
                 else {
                     // form submit
+                    $.each(x, function(i, field){
+                        $("#results").append(field.name + ":" + field.value + "<br/>");
+                    });
                     $("#myModal").modal("show");
                 }
             });

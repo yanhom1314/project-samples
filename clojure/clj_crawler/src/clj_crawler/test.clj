@@ -9,7 +9,9 @@
 (defn welcome [name]
   "What the fucking hell!"
   (println name))
-
+(defn say-fuck [name]
+  (print name)
+  (say-hi name))
 (defn -main [&args]
   (say-nice "Hello World!")
   (say-hi "Hello Nice!")
