@@ -34,7 +34,7 @@ A minimal [activator](https://www.typesafe.com/get-started) seed template for cr
     cd target/universal/stage
     bin/finatra-demo.bat -admin.port=:8877 -http.port=:80
     
-__如果需要及时刷新页面请增加参数项：`-local.doc.root=src/main/resources -mustache.templates.dir=templates`__    
+__如果需要及时刷新页面请增加参数项：`-local.doc.root=src/main/resources` 其中 `-mustache.templates.dir=templates`是可选的__    
 
 ## 乱码问题
 + 统一采用`UTF-8`编码
