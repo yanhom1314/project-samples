@@ -4,6 +4,8 @@
 
 A minimal [activator](https://www.typesafe.com/get-started) seed template for creating a Finatra application.
 
+## 热加载Reload
++ https://gist.github.com/k33g/9692361
 
 ## sbt-assembly & sbt-native-packager
 + add the next content to `build.sbt`
