@@ -3,7 +3,7 @@ package models
 import javax.inject.{Inject, Singleton}
 
 import play.api.db.slick.DatabaseConfigProvider
-import slick.driver.JdbcProfile
+import slick.jdbc.JdbcProfile
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -20,7 +20,7 @@ class PersonRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(impl
   // These imports are important, the first one brings db into scope, which will let you do the actual db operations.
   // The second one brings the Slick DSL into scope, which lets you define the table and other queries.
   import dbConfig._
-  import driver.api._
+  import profile.api._
 
   /**
    * Here we define the table. It will have a name of people

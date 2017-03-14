@@ -9,7 +9,7 @@ import javax.persistence._
   * Play Java will synthesise getter and setter methods for us and therefore keep JPA happy (JPA expects them).
   */
 @Entity
-@Table(name = "people")
+@Table(name = "t_people")
 class TPerson extends TModel {
   var name: String = _
   var age: Int = _

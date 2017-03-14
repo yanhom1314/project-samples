@@ -12,6 +12,7 @@ libraryDependencies ++= Seq(
   //jdbc,
   cache,
   ws,
+  evolutions,
   "org.apache.shiro" % "shiro-core" % $("shiro"),
   "org.postgresql" % "postgresql" % $("postgresql"),
   "com.h2database" % "h2" % $("h2"),
