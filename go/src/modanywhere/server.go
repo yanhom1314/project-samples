@@ -10,5 +10,5 @@ func main() {
 	flag.Parse()
 	fmt.Printf("Path:%s.\n",*realPath)
     http.Handle("/", http.FileServer(http.Dir(*realPath)))
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":80", nil)
  }
