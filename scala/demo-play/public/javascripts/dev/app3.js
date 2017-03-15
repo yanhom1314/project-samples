@@ -11,10 +11,11 @@ $(function () {
     $("#bt_2").click(function () {
         jsonSubmit("form_2", function (data) {
             alert(data);
-        }, function (XMLHttpRequest, textStatus, errorThrown) {
-            alert(XMLHttpRequest.status);
-            alert(XMLHttpRequest.readyState);
-            alert(textStatus);
+        }, function (xhr, ts, et) {
+            alert(xhr.status);
+            alert(xhr.readyState);
+            alert(ts);
+            alert(et);
         });
     });
 
@@ -23,6 +24,11 @@ $(function () {
         var action = f3.attr("action");
         $.get(action, f3.serializeObject(), function (d) {
             alert(d);
+        },function (xhr, ts, e) {
+            alert(xhr.status);
+            alert(xhr.readyState);
+            alert(ts);
+            alert(e);
         });
     });
 });
