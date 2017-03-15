@@ -37,7 +37,7 @@ module.exports = {
             'bootstrap-css': '../../../node_modules/bootstrap/dist/css/bootstrap.min.css',
             'jquery-ui-css': '../../../node_modules/jquery-ui/themes/base/all.css',
             'free-jqgrid-css': '../../../node_modules/free-jqgrid/css/ui.jqgrid.min.css',
-            'free-jqgrid-locale-cn': '../../../node_modules/free-jqgrid/js/i18n/ming/grid.locale-cn.js',
+            'free-jqgrid-locale-cn': '../../../node_modules/free-jqgrid/js/i18n/min/grid.locale-cn.js',
             'datatables-css': '../../../node_modules/datatables/media/css/jquery.dataTables.min.css',
             'math': '../lib/math.js'
         }

@@ -36,5 +36,8 @@ This project demonstrate how to create a simple CRUD application with Play integ
 + [vee-validate](https://github.com/logaretm/vee-validate)
 
 
+#### 前端
++ Ajax使用的是jQuery.ajax，也可以使用axios或者fetch
+
         
         
