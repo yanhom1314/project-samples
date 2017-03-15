@@ -31,10 +31,19 @@ trait Secured extends Controller with I18nSupport {
     _ => Action(parser)(implicit request => f(request))
   }
 
-  def IsRole(members: String*)(f: => Result) = Action {
+  def IsRole(members: String*)(f: Request[AnyContent] => Result) = Action {
     implicit request =>
       try {
-        if (User(request).exists(subject => Role(subject, members: _*))) f else Results.Forbidden
+        if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
+      } catch {
+        case _: Exception => unauthorized(request)
+      }
+  }
+
+  def IsRole[A](parser: BodyParser[A], members: String*)(f: Request[A] => Result) = Action(parser) {
+    implicit request =>
+      try {
+        if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
       } catch {
         case _: Exception => unauthorized(request)
       }
@@ -44,15 +53,6 @@ trait Secured extends Controller with I18nSupport {
     implicit request =>
       try {
         if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
-      } catch {
-        case _: Exception => unauthorized(request)
-      }
-  }
-
-  def IsRole[A](parser: BodyParser[A], members: String*)(f: A => Result) = Action(parser) {
-    implicit request =>
-      try {
-        if (User(request).exists(subject => Role(subject, members: _*))) f(request.body) else Results.Forbidden
       } catch {
         case _: Exception => unauthorized(request)
       }

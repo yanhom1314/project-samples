@@ -16,24 +16,21 @@ class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi, val 
       User(request).fold(Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout"))) { o => Ok(views.html.admin.index(o.getPrincipal.toString, o.hasRole("ROLE_ADMIN").toString)) }
   }
 
-  def check(name: String) = IsRole(name) {
+  def isCheck(name: String) = IsRole(name) { _ =>
     Ok(s"<h1>ROLE:${name} is OK.</h1>")
   }
 
-  def check1(name: String) = HasRole(name) { implicit request =>
+  def hasCheck(name: String) = HasRole(name) { implicit request =>
     Ok(s"<h1>Hello ROLE:[${name}]</h1>")
   }
 
-  def check2 = IsRole(parse.json, "ROLE_ADMIN") { body =>
-    val un = (body \ "un").as[String]
-    val profile = SecuredProfile(un, Seq("ROLE_ADMIN"))
+  def checkIs(name: String) = IsRole(parse.json, name) { implicit request =>
+    val profile = SecuredProfile(Name(request).get, Seq(name))
     Ok(Json.toJson(profile))
   }
 
-  def check3 = HasRole(parse.json, "ROLE_USER") { implicit request =>
-    val body = request.body
-    val un = (body \ "un").as[String]
-    val profile = SecuredProfile(un, Seq("ROLE_USER"))
+  def checkHas(name: String) = HasRole(parse.json, name) { implicit request =>
+    val profile = SecuredProfile(Name(request).get, Seq(name))
     Ok(Json.toJson(profile))
   }
 

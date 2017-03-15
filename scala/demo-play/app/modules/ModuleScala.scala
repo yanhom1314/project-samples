@@ -14,20 +14,26 @@ class ModuleScala extends AbstractModule {
   lazy val ctx = new AnnotationConfigApplicationContext(classOf[SpringDataJpaConfig])
 
   override def configure() = {
-    println("conf/application.conf:[play.modules.enabled += \"modules.ModuleScala\"].")
+    println("""conf/application.conf:[play.modules.enabled += "modules.ModuleScala"].""")
 
     bind(classOf[Clock]).toInstance(Clock.systemDefaultZone)
     ctx.getBeanNamesForType(classOf[Repository[_, _]]).map(ctx.getType(_)).foreach {
       case c: Class[Repository[_, _]@unchecked] => bind(c).toInstance(ctx.getBean(c))
     }
 
-    val u = ctx.getBean(classOf[TUserRepository])
-    val r = ctx.getBean(classOf[TRoleRepository])
+    init(ctx.getBean(classOf[TUserRepository]), ctx.getBean(classOf[TRoleRepository]))
+  }
 
-    val role = new TRole()
-    role.id = 1
-    role.roleName = "ROLE_ADMIN"
-    r.save(role)
+  private def init(ur: TUserRepository, rr: TRoleRepository): Unit = {
+    val r1 = new TRole()
+    r1.id = 1
+    r1.roleName = "ROLE_ADMIN"
+    rr.save(r1)
+
+    val r2 = new TRole()
+    r2.id = 2
+    r2.roleName = "ROLE_USER"
+    rr.save(r2)
 
     val user = new TUser()
     user.id = 1
@@ -35,10 +41,10 @@ class ModuleScala extends AbstractModule {
     user.password = "123456"
     user.address = "nanjing"
     user.age = 12
-    user.roles = List(role)
-    u.save(user)
+    user.roles = List(r1, r2)
+    ur.save(user)
 
-    println("count:" + u.count())
-    println("count:" + r.count())
+    println("count:" + ur.count())
+    println("count:" + rr.count())
   }
 }

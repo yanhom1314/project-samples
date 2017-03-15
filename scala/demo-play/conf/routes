@@ -16,10 +16,10 @@ GET         /logout              controllers.Authorize.logout
 GET         /info                controllers.AdminController.info
 GET         /admin               controllers.AdminController.admin(name:String ?= "Anonymous")
 
-GET         /check/:name         controllers.AdminController.check(name:String)
-GET         /check1/:name        controllers.AdminController.check1(name:String)
-POST        /check2              controllers.AdminController.check2
-POST        /check3              controllers.AdminController.check3
+GET         /is/:name            controllers.AdminController.isCheck(name:String)
+GET         /has/:name           controllers.AdminController.hasCheck(name:String)
+GET         /check/is            controllers.AdminController.checkIs(name:String)
+GET         /check/has           controllers.AdminController.checkHas(name:String)
 POST        /json                controllers.AdminController.json
 
 # An example controller showing a sample home page
