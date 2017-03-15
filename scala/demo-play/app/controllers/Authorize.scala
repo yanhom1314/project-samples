@@ -25,7 +25,7 @@ class Authorize @Inject()(val messagesApi: MessagesApi, val secureData: ShiroSub
   def login = Action {
     implicit request =>
       Name(request) match {
-        case Some(username) => Redirect(routes.AdminController.admin(username))
+        case Some(username) => Redirect(routes.AdminController.index())
         case None => Ok(views.html.login(loginForm))
       }
   }
@@ -46,7 +46,7 @@ class Authorize @Inject()(val messagesApi: MessagesApi, val secureData: ShiroSub
             cu = SecurityUtils.getSubject
             cu.login(token)
             secureData.save(username, cu)
-            Redirect(routes.AdminController.admin(username)).withSession(SecuredProfile.S_USERNAME -> username)
+            Redirect(routes.AdminController.index).withSession(SecuredProfile.S_USERNAME -> username)
           } catch {
             case _: Exception => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
           }

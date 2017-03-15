@@ -11,26 +11,30 @@ import shiro.ShiroSubjectCache
 
 class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi, val secureData: ShiroSubjectCache) extends Secured {
 
-  def admin(name: String) = IsAuthenticated {
+  val ROLE_USER = "ROLE_USER"
+
+  def index = IsAuthenticated {
     implicit request =>
       User(request).fold(Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout"))) { o => Ok(views.html.admin.index(o.getPrincipal.toString, o.hasRole("ROLE_ADMIN").toString)) }
   }
 
-  def isCheck(name: String) = IsRole(name) { _ =>
+  def is(name: String) = IsRole(name) { _ =>
     Ok(s"<h1>ROLE:${name} is OK.</h1>")
   }
 
-  def hasCheck(name: String) = HasRole(name) { implicit request =>
+  def has(name: String) = HasRole(name) { implicit request =>
     Ok(s"<h1>Hello ROLE:[${name}]</h1>")
   }
 
-  def checkIs(name: String) = IsRole(parse.json, name) { implicit request =>
-    val profile = SecuredProfile(Name(request).get, Seq(name))
+  def checkIs = IsRole(parse.json, ROLE_USER) { implicit request =>
+    println("checkIs:"+request.body)
+    val profile = SecuredProfile(Name(request).get, Seq(ROLE_USER))
     Ok(Json.toJson(profile))
   }
 
-  def checkHas(name: String) = HasRole(parse.json, name) { implicit request =>
-    val profile = SecuredProfile(Name(request).get, Seq(name))
+  def checkHas = HasRole(parse.json, ROLE_USER) { implicit request =>
+    println("checkHas:"+request.body)
+    val profile = SecuredProfile(Name(request).get, Seq(ROLE_USER))
     Ok(Json.toJson(profile))
   }
 

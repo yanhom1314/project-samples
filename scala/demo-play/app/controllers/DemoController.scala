@@ -55,7 +55,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     jqGridForm.bindFromRequest().fold(_ => Results.BadRequest, o => {
       import JqGridData._
 
-      Logger.info(s"_search:${o._search} nd:${o.nd} rows:${o.rows} page:${o.page} sidx:${o.sidx} sord:${o.sord} searchField:${o.searchField} searchString:${o.searchString} searchOper:${o.searchOper}")
+      Logger.debug(s"_search:${o._search} nd:${o.nd} rows:${o.rows} page:${o.page} sidx:${o.sidx} sord:${o.sord} searchField:${o.searchField} searchString:${o.searchString} searchOper:${o.searchOper}")
       val start = o.rows * (o.page - 1) + 1
       val records = 36
 
@@ -69,7 +69,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
   def datatables(draw: Int, start: Int, length: Int) = Action { implicit request =>
     import third.datatables.DataTablesData._
 
-    request.queryString.toList.sortBy(t => t._1).foreach { t => Logger.info(t._1 + ":" + t._2.map(v => v).mkString(" ")) }
+    if (Logger.isDebugEnabled) request.queryString.toList.sortBy(t => t._1).foreach { t => Logger.debug(t._1 + ":" + t._2.map(v => v).mkString(" ")) }
 
     val list = DataTablesData(draw, 102, 102, ListBuffer[DemoData]())
     (start.toInt until start.toInt + length).foreach { i => list.data += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }

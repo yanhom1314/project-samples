@@ -20,7 +20,8 @@ $(function () {
 
     $("#bt_3").click(function () {
         var f3 = $("#form_3");
-        $.get("/demo/is/" + f3.serializeObject().name, function (d) {
+        var action = f3.attr("action");
+        $.get(action, f3.serializeObject(), function (d) {
             alert(d);
         });
     });
