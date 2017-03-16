@@ -33,38 +33,22 @@ trait Secured extends Controller with I18nSupport {
 
   def IsRole(members: String*)(f: Request[AnyContent] => Result) = Action {
     implicit request =>
-      try {
-        if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
-      } catch {
-        case _: Exception => unauthorized(request)
-      }
+      if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
   }
 
   def IsRole[A](parser: BodyParser[A], members: String*)(f: Request[A] => Result) = Action(parser) {
     implicit request =>
-      try {
-        if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
-      } catch {
-        case _: Exception => unauthorized(request)
-      }
+      if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
   }
 
   def HasRole(members: String*)(f: Request[AnyContent] => Result) = Action {
     implicit request =>
-      try {
-        if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
-      } catch {
-        case _: Exception => unauthorized(request)
-      }
+      if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
   }
 
   def HasRole[A](parser: BodyParser[A], members: String*)(f: Request[A] => Result) = Action(parser) {
     implicit request =>
-      try {
-        if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
-      } catch {
-        case _: Exception => unauthorized(request)
-      }
+      if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
   }
 }
 

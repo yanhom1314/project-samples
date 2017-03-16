@@ -32,10 +32,12 @@ $(function () {
                     case 403:
                         alert("1");
                         window.top.location = '/demo/admin';
+                        alert("1-1");
                         break;
                     default:
                         alert("2");
                         window.top.location = '/demo';
+                        alert("2-2");
                 }
             }
         });

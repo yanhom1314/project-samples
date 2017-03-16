@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Index</title>
+  <meta charset="utf-8">
+  <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery.pjax/1.9.6/jquery.pjax.min.js"></script>
+</head>
+
+<body>
+  <h1>My Index Site</h1>
+  <div>
+    Go to <a href="1.html">第一页</a>.<a href="2.html">第二页</a><input type="button" id="clickMe" value="第三页">
+  </div>
+  <div id="container"></div>
+  <script type="text/javascript">
+    $(function () {
+      $(document).pjax('a', '#container');
+      $('#clickMe').click(function () {
+        $.pjax({
+          url: '3.html',
+          container: '#container'
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

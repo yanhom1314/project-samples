@@ -25,7 +25,7 @@ class Authorize @Inject()(val messagesApi: MessagesApi, val secureData: ShiroSub
   def login = Action {
     implicit request =>
       Name(request) match {
-        case Some(username) => Redirect(routes.AdminController.index())
+        case Some(_) => Redirect(routes.AdminController.index())
         case None => Ok(views.html.login(loginForm))
       }
   }
