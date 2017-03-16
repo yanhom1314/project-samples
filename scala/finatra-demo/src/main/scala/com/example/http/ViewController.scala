@@ -3,10 +3,10 @@ package com.example.http
 import java.util
 import javax.inject.{Inject, Singleton}
 
-import com.example.freemarker.Freemarker
 import com.example.service.ExampleService
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
+import finatra.views.freemarker.Freemarker
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable

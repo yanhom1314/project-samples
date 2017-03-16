@@ -2,6 +2,8 @@ package com.example.freemarker
 
 import java.util.concurrent.ConcurrentHashMap
 
+import finatra.views.freemarker.Freemarker
+
 import scala.collection.JavaConverters._
 
 private[freemarker] class FreemarkerTemplateNameLookup {

@@ -10,6 +10,8 @@ scalaVersion := "2.11.8"
 
 fork in run := true
 
+connectInput in run := true
+
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
 lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).enablePlugins(JavaAppPackaging).settings(
