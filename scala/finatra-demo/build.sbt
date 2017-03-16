@@ -10,8 +10,6 @@ scalaVersion := "2.11.8"
 
 fork in run := true
 
-connectInput in run := true
-
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
 lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).enablePlugins(JavaAppPackaging).settings(
@@ -20,11 +18,11 @@ lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).enableP
 
 assemblyMergeStrategy in assembly := {
   case x if x.endsWith("io.netty.versions.properties") => MergeStrategy.first
-  case PathList("javax", "servlet", xs@_*) => MergeStrategy.last
-  case PathList(ps@_*) if ps.last endsWith ".class" => MergeStrategy.first  
+  case PathList("javax", "servlet", _@_*) => MergeStrategy.last
+  case PathList(ps@_*) if ps.last endsWith ".class" => MergeStrategy.first
   case PathList(ps@_*) if ps.last endsWith ".html" => MergeStrategy.first
   case "application.conf" => MergeStrategy.first
-  case "unwanted.txt" | "changelog.txt" | "BUILD"=> MergeStrategy.discard      
+  case "unwanted.txt" | "changelog.txt" | "BUILD" => MergeStrategy.discard
   case x if x.endsWith("spring.factories") => MergeStrategy.first
   case x =>
     val oldStrategy = (assemblyMergeStrategy in assembly).value

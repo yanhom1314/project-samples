@@ -40,7 +40,7 @@ __如果需要及时刷新页面请增加参数项：`-local.doc.root=src/main/r
 
 ## 乱码问题
 + 统一采用`UTF-8`编码
-+ 增加`-Dfile.encoding=UTF-8`参数    
++ 增加`-Dfile.encoding=UTF-8`参数，也可以`sbt set javaOptions += "-Dfile.encoding=utf-8"`    
 
 ## Mustache Template
 + `Mustache`的缺省从`classpath`获取模版文件，`mustache.templates.dir`的缺省值为`templates`。
