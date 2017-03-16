@@ -13,7 +13,7 @@ import scala.collection.mutable
 
 @Singleton
 class ViewController @Inject()(service: ExampleService) extends Controller {
-  get("/view") { request: Request =>
+  get("/view") { _: Request =>
     val persons = mutable.Buffer[Person]()
     persons += Person("1", 1, "1")
     persons += Person("2", 2, "2")

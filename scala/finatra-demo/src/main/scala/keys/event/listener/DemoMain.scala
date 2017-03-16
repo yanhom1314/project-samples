@@ -1,7 +1,7 @@
 package keys.event.listener
 
 object DemoMain extends App {
-  KeysListener.watch()
+  //KeysListener.watch()
 
   println("Ok")
 

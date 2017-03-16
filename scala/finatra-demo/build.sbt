@@ -10,6 +10,8 @@ scalaVersion := "2.11.8"
 
 fork in run := true
 
+cancelable in Global := true
+
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
 lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).enablePlugins(JavaAppPackaging).settings(
@@ -33,11 +35,6 @@ test in assembly := {}
 
 libraryDependencies ++= Seq(
   "com.twitter" %% "finatra-http" % $("finatra"),
-  //"com.twitter" %% "finatra-thrift" % $("finatra"),
-  "com.twitter" %% "finatra-httpclient" % $("finatra"),
-  "com.twitter" %% "finatra-slf4j" % $("finatra"),
-  "com.twitter" %% "inject-server" % $("finatra"),
-  "com.twitter" %% "inject-app" % $("finatra"),
   "org.apache.shiro" % "shiro-core" % $("shiro"),
   "com.github.finagle" %% "finagle-oauth2" % $("finagle-oauth2"),
   "org.jdbi" % "jdbi" % $("jdbi"),

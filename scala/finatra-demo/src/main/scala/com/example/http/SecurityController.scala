@@ -16,7 +16,7 @@ import org.apache.shiro.subject.Subject
 @Singleton
 class SecurityController @Inject()(service: ExampleService) extends Controller {
 
-  get("/login") { request: Request =>
+  get("/login") { _: Request =>
     LoginView()
   }
 
@@ -48,17 +48,17 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
       case e: AuthenticationException => LoginView(error = Status.Unauthorized.reason)
     }
   }
-  filter[ShiroFilter].any("/info") { request: Request =>
+  filter[ShiroFilter].any("/info") { _: Request =>
     InfoView(SecurityUtils.getSubject)
   }
 
-  get("/logout") { request: Request =>
+  get("/logout") { _: Request =>
     val cu = SecurityUtils.getSubject
     cu.logout()
     response.ok.plain(s"Current User:${cu.getPrincipal} is LOGOUT!!!")
   }
 
-  filter[ShiroFilter].get("/console") { request: Request =>
+  filter[ShiroFilter].get("/console") { _: Request =>
     val cu = SecurityUtils.getSubject
     if (cu.isAuthenticated) ManageIndexView(cu)
     else LoginView()

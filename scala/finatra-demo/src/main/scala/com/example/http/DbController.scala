@@ -17,7 +17,7 @@ import scala.collection.JavaConversions._
 @Singleton
 class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: AnotherThingRepository, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository) extends Controller {
 
-  get("/db/init") { request: Request =>
+  get("/db/init") { _: Request =>
     try {
       dbiWrapper.withRepo[SomethingRepository] { repo =>
         if (repo.count() <= 0) (1 to 10).foreach(i => repo.save(Something(i, s"some:${i}")))
@@ -29,7 +29,7 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
     response.ok.plain("OK DbiWrapper:" + dbiWrapper.toString)
   }
 
-  get("/db/all") { request: Request =>
+  get("/db/all") { _: Request =>
     dbiWrapper.withRepo[SomethingRepository] { repo =>
       repo.findAll()
     }
@@ -39,7 +39,7 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
     dbiWrapper.withRepo[SomethingRepository](_.findById(request.id))
   }
 
-  get("/jpa/init") { request: Request =>
+  get("/jpa/init") { _: Request =>
     try {
       if (anotherThingRepository.count() <= 0) (1 to 10).foreach(i => anotherThingRepository.save(AnotherThing(i, s"jpa:${i}", s"jpa:${i}")))
       if (roleRepository.count() <= 0) {
@@ -59,7 +59,7 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
     response.ok.plain("Spring Data Jpa:" + anotherThingRepository)
   }
 
-  get("/jpa/update") { request: Request =>
+  get("/jpa/update") { _: Request =>
     if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
       val user = LoginUser("test", "test_123", 12, "NanJing")
       user.roles = List(roleRepository.findByRoleName("ROLE_USER"))
@@ -68,7 +68,7 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
     response.ok.plain("Spring Data Jpa:" + loginUserRepository)
   }
 
-  get("/jpa/all") { request: Request =>
+  get("/jpa/all") { _: Request =>
     anotherThingRepository.findAll()
   }
 

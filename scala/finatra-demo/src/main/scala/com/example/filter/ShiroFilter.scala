@@ -33,9 +33,10 @@ class ShiroFilter extends SimpleFilter[Request, Response] with Logging {
       service(request)
     }
     else {
-      request.response.statusCode = Status.TemporaryRedirect.code
-      request.response.location = "/login"
-      Future(request.response)
+      val response = Response(request)
+      response.statusCode = Status.TemporaryRedirect.code
+      response.location = "/login"
+      Future(response)
     }
   }
 }
