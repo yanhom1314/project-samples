@@ -13,7 +13,7 @@ import play.api.mvc._
 import security.{Secured, SecuredProfile}
 import shiro.ShiroSubjectCache
 
-class Authorize @Inject()(val messagesApi: MessagesApi, val secureData: ShiroSubjectCache) extends Secured with CookieLang {
+class Authorize @Inject()(val messagesApi: MessagesApi, val secureData: ShiroSubjectCache) extends Secured {
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,

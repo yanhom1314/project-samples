@@ -1,13 +1,16 @@
 package com.example.http
 
+import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
 import com.example.service.ExampleService
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
-import com.twitter.finatra.request.FormParam
+import com.twitter.finatra.request.{FormParam, Header}
 import com.twitter.finatra.response.Mustache
 import com.twitter.finatra.validation.{MethodValidation, NotEmpty, Size, ValidationResult}
+
+import scala.collection.JavaConverters._
 
 @Singleton
 class HomeController @Inject()(service: ExampleService) extends Controller {
@@ -53,12 +56,21 @@ case class Demo2View(name: String, persons: List[Person])
 
 case class Person(name: String, age: Int, address: String)
 
-case class FooRequest(@FormParam name: String,
+case class FooRequest(@Header `Accept-Language`: Option[String] = None,
+                      @FormParam name: String,
                       @Size(min = 5, max = 20) @FormParam email: String,
                       @FormParam age: Int,
-                      @NotEmpty @FormParam sug: String) {
+                      @NotEmpty @FormParam sug: String, req: Request) {
   @MethodValidation
   def validateName = {
+    def locales = `Accept-Language`.fold(Seq(Locale.getDefault())) { lang =>
+      Locale.LanguageRange.parse(lang).asScala.map(f => Locale.forLanguageTag(f.getRange))
+    }
+
+    locales.foreach(println(_))
+
+    println(req)
+
     ValidationResult.validate(name.length < 6, "name length must less 6.")
   }
 }

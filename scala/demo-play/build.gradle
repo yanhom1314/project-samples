@@ -1,0 +1,26 @@
+plugins {
+    id 'play'
+}
+
+model {
+    components {
+        play {
+            injectedRoutesGenerator = true
+            platform play: "$play", scala: '2.11', java: '1.8'
+        }
+    }
+}
+dependencies {
+   play("com.typesafe.play:play-ws_2.11:$play",
+   "com.typesafe.play:play-cache_2.11:$play",
+       "org.apache.shiro:shiro-core:$shiro",
+  "org.postgresql:postgresql:$postgresql",
+  "com.h2database:h2:$h2",
+  "org.springframework.data:spring-data-jpa:$spring_data_jpa",
+  "org.hibernate:hibernate-hikaricp:$hibernate",
+  "com.typesafe.play:play-slick_2.11:$play_slick",
+  "com.typesafe.play:play-slick-evolutions_2.11:$play_slick")
+
+  playTest ("org.scalatestplus.play:scalatestplus-play_2.11:$scalatestplus",
+    "junit:junit:$junit")    
+}
