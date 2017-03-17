@@ -41,12 +41,12 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
 
   def demo() = Action { implicit request =>
     println("################################")
-    println(s"personRepository:${personRepo.count()}")
+    println(s"1:personRepository:${personRepo.count()}")
     println("################################")
     personRepo.findAll().foreach(t => println(s"id:${t.id} name:${t.name} age:${t.age}"))
     println("################################")
     personRepo.findAllByAge(12)
-    println(s"age > 12 :${personRepo.findAllByAge(12)}")
+    println(s"2:age > 12 :${personRepo.findAllByAge(12)}")
     println("################################")
     Ok(views.html.demo())
   }

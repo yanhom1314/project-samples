@@ -13,13 +13,13 @@ module.exports = {
         })
     ],
     entry: {
-        app1: './public/javascripts/dev/app1.js',
-        app2: './public/javascripts/dev/app2.js',
-        app3: './public/javascripts/dev/app3.js',
-        flash: './public/javascripts/dev/flash.js'
+        app1: './javascripts/dev/app1.js',
+        app2: './javascripts/dev/app2.js',
+        app3: './javascripts/dev/app3.js',
+        flash: './javascripts/dev/flash.js'
     },
     output: {
-        path: './public/javascripts',
+        path: './javascripts',
         filename: '[name].min.js'
     },
     module: {
