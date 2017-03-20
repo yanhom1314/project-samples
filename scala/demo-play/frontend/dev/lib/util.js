@@ -1,9 +1,9 @@
-import Vue from "vue";
-import $ from "jquery";
-import jQuery from "jquery";
+import Vue from "Vue";
+import $ from "jQuery";
+import jQuery from "jQuery";
 import fetch from "fetch";
-import VeeValidate, {Validator} from "vee-validate";
-import messagesCN from "vee-locale-cn";
+import VeeValidate, {Validator} from "VeeValidate";
+import messagesCN from "vee_locale_cn";
 
 const config = {
     errorBagName: 'errors', // change if property conflicts.

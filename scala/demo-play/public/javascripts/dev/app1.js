@@ -1,4 +1,4 @@
-var $ = jQuery = require("jquery");
+var $ = jQuery = require("jQuery");
 
 //css can use cdn(recommend)
 //require("bootstrap-css");

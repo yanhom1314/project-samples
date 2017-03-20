@@ -60,13 +60,13 @@ module.exports = {
     //其它解决方案配置
     resolve: {
         alias: {
-            'vee-locale-cn': '../../node_modules/vee-validate/dist/locale/zh_CN'
+            vee_locale_cn: '../../node_modules/vee-validate/dist/locale/zh_CN'
         }
     },
     externals: {
-        vue: "Vue",
-        'vee-validate': "VeeValidate",
+        Vue: "Vue",
+        VeeValidate: "VeeValidate",
         fetch: "fetch",
-        jquery: "jQuery"
+        jQuery: "jQuery"
     }
 };
