@@ -2,6 +2,17 @@ plugins {
     id 'play'
 }
 
+apply plugin: 'scala'
+
+Properties props = new Properties()
+
+processResources {
+    props.load(new FileInputStream("build.properties"))
+    props.each { prop ->
+        project.ext.set(prop.key, prop.value)
+    }
+}
+
 model {
     components {
         play {
@@ -23,4 +34,12 @@ dependencies {
 
     playTest("org.scalatestplus.play:scalatestplus-play_2.11:$scalatestplus",
             "junit:junit:$junit")
+}
+
+task(versions) {
+    doLast {
+        project.properties.each { prop ->
+           println(prop.key+"="+prop.value)
+        }
+    }
 }
