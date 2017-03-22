@@ -15,7 +15,8 @@ cancelable in Global := true
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
 lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).enablePlugins(JavaAppPackaging).settings(
-  mainClass := Some("com.example.ExampleServerMain")
+  //mainClass := Some("com.example.ExampleServerMain")
+  mainClass := Some("demo.IpFindDomain")
 )
 
 assemblyMergeStrategy in assembly := {
