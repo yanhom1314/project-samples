@@ -1,6 +1,9 @@
 package example
 
 import java.io.File
+import java.nio.file.Paths
+
+import finatra.auto.{FileMonitorListener, Monitor}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -14,7 +17,9 @@ object Hello extends Greeting with App {
 
   println(greeting)
 
-  Await.ready(listener(), 5.seconds)
+
+  //Await.ready(listener(), 5.seconds)
+  Await.ready(Monitor.monitor(Paths.get("e:/tmp/result/"), new FileMonitorListener), 30.seconds)
 
   def listener(): Future[Unit] = {
     Future {
