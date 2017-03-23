@@ -9,6 +9,8 @@ import com.twitter.finatra.response.Mustache
 import com.twitter.finatra.validation.{Max, PastTime, ValidationMessageResolver}
 import org.joda.time.DateTime
 
+import scala.collection.JavaConverters._
+
 @Singleton
 class HomeController @Inject()(validationMessageResolver: ValidationMessageResolver) extends Controller {
   get("/") { _: Request =>
@@ -23,12 +25,11 @@ class HomeController @Inject()(validationMessageResolver: ValidationMessageResol
 
     UsersResponse(req.max, req.startDate, req.verbose)
   }
-  get("/messages") { _: Request =>
-    import scala.collection.JavaConverters._
+  get("/messages") { req: Request =>
+    req.accept.foreach(println(_))
     MessageView(validationMessageResolver.validationProperties.entrySet().asScala.map(e => Message(e.getKey.toString, e.getValue.toString)).toList)
   }
 }
-
 
 @Mustache("foo")
 case class FooView(name: String, persons: List[Person])
@@ -39,7 +40,6 @@ case class Person(name: String, age: Int, address: String)
 case class MessageView(messages: List[Message])
 
 case class Message(key: String, value: String)
-
 
 case class UsersRequest(@Max(100) @QueryParam max: Int,
                         @PastTime @QueryParam startDate: Option[DateTime],
