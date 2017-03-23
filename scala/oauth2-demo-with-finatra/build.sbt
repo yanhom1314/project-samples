@@ -3,9 +3,7 @@ import Build._
 val common = List(
   organization := "com.example",
   scalaVersion := "2.12.1",
-  version := "0.1.0-SNAPSHOT",
-  cancelable in Global := true,
-  fork in run := true)
+  version := "0.1.0-SNAPSHOT")
 
 assemblyMergeStrategy in assembly := {
   case x if x.endsWith("io.netty.versions.properties") => MergeStrategy.first
@@ -26,9 +24,8 @@ lazy val root = (project in file(".")).enablePlugins(JavaAppPackaging).
   settings(
     inThisBuild(common),
     name := "hello",
-    mainClass in Compile := Some("demo.oauth2.ExampleServerMain"),
+    //mainClass in Compile := Some("demo.oauth2.ExampleServerMain"),
     libraryDependencies ++= Seq(
-      "org.apache.commons" % "commons-jci-core" % $("jci"),
       "com.twitter" %% "finatra-http" % $("finatra"),
       "org.apache.shiro" % "shiro-core" % $("shiro"),
       "com.github.finagle" %% "finagle-oauth2" % $("finagle-oauth2"),
