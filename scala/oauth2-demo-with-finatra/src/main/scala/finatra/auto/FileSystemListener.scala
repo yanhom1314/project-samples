@@ -2,7 +2,7 @@ package finatra.auto
 
 import java.io.File
 
-class FileMonitorListener extends Listener {
+class FileSystemListener extends Listener {
   override def onDirectoryChanged(dir: File): Unit = {
     println("Directory " + dir.getAbsolutePath + " is changed.")
   }

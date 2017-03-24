@@ -3,11 +3,10 @@ package example
 import java.io.File
 import java.nio.file.Paths
 
-import finatra.auto.{FileMonitorListener, Monitor}
+import finatra.auto.{FileSystemListener, Monitor}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 import scala.io.StdIn
 import scala.util.control.Breaks
 
@@ -16,10 +15,12 @@ object Hello extends Greeting with App {
   val cmd_class = Array("java", "-Djava.ext.dirs=target\\universal\\stage\\lib", "-cp", "target/scala-2.12/classes", "demo.oauth2.ExampleServerMain", "-admin.port=:8000", "-http.port=:80")
 
   println(greeting)
+  val monitor = Monitor(Paths.get("e:/tmp/result/"))
+  monitor.watch(new FileSystemListener)
 
-
-  //Await.ready(listener(), 5.seconds)
-  Await.ready(Monitor.monitor(Paths.get("e:/tmp/result/"), new FileMonitorListener), 30.seconds)
+  //Await.ready(listener(), 30.seconds)
+  Thread.sleep(30000)
+  monitor.terminate()
 
   def listener(): Future[Unit] = {
     Future {
