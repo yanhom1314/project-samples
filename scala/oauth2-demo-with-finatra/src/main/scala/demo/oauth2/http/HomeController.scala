@@ -14,7 +14,7 @@ import scala.collection.JavaConverters._
 @Singleton
 class HomeController @Inject()(validationMessageResolver: ValidationMessageResolver) extends Controller {
   get("/") { _: Request =>
-    response.ok.html("<h1>Hello World111!</h1>")
+    response.ok.html("<h1>Hello World222!</h1>")
   }
   get("/foo") { _: Request =>
     FooView("hello", List(Person("1", 1, "1"), Person("2", 2, "2")))

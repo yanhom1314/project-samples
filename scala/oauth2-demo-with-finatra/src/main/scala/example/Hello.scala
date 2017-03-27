@@ -5,38 +5,18 @@ import java.nio.file.Paths
 
 import finatra.auto.{FileSystemListener, Monitor}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
-import scala.io.StdIn
-import scala.util.control.Breaks
-
-object Hello extends Greeting with App {
+object Hello extends Greeting {
   val cmd_jar = Array("java", "-cp","""target\scala-2.12\hello-assembly-0.1.0-SNAPSHOT.jar""", "demo.oauth2.ExampleServerMain", "-admin.port=:8000", "-http.port=:80")
   val cmd_class = Array("java", "-Djava.ext.dirs=target\\universal\\stage\\lib", "-cp", "target/scala-2.12/classes", "demo.oauth2.ExampleServerMain", "-admin.port=:8000", "-http.port=:80")
 
-  println(greeting)
-  val monitor = Monitor(Paths.get("e:/tmp/result/"))
-  monitor.watch(new FileSystemListener)
+  def main(args: Array[String]): Unit = {
+    println(greeting)
+    val monitor = Monitor(Paths.get("e:/tmp/result/"))
+    monitor.watch(new FileSystemListener)
 
-  //Await.ready(listener(), 30.seconds)
-  Thread.sleep(30000)
-  monitor.terminate()
-
-  def listener(): Future[Unit] = {
-    Future {
-      var p = run()
-      while (true) {
-        StdIn.readLine().trim.toLowerCase() match {
-          case "quit" =>
-            p.destroy()
-            Breaks.break()
-          case "restart" =>
-            p.destroy()
-            p = run()
-          case s: String => println(s"NOT COMMAND :[${s}]!!!")
-        }
-      }
-    }
+    //Await.ready(listener(), 30.seconds)
+    Thread.sleep(30000)
+    monitor.terminate()
   }
 
   @throws[Exception]

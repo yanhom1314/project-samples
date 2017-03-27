@@ -12,8 +12,8 @@ import scala.concurrent.Future
 
 case class Monitor(path: Path) {
   private var isRun = true
-  val queue = new LinkedBlockingQueue[(File, Listener)](1)
-  lazy val watcher = path.getFileSystem.newWatchService()
+  private val queue = new LinkedBlockingQueue[(File, Listener)](1)
+  private lazy val watcher = path.getFileSystem.newWatchService()
 
   val timer = new Timer(true)
 
