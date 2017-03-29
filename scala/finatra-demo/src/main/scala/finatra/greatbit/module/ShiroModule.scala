@@ -1,8 +1,8 @@
-package com.example
+package finatra.greatbit.module
 
 import javax.inject.{Inject, Singleton}
 
-import com.example.jdbi.DbiWrapper
+import com.example.jdbi.DBIWrapperImpl
 import com.example.jpa.repo.{LoginUserRepository, RoleRepository}
 import com.example.shiro.RealmService
 import com.google.inject.Provides
@@ -30,7 +30,7 @@ object ShiroModule extends TwitterModule {
   @Provides
   @Singleton
   @Inject()
-  def getRealm(dbiWrapper: DbiWrapper, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository): Realm = {
+  def getRealm(dbiWrapper: DBIWrapperImpl, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository): Realm = {
     RealmService(dbiWrapper, loginUserRepository, roleRepository)
   }
 }

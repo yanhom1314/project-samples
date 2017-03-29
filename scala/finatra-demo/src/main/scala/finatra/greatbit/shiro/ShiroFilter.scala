@@ -1,4 +1,4 @@
-package com.example.filter
+package finatra.greatbit.shiro
 
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -25,7 +25,7 @@ class ShiroFilter extends SimpleFilter[Request, Response] with Logging {
         try {
           currentUser.logout()
         } catch {
-          case e: UnknownSessionException => logger.error(s"UnknownSessionException:${session.getId}")
+          case _: UnknownSessionException => logger.error(s"UnknownSessionException:${session.getId}")
         }
     }
     if (currentUser.isAuthenticated) {

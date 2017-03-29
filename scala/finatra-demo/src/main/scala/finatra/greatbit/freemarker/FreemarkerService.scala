@@ -1,4 +1,4 @@
-package com.example.freemarker
+package finatra.greatbit.freemarker
 
 import java.io.{ByteArrayOutputStream, OutputStreamWriter, StringWriter}
 import java.nio.charset.StandardCharsets

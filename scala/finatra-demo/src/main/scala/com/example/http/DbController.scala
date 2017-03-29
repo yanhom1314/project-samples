@@ -1,8 +1,9 @@
 package com.example.http
 
+import java.util
 import javax.inject.{Inject, Singleton}
 
-import com.example.jdbi.DbiWrapper
+import com.example.jdbi.DBIWrapperImpl
 import com.example.jdbi.dao.{SomethingRepository, UserRepository}
 import com.example.jdbi.mapper.{Something, User}
 import com.example.jpa.repo.{AnotherThingRepository, LoginUserRepository, RoleRepository}
@@ -12,17 +13,17 @@ import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.QueryParam
 import com.twitter.finatra.validation.Max
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 @Singleton
-class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: AnotherThingRepository, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository) extends Controller {
+class DbController @Inject()(dbiWrapper: DBIWrapperImpl, anotherThingRepository: AnotherThingRepository, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository) extends Controller {
 
   get("/db/init") { _: Request =>
     try {
-      dbiWrapper.withRepo[SomethingRepository] { repo =>
+      dbiWrapper.withRepo[SomethingRepository, Unit] { repo =>
         if (repo.count() <= 0) (1 to 10).foreach(i => repo.save(Something(i, s"some:${i}")))
       }
-      dbiWrapper.withRepo[UserRepository] { repo => if (repo.count() <= 0) repo.save(User(1, "test1", "123456", 12, "NanJing")) }
+      dbiWrapper.withRepo[UserRepository, Unit] { repo => if (repo.count() <= 0) repo.save(User(1, "test1", "123456", 12, "NanJing")) }
     } catch {
       case e: Exception => e.printStackTrace()
     }
@@ -30,13 +31,13 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
   }
 
   get("/db/all") { _: Request =>
-    dbiWrapper.withRepo[SomethingRepository] { repo =>
+    dbiWrapper.withRepo[SomethingRepository, util.List[Something]] { repo =>
       repo.findAll()
     }
   }
 
   get("/db/show/:id") { request: IdRequest =>
-    dbiWrapper.withRepo[SomethingRepository](_.findById(request.id))
+    dbiWrapper.withRepo[SomethingRepository, Something](_.findById(request.id))
   }
 
   get("/jpa/init") { _: Request =>
@@ -50,7 +51,8 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
       if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
         val user = LoginUser("test", "123456", 12, "NanJing")
         user.id = 1
-        user.roles = List(roleRepository.findByRoleName("ROLE_USER"))
+        user.roles = List(roleRepository.findByRoleName("ROLE_USER")).asJava
+
         loginUserRepository.save(user)
       }
     } catch {
@@ -62,7 +64,7 @@ class DbController @Inject()(dbiWrapper: DbiWrapper, anotherThingRepository: Ano
   get("/jpa/update") { _: Request =>
     if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
       val user = LoginUser("test", "test_123", 12, "NanJing")
-      user.roles = List(roleRepository.findByRoleName("ROLE_USER"))
+      user.roles = List(roleRepository.findByRoleName("ROLE_USER")).asJava
       loginUserRepository.save(user)
     }
     response.ok.plain("Spring Data Jpa:" + loginUserRepository)

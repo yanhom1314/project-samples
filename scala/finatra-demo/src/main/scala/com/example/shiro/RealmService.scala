@@ -1,6 +1,6 @@
 package com.example.shiro
 
-import com.example.jdbi.DbiWrapper
+import com.example.jdbi.DBIWrapperImpl
 import com.example.jpa.repo.{LoginUserRepository, RoleRepository}
 import org.apache.shiro.authc._
 import org.apache.shiro.authz.{AuthorizationInfo, SimpleAuthorizationInfo}
@@ -9,7 +9,7 @@ import org.apache.shiro.subject.PrincipalCollection
 
 import scala.collection.JavaConversions._
 
-case class RealmService(dbiWrapper: DbiWrapper, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository) extends AuthorizingRealm {
+case class RealmService(dbiWrapper: DBIWrapperImpl, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository) extends AuthorizingRealm {
 
   override def getName: String = "MyRealm"
 

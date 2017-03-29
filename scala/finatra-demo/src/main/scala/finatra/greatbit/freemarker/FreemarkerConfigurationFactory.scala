@@ -1,4 +1,4 @@
-package com.example.freemarker
+package finatra.greatbit.freemarker
 
 import javax.inject.Singleton
 

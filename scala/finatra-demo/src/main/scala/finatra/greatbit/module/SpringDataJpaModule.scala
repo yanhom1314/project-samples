@@ -1,4 +1,4 @@
-package com.example
+package finatra.greatbit.module
 
 import com.example.spring.SpringDataJpaConfig
 import com.twitter.inject.TwitterModule

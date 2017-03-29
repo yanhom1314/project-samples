@@ -7,7 +7,7 @@ import javax.inject.{Inject, Singleton}
 
 import com.example.filter.AddCookieFilter
 import com.example.service.ExampleService
-import com.twitter.finagle.http.{Cookie, Request}
+import com.twitter.finagle.http.{Cookie, Request, Response}
 import com.twitter.finatra.http.Controller
 import com.twitter.util
 
@@ -43,7 +43,7 @@ class PingController @Inject()(service: ExampleService) extends Controller {
     val buffer = new StringBuffer()
     buffer.append(request.params.map { t => s"${t._1}:${t._2}" }.mkString("<br/>"))
     buffer.append(request.cookies.map { t => s"${t._1}:${t._2.value}" }.mkString("<br/>"))
-    buffer.append(request.response.cookies.map { t => s"${t._1}:${t._2.value}" }.mkString("<br/>"))
+    buffer.append(Response(request).cookies.map { t => s"${t._1}:${t._2.value}" }.mkString("<br/>"))
 
     response.ok.html(buffer.toString)
   }

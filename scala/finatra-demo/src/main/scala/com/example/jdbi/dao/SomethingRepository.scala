@@ -8,7 +8,10 @@ import org.skife.jdbi.v2.sqlobject.{Bind, BindBean, SqlQuery, SqlUpdate}
 
 @RegisterMapper(Array(classOf[SomethingMapper]))
 trait SomethingRepository extends BaseRepository[Something] {
-  @SqlUpdate("insert into j_something(id,name) values(:id, :name)")
+  @SqlUpdate("create table if not exists j_something (id bigint primary key auto_increment, name varchar(100))")
+  override def createTable(): Unit
+
+  @SqlUpdate("insert into j_something(name) values(:name)")
   override def save(@BindBean d: Something)
 
   @SqlUpdate("delete from j_something where id=:id")
@@ -25,7 +28,4 @@ trait SomethingRepository extends BaseRepository[Something] {
 
   @SqlQuery("select count(*) from j_something")
   override def count(): Long
-
-  @SqlUpdate("create or replace table j_something (id int primary key, name varchar(100))")
-  override def createTable(): Unit
 }

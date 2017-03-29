@@ -3,10 +3,10 @@ package com.example.http
 import javax.inject.{Inject, Singleton}
 import javax.naming.AuthenticationException
 
-import com.example.filter.ShiroFilter
 import com.example.service.ExampleService
 import com.twitter.finagle.http.{Request, Response, Status}
 import com.twitter.finatra.http.Controller
+import finatra.greatbit.shiro.ShiroFilter
 import finatra.views.freemarker.Freemarker
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.{IncorrectCredentialsException, LockedAccountException, UnknownAccountException, UsernamePasswordToken}

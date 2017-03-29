@@ -9,9 +9,13 @@ object IpFindDomain extends App {
     val list = Source.fromFile(new File(args(0))).getLines().map(_.trim).toSet
 
     Source.fromFile(new File(args(1))).getLines().foreach { l =>
-      l.split("\\|") match {
-        case Array(d, ips) => ips.split(";").filter(list.contains(_)).foreach(ip => println(s"${d} ${ip}"))
-        case _ =>
+      try {
+        l.split("\\|") match {
+          case Array(d, ips) => ips.split(";").filter(list.contains(_)).foreach(ip => println(s"${d} ${ip}"))
+          case _ =>
+        }
+      } catch {
+        case _: Exception =>
       }
     }
   }
