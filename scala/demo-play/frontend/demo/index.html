@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/demo/css/main.css" rel="stylesheet">
+    <!--
+    <script src="//unpkg.com/jquery/dist/jquery.min.js"></script>
+    <script src="//unpkg.com/vue/dist/vue.min.js"></script>
+    -->
+    <!--
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/fetch/2.0.1/fetch.min.js"></script>
+    <script src="//cdn.bootcss.com/vue/2.2.4/vue.min.js"></script>
+    -->
+    <script src="//cdn.bootcss.com/vue/2.2.4/vue.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/fetch/2.0.1/fetch.min.js"></script>
+</head>
+<body>
+<div id="app">
+    {{ message }}
+</div>
+<div id="app1">
+    {{ message }}
+</div>
+<div id="app-2">
+  <span v-bind:title="message">
+    Hover your mouse over me for a few seconds to see my dynamically bound title!
+  </span>
+</div>
+<div id="app-3">
+    <p v-if="seen">Now you see me</p>
+</div>
+<div id="app-4">
+    <ol>
+        <li v-for="t in list">
+            {{ t.text }}
+        </li>
+    </ol>
+</div>
+<div id="app-5">
+    <p>{{ message }}</p>
+    <button @click="reverseMessage">Reverse Message</button>
+
+
+</div>
+<div id="app-6">
+    <p>{{ message }}</p>
+    <input v-model="message">
+    <button @click="toUpper">大写</button>
+    <button @click="toLower">小写</button>
+    <button @click="ajax">Ajax</button>
+    <button @click="html">Html</button>
+
+    <div v-html="content"></div>
+</div>
+<div id="app-7">
+    <ol>
+        <!-- Create an instance of the todo-item component -->
+        <todo-item v-for="item in list" v-bind:todo="item"></todo-item>
+    </ol>
+</div>
+<ul>
+    <li><a href="form.html">Form Validtetor</a></li>
+    <li><a href="loader.html">Loader Vue Component</a></li>
+</ul>
+<!---->
+<script src="/js/common.min.js"></script>
+<script src="/js/index.min.js"></script>
+</body>
+</html>
