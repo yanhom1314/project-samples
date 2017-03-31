@@ -20,12 +20,10 @@ object FreemarkerModule extends TwitterModule {
   @Provides
   @Singleton
   def provideFreemarkerFactory(resolver: FileResolver, @Flag("local.doc.root") localDocRoot: String): FreemarkerConfigurationFactory = {
-    val factory = new FreemarkerConfigurationFactory()
     localDocRoot match {
-      case s: String if s != null && s.trim.length > 0 => factory.configuration.setDirectoryForTemplateLoading(new File(new File(localDocRoot), templatesDir()))
-      case _ => factory.configuration.setClassLoaderForTemplateLoading(this.getClass.getClassLoader, templatesDir())
+      case s: String if s != null && s.trim.length > 0 => FreemarkerConfigurationFactory(new File(localDocRoot, templatesDir()))
+      case _ => FreemarkerConfigurationFactory(this.getClass.getClassLoader, templatesDir())
     }
-    factory
   }
 
   override def singletonStartup(injector: Injector) {

@@ -8,7 +8,7 @@ import scala.collection.JavaConverters._
 
 private[freemarker] class FreemarkerTemplateNameLookup {
   private val classToTemplateNameCache = new ConcurrentHashMap[Class[_], String]().asScala
-
+  private val suffix = if (System.getProperty("freemarker.template.suffix") != null) System.getProperty("freemarker.template.suffix") else ".ftl"
   /* Public */
 
   def getTemplateName(obj: Any): String = {
@@ -24,7 +24,7 @@ private[freemarker] class FreemarkerTemplateNameLookup {
   private def lookupViaAnnotation(viewObj: Any): String = {
     classToTemplateNameCache.getOrElseUpdate(viewObj.getClass, {
       val freemarkerAnnotation = viewObj.getClass.getAnnotation(classOf[Freemarker])
-      freemarkerAnnotation.value + ".ftl"
+      freemarkerAnnotation.value + suffix
     })
   }
 }

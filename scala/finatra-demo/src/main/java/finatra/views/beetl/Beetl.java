@@ -1,4 +1,4 @@
-package finatra.views.freemarker;
+package finatra.views.beetl;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -8,7 +8,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target(PARAMETER)
 @Retention(RUNTIME)
-public @interface Freemarker {
+public @interface Beetl {
     /**
      * Template name
      */
