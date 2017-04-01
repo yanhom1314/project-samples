@@ -10,7 +10,7 @@ import com.twitter.util.Future
 class SecureFilter @Inject()(dataHandler: OAuthDataHandler) extends SimpleFilter[Request, Response] with OAuth2 {
 
   override def apply(request: Request, service: Service[Request, Response]): Future[Response] = {
-    authorize(request, dataHandler) flatMap { authInfo =>
+    authorize(request, dataHandler) flatMap { _ =>
       service(request)
     } handle {
       case e: OAuthError =>

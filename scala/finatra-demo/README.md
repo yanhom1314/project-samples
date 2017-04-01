@@ -4,9 +4,8 @@
 
 A minimal [activator](https://www.typesafe.com/get-started) seed template for creating a Finatra application.
 
-
 ## Spring Data JPA
-+ 配置`@Entity`时，需要属性上增加`@BeanProperty`，另外需要使用`java.lang.Long`作为主键，使用`scala.List、scala.Set`代替集合
++ `@Entity`必须用`Java`编写，否则会有很多问题。
 
 ## Freemarker & Beetl
 + 所有数据类型需要加`@BeanProperty`，另外属性集合类型必须使用`java.lang.Iterable<T>`类型，否则属性无法解析渲染。

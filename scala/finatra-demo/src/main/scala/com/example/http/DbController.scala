@@ -45,12 +45,12 @@ class DbController @Inject()(dbiWrapper: DBIWrapperImpl, anotherThingRepository:
       if (anotherThingRepository.count() <= 0) (1 to 10).foreach(i => anotherThingRepository.save(AnotherThingWrapper(i, s"jpa:${i}", s"jpa:${i}")))
       if (roleRepository.count() <= 0) {
         val role = RoleWrapper("ROLE_USER")
-        role.id = 1
+        role.id = 1L
         roleRepository.save(role)
       }
       if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
         val user = LoginUserWrapper("test", "123456", 12, "NanJing")
-        user.id = 1
+        user.id = 1L
         user.roles = List(roleRepository.findByRoleName("ROLE_USER")).asJava
 
         loginUserRepository.save(user)

@@ -19,8 +19,8 @@ class AddCookieFilter extends SimpleFilter[Request, Response] {
     request.params.foreach { t => println(s"${t._1}:${t._2}") }
     println(s"---------Request Cookies:${request.cookies.size}---------")
     request.cookies.foreach { t => println(s"${t._1}:${t._2.value}") }
-    println(s"---------Response Cookies:${request.response.cookies.size}---------")
-    request.response.cookies.foreach { t => println(s"${t._1}:${t._2.value}") }
+    println(s"---------Response Cookies:${ Response(request).cookies.size}---------")
+    Response(request).cookies.foreach { t => println(s"${t._1}:${t._2.value}") }
     println("-----------------------------------------------")
   }
 }

@@ -6,7 +6,7 @@ import com.twitter.finagle.oauth2.{AccessToken, AuthInfo, DataHandler}
 import com.twitter.util.Future
 
 class OAuthDataHandler extends DataHandler[User] {
-    val userAaccessToken = AccessToken("token1", Some("refreshToken1"), Some("all"), Some(3600), new java.util.Date())
+    val userAccessToken = AccessToken("token1", Some("refreshToken1"), Some("all"), Some(3600), new java.util.Date())
 
     def validateClient(clientId: String, clientSecret: String, grantType: String) =
       Future.value(true)
@@ -17,7 +17,7 @@ class OAuthDataHandler extends DataHandler[User] {
     }
 
     def createAccessToken(authInfo: AuthInfo[User]) =
-      Future.value(userAaccessToken)
+      Future.value(userAccessToken)
 
     def findAuthInfoByCode(code: String): Future[Option[AuthInfo[User]]] =
       Future.value(None)
@@ -31,7 +31,7 @@ class OAuthDataHandler extends DataHandler[User] {
 
     def findAccessToken(token: String): Future[Option[AccessToken]] = {
       println(" ===== FIND TOKEN")
-      if(token=="token1") Future.value(Some(userAaccessToken))
+      if(token=="token1") Future.value(Some(userAccessToken))
       else Future.value(None)
     }
 
