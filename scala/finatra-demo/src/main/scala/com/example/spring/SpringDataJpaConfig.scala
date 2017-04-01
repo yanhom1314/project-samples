@@ -9,12 +9,17 @@ import org.springframework.orm.jpa.JpaTransactionManager
 
 @Configuration
 @EnableJpaRepositories(basePackages = Array("com.example.jpa.repo"))
-@ComponentScan(basePackages = Array("com.example.jpa"))
+@ComponentScan(Array("com.example.jpa"))
 class SpringDataJpaConfig {
-  @Bean def entityManagerFactory(): EntityManagerFactory = Persistence.createEntityManagerFactory("h2") //h2 or postgres
+
+  @Bean def entityManagerFactory(): EntityManagerFactory = Persistence.createEntityManagerFactory("postgres")
 
   @Bean def hibernateExceptionTranslator(): HibernateExceptionTranslator = new HibernateExceptionTranslator()
 
-  @Bean def transactionManager(): JpaTransactionManager = new JpaTransactionManager()
-
+  @Bean def transactionManager(entityManagerFactory: EntityManagerFactory): JpaTransactionManager = {
+    println(s"emf:${entityManagerFactory}")
+    val tm = new JpaTransactionManager()
+    tm.setEntityManagerFactory(entityManagerFactory)
+    tm
+  }
 }

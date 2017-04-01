@@ -11,8 +11,6 @@ import finatra.greatbit.module.{BeetlModule, FreemarkerModule, ShiroModule, Spri
 object ExampleServerMain extends ExampleServer
 
 class ExampleServer extends HttpServer {
-  override def mustacheModule = MyMustacheModule
-
   override def defaultFinatraHttpPort = ":80"
 
   override protected def modules: Seq[Module] = Array(FreemarkerModule, BeetlModule, H2Module, SpringDataJpaModule, ShiroModule)
