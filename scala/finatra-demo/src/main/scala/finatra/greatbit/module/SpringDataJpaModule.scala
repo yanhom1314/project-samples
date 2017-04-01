@@ -10,6 +10,9 @@ object SpringDataJpaModule extends TwitterModule {
 
   protected override def configure(): Unit = {
     ctx.getBeanNamesForType(classOf[Repository[_, _]]).map(ctx.getType(_)).foreach {
+      case c: Class[Repository[_, _]@unchecked] => println(c.getCanonicalName)
+    }
+    ctx.getBeanNamesForType(classOf[Repository[_, _]]).map(ctx.getType(_)).foreach {
       case c: Class[Repository[_, _]@unchecked] => bind(c).toInstance(ctx.getBean(c))
     }
   }

@@ -4,7 +4,7 @@ import java.io.File
 import javax.inject.Singleton
 
 import com.google.inject.Provides
-import com.greatbit.tags.web.beetl.{BeetlBodyComponent, BeetlConfigurationFactory, BeetlMessageBodyWriter}
+import finatra.greatbit.beetl.{BeetlBodyComponent, BeetlConfigurationFactory, BeetlMessageBodyWriter}
 import com.twitter.finatra.http.internal.marshalling.MessageBodyManager
 import com.twitter.finatra.http.modules.DocRootModule
 import com.twitter.finatra.http.routing.FileResolver

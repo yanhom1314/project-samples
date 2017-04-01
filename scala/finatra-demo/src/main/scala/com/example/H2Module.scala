@@ -9,29 +9,27 @@ import org.skife.jdbi.v2.{DBI, Handle}
 
 
 object H2Module extends TwitterModule {
-  val server = Server.createTcpServer()
+  //val server = Server.createTcpServer()
   lazy val ds = JdbcConnectionPool.create("jdbc:h2:mem:test", "sa", "")
   lazy val dbi = new DBI(ds)
 
   protected override def configure(): Unit = {
-    dbi.withHandle(new HandleCallback[Unit] {
-      override def withHandle(handle: Handle): Unit = {
-        val sr = handle.attach(classOf[SomethingRepository])
-        val ur = handle.attach(classOf[UserRepository])
-        //jdbi create table
-        sr.createTable()
-        ur.createTable()
-      }
+    dbi.withHandle((handle: Handle) => {
+      val sr = handle.attach(classOf[SomethingRepository])
+      val ur = handle.attach(classOf[UserRepository])
+      //jdbi create table
+      sr.createTable()
+      ur.createTable()
     })
 
     bind[DBI].toInstance(dbi)
   }
 
   override def singletonStartup(injector: Injector): Unit = {
-    server.start()
+    //server.start()
   }
 
   override def singletonShutdown(injector: Injector): Unit = {
-    server.shutdown()
+    //server.shutdown()
   }
 }

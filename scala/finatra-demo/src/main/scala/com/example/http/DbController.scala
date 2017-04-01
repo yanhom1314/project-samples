@@ -13,8 +13,6 @@ import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.QueryParam
 import com.twitter.finatra.validation.Max
 
-import scala.collection.JavaConverters._
-
 @Singleton
 class DbController @Inject()(dbiWrapper: DBIWrapperImpl, anotherThingRepository: AnotherThingRepository, loginUserRepository: LoginUserRepository, roleRepository: RoleRepository) extends Controller {
 
@@ -48,10 +46,10 @@ class DbController @Inject()(dbiWrapper: DBIWrapperImpl, anotherThingRepository:
         role.id = 1
         roleRepository.save(role)
       }
-      if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
+      if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.length <= 0) {
         val user = LoginUser("test", "123456", 12, "NanJing")
         user.id = 1
-        user.roles = List(roleRepository.findByRoleName("ROLE_USER")).asJava
+        user.roles = List(roleRepository.findByRoleName("ROLE_USER"))
 
         loginUserRepository.save(user)
       }
@@ -62,9 +60,9 @@ class DbController @Inject()(dbiWrapper: DBIWrapperImpl, anotherThingRepository:
   }
 
   get("/jpa/update") { _: Request =>
-    if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.size() <= 0) {
+    if (loginUserRepository.findByUsername("test") == null || loginUserRepository.findByUsername("test").roles.length <= 0) {
       val user = LoginUser("test", "test_123", 12, "NanJing")
-      user.roles = List(roleRepository.findByRoleName("ROLE_USER")).asJava
+      user.roles = List(roleRepository.findByRoleName("ROLE_USER"))
       loginUserRepository.save(user)
     }
     response.ok.plain("Spring Data Jpa:" + loginUserRepository)

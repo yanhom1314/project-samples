@@ -1,4 +1,4 @@
-package com.greatbit.tags.web.beetl
+package finatra.greatbit.beetl
 
 import java.io.{ByteArrayOutputStream, OutputStreamWriter, StringWriter}
 import java.nio.charset.StandardCharsets

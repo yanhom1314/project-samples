@@ -1,6 +1,5 @@
 package com.example.jpa
 
-import java.util
 import javax.persistence.{Column, _}
 
 import scala.beans.BeanProperty
@@ -14,7 +13,7 @@ class Role extends BaseEntity {
 
   @BeanProperty
   @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
-  var users: util.List[LoginUser] = _
+  var users: List[LoginUser] = _
 }
 
 object Role {

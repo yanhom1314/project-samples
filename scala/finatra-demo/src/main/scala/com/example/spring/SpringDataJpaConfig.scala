@@ -9,7 +9,7 @@ import org.springframework.orm.jpa.JpaTransactionManager
 
 @Configuration
 @EnableJpaRepositories(basePackages = Array("com.example.jpa.repo"))
-@ComponentScan(Array("com.example.jpa.repo"))
+@ComponentScan(basePackages = Array("com.example.jpa"))
 class SpringDataJpaConfig {
   @Bean def entityManagerFactory(): EntityManagerFactory = Persistence.createEntityManagerFactory("h2") //h2 or postgres
 

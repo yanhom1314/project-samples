@@ -1,4 +1,4 @@
-package com.greatbit.tags.web.beetl
+package finatra.greatbit.beetl
 
 import java.util
 import javax.inject.Inject

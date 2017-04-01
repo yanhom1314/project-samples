@@ -6,17 +6,15 @@ organization := "com.example"
 
 version := "1.0.0"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.1"
 
 fork in run := true
 
-cancelable in Global := true
-
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
-mainClass in assembly := Some("com.example.ExampleServerMain")
+scalacOptions ++= Seq("-target:jvm-1.8")
 
-lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).enablePlugins(JavaAppPackaging).settings(
+lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).settings(
   //mainClass in assembly := Some("com.example.ExampleServerMain"),
   //mainClass := Some("demo.IpFindDomain")
   mainClass := Some("com.example.ExampleServerMain")
@@ -39,6 +37,9 @@ test in assembly := {}
 
 libraryDependencies ++= Seq(
   "com.twitter" %% "finatra-http" % $("finatra"),
+  "org.freemarker" % "freemarker" % $("freemarker"),
+  "com.ibeetl" % "beetl" % $("beetl"),
+  "org.antlr" % "antlr4-runtime" % $("antlr"),
   "org.apache.shiro" % "shiro-core" % $("shiro"),
   "com.github.finagle" %% "finagle-oauth2" % $("finagle-oauth2"),
   "org.jdbi" % "jdbi" % $("jdbi"),
@@ -48,7 +49,6 @@ libraryDependencies ++= Seq(
   "org.springframework.data" % "spring-data-jpa" % $("spring-data-jpa"),
   "org.postgresql" % "postgresql" % $("postgresql"),
   "com.h2database" % "h2" % $("h2"),
-  "org.freemarker" % "freemarker" % $("freemarker"),
   "ch.qos.logback" % "logback-classic" % $("logback"),
 
   "com.twitter" %% "finatra-http" % $("finatra") % "test" classifier "tests",

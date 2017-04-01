@@ -1,6 +1,5 @@
 package com.example.jpa
 
-import java.util
 import javax.persistence._
 
 import scala.beans.BeanProperty
@@ -28,7 +27,7 @@ class LoginUser extends BaseEntity {
   @ManyToMany(cascade = Array(CascadeType.MERGE), fetch = FetchType.EAGER)
   @JoinTable(name = "user_role", joinColumns = Array(new JoinColumn(name = "user_id", referencedColumnName = "id")),
     inverseJoinColumns = Array(new JoinColumn(name = "role_id", referencedColumnName = "id")))
-  var roles: util.List[Role] = _
+  var roles: List[Role] = _
 }
 
 object LoginUser {

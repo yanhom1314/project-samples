@@ -6,8 +6,7 @@ import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
 import com.twitter.finatra.http.routing.HttpRouter
-import finatra.greatbit.module.{FreemarkerModule, ShiroModule, SpringDataJpaModule}
-import finatra.greatbit.{ShiroModule, SpringDataJpaModule}
+import finatra.greatbit.module.{BeetlModule, FreemarkerModule, ShiroModule, SpringDataJpaModule}
 
 object ExampleServerMain extends ExampleServer
 
@@ -16,7 +15,7 @@ class ExampleServer extends HttpServer {
 
   override def defaultFinatraHttpPort = ":80"
 
-  override protected def modules: Seq[Module] = Array(ShiroModule, FreemarkerModule, H2Module, SpringDataJpaModule)
+  override protected def modules: Seq[Module] = Array(FreemarkerModule, BeetlModule, H2Module, SpringDataJpaModule, ShiroModule)
 
   override def configureHttp(router: HttpRouter): Unit = {
     router
