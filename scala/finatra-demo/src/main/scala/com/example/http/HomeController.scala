@@ -1,5 +1,6 @@
 package com.example.http
 
+import java.util
 import java.util.Locale
 import javax.inject.{Inject, Singleton}
 
@@ -10,12 +11,15 @@ import com.twitter.finatra.request.{FormParam, Header}
 import com.twitter.finatra.response.Mustache
 import com.twitter.finatra.validation.{MethodValidation, NotEmpty, Size, ValidationResult}
 
+import scala.beans.BeanProperty
 import scala.collection.JavaConverters._
 
 @Singleton
 class HomeController @Inject()(service: ExampleService) extends Controller {
 
-  def list(): List[Person] = List(Person("1", 1, "1"), Person("2", 2, "2"), Person("3", 3, "3"), Person("4", 4, "4"))
+  def list(): List[Person] = List(Person("1", 1, "1", List(Friend("11", 11), Friend("111", 111)).asJava),
+    Person("2", 2, "2", List(Friend("22", 22), Friend("222", 222)).asJava),
+    Person("3", 3, "3", List(Friend("33", 33), Friend("333", 333)).asJava))
 
   get("/") { _: Request =>
     FooView("YaFengLi", list())
@@ -54,7 +58,9 @@ case class Demo1View(name: String, persons: List[Person])
 @Mustache("d2")
 case class Demo2View(name: String, persons: List[Person])
 
-case class Person(name: String, age: Int, address: String)
+case class Friend(@BeanProperty name: String, @BeanProperty age: Int)
+
+case class Person(@BeanProperty name: String, @BeanProperty age: Int, @BeanProperty address: String, @BeanProperty friends: util.List[Friend])
 
 case class FooRequest(@Header `Accept-Language`: Option[String] = None,
                       @FormParam name: String,

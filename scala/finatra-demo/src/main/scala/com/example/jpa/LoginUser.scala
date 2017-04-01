@@ -3,6 +3,7 @@ package com.example.jpa
 import javax.persistence._
 
 import scala.beans.BeanProperty
+import scala.collection.mutable.ListBuffer
 
 @Entity
 @Table(name = "t_user")
@@ -27,7 +28,7 @@ class LoginUser extends BaseEntity {
   @ManyToMany(cascade = Array(CascadeType.MERGE), fetch = FetchType.EAGER)
   @JoinTable(name = "user_role", joinColumns = Array(new JoinColumn(name = "user_id", referencedColumnName = "id")),
     inverseJoinColumns = Array(new JoinColumn(name = "role_id", referencedColumnName = "id")))
-  var roles: List[Role] = _
+  var roles: ListBuffer[Role] = _
 }
 
 object LoginUser {

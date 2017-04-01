@@ -3,6 +3,7 @@ package com.example.jpa
 import javax.persistence.{Column, _}
 
 import scala.beans.BeanProperty
+import scala.collection.mutable.ListBuffer
 
 @Entity
 @Table(name = "t_role")
@@ -13,7 +14,7 @@ class Role extends BaseEntity {
 
   @BeanProperty
   @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
-  var users: List[LoginUser] = _
+  var users: ListBuffer[LoginUser] = _
 }
 
 object Role {
