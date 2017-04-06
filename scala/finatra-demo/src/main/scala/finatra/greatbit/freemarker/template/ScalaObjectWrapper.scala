@@ -32,8 +32,7 @@ class ScalaObjectWrapper extends ObjectWrapper {
   }
 }
 
-class ScalaDateWrapper(val date: Date, wrapper: ObjectWrapper)
-  extends ScalaBaseWrapper(date, wrapper) with TemplateDateModel {
+class ScalaDateWrapper(val date: Date, wrapper: ObjectWrapper) extends ScalaBaseWrapper(date, wrapper) with TemplateDateModel {
   def getDateType = TemplateDateModel.UNKNOWN
 
   def getAsDate = date
@@ -46,8 +45,7 @@ class ScalaSeqWrapper[T](val seq: Seq[T], wrapper: ObjectWrapper)
   def size = seq.size
 }
 
-class ScalaMapWrapper(val map: collection.Map[String, _], wrapper: ObjectWrapper)
-  extends ScalaBaseWrapper(map, wrapper) with TemplateHashModelEx {
+class ScalaMapWrapper(val map: Map[String, _], wrapper: ObjectWrapper) extends ScalaBaseWrapper(map, wrapper) with TemplateHashModelEx {
   override def get(key: String): TemplateModel = wrapper.wrap(map.get(key).orElse(Some(super.get(key))))
 
   override def isEmpty = map.isEmpty
@@ -59,8 +57,7 @@ class ScalaMapWrapper(val map: collection.Map[String, _], wrapper: ObjectWrapper
   def size = map.size
 }
 
-class ScalaIterableWrapper[T](val it: Iterable[T], wrapper: ObjectWrapper)
-  extends ScalaBaseWrapper(it, wrapper) with TemplateCollectionModel {
+class ScalaIterableWrapper[T](val it: Iterable[T], wrapper: ObjectWrapper) extends ScalaBaseWrapper(it, wrapper) with TemplateCollectionModel {
   def iterator = new ScalaIteratorWrapper(it.iterator, wrapper)
 }
 
@@ -73,19 +70,12 @@ class ScalaIteratorWrapper[T](val it: Iterator[T], wrapper: ObjectWrapper)
   def iterator = this
 }
 
-class ScalaMethodWrapper(val target: Any,
-                         val methodName: String,
-                         val wrapper: ObjectWrapper)
-  extends TemplateMethodModelEx {
+class ScalaMethodWrapper(val target: Any, val methodName: String, val wrapper: ObjectWrapper) extends TemplateMethodModelEx {
   def exec(arguments: java.util.List[_]) =
     wrapper.wrap(MethodUtils.invokeMethod(target, methodName, arguments.toArray))
 }
 
-class ScalaXmlWrapper(val node: NodeSeq, val wrapper: ObjectWrapper)
-  extends TemplateNodeModel
-    with TemplateHashModel
-    with TemplateSequenceModel
-    with TemplateScalarModel {
+class ScalaXmlWrapper(val node: NodeSeq, val wrapper: ObjectWrapper) extends TemplateNodeModel with TemplateHashModel with TemplateSequenceModel with TemplateScalarModel {
   // as node
   def children: Seq[Node] = node match {
     case node: Elem => node.child.flatMap {
