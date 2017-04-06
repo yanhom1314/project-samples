@@ -27,6 +27,10 @@ class PingController @Inject()(service: ExampleService) extends Controller {
     response.ok.plain("Bob")
   }
 
+  get("/twirl") { _: Request =>
+    response.ok.html(html.simple.render("hello").body)
+  }
+
   filter[AddCookieFilter].get("/cookie") { request: Request =>
     val format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     println(s"Come in /cookie:${format.format(new Date())}")
