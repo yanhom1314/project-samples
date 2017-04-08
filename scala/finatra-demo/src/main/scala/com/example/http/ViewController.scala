@@ -24,6 +24,13 @@ class ViewController @Inject()(service: ExampleService, anotherThingRepository: 
   get("/beetl/hi") { _: Request =>
     HiView(anotherThingRepository.findAll().asScala.toList.asJava)
   }
+
+  get("/twirl/simple") { _: Request =>
+    response.ok.html(html.simple.render("hello").body)
+  }
+  get("/twirl/hello") { _: Request =>
+    response.ok.html(html.hello.render("yafengli.dream@gmail.com").body)
+  }
 }
 
 @Freemarker("hello")
