@@ -26,7 +26,3 @@ task fatJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.2'
-}
