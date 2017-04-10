@@ -1,0 +1,15 @@
+spring:
+    application:
+        name: ftl_spring_boot_demo
+    datasource:
+        driverClassName: org.h2.Driver
+        url: jdbc:h2:mem:test
+        username: sa
+        password:
+        hikaricp:
+          dataSourceClassName: org.h2.jdbcx.JdbcDataSource
+          maximumPoolSize: 20
+          idleTimeout: 30000
+server:
+    context-path: /client
+    port: 80

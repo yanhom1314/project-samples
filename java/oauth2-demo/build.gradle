@@ -1,0 +1,41 @@
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${spring_boot}")
+    }
+}
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+   
+    dependencies {
+        compile("org.springframework.boot:spring-boot-starter-web",
+                "org.springframework.boot:spring-boot-starter-data-jpa",
+                "org.springframework.boot:spring-boot-starter-freemarker",
+                "org.springframework.boot:spring-boot-starter-security",
+                "org.springframework.boot:spring-boot-devtools",
+                "org.apache.shiro:shiro-spring:$shiro",
+                "org.apache.oltu.oauth2:org.apache.oltu.oauth2.authzserver:$oltu",
+                "org.apache.oltu.oauth2:org.apache.oltu.oauth2.resourceserver:$oltu",
+                "com.h2database:h2:$h2",
+                "com.github.axet:kaptcha:$kaptcha")
+        testCompile("junit:junit")
+    }
+}
+
+project(":demo-oauth2-server") {
+    jar {
+        baseName = 'demo-oauth2-server'
+        version = '0.1.0'
+    }
+}
+
+project(":demo-oauth2-client") {
+    jar {
+        baseName = 'demo-oauth2-client'
+        version = '0.1.0'
+    }
+}

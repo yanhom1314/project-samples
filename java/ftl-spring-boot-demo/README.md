@@ -14,7 +14,12 @@
         }
 
 ## 开发模式
-+ `java -Ddemo.load.dir=src\main\resources -jar x.y.z.jar`
-+ `demo.load.dir`参数指定相对当前路径的静态资源根路径。
+* 打开一个终端: `gradle -Dlocal.doc.root=src\main\resources bootRun`
+* 打开另一个终端： `gradle build --continuous`
+__`local.doc.root`参数指定资源根路径__
+
+## 运行模式
++ `gradle clean build -x test`
++ `java -jar x.y.z.jar`
 
         

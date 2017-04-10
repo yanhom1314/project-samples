@@ -1,39 +1,30 @@
 buildscript {
-    repositories {
-        mavenCentral()
-    }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${spring_boot}")
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'spring-boot'
-apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 jar {
     baseName = 'gs-rest-service'
     version = '0.1.0'
 }
 
-repositories {
-    maven { url "file:///d:/repository/.m2/" }
-    maven { url "http://maven.oschina.net/content/groups/public/" }
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web",
       	    "org.springframework.boot:spring-boot-starter-data-jpa",
             "org.springframework.boot:spring-boot-starter-freemarker",
             "org.springframework.boot:spring-boot-starter-security",
-            "com.h2database:h2:${h2}",
-            "com.github.axet:kaptcha:${kaptcha}")
+            "org.springframework.boot:spring-boot-devtools",
+            "org.apache.shiro:shiro-spring:$shiro",
+            "org.apache.oltu.oauth2:org.apache.oltu.oauth2.authzserver:$oltu",
+            "org.apache.oltu.oauth2:org.apache.oltu.oauth2.resourceserver:$oltu",
+            "com.h2database:h2:$h2",
+            "com.github.axet:kaptcha:$kaptcha")
     testCompile("junit:junit")
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.10'
 }
