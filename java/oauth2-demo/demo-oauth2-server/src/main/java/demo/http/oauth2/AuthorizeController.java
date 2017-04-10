@@ -1,4 +1,4 @@
-package demo.controller.oauth2;
+package demo.http.oauth2;
 
 import demo.oauth2.ClientService;
 import demo.oauth2.OAuthService;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 
 @RestController
-public class Authorize {
+public class AuthorizeController {
     @Autowired
     private OAuthService oAuthService;
     @Autowired

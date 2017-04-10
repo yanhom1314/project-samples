@@ -1,4 +1,4 @@
-package demo.controller;
+package demo.http.oauth2;
 
 import demo.oauth2.OAuthService;
 import demo.oauth2.UserService;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URISyntaxException;
 
 @RestController
-public class AccessToken {
+public class AccessTokenController {
     @Autowired
     private OAuthService oAuthService;
     @Autowired

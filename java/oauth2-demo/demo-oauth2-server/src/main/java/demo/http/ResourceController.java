@@ -1,4 +1,4 @@
-package demo.controller;
+package demo.http;
 
 import demo.oauth2.OAuthService;
 import org.apache.oltu.oauth2.common.OAuth;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-public class ResourceInfo {
+public class ResourceController {
     @Autowired
     private OAuthService oAuthService;
 
