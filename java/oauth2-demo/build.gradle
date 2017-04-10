@@ -7,10 +7,6 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-   
     dependencies {
         compile("org.springframework.boot:spring-boot-starter-web",
                 "org.springframework.boot:spring-boot-starter-data-jpa",
@@ -23,6 +19,13 @@ allprojects {
                 "com.h2database:h2:$h2",
                 "com.github.axet:kaptcha:$kaptcha")
         testCompile("junit:junit")
+    }
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+
+        options.compilerArgs << '-Xlint:unchecked'
+        options.encoding = 'UTF-8'
     }
 }
 

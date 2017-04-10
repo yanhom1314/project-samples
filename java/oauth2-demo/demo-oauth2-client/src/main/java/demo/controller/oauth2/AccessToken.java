@@ -1,4 +1,4 @@
-package demo.controller;
+package demo.controller.oauth2;
 
 import demo.oauth2.OAuthService;
 import demo.oauth2.UserService;

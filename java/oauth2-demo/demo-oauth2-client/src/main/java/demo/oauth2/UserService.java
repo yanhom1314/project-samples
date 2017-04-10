@@ -1,5 +1,7 @@
 package demo.oauth2;
 
+import demo.entity.User;
+
 import java.util.List;
 
 public interface UserService {
