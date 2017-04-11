@@ -21,7 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class AuthorizeController {
     @Autowired
     private ClientService clientService;
 
-    @RequestMapping("/authorize")
+    @PostMapping("/authorize")
     public Object authorize(HttpServletRequest request, Model model) throws Exception {
         try {
             //构建OAuth 授权请求
@@ -57,7 +57,7 @@ public class AuthorizeController {
                 if (!login(subject, request)) {//登录失败时跳转到登陆页面
                     model.addAttribute("client",
                             clientService.findByClientId(oauthRequest.getClientId()));
-                    return "oauth2login";
+                    return "login";
                 }
             }
 

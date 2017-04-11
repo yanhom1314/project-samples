@@ -16,7 +16,7 @@
                 <div class="alert alert-info"> 请输入管理员口令</div>
             </#if>
             <div>
-                <form action="/login" class="form-horizontal" method="post">
+                <form action="/authorize" class="form-horizontal" method="post">
                     <div class="control-group"><label class="control-label" contenteditable="true" for="j_username">帐号</label>
                         <div class="controls"><input id="j_username" class="input-large span10" name="username" type="text" value="admin"/></div>
                     </div>

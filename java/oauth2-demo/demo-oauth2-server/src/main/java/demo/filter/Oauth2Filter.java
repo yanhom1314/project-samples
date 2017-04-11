@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@WebFilter(filterName = "oauth2", urlPatterns = "/v1/openapi/*")
+//@WebFilter(filterName = "oauth2", urlPatterns = "/v1/openapi/*")
 public class Oauth2Filter implements Filter {
     public static final Logger logger = LoggerFactory.getLogger(Oauth2Filter.class);
 
