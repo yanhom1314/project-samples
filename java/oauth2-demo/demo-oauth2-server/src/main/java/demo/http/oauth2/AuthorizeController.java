@@ -19,23 +19,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 
-@RestController
+@Controller
 public class AuthorizeController {
     @Autowired
     private OAuthService oAuthService;
     @Autowired
     private ClientService clientService;
 
-    @PostMapping("/authorize")
+    @RequestMapping("/authorize")
     public Object authorize(HttpServletRequest request, Model model) throws Exception {
         try {
             //构建OAuth 授权请求
@@ -47,8 +47,7 @@ public class AuthorizeController {
                         .setError(OAuthError.TokenResponse.INVALID_CLIENT)
                         .setErrorDescription("INVALID_CLIENT_DESCRIPTION")
                         .buildJSONMessage();
-                return new ResponseEntity(
-                        response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
 
             Subject subject = SecurityUtils.getSubject();
@@ -87,6 +86,8 @@ public class AuthorizeController {
             headers.setLocation(new URI(response.getLocationUri()));
             return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
         } catch (OAuthProblemException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             //出错处理
             String redirectUri = "/error/redirect/uri";
             if (OAuthUtils.isEmpty(redirectUri)) {

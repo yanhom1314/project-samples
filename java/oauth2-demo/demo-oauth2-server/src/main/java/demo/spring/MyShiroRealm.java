@@ -29,14 +29,19 @@ public class MyShiroRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        String username = token.getPrincipal().toString();
-        String password = new String((byte[]) token.getCredentials());
-        //User user = userRepository.findByUsername(username);
-        User user = new User();
-        user.setUsername("admin");
-        user.setPassword("admin");
-        if (user != null && user.getPassword().equalsIgnoreCase(password)) return new SimpleAuthenticationInfo(username, password, username);
-        else throw new IncorrectCredentialsException("密码错误！！！");
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        if (authenticationToken instanceof UsernamePasswordToken) {
+            UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+            System.out.println("getUsername:" + token.getUsername());
+            System.out.println("getPassword:" + token.getPassword());
+            String username = token.getUsername();
+            String password = new String(token.getPassword());
+            //User user = userRepository.findByUsername(username);
+            User user = new User();
+            user.setUsername("admin");
+            user.setPassword("admin");
+            if (user != null && user.getPassword().equalsIgnoreCase(password)) return new SimpleAuthenticationInfo(username, password, username);
+            else throw new IncorrectCredentialsException("密码错误！！！");
+        } else throw new IncorrectCredentialsException("类型错误！！！");
     }
 }

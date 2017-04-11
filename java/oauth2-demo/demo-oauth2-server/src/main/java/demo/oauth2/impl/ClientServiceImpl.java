@@ -17,7 +17,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client createClient(Client client) {
-        if (!clientRepository.exists(client.getId())) {
+        if (client.getId() == null || !clientRepository.exists(client.getId())) {
             client.setClientId(UUID.randomUUID().toString());
             client.setClientSecret(UUID.randomUUID().toString());
             return clientRepository.save(client);

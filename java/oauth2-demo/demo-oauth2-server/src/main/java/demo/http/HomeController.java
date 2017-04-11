@@ -18,8 +18,13 @@ public class HomeController {
     @GetMapping("/index")
     public String index(@RequestParam(value = "name", defaultValue = "World") String name, Model model, HttpServletRequest request) {
         request.getParameterMap();
-        RequestContext rc=null;
+        RequestContext rc = null;
         model.addAttribute("title", "What the fucking hell!");
         return "index";
+    }
+
+    @GetMapping("/access")
+    public String access() {
+        return "access";
     }
 }

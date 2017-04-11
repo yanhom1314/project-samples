@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/client/**")
 public class ClientController {
@@ -21,14 +23,14 @@ public class ClientController {
     }
 
     @GetMapping("/create")
-    public String showCreateForm(Model model) {
-        model.addAttribute("client", new Client());
-        model.addAttribute("op", "新增");
+    public String showCreateForm(@ModelAttribute Client client) {
         return "client/edit";
     }
 
     @PostMapping("/create")
-    public String create(Client client, RedirectAttributes redirectAttributes) {
+    public String create(@Valid Client client, RedirectAttributes redirectAttributes) {
+        System.out.println("client:"+client);
+        System.out.println("client id:"+client.getId());
         clientService.createClient(client);
         redirectAttributes.addFlashAttribute("msg", "新增成功");
         return "redirect:/client";
