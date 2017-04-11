@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/v1/openapi")
-public class UserInfoController {
+public class ResourceController {
 
     @Autowired
     private OAuthService oAuthService;
@@ -35,7 +35,7 @@ public class UserInfoController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/userInfo")
+    @RequestMapping("/user")
     public HttpEntity userInfo(HttpServletRequest request) throws OAuthSystemException, OAuthProblemException, JsonProcessingException {
         return checkAccessToken(request);
     }
@@ -95,9 +95,10 @@ public class UserInfoController {
             //获取用户名
             String username = oAuthService.getUsernameByAccessToken(accessToken);
             User user = userService.findByUsername(username);
+            System.out.println("user:" + user);
             ObjectMapper mapper = new ObjectMapper();
-
-            return new ResponseEntity(mapper.writeValueAsString(user), HttpStatus.OK);
+            OAuthResponse oAuthResponse = OAuthResponse.status(HttpStatus.OK.value()).buildJSONMessage();
+            return new ResponseEntity(mapper.writeValueAsString(oAuthResponse), HttpStatus.OK);
         } catch (OAuthProblemException e) {
             //检查是否设置了错误码
             String errorCode = e.getError();

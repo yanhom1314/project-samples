@@ -36,10 +36,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             System.out.println("getPassword:" + token.getPassword());
             String username = token.getUsername();
             String password = new String(token.getPassword());
-            //User user = userRepository.findByUsername(username);
-            User user = new User();
-            user.setUsername("admin");
-            user.setPassword("admin");
+            User user = userRepository.findByUsername(username);
             if (user != null && user.getPassword().equalsIgnoreCase(password)) return new SimpleAuthenticationInfo(username, password, username);
             else throw new IncorrectCredentialsException("密码错误！！！");
         } else throw new IncorrectCredentialsException("类型错误！！！");
