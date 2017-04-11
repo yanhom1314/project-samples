@@ -1,4 +1,5 @@
 package demo.freemarker;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
@@ -47,8 +48,7 @@ public class LocalDocRootConfig {
                 FreeMarkerConfigurer configurer = context.getBean(FreeMarkerConfigurer.class);
 
                 viewResolver.setCache(false);
-                //TODO
-                //configurer.getConfiguration().setDirectoryForTemplateLoading(new File(DIR_ROOT, DIR_TEMPLATE));
+                configurer.getConfiguration().setDirectoryForTemplateLoading(new File(DIR_ROOT, DIR_TEMPLATE));
             } catch (Exception e) {
                 e.printStackTrace();
             }

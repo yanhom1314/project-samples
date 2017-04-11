@@ -8,9 +8,9 @@
     </div>
     <div class="row-fluid">
         <div class="well span5 center login-box">
-            <#if request.getParameter("error")??>
+            <#if RequestParameters["error"]??>
                 <div class="alert alert-danger" role="alert">帐号/密码错误！</div>
-            <#elseif request.getParameter("captcha")??>
+            <#elseif RequestParameters["captcha"]??>
                 <div class="alert alert-danger" role="alert">图形验证码错误！</div>
             <#else>
                 <div class="alert alert-info"> 请输入管理员口令</div>

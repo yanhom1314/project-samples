@@ -10,6 +10,12 @@ spring:
           dataSourceClassName: org.h2.jdbcx.JdbcDataSource
           maximumPoolSize: 20
           idleTimeout: 30000
+    freemarker:
+        suffix: .ftl
+        charset: utf-8
+        cache: true
+        expose-request-attributes: true
+        request-context-attribute: request
 server:
     context-path: /server
     port: 8000

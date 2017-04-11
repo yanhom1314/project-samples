@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@Component
+@WebFilter(filterName = "oauth2", urlPatterns = "/v1/openapi/*")
 public class Oauth2Filter implements Filter {
     public static final Logger logger = LoggerFactory.getLogger(Oauth2Filter.class);
 
@@ -46,12 +46,12 @@ public class Oauth2Filter implements Filter {
             //验证Access Token
             if (!checkAccessToken(accessToken)) {
                 // 如果不存在/过期了，返回未验证错误，需重新验证
-                oAuthFaileResponse(res);
+                oAuthFailedResponse(res);
             }
             chain.doFilter(request, response);
         } catch (OAuthProblemException e) {
             try {
-                oAuthFaileResponse(res);
+                oAuthFailedResponse(res);
             } catch (OAuthSystemException ex) {
                 logger.info("error trying to access oauth server", ex);
             }
@@ -67,7 +67,7 @@ public class Oauth2Filter implements Filter {
      * @throws OAuthSystemException
      * @throws IOException
      */
-    private void oAuthFaileResponse(HttpServletResponse res) throws OAuthSystemException, IOException {
+    private void oAuthFailedResponse(HttpServletResponse res) throws OAuthSystemException, IOException {
         OAuthResponse oauthResponse = OAuthRSResponse
                 .errorResponse(HttpServletResponse.SC_UNAUTHORIZED)
                 .setRealm("RESOURCE_SERVER_NAME")
