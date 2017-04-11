@@ -16,35 +16,21 @@
                 <div class="alert alert-info"> 请输入管理员口令</div>
             </#if>
             <div>
-                <form action="${request.contextPath}/login" method="post" class="form-horizontal">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <fieldset>
-                        <div class="input-prepend" title="Username" data-rel="tooltip">
-                            <span class="add-on"><i class="icon-user"></i></span>
-                            <input class="input-large span10" name="username" id="j_username" type="text" value="admin"/>
+                <form action="/login" class="form-horizontal" method="post">
+                    <div class="control-group"><label class="control-label" contenteditable="true" for="j_username">帐号</label>
+                        <div class="controls"><input id="j_username" class="input-large span10" name="username" type="text" value="admin"/></div>
+                    </div>
+                    <div class="control-group"><label class="control-label" contenteditable="true" for="j_password">密码</label>
+                        <div class="controls"><input id="j_password" class="input-large span10" name="password" type="password" value=""/></div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <label class="checkbox" contenteditable="true"><input type="checkbox"/>记住我</label>
+                            <button id="j_submit" class="btn" contenteditable="true" type="submit">登陆</button>
                         </div>
-                        <div class="clearfix"></div>
-                        <div class="input-prepend" title="Password" data-rel="tooltip"><span class="add-on"><i
-                                class="icon-lock"></i></span>
-                            <input class="input-large span10" name="password" id="j_password" type="password"
-                                   value=""/>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="input-prepend" title="Password" data-rel="tooltip"><span class="add-on"><i
-                                class="icon-lock"></i></span>
-                            <input class="input-large span10" name="j_captcha" id="j_captcha" type="text"
-                                   value=""/>
-                        </div>
-                        <div>
-                            <img id="_captcha" src="${request.contextPath}/captcha" style="width: 120px;height: 25px;" onclick="$('#_captcha').attr('src',this.src);"/>
-                        </div>
-
-                        <div class="clearfix"></div>
-                        <p class="center span5">
-                            <button type="submit" class="btn btn-primary">登录</button>
-                        </p>
-                    </fieldset>
+                    </div>
                 </form>
+
             </div>
         </div>
     </div>
