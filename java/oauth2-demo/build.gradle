@@ -9,11 +9,14 @@ allprojects {
 
     dependencies {
         compile("org.springframework.boot:spring-boot-starter-web",
+                "org.springframework.boot:spring-boot-starter-cache",
                 "org.springframework.boot:spring-boot-starter-data-jpa",
                 "org.springframework.boot:spring-boot-starter-freemarker",
                 "org.springframework.boot:spring-boot-starter-security",
                 "org.springframework.boot:spring-boot-devtools",
+                "com.google.guava:guava:$guava",
                 "org.apache.shiro:shiro-spring:$shiro",
+                "org.apache.shiro:shiro-ehcache:$shiro",
                 "org.apache.oltu.oauth2:org.apache.oltu.oauth2.authzserver:$oltu",
                 "org.apache.oltu.oauth2:org.apache.oltu.oauth2.resourceserver:$oltu",
                 "com.h2database:h2:$h2",
