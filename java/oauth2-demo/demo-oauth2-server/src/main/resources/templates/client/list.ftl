@@ -24,7 +24,7 @@
                         <td>${t.clientSecret}</td>
                         <td>${t.clientName}</td>
                         <td>
-                            <a href="<@s.url '/authorize?client_id=${t.clientId!}&response_type=code&redirect_uri=http://localhost:8000/access/${t.id}'/>" target="_blank">认证授权</a><br/>
+                            <a href="<@s.url '/authorize?client_id=${t.clientId!}&response_type=code&redirect_uri=http://localhost:8000'/><@s.url '/access/${t.id}'/>" target="_blank">认证授权</a><br/>
                             <div class="panel">
                                 <div class="panel-heading">使用授权令牌-获取用户信息</div>
                                 <div class="input-group">
@@ -35,7 +35,7 @@
                                 <script>
                                     $(function () {
                                         $("#go_${t.id}").click(function () {
-                                            var url = "http://localhost:8000/v1/openapi/user?access_token=" + $("#access_token_${t.id}").val();
+                                            var url = "<@s.url '/v1/openapi/user?access_token='/>" + $("#access_token_${t.id}").val();
                                             window.open(url);
                                         });
                                     });

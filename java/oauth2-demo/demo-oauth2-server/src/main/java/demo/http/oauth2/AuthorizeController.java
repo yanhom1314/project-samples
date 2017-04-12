@@ -1,7 +1,10 @@
 package demo.http.oauth2;
 
+import demo.entity.Client;
+import demo.entity.User;
 import demo.oauth2.ClientService;
 import demo.oauth2.OAuthService;
+import demo.oauth2.UserService;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.request.OAuthAuthzRequest;
@@ -9,6 +12,7 @@ import org.apache.oltu.oauth2.as.response.OAuthASResponse;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.error.OAuthError;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
 import org.apache.oltu.oauth2.common.utils.OAuthUtils;
@@ -22,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +39,29 @@ public class AuthorizeController {
     private OAuthService oAuthService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/confirm")
+    public String confirm(HttpServletRequest request) throws OAuthProblemException, OAuthSystemException {
+        OAuthAuthzRequest oauthRequest = new OAuthAuthzRequest(request);
+        Subject subject = SecurityUtils.getSubject();
+        System.out.println("subject:" + subject.isAuthenticated());
+
+        if (!subject.isAuthenticated()) return "login";
+
+        if (oAuthService.checkClientId(oauthRequest.getClientId())) {
+            //第一次授权
+            String username = (String) subject.getPrincipal();
+            if (userService.isFirst(username, oauthRequest.getClientId())) {
+                Client client = clientService.findByClientId(oauthRequest.getClientId());
+                User user = userService.findByUsername(username);
+                user.getClients().add(client);
+                userService.updateUser(user);
+            }
+            return "forward:/authorize";
+        } else return "login";
+    }
 
     @RequestMapping("/authorize")
     public Object authorize(HttpServletRequest request, Model model) throws Exception {
@@ -50,17 +78,22 @@ public class AuthorizeController {
                 return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
 
+            Client client = clientService.findByClientId(oauthRequest.getClientId());
             Subject subject = SecurityUtils.getSubject();
-            //如果用户没有登录，跳转到登陆页面
+            //是否登录
             if (!subject.isAuthenticated()) {
                 if (!login(subject, request)) {//登录失败时跳转到登陆页面
-                    model.addAttribute("client",
-                            clientService.findByClientId(oauthRequest.getClientId()));
+                    model.addAttribute("client", client);
                     return "login";
                 }
             }
-
             String username = (String) subject.getPrincipal();
+            //是否第一次授权
+            System.out.println("isFirst:" + userService.isFirst(username, oauthRequest.getClientId()));
+            if (userService.isFirst(username, oauthRequest.getClientId())) {
+                return "confirm";
+            }
+
             //生成授权码
             String authorizationCode = null;
             //responseType目前仅支持CODE，另外还有TOKEN
@@ -95,9 +128,7 @@ public class AuthorizeController {
                 return new ResponseEntity("OAuth callback url needs to be provided by client!!!", HttpStatus.NOT_FOUND);
             }
             //返回错误消息（如?error=）
-            final OAuthResponse response =
-                    OAuthASResponse.errorResponse(HttpServletResponse.SC_FOUND)
-                            .error(e).location(redirectUri).buildQueryMessage();
+            final OAuthResponse response = OAuthASResponse.errorResponse(HttpServletResponse.SC_FOUND).error(e).location(redirectUri).buildQueryMessage();
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(new URI(response.getLocationUri()));
             return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
@@ -105,19 +136,15 @@ public class AuthorizeController {
     }
 
     private boolean login(Subject subject, HttpServletRequest request) {
-        if ("get".equalsIgnoreCase(request.getMethod())) {
-            return false;
-        }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            return false;
-        }
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) return false;
 
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             subject.login(token);
+            System.out.println("login isAuthenticated:" + subject.isAuthenticated());
             return true;
         } catch (Exception e) {
             request.setAttribute("error", "登录失败:" + e.getClass().getName());

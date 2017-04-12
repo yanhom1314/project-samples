@@ -18,4 +18,6 @@ public interface UserService {
     List<User> findAll();// 得到所有用户
 
     User findByUsername(String username);// 根据用户名查找用户
+
+    Boolean isFirst(String username, String clientId);//是否第一次授权
 } 

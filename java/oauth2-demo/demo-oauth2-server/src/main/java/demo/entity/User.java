@@ -2,6 +2,8 @@ package demo.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "oauth2_user")
@@ -13,6 +15,12 @@ public class User implements Serializable {
     private String username; //用户名
     @Column(name = "password", nullable = false, length = 128)
     private String password; //密码
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "oauth2_user_client",
+            joinColumns = {@JoinColumn(name = "u_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "c_id", referencedColumnName = "id")})
+    private List<Client> clients = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -36,5 +44,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 }

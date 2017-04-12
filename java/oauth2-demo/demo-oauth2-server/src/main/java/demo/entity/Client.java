@@ -1,6 +1,8 @@
 package demo.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "oauth2_client")
@@ -14,6 +16,9 @@ public class Client {
     private String clientName;
     @Column(name = "client_secret", nullable = false, length = 128)
     private String clientSecret;
+
+    @ManyToMany(mappedBy = "clients")
+    private List<User> users = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -45,5 +50,13 @@ public class Client {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

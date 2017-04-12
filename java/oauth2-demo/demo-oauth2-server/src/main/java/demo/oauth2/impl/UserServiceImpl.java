@@ -2,6 +2,7 @@ package demo.oauth2.impl;
 
 import demo.entity.User;
 import demo.oauth2.UserService;
+import demo.repo.ClientRepository;
 import demo.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Override
     public User createUser(User user) {
@@ -59,5 +62,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Boolean isFirst(String username, String clientId) {
+        return userRepository.countByUsernameAndClientsContains(username, clientRepository.findByClientId(clientId)) <= 0;
     }
 }
