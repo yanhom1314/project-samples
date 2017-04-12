@@ -16,7 +16,6 @@ public class Client {
     private String clientName;
     @Column(name = "client_secret", nullable = false, length = 128)
     private String clientSecret;
-
     @ManyToMany(mappedBy = "clients")
     private List<User> users = new ArrayList<>();
 

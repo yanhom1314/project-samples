@@ -50,7 +50,6 @@ public class ResourceController {
      * @throws OAuthProblemException
      */
     private HttpEntity nocheckAccessToken(HttpServletRequest request) throws OAuthSystemException, OAuthProblemException, JsonProcessingException {
-
         //构建OAuth资源请求
         OAuthAccessResourceRequest oauthRequest = new OAuthAccessResourceRequest(request, ParameterStyle.QUERY);
 

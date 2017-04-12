@@ -5,6 +5,8 @@
     <h2>reqeust:${request?string}</h2>
     </#if>
     <#if section = "body">
+
+    <h1>subject:${subject.principal?string}</h1>
     <!-- Just another example of using a macro: -->
         <@p.otherExample p1=1 p2=2 />
     </#if>

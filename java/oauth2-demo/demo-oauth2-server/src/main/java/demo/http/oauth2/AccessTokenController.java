@@ -52,8 +52,6 @@ public class AccessTokenController {
                         .setError(OAuthError.TokenResponse.UNAUTHORIZED_CLIENT)
                         .setErrorDescription("INVALID_CLIENT_DESCRIPTION")
                         .buildJSONMessage();
-                System.out.println(3);
-
             } else {
                 String authCode = oauthRequest.getParam(OAuth.OAUTH_CODE);
                 // 检查验证类型，此处只检查AUTHORIZATION_CODE类型，其他的还有PASSWORD或REFRESH_TOKEN

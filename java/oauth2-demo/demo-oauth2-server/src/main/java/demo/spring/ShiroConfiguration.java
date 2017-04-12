@@ -47,7 +47,6 @@ public class ShiroConfiguration {
         filterChainDefinitionMapping.put("/", "anon");
         filterChainDefinitionMapping.put("/home", "authc,roles[guest]");
         filterChainDefinitionMapping.put("/admin", "authc,roles[admin]");
-        filterChainDefinitionMapping.put("/authorize", "authc,roles[guest,admin]");
         shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMapping);
         shiroFilter.setSecurityManager(securityManager);
         Map<String, Filter> filters = new HashMap<>();
