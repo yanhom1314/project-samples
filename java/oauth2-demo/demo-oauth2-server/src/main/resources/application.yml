@@ -19,3 +19,7 @@ spring:
 server:
     context-path: /demo
     port: 8000
+    session:
+        cookie:
+          http-only: true
+

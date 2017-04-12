@@ -23,8 +23,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         //通过un查找Roles
         //userRepository.findByUsername(un.toString).roles.map(_.roleName).foreach(info.addRole(_))
 
-        info.addRole("ROLE_USER");
-        info.addRole("ROLE_MANAGER");
+        info.addRole("guest");
+        info.addRole("admin");
         return info;
     }
 

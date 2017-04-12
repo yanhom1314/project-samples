@@ -15,7 +15,6 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
-import org.apache.oltu.oauth2.common.utils.OAuthUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -46,9 +45,6 @@ public class AuthorizeController {
     public String confirm(HttpServletRequest request) throws OAuthProblemException, OAuthSystemException {
         OAuthAuthzRequest oauthRequest = new OAuthAuthzRequest(request);
         Subject subject = SecurityUtils.getSubject();
-        System.out.println("subject:" + subject.isAuthenticated());
-
-        if (!subject.isAuthenticated()) return "login";
 
         if (oAuthService.checkClientId(oauthRequest.getClientId())) {
             //第一次授权
@@ -66,6 +62,21 @@ public class AuthorizeController {
     @RequestMapping("/authorize")
     public Object authorize(HttpServletRequest request, Model model) throws Exception {
         try {
+            Subject subject = SecurityUtils.getSubject();
+            //没有登录
+            if (!subject.isAuthenticated()) {
+                if (!login(subject, request)) {
+                    return "forward:/login";
+                }
+            }
+
+
+            String username = (String) subject.getPrincipal();
+            //是否第一次授权
+
+            if (userService.isFirst(username, oauthRequest.getClientId())) {
+                return "confirm";
+            }
             //构建OAuth 授权请求
             OAuthAuthzRequest oauthRequest = new OAuthAuthzRequest(request);
             //检查传入的客户端id是否正确
@@ -78,15 +89,6 @@ public class AuthorizeController {
                 return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
 
-            Client client = clientService.findByClientId(oauthRequest.getClientId());
-            Subject subject = SecurityUtils.getSubject();
-            //是否登录
-            if (!subject.isAuthenticated()) {
-                if (!login(subject, request)) {//登录失败时跳转到登陆页面
-                    model.addAttribute("client", client);
-                    return "login";
-                }
-            }
             String username = (String) subject.getPrincipal();
             //是否第一次授权
             System.out.println("isFirst:" + userService.isFirst(username, oauthRequest.getClientId()));
@@ -119,19 +121,9 @@ public class AuthorizeController {
             headers.setLocation(new URI(response.getLocationUri()));
             return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
         } catch (OAuthProblemException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            //出错处理
-            String redirectUri = "/error/redirect/uri";
-            if (OAuthUtils.isEmpty(redirectUri)) {
-                //告诉客户端没有传入redirectUri直接报错
-                return new ResponseEntity("OAuth callback url needs to be provided by client!!!", HttpStatus.NOT_FOUND);
-            }
-            //返回错误消息（如?error=）
-            final OAuthResponse response = OAuthASResponse.errorResponse(HttpServletResponse.SC_FOUND).error(e).location(redirectUri).buildQueryMessage();
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(new URI(response.getLocationUri()));
-            return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
+            //返回错误消息
+            model.addAttribute("error", e.getMessage());
+            return "home";
         }
     }
 
@@ -144,11 +136,47 @@ public class AuthorizeController {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             subject.login(token);
-            System.out.println("login isAuthenticated:" + subject.isAuthenticated());
             return true;
         } catch (Exception e) {
             request.setAttribute("error", "登录失败:" + e.getClass().getName());
             return false;
         }
     }
+
+    private OAuthResponse oauth2(HttpServletRequest request, String username) {
+        OAuthResponse response = null;
+        try {
+            //构建OAuth 授权请求
+            OAuthAuthzRequest oauthRequest = new OAuthAuthzRequest(request);
+            //检查传入的客户端id是否正确
+            if (!oAuthService.checkClientId(oauthRequest.getClientId())) {
+                response = OAuthASResponse
+                        .errorResponse(HttpStatus.BAD_REQUEST.value())
+                        .setError(OAuthError.TokenResponse.INVALID_CLIENT)
+                        .buildJSONMessage();
+            } else {
+                //生成授权码
+                String authorizationCode = null;
+                //responseType目前仅支持CODE，另外还有TOKEN
+                String responseType = oauthRequest.getParam(OAuth.OAUTH_RESPONSE_TYPE);
+                if (responseType.equals(ResponseType.CODE.toString())) {
+                    OAuthIssuerImpl oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
+                    authorizationCode = oauthIssuerImpl.authorizationCode();
+                    oAuthService.addAuthCode(authorizationCode, username);
+                }
+                //得到到客户端重定向地址
+                String redirectURI = oauthRequest.getParam(OAuth.OAUTH_REDIRECT_URI);
+
+                //进行OAuth响应构建
+                response = OAuthASResponse.authorizationResponse(request, HttpStatus.FOUND.value())
+                        .setCode(authorizationCode)
+                        .location(redirectURI)
+                        .buildQueryMessage();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
 }
+

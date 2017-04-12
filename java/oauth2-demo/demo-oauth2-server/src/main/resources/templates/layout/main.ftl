@@ -12,6 +12,20 @@
     <script src="//cdn.bootcss.com/vue/1.0.13/vue.min.js"></script>
 </head>
 <body>
+    <#if error??>
+    <div class="row-fluid">
+        <div class="panel">
+            <h1 style="color:red;">${error!}</h1>
+        </div>
+    </div>
+    </#if>
+    <#if success??>
+    <div class="row-fluid">
+        <div class="panel">
+            <h5 style="color:green;">${error!}</h5>
+        </div>
+    </div>
+    </#if>
     <#nested/>
 </body>
 </html>

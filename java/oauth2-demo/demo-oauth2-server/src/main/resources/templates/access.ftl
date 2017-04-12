@@ -28,7 +28,7 @@
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button id="j_submit" class="btn" contenteditable="true" type="submit">调用</button>
+                            <button id="j_submit" class="btn btn-primary" contenteditable="true" type="submit">调用</button>
                         </div>
                     </div>
                 </form>

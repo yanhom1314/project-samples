@@ -4,7 +4,7 @@
 <div class="row-fluid">
     <div class="row-fluid">
         <div class="span12 center login-header">
-            <h2>管理控制台</h2>
+            <h2>认证平台</h2>
         </div>
     </div>
     <div class="row-fluid">
@@ -14,13 +14,13 @@
             <#elseif RequestParameters["captcha"]??>
                 <div class="alert alert-danger" role="alert">图形验证码错误！</div>
             <#else>
-                <div class="alert alert-info"> 请输入管理员口令</div>
+                <div class="alert alert-info"> 请输入用户名/口令登录！</div>
             </#if>
             <div>
                 <form action="<@s.url '/authorize'/>" class="form-horizontal" method="post">
-                    <input type="hidden" name="client_id" value="${RequestParameters["client_id"]}">
-                    <input type="hidden" name="response_type" value="${RequestParameters["response_type"]}">
-                    <input type="hidden" name="redirect_uri" value="${RequestParameters["redirect_uri"]}">
+                    <input type="hidden" name="client_id" value="${RequestParameters["client_id"]!}">
+                    <input type="hidden" name="response_type" value="${RequestParameters["response_type"]!}">
+                    <input type="hidden" name="redirect_uri" value="${RequestParameters["redirect_uri"]!}">
                     <div class="control-group"><label class="control-label" contenteditable="true" for="j_username">帐号</label>
                         <div class="controls"><input id="j_username" class="input-large span10" name="username" type="text" value="admin"/></div>
                     </div>
@@ -29,11 +29,10 @@
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button id="j_submit" class="btn" contenteditable="true" type="submit">登陆</button>
+                            <button id="j_submit" class="btn btn-primary" contenteditable="true" type="submit">登陆</button>
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

@@ -16,7 +16,7 @@
                     <input type="hidden" name="redirect_uri" value="${RequestParameters["redirect_uri"]!}">
                     <div class="control-group">
                         <div class="controls">
-                            <button class="btn" contenteditable="true" type="submit">授权</button>
+                            <button class="btn btn-primary" contenteditable="true" type="submit">授权</button>
                         </div>
                     </div>
                 </form>
