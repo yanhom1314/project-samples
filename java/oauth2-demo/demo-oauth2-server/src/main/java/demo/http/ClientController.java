@@ -29,8 +29,6 @@ public class ClientController {
 
     @PostMapping("/create")
     public String create(@Valid Client client, RedirectAttributes redirectAttributes) {
-        System.out.println("client:"+client);
-        System.out.println("client id:"+client.getId());
         clientService.createClient(client);
         redirectAttributes.addFlashAttribute("msg", "新增成功");
         return "redirect:/client";

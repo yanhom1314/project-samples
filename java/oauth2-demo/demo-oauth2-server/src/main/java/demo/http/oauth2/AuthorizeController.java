@@ -92,8 +92,7 @@ public class AuthorizeController {
             String redirectUri = "/error/redirect/uri";
             if (OAuthUtils.isEmpty(redirectUri)) {
                 //告诉客户端没有传入redirectUri直接报错
-                return new ResponseEntity(
-                        "OAuth callback url needs to be provided by client!!!", HttpStatus.NOT_FOUND);
+                return new ResponseEntity("OAuth callback url needs to be provided by client!!!", HttpStatus.NOT_FOUND);
             }
             //返回错误消息（如?error=）
             final OAuthResponse response =

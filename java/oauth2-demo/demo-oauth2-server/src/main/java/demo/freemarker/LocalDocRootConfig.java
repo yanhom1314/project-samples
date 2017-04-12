@@ -15,10 +15,6 @@ public class LocalDocRootConfig {
     static {
         try {
             DIR_TEMPLATE = System.getProperty(TEMPLATE_PREFIX) != null ? System.getProperty(TEMPLATE_PREFIX) : "templates";
-            System.out.println(1);
-            System.out.println("#################################");
-            System.getProperty(LOCAL_DOC_ROOT);
-            System.out.println("#################################");
             if (System.getProperty(LOCAL_DOC_ROOT) != null) {
                 DIR_ROOT = new File(System.getProperty(LOCAL_DOC_ROOT));
                 System.out.printf("#%s:[%s]#\n", LOCAL_DOC_ROOT, DIR_ROOT.toURI().toString());

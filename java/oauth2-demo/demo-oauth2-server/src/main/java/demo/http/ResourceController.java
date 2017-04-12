@@ -95,10 +95,8 @@ public class ResourceController {
             //获取用户名
             String username = oAuthService.getUsernameByAccessToken(accessToken);
             User user = userService.findByUsername(username);
-            System.out.println("user:" + user);
             ObjectMapper mapper = new ObjectMapper();
-            OAuthResponse oAuthResponse = OAuthResponse.status(HttpStatus.OK.value()).buildJSONMessage();
-            return new ResponseEntity(mapper.writeValueAsString(oAuthResponse), HttpStatus.OK);
+            return new ResponseEntity(mapper.writeValueAsString(user), HttpStatus.OK);
         } catch (OAuthProblemException e) {
             //检查是否设置了错误码
             String errorCode = e.getError();

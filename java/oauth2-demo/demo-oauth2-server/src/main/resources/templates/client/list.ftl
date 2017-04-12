@@ -24,35 +24,19 @@
                         <td>${t.clientSecret}</td>
                         <td>${t.clientName}</td>
                         <td>
-                            <a href="<@s.url '/authorize?client_id=${t.clientId!}&response_type=code&redirect_uri=/access'/>" target="_blank">认证授权</a><br/>
-                            <a href="<@s.url '/access'/>" target="_blank">授权令牌-后台调用</a><br/>
+                            <a href="<@s.url '/authorize?client_id=${t.clientId!}&response_type=code&redirect_uri=http://localhost:8000/home'/>" target="_blank">认证授权</a><br/>
+                            <a href="<@s.url '/access?client_id=${t.clientId!}&client_secret=${t.clientSecret!}'/>" target="_blank">获取授权令牌-后台调用</a><br/>
                             <div class="panel">
-                                <div class="panel-heading">授权令牌</div>
+                                <div class="panel-heading">使用授权令牌-获取用户信息</div>
                                 <div class="input-group">
-                                    <input id="${t.id}_access_token" type="text" class="form-control" placeholder="access_token">
-                                    <span class="input-group-btn"><button id="${t.id}_go" class="btn btn-default" target="_blank">Go!</button>
+                                    <input id="access_token_${t.id}" type="text" class="form-control" name="access_token" placeholder="access_token">
+                                    <span class="input-group-btn"><button id="go_${t.id}" class="btn btn-default" target="_blank">Go!</button>
                                 </span>
                                 </div><!-- /input-group -->
                                 <script>
                                     $(function () {
-                                        $("#${t.id}_go").click(function () {
-                                            var url = "/access_token=" + $("#${t.id}_access_token").value();
-                                            window.open(url);
-                                        });
-                                    });
-                                </script>
-                            </div>
-                            <div class="panel">
-                                <div class="panel-heading">使用授权令牌-获取用户信息</div>
-                                <div class="input-group">
-                                    <input id="access_token" type="text" class="form-control" placeholder="access_token">
-                                    <span class="input-group-btn"><button id="go" class="btn btn-default" target="_blank">Go!</button></span>
-                                </div><!-- /input-group -->
-                                <script>
-                                    $(function () {
-                                        $("#go").click(function () {
-                                            var url = "http://localhost:8000/v1/openapi/user?access_token=" + $("#access_token").value();
-                                            console.log("url:" + url);
+                                        $("#go_${t.id}").click(function () {
+                                            var url = "http://localhost:8000/v1/openapi/user?access_token=" + $("#access_token_${t.id}").val();
                                             window.open(url);
                                         });
                                     });

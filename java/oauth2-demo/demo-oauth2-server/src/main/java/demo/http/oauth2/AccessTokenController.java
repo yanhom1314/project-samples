@@ -44,9 +44,7 @@ public class AccessTokenController {
                         .setError(OAuthError.TokenResponse.INVALID_CLIENT)
                         .setErrorDescription("INVALID_CLIENT_DESCRIPTION")
                         .buildJSONMessage();
-
             }
-
             // 检查客户端安全KEY是否正确
             else if (!oAuthService.checkClientSecret(oauthRequest.getClientSecret())) {
                 response = OAuthASResponse
@@ -54,6 +52,7 @@ public class AccessTokenController {
                         .setError(OAuthError.TokenResponse.UNAUTHORIZED_CLIENT)
                         .setErrorDescription("INVALID_CLIENT_DESCRIPTION")
                         .buildJSONMessage();
+                System.out.println(3);
 
             } else {
                 String authCode = oauthRequest.getParam(OAuth.OAUTH_CODE);
@@ -83,12 +82,11 @@ public class AccessTokenController {
                         .buildJSONMessage();
             }
             //根据OAuthResponse生成ResponseEntity
+            String redirect_uri= oauthRequest.getRedirectURI();
             return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
         } catch (OAuthProblemException e) {
             //构建错误响应
-            OAuthResponse res = OAuthASResponse
-                    .errorResponse(HttpServletResponse.SC_BAD_REQUEST).error(e)
-                    .buildJSONMessage();
+            OAuthResponse res = OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST).error(e).buildJSONMessage();
             return new ResponseEntity(res.getBody(), HttpStatus.valueOf(res.getResponseStatus()));
         }
     }
