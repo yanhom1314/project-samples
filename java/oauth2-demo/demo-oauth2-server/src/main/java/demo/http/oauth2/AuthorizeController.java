@@ -25,16 +25,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
+import static demo.http.oauth2.AuthorizeController.SESSION_USER_NAME;
+
 @Controller
-@SessionAttributes(value = {"subject"})
+@SessionAttributes(value = {SESSION_USER_NAME})
 public class AuthorizeController {
+    public static final String SESSION_USER_NAME = "subject";
     @Autowired
     private OAuthService oAuthService;
     @Autowired
@@ -60,28 +61,65 @@ public class AuthorizeController {
         } else return "login";
     }
 
-    @RequestMapping("/authorize")
-    public Object authorize(HttpServletRequest request, Model model) throws Exception {
+    @GetMapping("/logout")
+    public String logout() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            subject.logout();
+        }
+        return "/login";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        Subject subject = SecurityUtils.getSubject();
+        if (!subject.isAuthenticated()) return "login";
+        else return "forward:/authorize";
+    }
+
+    @PostMapping("/login")
+    public String login(HttpServletRequest request, Model model) {
         Subject subject = SecurityUtils.getSubject();
         //登录
         if (!subject.isAuthenticated()) {
             if (!login(subject, request)) {
-                return "forward:/login";
+                model.addAttribute("error", "登录失败,核对帐号/密码！");
+                return "redirect:/login" + (request.getQueryString() == null ? "" : "?" + request.getQueryString());
             }
         }
+        return "forward:/authorize";
+    }
+
+
+    @RequestMapping(value = "/authorize", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object authorize(HttpServletRequest request, Model model) {
+        System.out.println(1);
+        Subject subject = SecurityUtils.getSubject();
+        //登录
+        if (!subject.isAuthenticated()) {
+            System.out.println(2);
+            if (!login(subject, request)) {
+                System.out.println(3);
+                return "redirect:/login" + (request.getQueryString() == null ? "" : "?" + request.getQueryString());
+            }
+            System.out.println(4);
+        }
+        System.out.println(5);
         String username = (String) subject.getPrincipal();
         //授权
         ResponseEntity entity = oauth2(request, username);
         if (entity != null) {
-            switch (entity.getStatusCodeValue()) {
-                case 201:
+            System.out.println(6);
+            switch (entity.getStatusCode()) {
+                case CREATED:
+                    System.out.println(7);
                     return "confirm";
-                case 302:
-                    return entity;
                 default:
+                    System.out.println(8);
                     return entity;
             }
         } else {
+            System.out.println(9);
             model.addAttribute("subject", subject);
             return "home";
         }
@@ -96,8 +134,10 @@ public class AuthorizeController {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             subject.login(token);
+            System.out.println("1--isAuthenticated:" + subject.isAuthenticated());
             return true;
         } catch (Exception e) {
+            System.out.println("2--isAuthenticated:" + subject.isAuthenticated());
             request.setAttribute("error", "登录失败:" + e.getClass().getName());
             return false;
         }
@@ -116,9 +156,9 @@ public class AuthorizeController {
                         .buildJSONMessage();
                 entity = new ResponseEntity<>(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
-            //第一次
+            //第一次授权
             else if (userService.isFirst(username, oauthRequest.getClientId())) {
-                entity = new ResponseEntity("", HttpStatus.CREATED);
+                entity = new ResponseEntity<>("", HttpStatus.CREATED);
             } else {
                 String authorizationCode = null;
                 //responseType目前仅支持CODE，另外还有TOKEN
@@ -138,7 +178,7 @@ public class AuthorizeController {
                 //根据OAuthResponse返回ResponseEntity响应
                 HttpHeaders headers = new HttpHeaders();
                 headers.setLocation(new URI(response.getLocationUri()));
-                return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
+                return new ResponseEntity<>(headers, HttpStatus.valueOf(response.getResponseStatus()));
             }
         } catch (Exception e) {
             e.printStackTrace();

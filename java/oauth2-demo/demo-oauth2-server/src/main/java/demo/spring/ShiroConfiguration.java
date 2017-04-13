@@ -31,8 +31,8 @@ public class ShiroConfiguration {
         //init user
         if (userRepository.count() <= 0) {
             User user = new User();
-            user.setUsername("admin");
-            user.setPassword("admin");
+            user.setUsername("test");
+            user.setPassword("test");
             userRepository.save(user);
         }
     }
@@ -40,15 +40,6 @@ public class ShiroConfiguration {
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
-        shiroFilter.setLoginUrl("/login");
-        shiroFilter.setSuccessUrl("/index");
-        shiroFilter.setUnauthorizedUrl("/forbidden");
-        Map<String, String> filterChainDefinitionMapping = new HashMap<>();
-        filterChainDefinitionMapping.put("/", "anon");
-        filterChainDefinitionMapping.put("/home", "authc,roles[guest]");
-        filterChainDefinitionMapping.put("/admin", "authc,roles[admin]");
-        shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMapping);
-        shiroFilter.setSecurityManager(securityManager);
         Map<String, Filter> filters = new HashMap<>();
         filters.put("anon", new AnonymousFilter());
         filters.put("authc", new FormAuthenticationFilter());
@@ -56,6 +47,18 @@ public class ShiroConfiguration {
         filters.put("roles", new RolesAuthorizationFilter());
         filters.put("user", new UserFilter());
         shiroFilter.setFilters(filters);
+
+        shiroFilter.setLoginUrl("/login");
+        shiroFilter.setSuccessUrl("/index");
+        shiroFilter.setUnauthorizedUrl("/forbidden");
+
+        Map<String, String> filterChainDefinitionMapping = new HashMap<>();
+        filterChainDefinitionMapping.put("/", "anon");
+        filterChainDefinitionMapping.put("/home", "authc,roles[guest]");
+        filterChainDefinitionMapping.put("/admin", "authc,roles[admin]");
+        shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMapping);
+
+        shiroFilter.setSecurityManager(securityManager);
         return shiroFilter;
     }
 

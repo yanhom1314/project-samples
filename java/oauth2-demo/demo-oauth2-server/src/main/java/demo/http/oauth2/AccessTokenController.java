@@ -63,7 +63,7 @@ public class AccessTokenController {
                                 .setError(OAuthError.TokenResponse.INVALID_GRANT)
                                 .setErrorDescription("错误的授权码")
                                 .buildJSONMessage();
-                        return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+                        return new ResponseEntity<>(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
                     }
                 }
 
@@ -81,11 +81,11 @@ public class AccessTokenController {
             }
             //根据OAuthResponse生成ResponseEntity
             String redirect_uri= oauthRequest.getRedirectURI();
-            return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+            return new ResponseEntity<>(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
         } catch (OAuthProblemException e) {
             //构建错误响应
             OAuthResponse res = OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST).error(e).buildJSONMessage();
-            return new ResponseEntity(res.getBody(), HttpStatus.valueOf(res.getResponseStatus()));
+            return new ResponseEntity<>(res.getBody(), HttpStatus.valueOf(res.getResponseStatus()));
         }
     }
 }

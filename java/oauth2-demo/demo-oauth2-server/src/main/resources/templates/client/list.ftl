@@ -35,7 +35,7 @@
                                 <script>
                                     $(function () {
                                         $("#go_${t.id}").click(function () {
-                                            var url = "<@s.url '/v1/openapi/user?access_token='/>" + $("#access_token_${t.id}").val();
+                                            var url = "<@s.url '/v1/openapi/me?access_token='/>" + $("#access_token_${t.id}").val();
                                             window.open(url);
                                         });
                                     });

@@ -1,9 +1,10 @@
-package demo.http;
+package demo.http.oauth2;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.entity.User;
 import demo.oauth2.OAuthService;
+import demo.oauth2.OpenToken;
 import demo.oauth2.UserService;
 import org.apache.oltu.oauth2.common.OAuth;
 import org.apache.oltu.oauth2.common.error.OAuthError;
@@ -24,10 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Base64;
 
 @RestController
 @RequestMapping("/v1/openapi")
-public class ResourceController {
+public class OpenTokenController {
 
     @Autowired
     private OAuthService oAuthService;
@@ -35,7 +39,7 @@ public class ResourceController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/user")
+    @RequestMapping("/me")
     public HttpEntity userInfo(HttpServletRequest request) throws OAuthSystemException, OAuthProblemException, JsonProcessingException {
         return checkAccessToken(request);
     }
@@ -61,7 +65,7 @@ public class ResourceController {
         User user = userService.findByUsername(username);
         ObjectMapper mapper = new ObjectMapper();
 
-        return new ResponseEntity(mapper.writeValueAsString(user), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.writeValueAsString(user), HttpStatus.OK);
     }
 
     /**
@@ -84,18 +88,20 @@ public class ResourceController {
                         .errorResponse(HttpServletResponse.SC_UNAUTHORIZED)
                         .setRealm("RESOURCE_SERVER_NAME")
                         .setError(OAuthError.ResourceResponse.INVALID_TOKEN)
-                        .buildHeaderMessage();
+                        .buildJSONMessage();
                 HttpHeaders responseHeaders = new HttpHeaders();
                 responseHeaders.add("Content-Type", "application/json; charset=utf-8");
-                ObjectMapper mapper = new ObjectMapper();
-
-                return new ResponseEntity(mapper.writeValueAsString("hello world!"), responseHeaders, HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(oauthResponse.getBody(), responseHeaders, HttpStatus.UNAUTHORIZED);
             }
+            Base64.Encoder encoder = Base64.getEncoder();
             //获取用户名
             String username = oAuthService.getUsernameByAccessToken(accessToken);
             User user = userService.findByUsername(username);
+            OpenToken token = new OpenToken();
+            token.setOpenId(encoder.encodeToString((user.getId() + "_" + username.hashCode()).getBytes(StandardCharsets.UTF_8)));
+            token.setRoles(Arrays.asList("guest", "admin", "hello"));
             ObjectMapper mapper = new ObjectMapper();
-            return new ResponseEntity(mapper.writeValueAsString(user), HttpStatus.OK);
+            return new ResponseEntity<>(mapper.writeValueAsString(token), HttpStatus.OK);
         } catch (OAuthProblemException e) {
             //检查是否设置了错误码
             String errorCode = e.getError();
@@ -106,7 +112,7 @@ public class ResourceController {
                         .buildHeaderMessage();
                 HttpHeaders headers = new HttpHeaders();
                 headers.add(OAuth.HeaderType.WWW_AUTHENTICATE, oauthResponse.getHeader(OAuth.HeaderType.WWW_AUTHENTICATE));
-                return new ResponseEntity(headers, HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(headers, HttpStatus.UNAUTHORIZED);
             }
             OAuthResponse oauthResponse = OAuthRSResponse
                     .errorResponse(HttpServletResponse.SC_UNAUTHORIZED)
@@ -117,7 +123,7 @@ public class ResourceController {
                     .buildHeaderMessage();
             HttpHeaders headers = new HttpHeaders();
             headers.add(OAuth.HeaderType.WWW_AUTHENTICATE, oauthResponse.getHeader(OAuth.HeaderType.WWW_AUTHENTICATE));
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
