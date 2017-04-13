@@ -17,7 +17,12 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(HttpServletRequest request) {
-        return "redirect:/index?" + request.getQueryString();
+        return "redirect:/index" + (request.getQueryString() == null ? "" : "?" + request.getQueryString());
+    }
+
+    @GetMapping("/")
+    public String index() {
+        return "index";
     }
 
     @GetMapping("/index")

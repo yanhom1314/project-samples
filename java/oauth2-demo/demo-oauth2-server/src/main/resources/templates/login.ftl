@@ -17,7 +17,7 @@
                 <div class="alert alert-info"> 请输入用户名/口令登录！</div>
             </#if>
             <div>
-                <form action="<@s.url '/login'/>" class="form-horizontal" method="post">
+                <form action="<@s.url '/authorize'/>" class="form-horizontal" method="post">
                     <input type="hidden" name="client_id" value="${RequestParameters["client_id"]!}">
                     <input type="hidden" name="response_type" value="${RequestParameters["response_type"]!}">
                     <input type="hidden" name="redirect_uri" value="${RequestParameters["redirect_uri"]!}">
