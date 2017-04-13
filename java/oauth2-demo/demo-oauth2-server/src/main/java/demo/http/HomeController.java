@@ -1,6 +1,7 @@
 package demo.http;
 
 import demo.repo.ClientRepository;
+import demo.spring.UserCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +16,17 @@ public class HomeController {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private UserCache userCache;
+
     @GetMapping("/home")
     public String home(HttpServletRequest request) {
         return "redirect:/index" + (request.getQueryString() == null ? "" : "?" + request.getQueryString());
     }
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("all", userCache.getAll());
         return "index";
     }
 

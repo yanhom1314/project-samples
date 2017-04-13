@@ -23,5 +23,6 @@
 
     <root level="error">
         <appender-ref ref="rolling_file"/>
+        <appender-ref ref="stdout"/>
     </root>
 </configuration>
