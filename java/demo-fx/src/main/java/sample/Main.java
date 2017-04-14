@@ -12,13 +12,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/main.fxml"));
         primaryStage.setTitle("Hello World");
-        //左上角图标
+        //logo icon
         primaryStage.getIcons().add(new Image(this.getClass().getClassLoader().getResourceAsStream("img/icon.jpg")));
-        //窗口样式 标题栏 关闭按钮 最大化 最小化
+        //window title close max min
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        Scene scene = new Scene(root, 300, 200);
+        Scene scene = new Scene(root, 400, 320);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getClassLoader().getResource("css/login.css").toExternalForm());
         primaryStage.show();

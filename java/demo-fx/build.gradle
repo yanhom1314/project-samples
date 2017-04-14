@@ -3,15 +3,9 @@ apply plugin: 'java'
 group = "demo.fx"
 version = "${version}"
 
-repositories {
-    mavenLocal()
-    jcenter()
-    maven { url "maven.oschina.net/content/groups/public" }
-}
-
 dependencies {
     compile("com.google.inject:guice:$guice")
-    testCompile("junit:junit:4.11")
+    testCompile("junit:junit:$junit")
 }
 
 task fatJar(type: Jar) {

@@ -3,7 +3,6 @@ package sample;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,19 +21,12 @@ import javafx.util.Duration;
 
 import static java.lang.Math.random;
 
-public class ColorfulCirclesMain extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
+public class ColorfulCircles {
+    public static void second(Stage primaryStage) {
         Group root = new Group();
         Scene scene = new Scene(root, 800, 600, Color.BLACK);
         primaryStage.setScene(scene);
-
-        //primaryStage.getIcons().add(new Image("http://doc.akka.io/docs/akka/2.4.4/_static/akka_full_color.svg"));
-        primaryStage.getIcons().add(new Image(this.getClass().getClassLoader().getResourceAsStream("img/icon.jpg")));
+        primaryStage.getIcons().add(new Image(ColorfulCircles.class.getClassLoader().getResourceAsStream("img/icon.jpg")));
         Group circles = new Group();
 
         for (int i = 0; i < 30; i++) {
