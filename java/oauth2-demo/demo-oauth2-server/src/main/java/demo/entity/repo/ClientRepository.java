@@ -1,4 +1,4 @@
-package demo.repo;
+package demo.entity.repo;
 
 import demo.entity.Client;
 import org.springframework.data.repository.PagingAndSortingRepository;

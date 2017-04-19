@@ -1,4 +1,4 @@
-package demo.repo;
+package demo.entity.repo;
 
 import demo.entity.Client;
 import demo.entity.User;

@@ -18,6 +18,7 @@ import org.apache.oltu.oauth2.common.message.types.ResponseType;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.session.HttpServletSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -63,11 +64,12 @@ public class AuthorizeController {
     }
 
     @GetMapping("/logout")
-    public String logout() {
+    public String logout(HttpServletSession session) {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
             subject.logout();
         }
+
         return "login";
     }
 

@@ -1,5 +1,7 @@
 package demo.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class Client {
     private Long id;
     @Column(name = "client_id", unique = true, nullable = false, length = 64)
     private String clientId;
+    @NotBlank
     @Column(name = "client_name", unique = true, nullable = false, length = 200)
     private String clientName;
     @Column(name = "client_secret", nullable = false, length = 128)

@@ -1,4 +1,4 @@
-package demo.freemarker;
+package demo.util.freemarker;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
@@ -16,7 +16,7 @@ public class LocalDocRootConfig {
         try {
             DIR_TEMPLATE = System.getProperty(TEMPLATE_PREFIX) != null ? System.getProperty(TEMPLATE_PREFIX) : "templates";
             if (System.getProperty(LOCAL_DOC_ROOT) != null) {
-                DIR_ROOT = new File(System.getProperty("user.dir"), System.getProperty(LOCAL_DOC_ROOT));
+                DIR_ROOT = new File(System.getProperty(LOCAL_DOC_ROOT));
                 System.out.printf("#%s:[%s]#\n", LOCAL_DOC_ROOT, DIR_ROOT.toURI().toString());
             }
         } catch (Exception e) {

@@ -31,8 +31,6 @@ public class Controller {
     @FXML
     public void handleSubmitButtonAction(ActionEvent event) {
         if (username.getText().trim().equalsIgnoreCase("test") && password.getText().trim().equalsIgnoreCase("test")) {
-            action_target.setText(MessageFormat.format(bundle.getString("login.err"), username.getText()));
-        } else {
             try {
                 ((Stage) root.getScene().getWindow()).close();
                 Parent nextRoot = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/second.fxml"));
@@ -46,6 +44,8 @@ public class Controller {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            action_target.setText(MessageFormat.format(bundle.getString("login.err"), username.getText()));
         }
     }
 

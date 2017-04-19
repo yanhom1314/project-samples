@@ -2,7 +2,7 @@ package demo.oauth2.impl;
 
 import demo.entity.Client;
 import demo.oauth2.ClientService;
-import demo.repo.ClientRepository;
+import demo.entity.repo.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

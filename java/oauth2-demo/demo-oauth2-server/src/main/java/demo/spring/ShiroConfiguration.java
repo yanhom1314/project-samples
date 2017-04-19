@@ -1,7 +1,7 @@
 package demo.spring;
 
 import demo.entity.User;
-import demo.repo.UserRepository;
+import demo.entity.repo.UserRepository;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.AnonymousFilter;

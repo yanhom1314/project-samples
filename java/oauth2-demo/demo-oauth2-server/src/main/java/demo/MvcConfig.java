@@ -1,6 +1,6 @@
 package demo;
 
-import demo.freemarker.LocalDocRootConfig;
+import demo.util.freemarker.LocalDocRootConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.ApplicationContext;

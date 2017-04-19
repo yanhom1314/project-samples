@@ -1,7 +1,7 @@
 package demo.spring;
 
 import demo.entity.User;
-import demo.repo.UserRepository;
+import demo.entity.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,7 +15,7 @@ public class UserCache {
     @Autowired
     private UserRepository userRepository;
 
-    @Cacheable(CacheConfig.CODE_ALL_USER)
+    @Cacheable(value = CacheConfig.CODE_ALL_USER)
     public List<User> getAll() {
         List<User> list = new ArrayList<>();
         userRepository.findAll().iterator().forEachRemaining(list::add);
@@ -23,7 +23,7 @@ public class UserCache {
         return list;
     }
 
-    @CachePut(CacheConfig.CODE_ALL_USER)
+    @CachePut(value = CacheConfig.CODE_ALL_USER)
     public List<User> updateAll() {
         List<User> list = new ArrayList<>();
 

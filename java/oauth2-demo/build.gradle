@@ -37,11 +37,17 @@ project(":demo-oauth2-server") {
         baseName = 'demo-oauth2-server'
         version = '0.1.0'
     }
+    dependencies {
+        compile project(":demo-lib")
+    }
 }
 
 project(":demo-oauth2-client") {
     jar {
         baseName = 'demo-oauth2-client'
         version = '0.1.0'
+    }
+    dependencies {
+        compile project(":demo-lib")
     }
 }

@@ -17,6 +17,7 @@
                         <div class="controls">
                             <@s.bind "client.clientName" />
                             <input id="_client_name" type="text" name="${s.status.expression}" value="${s.status.value!}"/>
+                            <#list s.status.errorMessages as e> <b>${e}</b> <br> </#list>
                         </div>
                     </div>
                     <div class="control-group">

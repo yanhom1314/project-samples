@@ -1,6 +1,6 @@
 package demo.http;
 
-import demo.repo.ClientRepository;
+import demo.entity.repo.ClientRepository;
 import demo.spring.UserCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

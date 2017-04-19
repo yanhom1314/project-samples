@@ -1,2 +1,2 @@
-include 'demo-oauth2-server','demo-oauth2-client'
+include 'demo-oauth2-server','demo-oauth2-client', 'demo-lib'
 

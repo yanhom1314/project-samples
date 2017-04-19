@@ -1,7 +1,7 @@
 package demo.spring;
 
 import demo.entity.User;
-import demo.repo.UserRepository;
+import demo.entity.repo.UserRepository;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

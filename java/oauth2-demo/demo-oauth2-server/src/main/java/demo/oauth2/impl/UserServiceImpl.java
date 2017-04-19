@@ -2,8 +2,8 @@ package demo.oauth2.impl;
 
 import demo.entity.User;
 import demo.oauth2.UserService;
-import demo.repo.ClientRepository;
-import demo.repo.UserRepository;
+import demo.entity.repo.ClientRepository;
+import demo.entity.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

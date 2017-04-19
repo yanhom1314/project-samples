@@ -16,24 +16,31 @@
             <#else>
                 <div class="alert alert-info"> 请输入用户名/口令登录！</div>
             </#if>
-            <div>
-                <form action="<@s.url '/authorize'/>" class="form-horizontal" method="post">
-                    <input type="hidden" name="client_id" value="${RequestParameters["client_id"]!}">
-                    <input type="hidden" name="response_type" value="${RequestParameters["response_type"]!}">
-                    <input type="hidden" name="redirect_uri" value="${RequestParameters["redirect_uri"]!}">
-                    <div class="control-group"><label class="control-label" contenteditable="true" for="j_username">帐号</label>
-                        <div class="controls"><input id="j_username" class="input-large span10" name="username" type="text" value="test"/></div>
-                    </div>
-                    <div class="control-group"><label class="control-label" contenteditable="true" for="j_password">密码</label>
-                        <div class="controls"><input id="j_password" class="input-large span10" name="password" type="password" value="test"/></div>
-                    </div>
-                    <div class="control-group">
-                        <div class="controls">
-                            <button id="j_submit" class="btn btn-primary" contenteditable="true" type="submit">登陆</button>
+            <#if _s_user_name??>
+                <script>
+                    window.top.location = "index";
+                </script>
+            <#else>
+                <div>
+                    <form action="<@s.url '/authorize'/>" class="form-horizontal" method="post">
+                        <input type="hidden" name="client_id" value="${RequestParameters["client_id"]!}">
+                        <input type="hidden" name="response_type" value="${RequestParameters["response_type"]!}">
+                        <input type="hidden" name="redirect_uri" value="${RequestParameters["redirect_uri"]!}">
+                        <div class="control-group"><label class="control-label" contenteditable="true" for="j_username">帐号</label>
+                            <div class="controls"><input id="j_username" class="input-large span10" name="username" type="text" value="test"/></div>
                         </div>
-                    </div>
-                </form>
-            </div>
+                        <div class="control-group"><label class="control-label" contenteditable="true" for="j_password">密码</label>
+                            <div class="controls"><input id="j_password" class="input-large span10" name="password" type="password" value="test"/></div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button id="j_submit" class="btn btn-primary" contenteditable="true" type="submit">登陆</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </#if>
         </div>
     </div>
 </div>
