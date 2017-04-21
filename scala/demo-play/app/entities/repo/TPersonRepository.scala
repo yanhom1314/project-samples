@@ -1,7 +1,8 @@
-package entities
+package entities.repo
 
 import java.util
 
+import entities.TPerson
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 

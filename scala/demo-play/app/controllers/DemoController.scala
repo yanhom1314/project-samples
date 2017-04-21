@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject._
 
-import entities.TPersonRepository
+import entities.repo.TPersonRepository
 import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}

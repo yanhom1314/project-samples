@@ -4,8 +4,10 @@ import javax.inject.{Inject, Singleton}
 import javax.naming.AuthenticationException
 
 import com.example.service.ExampleService
-import com.twitter.finagle.http.{Request, Response, Status}
+import com.twitter.finagle.http.{Request, Status}
 import com.twitter.finatra.http.Controller
+import com.twitter.finatra.request.FormParam
+import com.twitter.finatra.validation._
 import finatra.greatbit.shiro.ShiroFilter
 import finatra.views.freemarker.Freemarker
 import org.apache.shiro.SecurityUtils
@@ -20,17 +22,13 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
     LoginView()
   }
 
-  post("/login") { request: Request =>
+  post("/login") { lur: LoginUserRequest =>
     val cu = SecurityUtils.getSubject
 
-    val username = request.params.get("username").getOrElse("guest")
-    val password = request.params.get("password").getOrElse("guest")
-    val remember = request.params.get("remember").getOrElse(false.toString).toBoolean
+    val token = new UsernamePasswordToken(lur.username, lur.password)
+    token.setRememberMe(lur.remember)
+    response.status(Status.Unauthorized.code)
 
-    val token = new UsernamePasswordToken(username, password)
-    token.setRememberMe(remember)
-
-    Response(request).statusCode = Status.Unauthorized.code
     try {
       cu.login(token)
       response.temporaryRedirect.location("/info").toFuture
@@ -39,7 +37,7 @@ class SecurityController @Inject()(service: ExampleService) extends Controller {
         try {
           cu.logout()
         } catch {
-          case e: Exception =>
+          case e: Exception => e.printStackTrace()
         }
         LoginView(error = Status.GatewayTimeout.reason)
       case e: UnknownAccountException => LoginView(error = Status.Forbidden.reason)
@@ -73,3 +71,7 @@ case class LoginView(user: Subject = null, error: String = null, success: String
 
 @Freemarker("manage/index")
 case class ManageIndexView(user: Subject)
+
+case class LoginUserRequest(@FormParam @NotEmpty username: String,
+                            @FormParam @NotEmpty password: String,
+                            @FormParam remember: Boolean = false)

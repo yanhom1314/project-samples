@@ -3,7 +3,7 @@ package shiro
 
 import javax.inject.{Inject, Singleton}
 
-import entities.TUserRepository
+import entities.repo.TUserRepository
 import org.apache.shiro.authc._
 import org.apache.shiro.authz.{AuthorizationInfo, SimpleAuthorizationInfo}
 import org.apache.shiro.realm.AuthorizingRealm

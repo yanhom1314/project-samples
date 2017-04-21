@@ -4,7 +4,8 @@ import java.time.Clock
 
 import com.google.inject.AbstractModule
 import config.SpringDataJpaConfig
-import entities.{TRole, TRoleRepository, TUser, TUserRepository}
+import entities.repo.{TRoleRepository, TUserRepository}
+import entities.{TRole, TUser, TUserRepository}
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.repository.Repository
 

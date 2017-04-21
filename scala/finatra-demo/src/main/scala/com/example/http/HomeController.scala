@@ -22,7 +22,7 @@ class HomeController @Inject()(service: ExampleService) extends Controller {
     Person("3", 3, "3", List(Friend("33", 33), Friend("333", 333)).asJava))
 
   get("/") { _: Request =>
-    FooView("YaFengLi", list())
+    IndexView("YaFengLi", list())
   }
 
   get("/home") { _: Request =>
@@ -34,7 +34,7 @@ class HomeController @Inject()(service: ExampleService) extends Controller {
   }
 
   get("/foo") { _: Request =>
-    FooView("YaFengLi", list())
+    IndexView("YaFengLi", list())
   }
 
   get("/d1") { _: Request =>
@@ -49,8 +49,8 @@ class HomeController @Inject()(service: ExampleService) extends Controller {
   }
 }
 
-@Mustache("foo")
-case class FooView(name: String, persons: List[Person])
+@Mustache("index")
+case class IndexView(name: String, persons: List[Person])
 
 @Mustache("d1")
 case class Demo1View(name: String, persons: List[Person])
