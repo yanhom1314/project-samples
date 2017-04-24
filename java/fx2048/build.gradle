@@ -1,26 +1,16 @@
 apply plugin: 'java'
 
-repositories {
-    mavenLocal()
-    jcenter()
-}
 jar {
     manifest {
-        attributes 'Main-Class': 'game2048.Game2048'
+        attributes 'Main-Class': 'sdimkov.game2048.MainApp'  //attributes 'Main-Class': 'game2048.Game2048'
     }
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
-// In this section you declare the dependencies for your production and test code
 dependencies {
-    compile("com.google.inject:guice:$guice")
+    compile("com.google.inject:guice:$guice",
+            "ch.qos.logback:logback-classic:$logback")
     testCompile "junit:junit:$junit"
-}
-
-task fatJar(type: Jar) {
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
 }

@@ -5,8 +5,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import java.net.URL?>
-<StackPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="game-root"
-           stylesheets="@css/game.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="g2048.GameController">
+<StackPane fx:id="gamePane" fx:controller="g2048.GameController" xmlns:fx="http://javafx.com/fxml"
+           prefHeight="400.0" prefWidth="600.0" styleClass="game-root" stylesheets="@css/game.css">
     <stylesheets>
         <URL value="@css/game.css"/>
     </stylesheets>
@@ -49,6 +49,5 @@
                 </HBox>
             </children>
         </Group>
-        <Group/>
     </children>
 </StackPane>

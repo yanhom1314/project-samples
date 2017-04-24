@@ -1,16 +1,11 @@
 package game2048;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author José Pereda
  * @date 22-abr-2014 - 12:11:11
  */
@@ -59,5 +54,4 @@ public class RecordManager {
         }
         return 0;
     }
-
 }

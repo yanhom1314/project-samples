@@ -1,16 +1,16 @@
 import Build._
 
-name := """fx2048"""
-
-version := "1.0"
-
-scalaVersion := "2.11.8"
-
-mainClass in assembly := Some("g2048.Game2048II")
-
 assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)
 
-libraryDependencies ++= Seq(
-  "com.google.inject" % "guice" % $("guice"),
-  "junit" % "junit" % $("junit") % "test"
+lazy val root = (project in file(".")).settings(
+  name := """fx2048""",
+  version := "1.0",
+  scalaVersion := "2.12.1",
+  mainClass in assembly :=  Some("sdimkov.game2048.MainApp"),// Some("game2048.Game2048"),
+  libraryDependencies ++= Seq(
+    "com.google.inject" % "guice" % $("guice"),
+    "ch.qos.logback" % "logback-classic" % $("logback"),
+    "junit" % "junit" % $("junit") % "test"
+  )
 )
+
