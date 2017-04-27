@@ -8,7 +8,8 @@ scalaVersion := $("scala")
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % $("akka"),
-  "com.typesafe.akka" %% "akka-http-spray-json" % $("akka"),
+  "org.json4s" %% "json4s-native" % $("json4s"),
+"com.typesafe.akka" %% "akka-http-spray-json" % $("akka"),
   "org.scalatest" %% "scalatest" % $("scalatest") % "test",
   "junit" % "junit" % $("junit") % "test"
 )
