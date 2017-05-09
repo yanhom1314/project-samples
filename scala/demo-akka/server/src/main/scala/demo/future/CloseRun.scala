@@ -10,7 +10,7 @@ case class CloseRun(implicit system: ActorSystem) extends Runnable {
       val reader = new BufferedReader(new InputStreamReader(System.in))
 
       reader.readLine() match {
-        case "quit" | "exit" => system.shutdown()
+        case "quit" | "exit" => system.terminate()
         case _ => Thread.sleep(2000)
       }
     } catch {

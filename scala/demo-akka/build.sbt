@@ -1,7 +1,5 @@
 import Build._
 
-scalaVersion := $("scala")
-
 lazy val demo_akka = project.in(file(".")).aggregate(server, client, message)
 
 lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).dependsOn(message).settings(
@@ -9,13 +7,13 @@ lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).dependsOn
   organization := "org.koala",
   version := $("prod"),
   scalaVersion := $("scala"),
-  mainClass := Some("demo.example.boot.ServerBoot"),
+  mainClass := Some("demo.boot.ServerBoot"),
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-remote" % $("akka"),
     "ch.qos.logback" % "logback-classic" % $("logback"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
     "junit" % "junit" % $("junit") % "test"
-  ))
+  )).settings(dirSetting ++= Seq("conf"))
 
 lazy val client = project.in(file("client")).enablePlugins(SbtDistApp).dependsOn(server).settings(
   name := "client",
@@ -24,22 +22,20 @@ lazy val client = project.in(file("client")).enablePlugins(SbtDistApp).dependsOn
   scalaVersion := $("scala"),
   mainClass := Some("demo.ClientBoot"),
   libraryDependencies ++= Seq(
-    "com.typesafe.akka" %% "akka-http-core" % $("akka"),
-    "com.typesafe.akka" %% "akka-http-xml-experimental" % $("akka"),
-    "com.typesafe.akka" %% "akka-http-spray-json-experimental" % $("akka"),
+    "com.typesafe.akka" %% "akka-actor" % $("akka"),
     "com.typesafe.akka" %% "akka-stream" % $("akka"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
     "junit" % "junit" % $("junit") % "test"
-  ))
+  )).settings(dirSetting ++= Seq("conf"))
 
-lazy val message = project.in(file("message")).settings(
+lazy val message = project.in(file("message")).enablePlugins(SbtDistApp).settings(
   name := "message",
   organization := "org.koala",
   version := $("prod"),
   scalaVersion := $("scala"),
+  mainClass := Some("message.boot.HelloMain"),
   libraryDependencies ++= Seq(
     "com.google.inject" % "guice" % $("guice"),
-    "com.typesafe.akka" %% "akka-kernel" % $("akka"),
     "com.typesafe.akka" %% "akka-remote" % $("akka"),
     "org.scalatest" %% "scalatest" % $("scalatest") % "test",
     "junit" % "junit" % $("junit") % "test"

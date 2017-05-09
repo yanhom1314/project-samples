@@ -1,2 +1,2 @@
-addSbtPlugin("org.koala" %% "sbt-application-plugin" % "1.1.2")
+addSbtPlugin("org.koala" %% "sbt-application-plugin" % "1.2.0")
 

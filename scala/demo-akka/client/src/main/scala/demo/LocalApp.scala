@@ -33,5 +33,5 @@ object LocalApp extends App {
   println("starting...")
   println(s"created action:w1:${w1.path} w2:${w2.path}")
 
-  system.scheduler.scheduleOnce(20.seconds)(system.shutdown())(system.dispatcher)
+  system.scheduler.scheduleOnce(20.seconds)(system.terminate())(system.dispatcher)
 }

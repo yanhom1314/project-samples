@@ -16,13 +16,22 @@
         >package
         >project root
         >distZip
+
+#### 本地测试
         
+        cd server/target/universalstage
+        bin/server
+        cd client/target/universalstage
+        bin/client        
+
+#### Akka部署
+
 + 安装： 
         
         cp conf/* $AKKA_HOME/config/
         cp target/universal/stage/lib/*.jar $AKKA_HOME/deploy/
-             
-#### 运行测试
+
++ 运行：             
 
         bin/akka demo.Server
         bin/akka demo.Client           

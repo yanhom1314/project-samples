@@ -25,7 +25,7 @@ public class ServerJavaBoot {
             }, system.dispatcher());
 
             system.scheduler().scheduleOnce(FiniteDuration.apply(20, TimeUnit.SECONDS), () -> {
-                system.shutdown();
+                system.terminate();
             }, system.dispatcher());
         } catch (Exception e) {
             e.printStackTrace();
