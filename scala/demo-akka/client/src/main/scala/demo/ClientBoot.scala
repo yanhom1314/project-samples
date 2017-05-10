@@ -2,16 +2,20 @@ package demo
 
 import java.io.File
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorSystem, DeadLetter, Props}
 import com.typesafe.config.ConfigFactory
 import demo.actor.ActorConstants._
+import demo.dead.DeadLetterListener
 
 import scala.concurrent.duration._
 
 object ClientBoot extends App {
-  implicit val system = ActorSystem(CLIENT_ACTOR_SYSTEM, ConfigFactory.parseFile(new File("conf/client.conf")))
 
-  //  loopByActorOf()
+  implicit val system = ActorSystem(CLIENT_ACTOR_SYSTEM, ConfigFactory.parseFile(new File("conf/client.conf")))
+  val listener = system.actorOf(Props[DeadLetterListener])
+  system.eventStream.subscribe(listener, classOf[DeadLetter])
+
+  //loopByActorOf() //@Deprecated actorOf is used to create new actors by supplying their Props objects. and it's using by server or local.
   loopByActorSelection()
 
   //close after 50 seconds
