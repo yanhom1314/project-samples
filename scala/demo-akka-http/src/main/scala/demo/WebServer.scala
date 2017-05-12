@@ -1,83 +1,28 @@
 package demo
 
-import java.io.File
-import java.util.concurrent.TimeUnit
-
-import akka.Done
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-//import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
-import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
-//import spray.json.DefaultJsonProtocol._
 
-import scala.collection.mutable
-import scala.concurrent.duration.FiniteDuration
-import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.io.StdIn
 
 object WebServer {
-  val cache = mutable.Map[Long, Item]()
-
   val BASE_DIR = if (System.getProperty("http.path") != null) System.getProperty("http.path") else System.getProperty("user.dir") + "/html"
 
   val HTTP_PORT = if (System.getProperty("http.port") != null) System.getProperty("http.port").toInt else 80
 
-  final case class Item(name: String, id: Long)
-
-  implicit val itemFormat = jsonFormat2(Item)
-
-  def fetchItem(itemId: Long)(implicit dispatcher: ExecutionContextExecutor): Future[Option[Item]] = Future(cache.get(itemId))
-
-  def saveOrder(itemId: Long)(implicit dispatcher: ExecutionContextExecutor): Future[Done] = Future {
-    cache += itemId -> Item(itemId.toString, itemId)
-    Done
-  }
 
   def main(args: Array[String]) {
     implicit val system = ActorSystem("my-demo-system")
     implicit val materializer = ActorMaterializer()
     implicit val executionContext = system.dispatcher
-    val duration = FiniteDuration(6, TimeUnit.SECONDS)
 
-    val route = path("hello") {
-      get {
-        complete {
-          //Future(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
-          HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>").toStrict(duration)
-        }
-      }
-    } ~ get {
-      pathPrefix("item" / LongNumber) { id =>
-        onSuccess(fetchItem(id)) {
-          case Some(item) => complete(item)
-          case None => complete(StatusCodes.NotFound, s"Not Found:${id}")
-        }
-      }
-    } ~ post {
-      pathPrefix("create-item" / LongNumber) { id =>
-        onComplete(saveOrder(id)) {
-          _ => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Create Item is ok.</h1>0").toStrict(duration))
-        }
-      }
-    } ~ path("302") {
-      val locationHeader = headers.Location("http://127.0.0.1/301")
-      complete(HttpResponse(302, headers = List(locationHeader)))
-    } ~ path("301") {
-      val locationHeader = headers.Location("http://127.0.0.1/static/test.html")
-      complete(HttpResponse(302, headers = List(locationHeader)))
-    } ~ path("404") {
-      complete(HttpResponse(404, entity = "Unfortunately, the resource couldn't be found."))
-    } ~ get {
-      pathPrefix("static" / Segment) { name =>
-        getFromFile(new File(BASE_DIR, name))
-      }
-    }
+    val route = SprayJsonHttp.route ~ Json4sHttp.route
 
     val bindingFuture = Http().bindAndHandle(route, "localhost", HTTP_PORT)
 
-    println(s"Server[${BASE_DIR}] online at http://localhost:${HTTP_PORT}/\nPress RETURN to stop...")
+    println(s"Server[${BASE_DIR}] online at http://localhost:${HTTP_PORT}/\nPress ENTER to stop...")
     StdIn.readLine()
     bindingFuture.flatMap(_.unbind()).onComplete(_ => system.terminate())
   }

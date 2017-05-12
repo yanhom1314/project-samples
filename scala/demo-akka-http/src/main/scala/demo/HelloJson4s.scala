@@ -4,7 +4,7 @@ import org.json4s.JsonDSL.WithDouble._
 import org.json4s._
 import org.json4s.native.JsonMethods._
 
-object HelloJson extends App {
+object HelloJson4s extends App {
 
   val jv_1 = parse("""{"name":"yafengli@sina.com","age":1,"numbers":[1,2,3,4,5]}""")
   println(jv_1)
@@ -15,7 +15,6 @@ object HelloJson extends App {
 
   println(compact(render(jv_1 \\ "name")))
   println(compact(render(jv_1 \\ "numbers")))
-
 
   val json2 = parse(
     """

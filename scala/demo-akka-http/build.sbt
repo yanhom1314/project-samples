@@ -9,12 +9,17 @@ scalaVersion := $("scala")
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % $("akka"),
   "org.json4s" %% "json4s-native" % $("json4s"),
-"com.typesafe.akka" %% "akka-http-spray-json" % $("akka"),
+  "com.typesafe.akka" %% "akka-http-spray-json" % $("akka"),
+  //"com.typesafe.akka" %% "akka-http-spray-json" % $("akka"),
   "org.scalatest" %% "scalatest" % $("scalatest") % "test",
   "junit" % "junit" % $("junit") % "test"
 )
 
 mainClass := Some("demo.WebServer")
+
+enablePlugins(SbtDistApp)
+
+dirSetting ++= Seq("html")
 
 assemblyMergeStrategy in assembly := {
   case x if x.endsWith("io.netty.versions.properties") => MergeStrategy.first
@@ -32,3 +37,4 @@ assemblyMergeStrategy in assembly := {
 test in assembly := {}
 
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
+
