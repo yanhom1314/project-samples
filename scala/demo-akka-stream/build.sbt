@@ -4,15 +4,14 @@ name := """demo-akka-stream"""
 
 version := "1.1"
 
-scalaVersion := "2.11.8"
+scalaVersion := $("scala")
 
 lazy val root = project.in(file(".")).enablePlugins(SbtDistApp).settings(
   name := "client",
   organization := "org.koala",
   version := $("prod"),
   scalaVersion := $("scala"),
-  mainClass := Some("sample.command.DemoMain"),
-  test in assembly := {},
+  mainClass := Some("sample.command.DemoMain"),  
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-stream" % $("akka"),
     "io.reactivex" %% "rxscala" % $("rxscala"),

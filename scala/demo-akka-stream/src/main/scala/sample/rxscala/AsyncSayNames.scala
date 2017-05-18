@@ -5,7 +5,7 @@ import rx.lang.scala.Observable
 object AsyncSayNames extends App {
 
   def hello(names: String*) {
-    Observable.from(names) subscribe { n =>
+    Observable.from(names).subscribe { n =>
       println(s"Hello $n!")
     }
   }
