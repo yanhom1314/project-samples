@@ -4,6 +4,7 @@ trait Ignore
 
 case class A(a: Int)
 
-case class C(a: A) extends Ignore
+case class B(a: A with Ignore, d: Int)
 
-case class B(a: A, d: Int)
+//add type A with Ignore
+class C(c: Int) extends A(c) with Ignore
