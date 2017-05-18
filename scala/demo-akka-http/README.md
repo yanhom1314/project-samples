@@ -1,7 +1,9 @@
 #### Get
 
-        curl -i http://localhost/json4s
-        curl -i http://localhost/home
+        curl -i http://localhost/json4s/foo
+        curl -i http://localhost/json4s/a
+        curl -i http://localhost/json4s/b
+        curl -i http://localhost/
         
 #### Post
         
