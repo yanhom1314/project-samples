@@ -4,6 +4,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
+import demo.http.{Json4sHttp, SprayJsonHttp}
 
 import scala.io.StdIn
 
@@ -20,7 +21,7 @@ object WebServer {
 
     val route = SprayJsonHttp.route ~ Json4sHttp.route
 
-    val bindingFuture = Http().bindAndHandle(route, "localhost", HTTP_PORT)
+    val bindingFuture = Http().bindAndHandle(route, "0.0.0.0", HTTP_PORT)
 
     println(s"Server[${BASE_DIR}] online at http://localhost:${HTTP_PORT}/\nPress ENTER to stop...")
     StdIn.readLine()

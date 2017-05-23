@@ -1,6 +1,7 @@
 package test
 
-import demo.{A, B, Json4sIgnore}
+import demo.json.{A, B, Json4sIgnore}
+import demo.{A, B}
 import org.json4s.JsonAST.JNothing
 import org.json4s.native.Serialization
 import org.json4s.{CustomSerializer, DefaultFormats, Extraction}

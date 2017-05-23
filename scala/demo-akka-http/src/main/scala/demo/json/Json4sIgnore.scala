@@ -1,4 +1,4 @@
-package demo
+package demo.json
 
 import org.json4s.CustomSerializer
 import org.json4s.JsonAST.JNothing

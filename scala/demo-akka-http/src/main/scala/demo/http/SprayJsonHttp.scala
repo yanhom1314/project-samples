@@ -1,4 +1,4 @@
-package demo
+package demo.http
 
 import java.io.File
 import java.util.concurrent.TimeUnit
