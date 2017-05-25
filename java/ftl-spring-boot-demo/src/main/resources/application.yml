@@ -10,6 +10,9 @@ spring:
           dataSourceClassName: org.h2.jdbcx.JdbcDataSource
           maximumPoolSize: 20
           idleTimeout: 30000
+    freemarker:
+      request-context-attribute: request
+      expose-session-attributes: true
 server:
     context-path: /
     port: 80

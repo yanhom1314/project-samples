@@ -2,7 +2,9 @@ package demo;
 
 import demo.freemarker.LocalDocRootConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
@@ -11,7 +13,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.SessionTrackingMode;
 import java.io.File;
+import java.util.Collections;
 
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
@@ -21,6 +25,14 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @PostConstruct
     public void init() {
         LocalDocRootConfig.freemarkerConfiguration(context);
+    }
+
+    @Bean
+    public ServletContextInitializer servletContextInitializer() {
+        return sc -> {
+            sc.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));//remove JSESSIONID from url
+            sc.getSessionCookieConfig().setHttpOnly(true); //set Cookie HttpOnly,and use also server.session.cookie.http-only:false
+        };
     }
 
     @Override

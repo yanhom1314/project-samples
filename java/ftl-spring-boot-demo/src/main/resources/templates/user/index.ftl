@@ -1,6 +1,6 @@
 <#include "../layout/main.ftl"/>
 <#import "../tag/security.ftl" as s/>
-<@layout "Admin">
+<@layout "User">
 <div class="alert alert-info">
     <@s.username/>
     <@s.security/>
