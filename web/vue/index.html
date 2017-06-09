@@ -23,11 +23,16 @@
     <script src="//cdn.bootcss.com/fetch/2.0.1/fetch.min.js"></script>
 </head>
 <body>
-<div id="app">
-    {{ message }}
+<div id="app" >
+    <span v-cloak>{{ message }}</span><br/>
+    <!--阻止花括号闪烁-->
+    <span v-text="message"></span><br/>
+    <!-- 2.0 写法，v-html可以转义输出html -->
+    <span v-html="message"></span><br/>
 </div>
 <div id="app1">
-    {{ message }}
+    <!-- 2.0 写法，v-html可以转义输出html -->
+    <span v-html="message"></span>    
 </div>
 <div id="app-2">
   <span v-bind:title="message">
@@ -45,13 +50,13 @@
     </ol>
 </div>
 <div id="app-5">
-    <p>{{ message }}</p>
+    <p v-cloak>{{ message }}</p>
     <button @click="reverseMessage">Reverse Message</button>
 
 
 </div>
 <div id="app-6">
-    <p>{{ message }}</p>
+    <p v-cloak>{{ message }}</p>
     <input v-model="message">
     <button @click="toUpper">大写</button>
     <button @click="toLower">小写</button>

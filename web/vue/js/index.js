@@ -3,14 +3,14 @@ import {axios, fetch, Vue} from "./lib/util";
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Hello Vue!'
+        message: '<strong>Hello Vue!</strong>'
     }
 });
 
 var app1 = new Vue({
     el: '#app1',
     data: {
-        message: 'Hello Vue in app-1!'
+        message: '<strong>Hello Vue in app-1!</strong>'
     }
 });
 

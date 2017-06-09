@@ -1,3 +1,8 @@
+/* vue 防止解析闪烁 */
+[v-cloak]{
+    display: none;
+}
+
 .is-danger {
     font-weight: bold;
     color: red;
