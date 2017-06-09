@@ -1,22 +1,9 @@
-import Vue from "vue";
+import {Vue, Validator, VeeValidate} from "./validation";
 import $ from "jQuery";
 import jQuery from "jQuery";
-import fetch from "fetch";
 import axios from "axios";
-import cn from "../../node_modules/vee-validate/dist/locale/zh_CN";
-import en from "../../node_modules/vee-validate/dist/locale/en";
-import VeeValidate, {Validator} from "vee-validate";
 
-const config = {
-    //locale: 'zh_CN'
-    locale:'en'
-};
-
-Validator.addLocale(cn);
-Validator.addLocale(en);
-
-Vue.use(VeeValidate, config);
-
+//扩展JQuery，对应serializeArray方法，生成json对象
 $.fn.serializeObject = function () {
     var o = {};
     var a = this.serializeArray();
@@ -49,5 +36,5 @@ $.jsonSubmit = function (formElId, successCall, errorCall) {
         }
     });
 };
-//导出
-export {Vue, Validator, fetch, axios, jQuery, $}
+//export 
+export {Vue, Validator, VeeValidate, axios, jQuery, $}

@@ -6,7 +6,6 @@
 + `webpack --watch` && `http-server -p 80`
 + Access: http://localhost/
 
-
 #### 验证使用vue-validate抛弃vue-validator，观察vue-form
 
 #### 解决vue解析闪烁
