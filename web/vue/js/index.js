@@ -70,13 +70,19 @@ var app6 = new Vue({
             });
         },
         html: () => {
-            fetch('/demo/nothing.html').then(function (response) {
-                return response.text();
-            }).then(function (text) {
-                app6.content = text;
-            }).catch(function (e) {
-                console.log("Exception:" + e);
+            axios.get('/demo/nothing.html').then(function(response){
+                console.log(response);
+                app6.content = response.data;
+            }).catch(function(err){
+
             });
+            // fetch('/demo/nothing.html').then(function (response) {
+            //     return response.text();
+            // }).then(function (text) {
+            //     app6.content = text;
+            // }).catch(function (e) {
+            //     console.log("Exception:" + e);
+            // });
         }
     }
 });
