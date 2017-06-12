@@ -13,6 +13,17 @@ targetCompatibility = 1.8
 jar {
     baseName = 'gs-rest-service'
     version = '0.1.0'
+    excludes = ['**/node_modules','**/webpack.config.js','**/package.json','**/.babelrc']
+}
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    options.encoding = 'UTF-8'
+    options.compilerArgs.addAll(["-XDignore.symbol.file", "-Xlint:unchecked"])
+
+    excludes = ['**/node_modules','**/webpacke.config.js','**/package.json']
 }
 
 dependencies {

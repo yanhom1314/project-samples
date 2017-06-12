@@ -4,21 +4,20 @@ var path = require('path');
 module.exports = {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin('common'),
-        //zip
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // })
+        new webpack.optimize.UglifyJsPlugin({
+             compress: {
+                 warnings: false
+             }
+        })
     ],
     entry: {
-        index: './js/index.js',
-        form: './js/form.js',
-        loader: './js/loader.js'
+        form: './src/main/resources/static/resources/js/dev/form.js',
+        //index: './src/main/resources/static/resources/js/dev/index.js',
+        //loader: './src/main/resources/static/resources/js/dev/loader.js'
     },
     output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
+        path: path.resolve(__dirname, './src/main/resources/static/resources/js/dist'),
+        publicPath: '/js/dist/',
         filename: '[name].min.js'
     },
     module: {
@@ -58,8 +57,7 @@ module.exports = {
     performance: {
         hints: false
     },
-    externals: {
-        fetch: "fetch",
-        jQuery: "jQuery"
-    }
+    // externals: {
+    //     jQuery: "jQuery"
+    // }
 };

@@ -4,6 +4,7 @@ var app1 = new Vue({
     el: "#app1",
     data: {
         locale: 'zh_CN',
+        submit: '登录'
     },
     computed: {
         nextLocale() {
@@ -13,23 +14,24 @@ var app1 = new Vue({
     methods: {
         init(_locale) {
             console.log("init the current locale and language："+this.locale+".");
-            if (_locale != undefined) this.locale = _locale;
+            if (_locale != undefined) {
+                this.locale = _locale;
+                this.submit = this.locale === 'en' ? 'Login' : '登录';
+            }
             this.$validator.setLocale(this.locale);
         },
         changeLocale() {
             this.locale = this.locale === 'en' ? 'zh_CN' : 'en';
+            this.submit = this.locale === 'en' ? 'Login' : '登录';
+
             this.$validator.setLocale(this.locale);
         },
         validateBeforeSubmit() {
             var x = $("form").serializeArray();
             // Validate All returns a promise and provides the validation result.
             this.$validator.validateAll().then(() => {
-                $(".modal-body").html("");
-                $.each(x, function (i, field) {
-                    $(".modal-body").append(field.name + ":" + field.value + "<br/>");
-                });
-                // form submit
-                $("#myModal").modal("show");
+                console.log(111);
+                $("form").submit();
             }).catch(() => {
                 if (console) console.log('form invalid.');
             });

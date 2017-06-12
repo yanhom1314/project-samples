@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>测试</title>
@@ -22,61 +23,103 @@
     <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="//cdn.bootcss.com/fetch/2.0.1/fetch.min.js"></script>
 </head>
+
 <body>
-<div id="app" >
-    <span v-cloak>{{ message }}</span><br/>
-    <!--阻止花括号闪烁-->
-    <span v-text="message"></span><br/>
-    <!-- 2.0 写法，v-html可以转义输出html -->
-    <span v-html="message"></span><br/>
-</div>
-<div id="app1">
-    <!-- 2.0 写法，v-html可以转义输出html -->
-    <span v-html="message"></span>    
-</div>
-<div id="app-2">
-  <span v-bind:title="message">
+    <div id="app">
+        <span v-cloak>{{ message }}</span><br/>
+        <!--阻止花括号闪烁-->
+        <span v-text="message"></span><br/>
+        <!-- 2.0 写法，v-html可以转义输出html -->
+        <span v-html="message"></span><br/>
+    </div>
+    <div id="app1">
+        <!-- 2.0 写法，v-html可以转义输出html -->
+        <span v-html="message"></span>
+    </div>
+    <div id="app-2">
+        <span v-bind:title="message">
     Hover your mouse over me for a few seconds to see my dynamically bound title!
   </span>
-</div>
-<div id="app-3">
-    <p v-if="seen">Now you see me</p>
-</div>
-<div id="app-4">
-    <ol>
-        <li v-for="t in list">
-            {{ t.text }}
-        </li>
-    </ol>
-</div>
-<div id="app-5">
-    <p v-cloak>{{ message }}</p>
-    <button @click="reverseMessage">Reverse Message</button>
+    </div>
+    <div id="app-3">
+        <p v-if="seen">Now you see me</p>
+    </div>
+    <div id="app-4">
+        <ol>
+            <li v-for="t in list">
+                {{ t.text }}
+            </li>
+        </ol>
+    </div>
+    <div id="app-5">
+        <p v-cloak>{{ message }}</p>
+        <button @click="reverseMessage">Reverse Message</button>
 
 
-</div>
-<div id="app-6">
-    <p v-cloak>{{ message }}</p>
-    <input v-model="message">
-    <button @click="toUpper">大写</button>
-    <button @click="toLower">小写</button>
-    <button @click="ajax">Ajax</button>
-    <button @click="html">Html</button>
+    </div>
+    <div id="app-6">
+        <p v-cloak>{{ message }}</p>
+        <input v-model="message">
+        <button @click="toUpper">大写</button>
+        <button @click="toLower">小写</button>
+        <button @click="ajax">Ajax</button>
+        <button @click="html">Html</button>
 
-    <div v-html="content"></div>
-</div>
-<div id="app-7">
-    <ol>
-        <!-- Create an instance of the todo-item component -->
-        <todo-item v-for="item in list" v-bind:todo="item"></todo-item>
-    </ol>
-</div>
-<ul>
-    <li><a href="/demo/form.html">Form Validtetor</a></li>
-    <li><a href="/demo/loader.html">Loader Vue Component</a></li>
-</ul>
-<!---->
-<script src="/dist/common.min.js"></script>
-<script src="/dist/index.min.js"></script>
+        <div v-html="content"></div>
+    </div>
+    <div id="app-7">
+        <ol>
+            <!-- Create an instance of the todo-item component -->
+            <todo-item v-for="item in list" v-bind:todo="item"></todo-item>
+        </ol>
+    </div>
+    <ul>
+        <li><a href="/demo/form.html">Form Validtetor</a></li>
+        <li><a href="/demo/loader.html">Loader Vue Component</a></li>
+    </ul>
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading" id="headingOne">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Collapsible Group Item #1</a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li role="presentation" class="active"><a href="#">Home</a></li>
+                        <li role="presentation"><a href="#">Profile</a></li>
+                        <li role="presentation"><a href="#">Messages</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" id="headingTwo">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Collapsible Group Item #2</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                    non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+                    tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil
+                    anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
+                    excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+                    you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>        
+    </div>
+    <!---->
+    <script src="/dist/common.min.js"></script>
+    <script src="/dist/index.min.js"></script>
+    <script>
+        //$('#collapseOne').collapse('hide');
+        //$('#collapseTwo').collapse('show');
+    </script>
 </body>
+
 </html>

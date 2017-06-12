@@ -1,6 +1,6 @@
 import {Vue, Validator, VeeValidate} from "./validation";
-import $ from "jQuery";
-import jQuery from "jQuery";
+import $ from "jquery";
+import jQuery from "jquery";
 import axios from "axios";
 //注册空间
 window.g3 = window.g3 || {};
@@ -38,5 +38,5 @@ $.jsonSubmit = function (formElId, successCall, errorCall) {
         }
     });
 };
-//export 
+//export
 export {Vue, Validator, VeeValidate, axios, jQuery, $}
