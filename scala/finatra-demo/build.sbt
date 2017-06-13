@@ -14,7 +14,11 @@ javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
 
 scalacOptions ++= Seq("-target:jvm-1.8")
 
-lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp).enablePlugins(SbtTwirl).settings(
+enablePlugins(SbtDistApp,SbtTwirl)
+
+mainClass := Some("com.example.ExampleServerMain")
+
+lazy val finatra_demo = (project in file(".")).enablePlugins(SbtDistApp,SbtTwirl).settings(
   mainClass := Some("com.example.ExampleServerMain")
 )
 
