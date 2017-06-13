@@ -8,9 +8,9 @@
     <h3>${name!}</h3>
     <div>
         <#list persons as t>
-            <li>${t.name()}|${t.age()}|${t.address()}|${t.friends()?size}</li>
-            <#list t.friends() as f>
-                <span>[${f.name()},${f.age()}]</span>
+            <li>${t.name}|${t.age}|${t.address}|${t.friends?size}</li>
+            <#list t.friends as f>
+                <span>[${f.name},${f.age}]</span>
             </#list>
         </#list>
     </div>

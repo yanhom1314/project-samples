@@ -1,11 +1,11 @@
 <#macro security>
-    <#--
-    ${SPRING_SECURITY_CONTEXT.authentication.principal.username}<br/>
-    ${SPRING_SECURITY_CONTEXT.authentication.details}<br/>
+<ul>
+    <li>${SPRING_SECURITY_CONTEXT.authentication.principal.username}</li>
+    <li>${SPRING_SECURITY_CONTEXT.authentication.details}</li>
     <#list SPRING_SECURITY_CONTEXT.authentication.authorities as t>
-        <h5>${t}</h5>
+        <li>${t}</li>
     </#list>
-    -->
+</ul>
 </#macro>
 <#macro isAuth>
     <#if SPRING_SECURITY_CONTEXT??>
@@ -18,7 +18,7 @@
     </#if>
 </#macro>
 <#macro username>
-    ${SPRING_SECURITY_CONTEXT.authentication.name}<br/>
+<h4>${SPRING_SECURITY_CONTEXT.authentication.name}</h4>
 </#macro>
 <#macro hasRole role>
     <#if SPRING_SECURITY_CONTEXT.authentication.authorities?seq_contains(role)>

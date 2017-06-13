@@ -27,17 +27,15 @@ public class ResourceInfo {
     private OAuthService oAuthService;
 
     @RequestMapping("/resource")
+    @SuppressWarnings("unchecked")
     public HttpEntity userInfo(HttpServletRequest request) throws OAuthSystemException {
         try {
-            //构建OAuth资源请求
             OAuthAccessResourceRequest oauthRequest =
                     new OAuthAccessResourceRequest(request, ParameterStyle.QUERY);
-            //获取Access Token
+
             String accessToken = oauthRequest.getAccessToken();
 
-            //验证Access Token
             if (!oAuthService.checkAccessToken(accessToken)) {
-                // 如果不存在/过期了，返回未验证错误，需重新验证
                 OAuthResponse oauthResponse = OAuthRSResponse
                         .errorResponse(HttpServletResponse.SC_UNAUTHORIZED)
                         .setRealm("RESOURCE_SERVER_NAME")
@@ -49,11 +47,9 @@ public class ResourceInfo {
                         oauthResponse.getHeader(OAuth.HeaderType.WWW_AUTHENTICATE));
                 return new ResponseEntity(headers, HttpStatus.UNAUTHORIZED);
             }
-            //返回用户名
             String username = oAuthService.getUsernameByAccessToken(accessToken);
             return new ResponseEntity(username, HttpStatus.OK);
         } catch (OAuthProblemException e) {
-            //检查是否设置了错误码
             String errorCode = e.getError();
             if (OAuthUtils.isEmpty(errorCode)) {
                 OAuthResponse oauthResponse = OAuthRSResponse

@@ -13,6 +13,10 @@ spring:
     freemarker:
       request-context-attribute: request
       expose-session-attributes: true
+    messages:
+      basename: messages
 server:
     context-path: /
     port: 80
+my:
+    expired: 864000

@@ -1,7 +1,9 @@
 package demo;
 
+import demo.config.MyConfig;
 import demo.service.CaptchaFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,19 +12,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 
 @Configuration
 @EnableWebSecurity
+@EnableConfigurationProperties(MyConfig.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CaptchaFilter captchaFilter;
-    //@Autowired
-    //private CsrfHeaderFilter csrfHeaderFilter;
-
+    @Autowired
+    private MyConfig mc;
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -45,6 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
                 .permitAll()
+                .and()
+                .rememberMe().key("greatbit@2017").tokenValiditySeconds(mc.getExpired())
                 .and().addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -52,11 +53,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         //auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
         auth.userDetailsService(userDetailsService);
-    }
-
-    private CsrfTokenRepository csrfTokenRepository() {
-        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-        repository.setHeaderName("X-XSRF-TOKEN");
-        return repository;
     }
 }

@@ -7,9 +7,6 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 jar {
     baseName = 'gs-rest-service'
     version = '0.1.0'
@@ -20,7 +17,7 @@ compileJava {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    options.encoding = 'UTF-8'
+    //options.encoding = 'UTF-8'
     options.compilerArgs.addAll(["-XDignore.symbol.file", "-Xlint:unchecked"])
 
     excludes = ['**/node_modules','**/webpacke.config.js','**/package.json']
@@ -29,6 +26,7 @@ compileJava {
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web",
       	    "org.springframework.boot:spring-boot-starter-data-jpa",
+            "org.springframework.boot:spring-boot-starter-websocket",
             "org.springframework.boot:spring-boot-starter-freemarker",
             "org.springframework.boot:spring-boot-starter-security",
             "org.springframework.boot:spring-boot-devtools",

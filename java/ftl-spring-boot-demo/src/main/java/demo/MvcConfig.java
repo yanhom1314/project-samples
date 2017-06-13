@@ -1,26 +1,35 @@
 package demo;
 
+import demo.config.MyConfig;
 import demo.freemarker.LocalDocRootConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 import javax.servlet.SessionTrackingMode;
 import java.io.File;
 import java.util.Collections;
+import java.util.Locale;
 
 @Configuration
+@EnableConfigurationProperties(MyConfig.class)
 public class MvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private ApplicationContext context;
+    @Autowired
+    private ServletContext sct;
+    @Autowired
+    private MyConfig mc;
 
     @PostConstruct
     public void init() {
@@ -35,9 +44,33 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         };
     }
 
+    @Bean
+    public LocaleResolver localeResolver() {
+        CookieLocaleResolver resolver = new CookieLocaleResolver();
+        resolver.setDefaultLocale(Locale.US);
+        resolver.setCookieName("locale");
+        resolver.setCookiePath(sct.getContextPath());
+        resolver.setCookieMaxAge(mc.getExpired());
+        return resolver;
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
+    }
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+
+        super.addInterceptors(registry);
     }
 
     @Override

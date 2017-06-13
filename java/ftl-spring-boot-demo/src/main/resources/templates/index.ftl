@@ -6,6 +6,7 @@
     <#if section == "head">
     <h1>Hello World!!!</h1>
     <h2>request:${request}</h2>
+    <h3><@s.message 'logout'/></h3>
     <hr/>
     <h3>session:${SPRING_SECURITY_CONTEXT?if_exists}</h3>
         <#if SPRING_SECURITY_CONTEXT??>
@@ -36,6 +37,23 @@
             </#if>
         </div>
         </#if>
+    ${locale!"NO LOCALE"}
+    <select id="locales">
+        <option value=""></option>
+        <option value="zh_CN">中文</option>
+        <option value="en_US">English</option>
+        <option value="fr">Français</option>
+    </select>
+    <script>
+        $(function () {
+            $("#locales").change(function () {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('/index?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
     </#if>
     <#if section=="body">
     <!-- Just another example of using a macro: -->

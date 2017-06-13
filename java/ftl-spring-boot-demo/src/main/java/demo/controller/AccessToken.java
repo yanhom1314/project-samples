@@ -32,13 +32,12 @@ public class AccessToken {
     private UserService userService;
 
     @RequestMapping("/accessToken")
+    @SuppressWarnings("unchecked")
     public HttpEntity token(HttpServletRequest request)
             throws URISyntaxException, OAuthSystemException {
         try {
-            //构建OAuth请求
             OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
 
-            //检查提交的客户端id是否正确
             if (!oAuthService.checkClientId(oauthRequest.getClientId())) {
                 OAuthResponse response = OAuthASResponse
                         .errorResponse(HttpServletResponse.SC_BAD_REQUEST)
@@ -49,7 +48,6 @@ public class AccessToken {
                         response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
 
-            // 检查客户端安全KEY是否正确
             if (!oAuthService.checkClientSecret(oauthRequest.getClientSecret())) {
                 OAuthResponse response = OAuthASResponse
                         .errorResponse(HttpServletResponse.SC_UNAUTHORIZED)
@@ -61,7 +59,6 @@ public class AccessToken {
             }
 
             String authCode = oauthRequest.getParam(OAuth.OAUTH_CODE);
-            // 检查验证类型，此处只检查AUTHORIZATION_CODE类型，其他的还有PASSWORD或REFRESH_TOKEN
             if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(
                     GrantType.AUTHORIZATION_CODE.toString())) {
                 if (!oAuthService.checkAuthCode(authCode)) {
@@ -75,20 +72,17 @@ public class AccessToken {
                 }
             }
 
-            //生成Access Token
             OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
             final String accessToken = oauthIssuerImpl.accessToken();
             oAuthService.addAccessToken(accessToken,
                     oAuthService.getUsernameByAuthCode(authCode));
 
-            //生成OAuth响应
             OAuthResponse response = OAuthASResponse
                     .tokenResponse(HttpServletResponse.SC_OK)
                     .setAccessToken(accessToken)
                     .setExpiresIn(String.valueOf(oAuthService.getExpireIn()))
                     .buildJSONMessage();
 
-            //根据OAuthResponse生成ResponseEntity
             return new ResponseEntity(
                     response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
         } catch (OAuthProblemException e) {

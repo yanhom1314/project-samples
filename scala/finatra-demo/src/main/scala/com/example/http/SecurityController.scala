@@ -8,8 +8,8 @@ import com.twitter.finagle.http.{Request, Status}
 import com.twitter.finatra.http.Controller
 import com.twitter.finatra.request.FormParam
 import com.twitter.finatra.validation._
+import finatra.freemarker.Freemarker
 import finatra.greatbit.shiro.ShiroFilter
-import finatra.views.freemarker.Freemarker
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc.{IncorrectCredentialsException, LockedAccountException, UnknownAccountException, UsernamePasswordToken}
 import org.apache.shiro.session.UnknownSessionException

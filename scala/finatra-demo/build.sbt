@@ -6,7 +6,7 @@ organization := "com.example"
 
 version := "1.0.0"
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.2"
 
 fork in run := true
 
@@ -20,7 +20,7 @@ mainClass := Some("com.example.ExampleServerMain")
 
 libraryDependencies ++= Seq(
   "com.twitter" %% "finatra-http" % $("finatra"),
-  "org.freemarker" % "freemarker" % $("freemarker"),
+  "greatbit" %% "finatra-freemarker" % $("finatra"),
   "com.ibeetl" % "beetl" % $("beetl"),
   "org.antlr" % "antlr4-runtime" % $("antlr"),
   "org.apache.shiro" % "shiro-core" % $("shiro"),
@@ -35,12 +35,5 @@ libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % $("postgresql"),
   "com.h2database" % "h2" % $("h2"),
   "ch.qos.logback" % "logback-classic" % $("logback"),
-
   "com.twitter" %% "finatra-http" % $("finatra") % "test" classifier "tests",
-  "com.twitter" %% "inject-server" % $("finatra") % "test" classifier "tests",
-  "com.twitter" %% "inject-app" % $("finatra") % "test" classifier "tests",
-  "com.twitter" %% "inject-core" % $("finatra") % "test" classifier "tests",
-  "com.twitter" %% "inject-modules" % $("finatra") % "test" classifier "tests",
-
-  "org.mockito" % "mockito-core" % $("mockito") % "test",
   "org.scalatest" %% "scalatest" % $("scalatest") % "test")
