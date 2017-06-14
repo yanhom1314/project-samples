@@ -39,10 +39,9 @@
         </#if>
     ${locale!"NO LOCALE"}
     <select id="locales">
-        <option value=""></option>
-        <option value="zh_CN">中文</option>
-        <option value="en_US">English</option>
-        <option value="fr">Français</option>
+        <option value="zh_CN" <#if locale?string == "zh_CN">selected</#if>>中文</option>
+        <option value="en_US" <#if locale?string == "en_US">selected</#if>>English</option>
+        <option value="fr" <#if locale?string == "fr">selected</#if>>Français</option>
     </select>
     <script>
         $(function () {

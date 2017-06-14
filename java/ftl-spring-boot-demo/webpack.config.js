@@ -57,7 +57,7 @@ module.exports = {
     performance: {
         hints: false
     },
-    // externals: {
-    //     jQuery: "jQuery"
-    // }
+    externals: {
+       jQuery: "jQuery"
+    }
 };

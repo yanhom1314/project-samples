@@ -10,7 +10,7 @@ apply plugin: 'org.springframework.boot'
 jar {
     baseName = 'gs-rest-service'
     version = '0.1.0'
-    excludes = ['**/node_modules','**/webpack.config.js','**/package.json','**/.babelrc']
+    excludes = ['**/node_modules', '**/webpack.config.js', '**/package.json', '**/.babelrc']
 }
 
 compileJava {
@@ -20,12 +20,14 @@ compileJava {
     //options.encoding = 'UTF-8'
     options.compilerArgs.addAll(["-XDignore.symbol.file", "-Xlint:unchecked"])
 
-    excludes = ['**/node_modules','**/webpacke.config.js','**/package.json']
+    excludes = ['**/node_modules', '**/webpacke.config.js', '**/package.json']
 }
+
+compileJava.dependsOn(processResources)
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web",
-      	    "org.springframework.boot:spring-boot-starter-data-jpa",
+            "org.springframework.boot:spring-boot-starter-data-jpa",
             "org.springframework.boot:spring-boot-starter-websocket",
             "org.springframework.boot:spring-boot-starter-freemarker",
             "org.springframework.boot:spring-boot-starter-security",
