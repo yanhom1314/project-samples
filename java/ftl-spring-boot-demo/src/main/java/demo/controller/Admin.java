@@ -27,7 +27,6 @@ public class Admin {
             System.out.println(key + ":" + session.getAttribute(key));
         }
         model.addAttribute("title", "What the fucking hell!");
-        System.out.println("locale:" + localeResolver.resolveLocale(request));
         return "admin/index";
     }
 

@@ -8,16 +8,16 @@
     </div>
     <div class="row-fluid">
         <div class="well span5 center login-box">
-            <#if RequestParameters['error']??>
-                <div class="alert alert-danger" role="alert"><@s.message "password.err"/></div>
-            <#elseif RequestParameters['captcha']??>
-                <div class="alert alert-danger" role="alert"><@s.message "captcha.err"/></div>
-            </#if>
             <@e.isAuth>
                 <h1>已经登录过了！！沙茶</h1>
                 <h1><a href="<@s.url '/logout'/>"><@s.message "logout"/></a></h1>
             </@e.isAuth>
             <@e.isNotAuth>
+                <#if RequestParameters['error']??>
+                    <div class="alert alert-danger" role="alert"><@s.message "password.err"/></div>
+                <#elseif RequestParameters['captcha']??>
+                    <div class="alert alert-danger" role="alert"><@s.message "captcha.err"/></div>
+                </#if>
                 <div id="app1">
                     <form @submit.prevent="validateBeforeSubmit" action="<@s.url '/login'/>" method="post" class="form-horizontal">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -58,7 +58,6 @@
         </div>
     </div>
 </div>
-<script src="<@s.url '/resources/js/dist/common.min.js'/>"></script>
 <script src="<@s.url '/resources/js/dist/form.min.js'/>"></script>
 <script>
     window.onload = function () {

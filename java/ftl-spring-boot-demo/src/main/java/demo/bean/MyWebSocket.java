@@ -1,5 +1,7 @@
 package demo.bean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -11,6 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @ServerEndpoint(value = "/ws/count")
 @Component
 public class MyWebSocket {
+    public static final Logger logger = LoggerFactory.getLogger(MyWebSocket.class);
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static AtomicInteger onlineCount = new AtomicInteger(0);
 
@@ -52,8 +55,7 @@ public class MyWebSocket {
     public void onMessage(String message, Session session) {
         try {
             System.out.println("来自客户端的消息:" + message);
-
-            session.getBasicRemote().sendText(message);
+            session.getBasicRemote().sendText(message.toUpperCase());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,8 +66,8 @@ public class MyWebSocket {
      */
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("发生错误");
-        error.printStackTrace();
+        sessionMap.remove(session.getId());
+        logger.error(error.getMessage());
     }
 
     public static void sendAllMessage(String message) {

@@ -12,6 +12,7 @@ module.exports = {
     ],
     entry: {
         form: './src/main/resources/static/resources/js/dev/form.js',
+        person: './src/main/resources/static/resources/js/dev/person.js'
         //index: './src/main/resources/static/resources/js/dev/index.js',
         //loader: './src/main/resources/static/resources/js/dev/loader.js'
     },
