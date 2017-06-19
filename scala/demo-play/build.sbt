@@ -6,7 +6,7 @@ version := $("prod")
 
 scalaVersion := $("scalaVersion")
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+enablePlugins(PlayScala)
 
 libraryDependencies ++= Seq(
   //jdbc,

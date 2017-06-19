@@ -1,10 +1,8 @@
 @(person: Form[CreatePersonForm])(implicit messages: Messages, session: Session, flash: Flash)
-
 @import helper._
-
 @layout.main("Welcome to Play") {
 
-    <script src="@routes.Assets.versioned("javascripts/app2.min.js")"></script>
+    <script src="@routes.Assets.versioned("../../public/js/app2.min.js")"></script>
 
     <ul id="persons"></ul>
     @form(routes.PersonController.addPerson) {
@@ -20,15 +18,15 @@
     }
 
     <form action="@routes.PersonController.addPerson()" method="post">
-        <dl>
-            <dt><label>Name</label></dt>
+        <dl class="@(if(person.error("age").isDefined) "error" else "")">
+            <dt><label>@messages("name")</label></dt>
             <dd><input type="text" name="name" value="@person("name").value"></dd>
             @if(person.error("name").isDefined) {
                 <dd class="error">@messages(person.error("name").get.message, person.error("name").get.args: _*)</dd>
             }
         </dl>
-        <dl>
-            <dt><label>Age</label></dt>
+        <dl class="@(if(person.error("age").isDefined) "error" else "")">
+            <dt><label>@messages("age")</label></dt>
             <dd><input type="text" name="age" value="@person("age").value"></dd>
             @if(person.error("age").isDefined) {
                 <dd class="error">@messages(person.error("age").get.message, person.error("age").get.args: _*)</dd>
@@ -78,7 +76,7 @@
         <p>...</p>
         <p><a class="btn btn-primary btn-lg" href="@routes.HomeController.home()" role="button">Learn more</a></p>
     </div>
-        <!-- dataTables-->    
+        <!-- dataTables-->
     <table id="example" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>

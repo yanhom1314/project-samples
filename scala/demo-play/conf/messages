@@ -1,6 +1,6 @@
 #add
-name = 姓名
-age = 年龄
+name = Name
+age = Age
 
 #secure
 logout.message=登出系统！

@@ -6,19 +6,16 @@ import play.api.i18n.{I18nSupport, Lang}
 import play.api.mvc.{Action, Controller, Cookie, RequestHeader}
 
 trait CookieLang extends Controller with I18nSupport {
+  val LANG = "lang"
 
-  val localeForm = Form("locale" -> nonEmptyText)
+  val localeForm = Form(LANG -> nonEmptyText)
+  //val COUNTRY = "country"
+  //val localeForm = Form(tuple(LANG -> nonEmptyText, COUNTRY -> nonEmptyText))
 
   def changeLocale = Action {
     implicit request =>
-      val referrer = request.headers.get(REFERER).getOrElse(HOME_URL)
-      localeForm.bindFromRequest.fold(
-        _ => {
-          BadRequest(referrer)
-        },
-        locale => {
-          Redirect(referrer).withCookies(Cookie(LANG, locale))
-        })
+      localeForm.bindFromRequest.fold(e => BadRequest(e.errors.map(r => messagesApi(r.message, r.args)).mkString("|")),
+        lg => Redirect(request.headers.get(REFERER).getOrElse(routes.HomeController.default().url)).withCookies(Cookie(LANG, lg)).withLang(Lang(lg)))
   }
 
   implicit def lang(implicit request: RequestHeader) = {
@@ -27,7 +24,4 @@ trait CookieLang extends Controller with I18nSupport {
       case Some(cookie) => Lang(cookie.value)
     }
   }
-
-  val LANG = "lang"
-  val HOME_URL = "/"
 }

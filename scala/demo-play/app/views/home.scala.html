@@ -1,0 +1,18 @@
+@(message: String)(implicit messages: Messages, session: Session, flash: Flash, ls: Langs, lang: Lang)
+
+@layout.main("Welcome to Play") {
+
+    <script src="@routes.Assets.versioned("../../public/js/app2.min.js")"></script>
+
+    <a href="@routes.PersonController.index()" class="btn btn-primary">Person</a>
+    <h5>@message|@messages("name")|@messages("age")</h5>
+
+    @helper.form(action = routes.HomeController.changeLocale()) {
+        <select name="lang" onchange="this.form.submit()">
+        @ls.availables.map { l =>
+            <option value="@l.code" @(if(l.code.startsWith(lang.code)) "selected")>@l.code</option>
+        }
+        </select>
+        <h1>@Messages("name")</h1>
+    }
+}

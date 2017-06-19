@@ -3,6 +3,7 @@ package controllers
 import javax.inject._
 
 import play.api.Logger
+import play.api.i18n.{Langs, MessagesApi}
 import play.api.mvc._
 
 /**
@@ -10,7 +11,10 @@ import play.api.mvc._
   * application's home page.
   */
 @Singleton
-class HomeController @Inject() extends Controller {
+class HomeController @Inject()(implicit val messagesApi: MessagesApi, langs: Langs) extends CookieLang {
+  def default() = Action { implicit request =>
+    Ok(views.html.home("Hello World!"))
+  }
 
   def home(id: Long = 1L, name: String = "HHH") = Action { implicit request =>
     Redirect(routes.HomeController.index(Some(s"id:${id} name:${name}"))).withSession(request.session + ("home" -> "Ok")).flashing(request.flash + ("home" -> "FLASH HOME"))
