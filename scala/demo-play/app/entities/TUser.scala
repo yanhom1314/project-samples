@@ -4,9 +4,9 @@ import java.util
 import javax.persistence._
 
 @Entity
-@Table(name = "t_user")
+@Table(name = "t_user", indexes = Array(new Index(name = "i_username", columnList = "username", unique = true)))
 class TUser extends TModel {
-  @Column(nullable = false, unique = true)
+  @Column(name = "username", nullable = false)
   var username: String = _
 
   @Column

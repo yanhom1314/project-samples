@@ -31,7 +31,7 @@ class PersonController @Inject()(repo: PersonRepository, val messagesApi: Messag
   def index = Action { implicit request =>
     request.session.data.toSeq.foreach(e => Logger.info(s"session: ${e._1}:${e._2}"))
     request.flash.data.toSeq.foreach(e => Logger.info(s"flash: ${e._1}:${e._2}"))
-    Ok(views.html.index(personForm)).withSession(request.session + ("user" -> "YaFengLi"))
+    Ok(views.html.person.index(personForm)).withSession(request.session + ("user" -> "YaFengLi"))
   }
 
   /**
@@ -46,7 +46,7 @@ class PersonController @Inject()(repo: PersonRepository, val messagesApi: Messag
       // We also wrap the result in a successful future, since this action is synchronous, but we're required to return
       // a future because the person creation function returns a future.
       errorForm => {
-        Future.successful(Ok(views.html.index(errorForm)))
+        Future.successful(Ok(views.html.person.index(errorForm)))
       },
       // There were no errors in the from, so create the person.
       person => {

@@ -21,7 +21,7 @@
             <property name="hibernate.hikari.minimumIdle" value="20"/>
             <property name="hibernate.hikari.maximumPoolSize" value="100"/>
             <property name="hibernate.hikari.idleTimeout" value="30000"/>
-            <property name="hibernate.hikari.dataSourceClassName" value="org.postgresql.ds.PGPoolingDataSource"/>
+            <property name="hibernate.hikari.dataSourceClassName" value="org.postgresql.ds.PGConnectionPoolDataSource"/>
             <property name="hibernate.hikari.dataSource.url" value="jdbc:postgresql://192.168.0.98:5432/testdb"/>
         </properties>
     </persistence-unit>
