@@ -14,10 +14,12 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % $("junit") % "test"
 )
 
-//mainClass := Some("demo.WebServer")
-mainClass := Some("demo.tcp.DemoBootMain")
+mainClass := Some("demo.WebServer")
+//mainClass := Some("demo.tcp.DemoBootMain")
 
-enablePlugins(SbtDistApp)
+enablePlugins(SbtDistApp,SbtTwirl)
+
+TwirlKeys.templateImports += "demo._"
 
 dirSetting ++= Seq("html")
 

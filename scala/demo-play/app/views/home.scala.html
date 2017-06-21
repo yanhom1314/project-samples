@@ -2,7 +2,7 @@
 
 @layout.main("Welcome to Play") {
 
-    <script src="@routes.Assets.versioned("public/js/app2.min.js")"></script>
+    <script src="@routes.Assets.versioned("js/app2.min.js")"></script>
 
     <a href="@routes.PersonController.index()" class="btn btn-primary">Person</a>
     <h5>@message|@messages("name")|@messages("age")</h5>

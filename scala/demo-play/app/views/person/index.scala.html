@@ -1,8 +1,8 @@
 @(person: Form[CreatePersonForm])(implicit messages: Messages, session: Session, flash: Flash)
-@import helper._
+    @import helper._
 @layout.main("Welcome to Play") {
-    <script src="@routes.Assets.versioned("public/js/app2.min.js")"></script>
-    <ul id="persons"></ul>
+    <script src="@routes.Assets.versioned("js/app2.min.js")"></script>
+
     @form(routes.PersonController.addPerson) {
         <div class="ui icon input">
         @inputText(person("name"), 'id -> "_name")
@@ -38,4 +38,5 @@
         <li class="error">@e.key |@e.message [@e.args] | @messages(e.message, e.args: _*)</li>
     }
     </ul>
+    <ul id="persons"></ul>
 }

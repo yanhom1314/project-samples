@@ -1,5 +1,6 @@
 package demo.http
 
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.Materializer
 import demo.json.{A, B, Json4sIgnore}
@@ -35,6 +36,10 @@ object Json4sHttp {
       } ~ path("b") {
         implicit val fmt = DefaultFormats + Json4sIgnore.formats
         complete(Extraction.decompose(B(new C(A(2)), 1)))
+      }
+    } ~ pathPrefix("twirl") {
+      get {
+        complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, html.index("Hello World!").body))
       }
     }
   }

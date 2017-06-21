@@ -1,7 +1,7 @@
 @(person: Form[CreatePersonForm])(implicit messages: Messages, session: Session, flash: Flash)
     @import helper._
 @layout.main("Welcome to Play") {
-    <script src="@routes.Assets.versioned("public/js/app2.min.js")"></script>
+    <script src="@routes.Assets.versioned("js/app2.min.js")"></script>
 
     @form(routes.HomeController.home(111, "XinFeng"), 'method -> "GET", 'id -> "index") {
         <div class="buttons">
