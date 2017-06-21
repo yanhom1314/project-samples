@@ -4,6 +4,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
@@ -18,11 +19,11 @@
     </padding>
 
     <Text fx:id="welcome_text" text="%login.welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0"/>
+    <DatePicker fx:id="dp"/>
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
         <Button alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" onAction="handleSubmitButtonAction(event);" text="%login.sign"/>
         <Button alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" onAction="#thirdPaneSubmitButtonAction" text="%menu.third"/>
     </HBox>
-
     <fx:script source="/js/2.js"/>
 </GridPane>
