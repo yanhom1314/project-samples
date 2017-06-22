@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "demo.helloworld.HelloWorldApp"
+
+dependencies {
+    compile("org.actframework:act:$act",
+            "org.actframework:act-freemarker:$freemarker",
+            "ch.qos.logback:logback-classic:$logback")
+    testCompile("junit:junit:$junit")
+}
+
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'Gradle Fat Jar File',
+        	'Implementation-Version': "$version",
+        	'Main-Class': 'demo.helloworld.HelloWorldApp'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
