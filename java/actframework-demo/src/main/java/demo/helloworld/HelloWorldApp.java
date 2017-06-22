@@ -2,15 +2,16 @@ package demo.helloworld;
 
 import act.Act;
 import act.inject.DefaultValue;
-import act.util.Output;
 import org.osgl.mvc.annotation.GetAction;
 
 import static act.controller.Controller.Util.render;
+import static act.controller.Controller.Util.template;
 
 public class HelloWorldApp {
 
-    @GetAction
-    public void home(@DefaultValue("world") @Output String who) {
+    @GetAction("/")
+    public void home(@DefaultValue("world") String who) {
+        render(who);
     }
 
     @GetAction("/bye")
@@ -20,6 +21,7 @@ public class HelloWorldApp {
 
     @GetAction("/sayHello")
     public void sayHello(@DefaultValue("World!") String who) {
+        //template(who);
         render(who);
     }
 
