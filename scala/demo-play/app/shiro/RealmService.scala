@@ -10,7 +10,7 @@ import org.apache.shiro.realm.AuthorizingRealm
 import org.apache.shiro.subject.PrincipalCollection
 import services.Counter
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 @Singleton
 case class RealmService @Inject()(counter: Counter, userRepo: TUserRepository) extends AuthorizingRealm {
@@ -23,7 +23,7 @@ case class RealmService @Inject()(counter: Counter, userRepo: TUserRepository) e
     val info = new SimpleAuthorizationInfo()
     try {
       val un = getAvailablePrincipal(principals)
-      userRepo.findByUsername(un.toString).roles.map(_.roleName).foreach(info.addRole(_))
+      userRepo.findByUsername(un.toString).roles.asScala.map(_.roleName).foreach(info.addRole(_))
     } catch {
       case e: Exception => e.printStackTrace()
     }

@@ -1,11 +1,14 @@
 package controllers
 
+import java.util.Locale
+
 import play.api.data.Forms._
 import play.api.data._
 import play.api.i18n.{I18nSupport, Lang}
-import play.api.mvc.{Action, Controller, Cookie, RequestHeader}
+import play.api.mvc._
 
-trait CookieLang extends Controller with I18nSupport {
+trait CookieLang extends InjectedController with I18nSupport {
+
   val LANG = "lang"
 
   val localeForm = Form(LANG -> nonEmptyText)
@@ -14,13 +17,13 @@ trait CookieLang extends Controller with I18nSupport {
 
   def changeLocale = Action {
     implicit request =>
-      localeForm.bindFromRequest.fold(e => BadRequest(e.errors.map(r => messagesApi(r.message, r.args)).mkString("|")),
+      localeForm.bindFromRequest.fold(e => BadRequest(""),
         lg => Redirect(request.headers.get(REFERER).getOrElse(routes.HomeController.default().url)).withCookies(Cookie(LANG, lg)).withLang(Lang(lg)))
   }
 
-  implicit def lang(implicit request: RequestHeader) = {
+  implicit def findLang(implicit request: RequestHeader): Lang = {
     request.cookies.get(LANG) match {
-      case None =>
+      case None => Lang(Locale.getDefault)
       case Some(cookie) => Lang(cookie.value)
     }
   }

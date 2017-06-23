@@ -3,15 +3,15 @@ package controllers
 import javax.inject._
 
 import play.api.Logger
-import play.api.i18n.{Langs, MessagesApi}
-import play.api.mvc._
+import play.api.i18n.Langs
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
   * application's home page.
   */
 @Singleton
-class HomeController @Inject()(implicit val messagesApi: MessagesApi, langs: Langs) extends CookieLang {
+class HomeController @Inject()(langs: Langs) extends CookieLang {
+
   def default() = Action { implicit request =>
     Ok(views.html.home("Hello World!"))
   }

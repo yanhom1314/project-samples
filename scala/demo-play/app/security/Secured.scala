@@ -2,16 +2,18 @@ package security
 
 import controllers.routes
 import org.apache.shiro.subject.Subject
-import play.api.i18n.{I18nSupport, Messages}
+import play.api.i18n.I18nSupport
 import play.api.mvc._
 import security.SecuredProfile.S_USERNAME
 import shiro.ShiroSubjectCache
 
-trait Secured extends Controller with I18nSupport {
+trait Secured extends InjectedController with I18nSupport {
 
   def secureData: ShiroSubjectCache
 
-  def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
+  //def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> messagesApi("unauthorized.message"))
+
+  def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> "NOTHING")
 
   def Role(subject: Subject, roles: String*): Boolean = roles.exists(subject.hasRole(_))
 

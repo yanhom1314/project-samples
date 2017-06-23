@@ -8,12 +8,11 @@ import org.apache.shiro.authc._
 import org.apache.shiro.subject.Subject
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.mvc._
+import play.api.i18n.Messages
 import security.{Secured, SecuredProfile}
 import shiro.ShiroSubjectCache
 
-class Authorize @Inject()(val messagesApi: MessagesApi, val secureData: ShiroSubjectCache) extends Secured {
+class Authorize @Inject()(val secureData: ShiroSubjectCache) extends Secured {
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,

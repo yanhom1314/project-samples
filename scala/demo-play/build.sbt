@@ -10,8 +10,9 @@ enablePlugins(PlayScala)
 
 libraryDependencies ++= Seq(
   //jdbc,
-  cache,
+  ehcache,
   ws,
+  guice,
   //evolutions,
   "org.apache.shiro" % "shiro-core" % $("shiro"),
   "org.postgresql" % "postgresql" % $("postgresql"),

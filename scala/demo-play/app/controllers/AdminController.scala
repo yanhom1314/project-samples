@@ -9,7 +9,7 @@ import play.api.mvc.Action
 import security.{Secured, SecuredProfile}
 import shiro.ShiroSubjectCache
 
-class AdminController @Inject()(realm: Realm, val messagesApi: MessagesApi, val secureData: ShiroSubjectCache) extends Secured {
+class AdminController @Inject()(realm: Realm, val secureData: ShiroSubjectCache) extends Secured {
 
   val ROLE_USER = "ROLE_USER"
 

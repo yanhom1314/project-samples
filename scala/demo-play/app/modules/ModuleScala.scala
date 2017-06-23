@@ -9,7 +9,7 @@ import entities.{TRole, TUser}
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.data.repository.Repository
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 class ModuleScala extends AbstractModule {
   lazy val ctx = new AnnotationConfigApplicationContext(classOf[SpringDataJpaConfig])
@@ -42,7 +42,7 @@ class ModuleScala extends AbstractModule {
     user.password = "123456"
     user.address = "nanjing"
     user.age = 12
-    user.roles = List(r1, r2)
+    user.roles = List(r1, r2).asJava
     ur.save(user)
 
     println("count:" + ur.count())

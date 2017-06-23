@@ -3,7 +3,7 @@ package controllers
 import javax.inject._
 
 import akka.actor.ActorSystem
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.I18nSupport
 import play.api.mvc._
 import play.twirl.api.Html
 
@@ -21,7 +21,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
   *                    asynchronous code.
   */
 @Singleton
-class AsyncController @Inject()(actorSystem: ActorSystem, val messagesApi: MessagesApi)(implicit exec: ExecutionContext) extends Controller with I18nSupport {
+class AsyncController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends InjectedController with I18nSupport {
 
   /**
     * Create an Action that returns a plain text message after a delay

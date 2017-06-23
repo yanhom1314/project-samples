@@ -14,7 +14,7 @@ import third.DemoData
 import third.datatables.DataTablesData
 import third.jqgrid.{JqGridData, JqGridForm}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -22,7 +22,7 @@ import scala.collection.mutable.ListBuffer
   * application's home page.
   */
 @Singleton
-class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPersonRepository, val messagesApi: MessagesApi) extends Controller with I18nSupport {
+class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPersonRepository) extends InjectedController with I18nSupport {
 
   val jqGridForm = Form[JqGridForm](
     mapping(
@@ -43,7 +43,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     println("################################")
     println(s"1:personRepository:${personRepo.count()}")
     println("################################")
-    personRepo.findAll().foreach(t => println(s"id:${t.id} name:${t.name} age:${t.age}"))
+    personRepo.findAll().asScala.foreach(t => println(s"id:${t.id} name:${t.name} age:${t.age}"))
     println("################################")
     personRepo.findAllByAge(12)
     println(s"2:age > 12 :${personRepo.findAllByAge(12)}")
@@ -53,7 +53,6 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
 
   def jqgrid() = Action { implicit request =>
     jqGridForm.bindFromRequest().fold(_ => Results.BadRequest, o => {
-      import JqGridData._
 
       Logger.debug(s"_search:${o._search} nd:${o.nd} rows:${o.rows} page:${o.page} sidx:${o.sidx} sord:${o.sord} searchField:${o.searchField} searchString:${o.searchString} searchOper:${o.searchOper}")
       val start = o.rows * (o.page - 1) + 1
@@ -67,7 +66,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
   }
 
   def datatables(draw: Int, start: Int, length: Int) = Action { implicit request =>
-    import third.datatables.DataTablesData._
+
 
     if (Logger.isDebugEnabled) request.queryString.toList.sortBy(t => t._1).foreach { t => Logger.debug(t._1 + ":" + t._2.map(v => v).mkString(" ")) }
 

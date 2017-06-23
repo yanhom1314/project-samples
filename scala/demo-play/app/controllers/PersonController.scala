@@ -13,7 +13,7 @@ import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class PersonController @Inject()(repo: PersonRepository, val messagesApi: MessagesApi)(implicit ec: ExecutionContext) extends Controller with I18nSupport {
+class PersonController @Inject()(repo: PersonRepository)(implicit ec: ExecutionContext) extends InjectedController with I18nSupport {
 
   /**
     * The mapping for the person form.
