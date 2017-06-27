@@ -3,9 +3,9 @@ package controllers
 import javax.inject.Inject
 
 import org.apache.shiro.realm.Realm
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.libs.json.Json
-import play.api.mvc.Action
+import play.api.i18n.Messages
+import play.api.libs.json.{Json, _}
+import play.api.mvc.{AnyContent, Request}
 import security.{Secured, SecuredProfile}
 import shiro.ShiroSubjectCache
 
@@ -14,7 +14,7 @@ class AdminController @Inject()(realm: Realm, val secureData: ShiroSubjectCache)
   val ROLE_USER = "ROLE_USER"
 
   def index = IsAuthenticated {
-    implicit request =>
+    implicit request: Request[AnyContent] =>
       User(request).fold(Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.timeout"))) { o => Ok(views.html.admin.index(o.getPrincipal.toString, o.hasRole("ROLE_ADMIN").toString)) }
   }
 
@@ -27,24 +27,23 @@ class AdminController @Inject()(realm: Realm, val secureData: ShiroSubjectCache)
   }
 
   def checkIs = IsRole(parse.json, ROLE_USER) { implicit request =>
-    println("checkIs:"+request.body)
+    println("checkIs:" + request.body)
     val profile = SecuredProfile(Name(request).get, Seq(ROLE_USER))
     Ok(Json.toJson(profile))
   }
 
   def checkHas = HasRole(parse.json, ROLE_USER) { implicit request =>
-    println("checkHas:"+request.body)
+    println("checkHas:" + request.body)
     val profile = SecuredProfile(Name(request).get, Seq(ROLE_USER))
     Ok(Json.toJson(profile))
   }
 
-  def info = Action { implicit request =>
+  def info = Action { implicit request: Request[AnyContent] =>
     User(request).fold(Forbidden("Nothing"))(s => Ok(views.html.info(request.session.data, s)))
   }
 
-  def json = Action(parse.json) { implicit request =>
-    val body = request.body
-    val un = (body \ "un").as[String]
-    Ok(s"un:${un} name:${Name(request)} body:${body}")
+  def json = Action(parse.json) { implicit request: Request[JsValue] =>
+    val un = (request.body \ "un").as[String]
+    Ok(s"un:${un} name:${Name(request)} body:${request.body}")
   }
 }

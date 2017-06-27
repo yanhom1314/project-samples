@@ -6,7 +6,7 @@ version := $("prod")
 
 scalaVersion := $("scalaVersion")
 
-enablePlugins(PlayScala)
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 libraryDependencies ++= Seq(
   //jdbc,
@@ -24,3 +24,9 @@ libraryDependencies ++= Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % $("scalatestplus") % Test,
   "junit" % "junit" % $("junit") % Test
 )
+
+// Adds additional packages into Twirl
+//TwirlKeys.templateImports += "com.example.controllers._"
+
+// Adds additional packages into conf/routes
+// play.sbt.routes.RoutesKeys.routesImport += "com.example.binders._"

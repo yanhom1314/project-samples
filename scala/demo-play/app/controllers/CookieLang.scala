@@ -7,7 +7,7 @@ import play.api.data._
 import play.api.i18n.{I18nSupport, Lang}
 import play.api.mvc._
 
-trait CookieLang extends InjectedController with I18nSupport {
+abstract class CookieLang(cc: ControllerComponents) extends AbstractController(cc) with I18nSupport {
 
   val LANG = "lang"
 
@@ -15,13 +15,12 @@ trait CookieLang extends InjectedController with I18nSupport {
   //val COUNTRY = "country"
   //val localeForm = Form(tuple(LANG -> nonEmptyText, COUNTRY -> nonEmptyText))
 
-  def changeLocale = Action {
-    implicit request =>
-      localeForm.bindFromRequest.fold(e => BadRequest(""),
-        lg => Redirect(request.headers.get(REFERER).getOrElse(routes.HomeController.default().url)).withCookies(Cookie(LANG, lg)).withLang(Lang(lg)))
+  def changeLocale = Action { implicit request: Request[AnyContent] =>
+    localeForm.bindFromRequest.fold(e => BadRequest(""),
+      lg => Redirect(request.headers.get(REFERER).getOrElse(routes.HomeController.default().url)).withCookies(Cookie(LANG, lg)).withLang(Lang(lg)))
   }
 
-  implicit def findLang(implicit request: RequestHeader): Lang = {
+  implicit def findLang(implicit request: Request[AnyContent]): Lang = {
     request.cookies.get(LANG) match {
       case None => Lang(Locale.getDefault)
       case Some(cookie) => Lang(cookie.value)

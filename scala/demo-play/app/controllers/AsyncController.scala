@@ -35,7 +35,7 @@ class AsyncController @Inject()(actorSystem: ActorSystem)(implicit exec: Executi
     getFutureMessage(1.second).map { msg => Ok(msg) }
   }
 
-  def sayHi = Action.async { implicit request => getFutureHtml(4.second).map(r => Ok(r)) }
+  def sayHi = Action.async { implicit request: Request[AnyContent] => getFutureHtml(4.second).map(r => Ok(r)) }
 
   private def getFutureMessage(delayTime: FiniteDuration): Future[String] = {
     val promise: Promise[String] = Promise[String]()

@@ -28,7 +28,7 @@ class PersonController @Inject()(repo: PersonRepository)(implicit ec: ExecutionC
   /**
     * The index action.
     */
-  def index = Action { implicit request =>
+  def index = Action { implicit request: Request[AnyContent] =>
     request.session.data.toSeq.foreach(e => Logger.info(s"session: ${e._1}:${e._2}"))
     request.flash.data.toSeq.foreach(e => Logger.info(s"flash: ${e._1}:${e._2}"))
     Ok(views.html.person.index(personForm)).withSession(request.session + ("user" -> "YaFengLi"))
@@ -39,7 +39,7 @@ class PersonController @Inject()(repo: PersonRepository)(implicit ec: ExecutionC
     *
     * This is asynchronous, since we're invoking the asynchronous methods on PersonRepository.
     */
-  def addPerson = Action.async { implicit request =>
+  def addPerson = Action.async { implicit request: Request[AnyContent] =>
     // Bind the form first, then fold the result, passing a function to handle errors, and a function to handle succes.
     personForm.bindFromRequest.fold(
       // The error function. We return the index page with the error form, which will render the errors.
@@ -68,11 +68,4 @@ class PersonController @Inject()(repo: PersonRepository)(implicit ec: ExecutionC
   }
 }
 
-/**
-  * The create person form.
-  *
-  * Generally for forms, you should define separate objects to your models, since forms very often need to present data
-  * in a different way to your models.  In this case, it doesn't make sense to have an id parameter in the form, since
-  * that is generated once it's created.
-  */
 case class CreatePersonForm(name: String, age: Int)

@@ -11,5 +11,4 @@ class CountController @Inject()(counter: Counter) extends InjectedController {
   def count = Action {
     Ok(counter.nextCount().toString)
   }
-
 }

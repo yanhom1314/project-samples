@@ -6,8 +6,8 @@ import entities.repo.TPersonRepository
 import play.api.Logger
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.Json
+import play.api.i18n.I18nSupport
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
 import services.SpringContextLoader
 import third.DemoData
@@ -39,7 +39,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     )(JqGridForm.apply)(JqGridForm.unapply)
   )
 
-  def demo() = Action { implicit request =>
+  def demo() = Action { implicit request: Request[AnyContent] =>
     println("################################")
     println(s"1:personRepository:${personRepo.count()}")
     println("################################")
@@ -51,7 +51,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     Ok(views.html.demo())
   }
 
-  def jqgrid() = Action { implicit request =>
+  def jqgrid() = Action { implicit request: Request[AnyContent] =>
     jqGridForm.bindFromRequest().fold(_ => Results.BadRequest, o => {
 
       Logger.debug(s"_search:${o._search} nd:${o.nd} rows:${o.rows} page:${o.page} sidx:${o.sidx} sord:${o.sord} searchField:${o.searchField} searchString:${o.searchString} searchOper:${o.searchOper}")
@@ -65,9 +65,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     })
   }
 
-  def datatables(draw: Int, start: Int, length: Int) = Action { implicit request =>
-
-
+  def datatables(draw: Int, start: Int, length: Int) = Action { implicit request: Request[AnyContent] =>
     if (Logger.isDebugEnabled) request.queryString.toList.sortBy(t => t._1).foreach { t => Logger.debug(t._1 + ":" + t._2.map(v => v).mkString(" ")) }
 
     val list = DataTablesData(draw, 102, 102, ListBuffer[DemoData]())
@@ -75,7 +73,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
     Ok(Json.toJson(list))
   }
 
-  def save = Action(parse.json) { request =>
+  def save = Action(parse.json) { implicit request: Request[JsValue] =>
     Ok("Got: " + (request.body \ "name").as[String])
   }
 }
