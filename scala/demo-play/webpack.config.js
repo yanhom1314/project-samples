@@ -1,8 +1,8 @@
 const webpack = require('webpack');
-
+const path = require('path');
 module.exports = {
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('main.min.js'),
+        new webpack.optimize.CommonsChunkPlugin('main'),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -13,13 +13,13 @@ module.exports = {
         })
     ],
     entry: {
-        app1: './js/dev/app1.js',
-        app2: './js/dev/app2.js',
-        app3: './js/dev/app3.js',
-        flash: './js/dev/flash.js'
+        app1: './public/js/dev/app1.js',
+        app2: './public/js/dev/app2.js',
+        app3: './public/js/dev/app3.js',
+        flash: './public/js/dev/flash.js'
     },
     output: {
-        path: './js',
+        path: path.resolve(__dirname, './public/js'),
         filename: '[name].min.js'
     },
     module: {

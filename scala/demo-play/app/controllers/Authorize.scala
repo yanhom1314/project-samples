@@ -23,35 +23,44 @@ class Authorize @Inject()(val secureData: ShiroSubjectCache, addToken: CSRFAddTo
     )(Login.apply)(Login.unapply)
   )
 
-  def login = Action { implicit request: Request[_] =>
-    Name(request) match {
-      case Some(_) => Redirect(routes.AdminController.index())
-      case None => Ok(views.html.login(loginForm))
+  def login = addToken {
+    Action { implicit request: Request[_] =>
+      Name(request) match {
+        case Some(_) => Redirect(routes.AdminController.index())
+        case None => Ok(views.html.login(loginForm))
+      }
     }
   }
 
-  def authenticate = Action { implicit request: Request[_] => {
-    loginForm.bindFromRequest().fold(
-      errors => BadRequest(views.html.login(errors)),
-      user => {
-        var cu: Subject = null
-        try {
-          val username = user.username
-          val password = user.password
-          val remember = true
-          val token = new UsernamePasswordToken(username, password)
-          token.setRememberMe(remember)
+  def authenticate = checkToken {
+    Action { implicit request: Request[_] => {
+      loginForm.bindFromRequest().fold(
+        errors => BadRequest(views.html.login(errors)),
+        user => {
+          var cu: Subject = null
+          try {
+            val username = user.username
+            val password = user.password
+            System.out.println(s"username:${username} password:${password}")
+            val remember = true
+            val token = new UsernamePasswordToken(username, password)
+            token.setRememberMe(remember)
 
-          cu = SecurityUtils.getSubject
-          cu.login(token)
-          secureData.save(username, cu)
-          Redirect(routes.AdminController.index).withSession(SecuredProfile.S_USERNAME -> username)
-        } catch {
-          case _: Exception => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
+            cu = SecurityUtils.getSubject
+            println(1)
+            cu.login(token)
+            println(2)
+            secureData.save(username, cu)
+            println(3)
+            Ok(views.html.admin.index(username, username)).withSession(request.session + (SecuredProfile.S_USERNAME -> username))
+            //Redirect(routes.AdminController.index).withSession(request.session + SecuredProfile.S_USERNAME -> username)
+          } catch {
+            case _: Exception => Redirect(routes.Authorize.login()).flashing("error" -> Messages("unauthorized.message"))
+          }
         }
-      }
-    )
-  }
+      )
+    }
+    }
   }
 
   def logout = Action { implicit request: Request[AnyContent] =>

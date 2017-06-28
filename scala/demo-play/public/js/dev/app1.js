@@ -1,11 +1,5 @@
 var $ = jQuery = require("jQuery");
 
-//css can use cdn(recommend)
-//require("bootstrap-css");
-//require("jquery-ui-css");
-//require("free-jqgrid-css");
-//require("main-css");
-
 require("jquery-ui");
 require("free-jqgrid-locale-cn");
 require("free-jqgrid");

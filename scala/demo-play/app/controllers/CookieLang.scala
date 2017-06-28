@@ -10,11 +10,9 @@ abstract class CookieLang(cc: ControllerComponents) extends AbstractController(c
   val LANG = "lang"
 
   val localeForm = Form(LANG -> nonEmptyText)
-  //val COUNTRY = "country"
-  //val localeForm = Form(tuple(LANG -> nonEmptyText, COUNTRY -> nonEmptyText))
 
-  def changeLocale = Action { implicit request: Request[AnyContent] =>
-    localeForm.bindFromRequest.fold(e => BadRequest(""),
+  def changeLanguage = Action { implicit request: Request[AnyContent] =>
+    localeForm.bindFromRequest.fold(e => BadRequest(e.errors.toString()),
       lg => {
         defaultLang = Lang(lg)
         Redirect(request.headers.get(REFERER).getOrElse(routes.HomeController.default().url)).withCookies(Cookie(LANG, lg)).withLang(defaultLang)

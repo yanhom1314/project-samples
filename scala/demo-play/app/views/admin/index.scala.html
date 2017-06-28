@@ -27,6 +27,11 @@
             <input type="text" name="name" value="ROLE_ADMIN"/>
             <input id="bt_3" type="button" class="button" value="提交"/>
         </form>
+        <ul>
+        @for(t <- session.data) {
+            <li>@t._1 :::: @t._2</li>
+        }
+        </ul>
     </div>
     <script src="@routes.Assets.versioned("js/app3.min.js")"></script>
 }

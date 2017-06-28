@@ -6,14 +6,9 @@
         right: 20px;
         top: 0px;
         text-align: center;">
-        @if(flash.data.contains("success")) {
-            <div class="alert alert-success">
-                <span style="font-weight: bold">@flash.data("success")</span>
-            </div>
-        }
-        @if(flash.data.contains("error")) {
-            <div class="alert alert-danger">
-                <span style="font-weight: bold">@flash.data("error")</span>
+        @for(t <- flash.data) {
+            <div class="@{if(t._1 == "success") "alert alert-success" else if(t._1 == "error") "alert alert-danger" else "alert alert-info"}">
+                <span style="font-weight: bold">@t._2</span>
             </div>
         }
     </div>

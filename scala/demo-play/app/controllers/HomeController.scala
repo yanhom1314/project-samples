@@ -18,7 +18,7 @@ class HomeController @Inject()(langs: Langs, cc: ControllerComponents) extends C
     Ok(views.html.home("Hello World!"))
   }
 
-  def home(id: Long = 1L, name: String = "HHH") = Action { implicit request: Request[AnyContent] =>
+  def home(id: Long = 1L, name: String = "HHH") = Action { implicit request: Request[_] =>
     Redirect(routes.HomeController.index(Some(s"id:${id} name:${name}"))).withSession(request.session + ("home" -> "Ok")).flashing(request.flash + ("home" -> "FLASH HOME"))
   }
 
@@ -28,6 +28,6 @@ class HomeController @Inject()(langs: Langs, cc: ControllerComponents) extends C
       case None => Logger.info("id:_")
     }
 
-    Redirect(routes.PersonController.index).withSession(request.session + ("index" -> "Ok")).flashing(request.flash + ("index" -> "FLASH INDEX"))
+    Redirect(routes.PersonController.index).withSession(request.session + ("index" -> "Ok")).flashing(request.flash + ("error" -> "FLASH INDEX"))
   }
 }

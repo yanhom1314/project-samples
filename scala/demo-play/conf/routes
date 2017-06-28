@@ -3,42 +3,46 @@
 # ~~~~
 
 #demo
-GET         /locale              controllers.HomeController.changeLocale
-GET         /demo                controllers.DemoController.demo
-+nocsrf
-POST        /jqgrid              controllers.DemoController.jqgrid
-GET         /datatables          controllers.DemoController.datatables(draw:Int ?= 0, start:Int ?=0, length:Int ?=0)
+GET         /locale               controllers.HomeController.changeLanguage
+GET         /demo                 controllers.DemoController.demo
+POST        /jqgrid               controllers.DemoController.jqgrid
+GET         /datatables           controllers.DemoController.datatables(draw:Int ?= 0, start:Int ?=0, length:Int ?=0)
 
 #secure
-GET         /login               controllers.Authorize.login
-POST        /login               controllers.Authorize.authenticate
-GET         /logout              controllers.Authorize.logout
+GET         /login                controllers.Authorize.login
+POST        /login                controllers.Authorize.authenticate
+GET         /logout               controllers.Authorize.logout
 
 #admin
-GET         /info                controllers.AdminController.info
-GET         /admin               controllers.AdminController.index
+GET         /info                 controllers.AdminController.info
+GET         /admin                controllers.AdminController.index
 
-GET         /is                  controllers.AdminController.is(name:String ?= "Anonymous")
-GET         /has/:name           controllers.AdminController.has(name:String)
-POST        /check/is            controllers.AdminController.checkIs
-POST        /check/has           controllers.AdminController.checkHas
-POST        /json                controllers.AdminController.json
+GET         /is                   controllers.AdminController.is(name:String ?= "Anonymous")
+GET         /has/:name            controllers.AdminController.has(name:String)
+POST        /check/is             controllers.AdminController.checkIs
+POST        /check/has            controllers.AdminController.checkHas
+POST        /json                 controllers.AdminController.json
 
 # An example controller showing a sample home page
-GET         /                    controllers.HomeController.default
-GET         /home                controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")
-GET         /index               controllers.HomeController.index(id:Option[String])
+GET         /                     controllers.HomeController.default
+GET         /home                 controllers.HomeController.home(id:Long ?= 99 ,name:String ?= "YYY")
+GET         /index                controllers.HomeController.index(id:Option[String])
 
 # An example controller showing how to use dependency injection
-GET         /count               controllers.CountController.count
+GET         /count                controllers.CountController.count
 # An example controller showing how to write asynchronous code
-GET         /message             controllers.AsyncController.message
-GET         /sayhi               controllers.AsyncController.sayHi
+GET         /message              controllers.AsyncController.message
+GET         /sayhi                controllers.AsyncController.sayHi
 
 # Home page
-GET         /person              controllers.PersonController.index
-POST        /person              controllers.PersonController.addPerson
-GET         /persons             controllers.PersonController.getPersons
+GET         /person               controllers.PersonController.index
+POST        /person               controllers.PersonController.addPerson
+GET         /persons              controllers.PersonController.getPersons
+
+## CSRF examples
+GET         /form/addtoken        controllers.FormController.addtoken
+GET         /form/notoken         controllers.FormController.notoken
+POST        /form/check           controllers.FormController.check
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file         controllers.Assets.versioned(path="/public", file: Asset)

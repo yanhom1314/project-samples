@@ -35,6 +35,8 @@ case class RealmService @Inject()(counter: Counter, userRepo: TUserRepository) e
     val username = token.getPrincipal.toString
     val password = new String(token.getCredentials().asInstanceOf[Array[Char]])
     val user = userRepo.findByUsername(username)
+    System.out.println(s"2:username:${username} password:${password}")
+    System.out.println(s"2:username:${user.password} ${user.password.equalsIgnoreCase(password)}")
     if (user != null && user.password.equalsIgnoreCase(password)) {
       new SimpleAuthenticationInfo(username, password, getName)
     } else throw new IncorrectCredentialsException("密码错误！！！")
