@@ -9,11 +9,12 @@ import org.apache.shiro.subject.Subject
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
 import play.api.i18n.Messages
-import play.api.mvc.{AnyContent, Request}
+import play.api.mvc.{AnyContent, ControllerComponents, Request}
+import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import security.{Secured, SecuredProfile}
 import shiro.ShiroSubjectCache
 
-class Authorize @Inject()(val secureData: ShiroSubjectCache) extends Secured {
+class Authorize @Inject()(val secureData: ShiroSubjectCache, addToken: CSRFAddToken, checkToken: CSRFCheck, cc: ControllerComponents) extends Secured(cc) {
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,
@@ -22,14 +23,14 @@ class Authorize @Inject()(val secureData: ShiroSubjectCache) extends Secured {
     )(Login.apply)(Login.unapply)
   )
 
-  def login = Action { implicit request: Request[AnyContent] =>
+  def login = Action { implicit request: Request[_] =>
     Name(request) match {
       case Some(_) => Redirect(routes.AdminController.index())
       case None => Ok(views.html.login(loginForm))
     }
   }
 
-  def authenticate = Action { implicit request: Request[AnyContent] => {
+  def authenticate = Action { implicit request: Request[_] => {
     loginForm.bindFromRequest().fold(
       errors => BadRequest(views.html.login(errors)),
       user => {

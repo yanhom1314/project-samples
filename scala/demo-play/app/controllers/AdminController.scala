@@ -5,11 +5,11 @@ import javax.inject.Inject
 import org.apache.shiro.realm.Realm
 import play.api.i18n.Messages
 import play.api.libs.json.{Json, _}
-import play.api.mvc.{AnyContent, Request}
+import play.api.mvc.{AnyContent, ControllerComponents, Request}
 import security.{Secured, SecuredProfile}
 import shiro.ShiroSubjectCache
 
-class AdminController @Inject()(realm: Realm, val secureData: ShiroSubjectCache) extends Secured {
+class AdminController @Inject()(realm: Realm, val secureData: ShiroSubjectCache, cc: ControllerComponents) extends Secured(cc) {
 
   val ROLE_USER = "ROLE_USER"
 

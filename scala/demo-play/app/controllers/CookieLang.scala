@@ -1,7 +1,5 @@
 package controllers
 
-import java.util.Locale
-
 import play.api.data.Forms._
 import play.api.data._
 import play.api.i18n.{I18nSupport, Lang}
@@ -17,13 +15,11 @@ abstract class CookieLang(cc: ControllerComponents) extends AbstractController(c
 
   def changeLocale = Action { implicit request: Request[AnyContent] =>
     localeForm.bindFromRequest.fold(e => BadRequest(""),
-      lg => Redirect(request.headers.get(REFERER).getOrElse(routes.HomeController.default().url)).withCookies(Cookie(LANG, lg)).withLang(Lang(lg)))
+      lg => {
+        defaultLang = Lang(lg)
+        Redirect(request.headers.get(REFERER).getOrElse(routes.HomeController.default().url)).withCookies(Cookie(LANG, lg)).withLang(defaultLang)
+      })
   }
 
-  implicit def findLang(implicit request: Request[AnyContent]): Lang = {
-    request.cookies.get(LANG) match {
-      case None => Lang(Locale.getDefault)
-      case Some(cookie) => Lang(cookie.value)
-    }
-  }
+  implicit var defaultLang: Lang = Lang(java.util.Locale.getDefault)
 }

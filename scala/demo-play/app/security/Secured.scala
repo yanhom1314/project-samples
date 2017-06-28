@@ -1,19 +1,19 @@
 package security
 
-import controllers.routes
+import controllers.{CookieLang, routes}
 import org.apache.shiro.subject.Subject
-import play.api.i18n.I18nSupport
+import play.api.i18n.Langs
 import play.api.mvc._
 import security.SecuredProfile.S_USERNAME
 import shiro.ShiroSubjectCache
 
-trait Secured extends InjectedController with I18nSupport {
+abstract class Secured(cc: ControllerComponents) extends CookieLang(cc) {
 
   def secureData: ShiroSubjectCache
 
   //def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> messagesApi("unauthorized.message"))
 
-  def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> "NOTHING")
+  def unauthorized(request: RequestHeader): Result = Redirect(routes.Authorize.login()).flashing("error" -> messagesApi("unauthorized.message"))
 
   def Role(subject: Subject, roles: String*): Boolean = roles.exists(subject.hasRole(_))
 
