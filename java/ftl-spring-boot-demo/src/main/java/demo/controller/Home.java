@@ -1,15 +1,16 @@
 package demo.controller;
 
+import static demo.bean.ValContants.M_LOCALE;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
-
-import static demo.bean.ValContants.M_LOCALE;
 
 @Controller
 public class Home extends BaseController {

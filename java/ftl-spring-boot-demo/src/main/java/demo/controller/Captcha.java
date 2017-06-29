@@ -1,8 +1,14 @@
 package demo.controller;
 
-import com.google.code.kaptcha.Producer;
-import com.google.code.kaptcha.util.Config;
-import demo.service.CaptchaFilter;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.util.Properties;
+
+import javax.annotation.PostConstruct;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.annotation.PostConstruct;
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.util.Properties;
+import com.google.code.kaptcha.Producer;
+import com.google.code.kaptcha.util.Config;
+
+import demo.service.CaptchaFilter;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)

@@ -1,18 +1,25 @@
 package demo.controller;
 
-import demo.bean.Person;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import static demo.bean.ValContants.FORM_OBJECT_NAME;
+import static demo.bean.ValContants.M_LOCALE;
 
-import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static demo.bean.ValContants.FORM_OBJECT_NAME;
-import static demo.bean.ValContants.M_LOCALE;
+import javax.validation.Valid;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import demo.bean.Person;
 
 @Controller
 @RequestMapping("/person/**")

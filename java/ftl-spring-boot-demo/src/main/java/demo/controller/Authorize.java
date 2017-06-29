@@ -35,8 +35,7 @@ public class Authorize {
     @Autowired
     private ClientService clientService;
 
-    @RequestMapping("/authorize")
-    @SuppressWarnings("unchecked")
+    @RequestMapping("/authorize")    
     public Object authorize(HttpServletRequest request, Model model) throws Exception {
         try {
             OAuthAuthzRequest oauthRequest = new OAuthAuthzRequest(request);
@@ -46,7 +45,7 @@ public class Authorize {
                         .setError(OAuthError.TokenResponse.INVALID_CLIENT)
                         .setErrorDescription("INVALID_CLIENT_DESCRIPTION")
                         .buildJSONMessage();
-                return new ResponseEntity(
+                return new ResponseEntity<String>(
                         response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
             }
 
@@ -60,7 +59,7 @@ public class Authorize {
             }
 
             String username = (String) subject.getPrincipal();
-            //生成授权码
+            //鐢熸垚鎺堟潈鐮�
             String authorizationCode = null;
             String responseType = oauthRequest.getParam(OAuth.OAUTH_RESPONSE_TYPE);
             if (responseType.equals(ResponseType.CODE.toString())) {
@@ -76,11 +75,11 @@ public class Authorize {
             final OAuthResponse response = builder.location(redirectURI).buildQueryMessage();
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(new URI(response.getLocationUri()));
-            return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
+            return new ResponseEntity<String>(headers, HttpStatus.valueOf(response.getResponseStatus()));
         } catch (OAuthProblemException e) {
             String redirectUri = "/error/redirect/uri";
             if (OAuthUtils.isEmpty(redirectUri)) {
-                return new ResponseEntity(
+                return new ResponseEntity<String>(
                         "OAuth callback url needs to be provided by client!!!", HttpStatus.NOT_FOUND);
             }
             final OAuthResponse response =
@@ -88,7 +87,7 @@ public class Authorize {
                             .error(e).location(redirectUri).buildQueryMessage();
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(new URI(response.getLocationUri()));
-            return new ResponseEntity(headers, HttpStatus.valueOf(response.getResponseStatus()));
+            return new ResponseEntity<String>(headers, HttpStatus.valueOf(response.getResponseStatus()));
         }
     }
 
@@ -108,7 +107,7 @@ public class Authorize {
             subject.login(token);
             return true;
         } catch (Exception e) {
-            request.setAttribute("error", "登录失败:" + e.getClass().getName());
+            request.setAttribute("error", "鐧诲綍澶辫触:" + e.getClass().getName());
             return false;
         }
     }

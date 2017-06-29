@@ -1,15 +1,16 @@
 package demo.controller;
 
 
+import static demo.bean.ValContants.M_LOCALE;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.LocaleResolver;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
-
-import static demo.bean.ValContants.M_LOCALE;
 
 public abstract class BaseController {
     @Autowired
