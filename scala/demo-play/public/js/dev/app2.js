@@ -1,6 +1,6 @@
 var $ = jQuery = require('jQuery');
 
-//require("datatables-css");
+require("datatables-css");
 
 require("datatables");
 

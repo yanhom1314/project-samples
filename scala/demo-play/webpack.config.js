@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const path = require('path');
+
 module.exports = {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin('main'),
@@ -19,7 +19,7 @@ module.exports = {
         flash: './public/js/dev/flash.js'
     },
     output: {
-        path: path.resolve(__dirname, './public/js'),
+        path: __dirname + './public/js/',
         filename: '[name].min.js'
     },
     module: {

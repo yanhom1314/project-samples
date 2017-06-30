@@ -1,16 +1,8 @@
 @()(implicit session: Session)
 @if(!session.isEmpty) {
-    <div id="_flash_" style="position: absolute;
-        z-index: 999;
-        left: 20px;
-        right: 20px;
-        top: 0px;
-        text-align: center;">
     @for(t <- session.data) {
         <div class="alert alert-success">
-            <span style="font-weight: bold">@t._2</span>
+            <span style="font-weight: bold">@t._1 : @t._2</span>
         </div>
     }
-    </div>
-    <script src="@routes.Assets.versioned("js/flash.min.js")" type="text/javascript"></script>
 }
