@@ -7,6 +7,9 @@ This project demonstrate how to create a simple CRUD application with Play integ
 
         play.modules.enabled += "modules.ModuleJava"  #modules.ModuleScala
 
+
+*play.http.session.maxAge:不能过小，否则会频繁清除session，则CSRF测试就不正常*        
+
 ## Build & Run
 
         webpack
