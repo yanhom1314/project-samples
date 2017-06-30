@@ -4,11 +4,13 @@ package controllers
 import javax.inject._
 
 import play.api.Logger
+import play.api.data.Form
+import play.api.data.Forms._
 import play.api.mvc._
 import play.filters.csrf._
 
 @Singleton
-class FormController @Inject()(addToken: CSRFAddToken, checkToken: CSRFCheck, cc: ControllerComponents) extends AbstractController(cc) {
+class FormController @Inject()(addToken: CSRFAddToken, checkToken: CSRFCheck, cc: MessagesControllerComponents) extends MessagesAbstractController(cc) {
 
   def addtoken = addToken {
     Action { implicit req: RequestHeader =>
@@ -19,7 +21,7 @@ class FormController @Inject()(addToken: CSRFAddToken, checkToken: CSRFCheck, cc
            				|<html><head></head><body>
            				|<form action="${routes.FormController.check}" method="post">
            				|	<input type="text" name="${token.name}" value="${token.value}" readonly="true" size="90">
-                  | <input type="text" name="name" value="${token.name}" size="90">
+           | <input type="text" name="name" value="${token.name}" size="90">
            				|	<button type="submit">Submit</button>
            				|</form>
            				|</body>
@@ -34,7 +36,7 @@ class FormController @Inject()(addToken: CSRFAddToken, checkToken: CSRFCheck, cc
          			|<!DOCTYPE html>
          			|<html><head></head><body>
          			|<form action="${routes.FormController.check}" method="post">
-              |   <input type="text" name="host" value="${req.host}" size="90">
+         |   <input type="text" name="host" value="${req.host}" size="90">
          			|   <button type="submit">Submit</button>
          			|</form>
          			|</body>
@@ -48,4 +50,6 @@ class FormController @Inject()(addToken: CSRFAddToken, checkToken: CSRFCheck, cc
       Ok("Success")
     }
   }
+
 }
+

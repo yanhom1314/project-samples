@@ -39,6 +39,10 @@ GET         /person               controllers.PersonController.index
 POST        /person               controllers.PersonController.addPerson
 GET         /persons              controllers.PersonController.getPersons
 
+#CSRF USER
+GET         /form/user            controllers.UserController.userGet
+POST        /form/user            controllers.UserController.userPost
+
 ## CSRF examples
 GET         /form/addtoken        controllers.FormController.addtoken
 GET         /form/notoken         controllers.FormController.notoken
