@@ -25,31 +25,31 @@ abstract class Secured(cc: MessagesControllerComponents) extends CookieLang(cc) 
     _ => Action(f)
   }
 
-  def IsAuthenticated(f: Request[AnyContent] => Result) = Security.Authenticated(User, unauthorized) {
-    _ => Action { implicit request: Request[AnyContent] => f(request) }
+  def IsAuthenticated(f: MessagesRequest[_] => Result) = Security.Authenticated(User, unauthorized) {
+    _ => Action { implicit request: MessagesRequest[_] => f(request) }
   }
 
-  def IsAuthenticated[A](parser: BodyParser[A])(f: Request[A] => Result) = Security.Authenticated(Name, unauthorized) {
-    _ => Action(parser) { implicit request: Request[A] => f(request) }
+  def IsAuthenticated[A](parser: BodyParser[A])(f: MessagesRequest[A] => Result) = Security.Authenticated(Name, unauthorized) {
+    _ => Action(parser) { implicit request: MessagesRequest[A] => f(request) }
   }
 
-  def IsRole(members: String*)(f: Request[AnyContent] => Result) = Action {
-    implicit request: Request[AnyContent] =>
+  def IsRole(members: String*)(f: MessagesRequest[AnyContent] => Result) = Action {
+    implicit request: MessagesRequest[AnyContent] =>
       if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
   }
 
-  def IsRole[A](parser: BodyParser[A], members: String*)(f: Request[A] => Result) = Action(parser) {
-    implicit request: Request[A] =>
+  def IsRole[A](parser: BodyParser[A], members: String*)(f: MessagesRequest[A] => Result) = Action(parser) {
+    implicit request: MessagesRequest[A] =>
       if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
   }
 
-  def HasRole(members: String*)(f: Request[AnyContent] => Result) = Action {
-    implicit request: Request[AnyContent] =>
+  def HasRole(members: String*)(f: MessagesRequest[_] => Result) = Action {
+    implicit request: MessagesRequest[_] =>
       if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
   }
 
-  def HasRole[A](parser: BodyParser[A], members: String*)(f: Request[A] => Result) = Action(parser) {
-    implicit request: Request[A] =>
+  def HasRole[A](parser: BodyParser[A], members: String*)(f: MessagesRequest[A] => Result) = Action(parser) {
+    implicit request: MessagesRequest[A] =>
       if (User(request).exists(subject => Role(subject, members: _*))) f(request) else Results.Forbidden
   }
 }
