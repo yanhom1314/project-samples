@@ -40,6 +40,7 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
   )
 
   def demo() = Action { implicit request: MessagesRequest[_] =>
+    play.filters.csrf.CSRFCheck
     println("################################")
     println(s"1:personRepository:${personRepo.count()}")
     println("################################")

@@ -15,7 +15,7 @@ function resizeGrid() {
 }
 
 $(function () {
-    var csrfToken = $('meta[name="csrfToken"]').attr("content");
+    var csrfToken = $('meta[name="Csrf-Token"]').attr("content");
     console.log(add(12, 7));
     console.log(csrfToken);
     //jqgrid
@@ -25,7 +25,7 @@ $(function () {
         mtype: "POST",
         loadBeforeSend: function(jqXHR) {
             // you should modify the next line to get the CSRF tocken
-            jqXHR.setRequestHeader('csrfToken', csrfToken);
+            jqXHR.setRequestHeader('Csrf-Token', csrfToken);
         },
         colNames: ['id', 'firstName', 'lastName', 'address'],
         colModel: [

@@ -4,8 +4,6 @@ package controllers
 import javax.inject._
 
 import play.api.Logger
-import play.api.data.Form
-import play.api.data.Forms._
 import play.api.mvc._
 import play.filters.csrf._
 
@@ -13,7 +11,7 @@ import play.filters.csrf._
 class FormController @Inject()(addToken: CSRFAddToken, checkToken: CSRFCheck, cc: MessagesControllerComponents) extends MessagesAbstractController(cc) {
 
   def addtoken = addToken {
-    Action { implicit req: RequestHeader =>
+    Action { implicit req: MessagesRequest[_] =>
       val token: CSRF.Token = CSRF.getToken.get
       Ok(
         s"""
@@ -30,7 +28,7 @@ class FormController @Inject()(addToken: CSRFAddToken, checkToken: CSRFCheck, cc
     }
   }
 
-  def notoken = Action { implicit req: RequestHeader =>
+  def notoken = Action { implicit req: MessagesRequest[_] =>
     Ok(
       s"""
          			|<!DOCTYPE html>

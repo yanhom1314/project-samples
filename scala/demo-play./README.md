@@ -38,5 +38,17 @@ This project demonstrate how to create a simple CRUD application with Play integ
 #### 前端
 + Ajax使用的是jQuery.ajax，也可以使用axios或者fetch
 
-        
-        
+#### CSRF
++ `Twirl Template`: `<meta name="Csrf-Token" content="@helper.CSRF.getToken.value">`
+
++ `JavaScript`:
+    
+        var csrfToken = $('meta[name="Csrf-Token"]').attr("content");
+        $("#list2").jqGrid({
+                ...
+                loadBeforeSend: function(jqXHR) {
+                    // you should modify the next line to get the CSRF tocken
+                    jqXHR.setRequestHeader('Csrf-Token', csrfToken);
+                },
+                ...
+            });               
