@@ -1,0 +1,58 @@
+@(person: Form[CreatePersonForm])(implicit session: Session, flash: Flash, request: MessagesRequestHeader)
+
+@layout.main("Welcome to Play") {
+    <script src="@routes.Assets.versioned("js/app2.min.js")"></script>
+
+    @helper.form(routes.HomeController.home(111, "XinFeng"), 'method -> "GET", 'id -> "index") {
+        <div class="buttons">
+            <input type="submit" value="Index With Flash And Session!" class="ui primary  button"/>
+        </div>
+    }
+    <div id="messages">@request.messages("error.number")</div>
+    <div id="session">
+        session:
+        <ul>
+            <li>home:@session.get("home")</li>
+            <li>index:@session.get("index")</li>
+            <li>user:@session.get("user")</li>
+        </ul>
+    </div>
+    <div id="flash">
+        flash:
+        <ul>
+            <li>home:@flash.get("home")</li>
+            <li>index:@flash.get("index")</li>
+            <li>user:@flash.get("user")</li>
+        </ul>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn">Left</button>
+        <button class="btn">Middle</button>
+        <button class="btn">Right</button>
+    </div>
+    <div class="jumbotron">
+        <h1>Hello, world!</h1>
+        <p>...</p>
+        <p><a class="btn btn-primary btn-lg" href="@routes.HomeController.home()" role="button">Learn more</a></p>
+    </div>
+        <!-- dataTables-->
+    <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Id</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Address</th>
+            </tr>
+        </tfoot>
+    </table>
+}

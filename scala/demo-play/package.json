@@ -1,0 +1,28 @@
+{
+  "name": "demo-play",
+  "version": "1.0.0",
+  "description": "This project demonstrate how to create a simple CRUD application with Play.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "css-loader": "^0.23.1",
+    "datatables.net": "^1.10.15",
+    "file-loader": "^0.8.5",
+    "free-jqgrid": "^4.13.6",
+    "jquery": "^3.0.0",
+    "jquery-ui": "^1.12.1",
+    "jsgrid": "^1.5.2",
+    "jsx-loader": "^0.13.2",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^3.0.0"
+  }
+}

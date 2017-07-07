@@ -1,0 +1,8 @@
+@(data: Map[String, String], subject: org.apache.shiro.subject.Subject)(implicit flash: Flash, session: Session, req: MessagesRequestHeader)
+@layout.main("Hello Login!") {
+    <div>
+        <h2>session:@data</h2>
+        <h2>subject:@subject</h2>
+        <h2>username:@subject.getPrincipal.toString</h2>
+    </div>
+}

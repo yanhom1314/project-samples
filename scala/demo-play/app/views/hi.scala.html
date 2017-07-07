@@ -1,0 +1,19 @@
+@*
+* This template takes a single argument, a String containing a
+* message to display.
+*@
+@(message: String)(implicit request: MessagesRequestHeader, session: Session, flash: Flash)
+@*
+* Call the the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@layout.main("Welcome to Play") {
+    @*
+    * Get an `Html` object by calling the built-in Play welcome
+    * template and passing a `String` message.
+    *@
+    <h1>Hello World!</h1>
+    <h2>Welcome to SayHi Page!</h2>
+    <h5>@message</h5>
+}

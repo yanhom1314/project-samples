@@ -1,0 +1,55 @@
+@(person: Form[CreatePersonForm])(implicit request: MessagesRequestHeader, session: Session, flash: Flash)
+
+@layout.main("Welcome to Play") {
+    <script src="@routes.Assets.versioned("js/app1.min.js")"></script>
+    <script src="@routes.Assets.versioned("js/app2.min.js")"></script>
+
+    @helper.form(routes.PersonController.addPerson) {
+        @helper.CSRF.formField
+        <div class="ui icon input">
+        @helper.inputText(person("name"), 'id -> "_name")
+        </div>
+        <div class="ui icon input">
+        @helper.inputText(person("age"))
+        </div>
+        <div class="buttons">
+            <input type="submit" value="Add New Person" class="btn btn-primary"/>
+        </div>
+    }
+    <form action="@routes.PersonController.addPerson()" method="post">
+        <dl class="@(if(person.error("name").isDefined) "error" else "")">
+            <dt><label>@request.messages("name")</label></dt>
+            <dd><input type="text" name="name" value="@person("name").value"></dd>
+            @if(person.error("name").isDefined) {
+                <dd class="error">@request.messages(person.error("name").get.message, person.error("name").get.args: _*)</dd>
+            }
+        </dl>
+        <dl class="@(if(person.error("age").isDefined) "error" else "")">
+            <dt><label>@request.messages("age")</label></dt>
+            <dd><input type="text" name="age" value="@person("age").value"></dd>
+            @if(person.error("age").isDefined) {
+                <dd class="error">@request.messages(person.error("age").get.message, person.error("age").get.args: _*)</dd>
+            }
+        </dl>
+        <dl>
+            <dt><input type="submit" value="Add New Person" class="btn btn-primary"/></dt>
+        </dl>
+    </form>
+    <ul>
+    @for(e <- person.errors) {
+        <li class="error">@e.key |@e.message [@e.args] | @request.messages(e.message, e.args: _*)</li>
+    }
+    </ul>
+    <hr/>
+    <h4>Session:</h4>
+    @tags.session()
+    <hr/>
+    <ul id="persons"></ul>
+
+    <h4>DataTables:</h4>
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+    </table>
+    <h4>Free-JqGrid:</h4>
+    <table id="list2"></table>
+    <div id="pager2"></div>
+}

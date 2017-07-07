@@ -1,0 +1,19 @@
+@()(implicit request: MessagesRequestHeader, session: Session, flash: Flash)
+
+@layout.main("Welcome to Play") {
+    <script src="@routes.Assets.versioned("js/app1.min.js")"></script>
+    <h1>Hello World!</h1>
+    <div id="message">
+        <p>你为什么，言无声，泪如雨。</p>
+        <p>你为什么，扬起脸，笑的像满月。</p>
+    </div>
+    <span class="label label-default">Default</span>
+    <span class="label label-primary">Primary</span>
+    <span class="label label-success">Success</span>
+    <span class="label label-info">Info</span>
+    <span class="label label-warning">Warning</span>
+    <span class="label label-danger">Danger</span>
+    <!-- jqgrid-->
+    <table id="list2"></table>
+    <div id="pager2"></div>
+}
