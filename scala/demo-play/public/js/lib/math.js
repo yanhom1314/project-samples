@@ -1,4 +1,5 @@
-var $ = jQuery = require("jQuery");
+import $ from "jquery";
+import jQuery from "jquery";
 
 $.fn.serializeObject = function () {
     var o = {};
@@ -16,27 +17,24 @@ $.fn.serializeObject = function () {
     return o;
 };
 
-module.exports = {
-    d7: {context: "/"},
-    $: $,
-    jQuery: jQuery,
-    add: function (x, y) {
-        return x + y;
-    },
-    jsonSubmit: function (formId, successCall, errorCall) {
-        var f = $("#" + formId);
-        $.ajax({
-            url: f.attr("action"),
-            data: JSON.stringify(f.serializeObject()),
-            type: "post",
-            dataType: "json",
-            contentType: 'application/json',
-            success: function (data) {
-                if (successCall != undefined) successCall(data);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                if (errorCall != undefined) errorCall(XMLHttpRequest, textStatus, errorThrown)
-            }
-        });
-    }
+var jsonSubmit = function (formId, successCall, errorCall) {
+    var f = $("#" + formId);
+    $.ajax({
+        url: f.attr("action"),
+        data: JSON.stringify(f.serializeObject()),
+        type: "post",
+        dataType: "json",
+        contentType: 'application/json',
+        success: function (data) {
+            if (successCall != undefined) successCall(data);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (errorCall != undefined) errorCall(XMLHttpRequest, textStatus, errorThrown)
+        }
+    });
+}
+
+var add = function (x, y) {
+    return x + y;
 };
+export { jsonSubmit, add }

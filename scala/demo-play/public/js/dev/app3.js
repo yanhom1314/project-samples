@@ -1,6 +1,5 @@
-var $ = jQuery = require("jquery");
-
-var jsonSubmit = require('math').jsonSubmit;
+import $ from "jquery";
+import {jsonSubmit} from "../lib/math";
 
 $(function () {
     $("#bt_1").click(function () {

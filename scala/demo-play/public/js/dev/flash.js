@@ -1,4 +1,4 @@
-var $ = jQuery = require("jquery");
+import $ from "jquery";
 
 $(function () {
     var flash = $("#_flash_");

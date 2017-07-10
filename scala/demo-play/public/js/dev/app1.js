@@ -1,11 +1,10 @@
-var $ = jQuery = require("jquery");
+import $ from "jquery";
+import {add} from "../lib/math";
+import d7 from "../lib/config";
 
 require("jquery-ui");
 require("free-jqgrid-locale-cn");
 require("free-jqgrid");
-
-var add = require('math').add;
-var d7 = require('math').d7;
 
 function resizeGrid() {
     var width = $(window).width() * 0.8;

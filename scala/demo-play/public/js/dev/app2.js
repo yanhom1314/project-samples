@@ -1,6 +1,5 @@
-var $ = jQuery = require("jquery");
-
-var d7 = require('math').d7;
+import $ from "jquery";
+import d7 from "../lib/config";
 
 require('datatables.net');
 
