@@ -1,12 +1,5 @@
 
 buildscript {
-    repositories {
-      maven {url "file:///D:/repository/.m2"}      
-      ivy {url "file:///D:/repository/.ivy2/cache"}
-      ivy {url "file:///D:/repository/.ivy2/local"}
-      maven {url "http://maven.aliyun.com/nexus/content/groups/public"}
-      maven {url  "https://dl.bintray.com/yafengli/maven"}      
-    } 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${spring_boot}")
     }
@@ -32,13 +25,6 @@ compileJava {
     excludes = ['**/node_modules', '**/webpacke.config.js', '**/package.json']
 }
 compileJava.dependsOn(processResources)
-repositories {
-    maven {url "file:///D:/repository/.m2"}      
-    ivy {url "file:///D:/repository/.ivy2/cache"}
-    ivy {url "file:///D:/repository/.ivy2/local"}
-    maven {url "http://maven.aliyun.com/nexus/content/groups/public"}   
-    maven {url  "https://dl.bintray.com/yafengli/maven"}     
-}
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web",
             "org.springframework.boot:spring-boot-starter-data-jpa",

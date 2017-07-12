@@ -4,7 +4,7 @@ import sbt.Keys._
 lazy val root = project.in(file(".")).enablePlugins(SbtDistApp).settings(
   name := """demo-dnsjava""",
   version := "1.0",
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.12.2",
   mainClass := Some("com.example.Hello"),
   libraryDependencies ++= Seq(
     "dnsjava" % "dnsjava" % $("dnsjava"),
