@@ -1,0 +1,26 @@
+spring:
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://127.0.0.1:5432/dnslogdb
+        username: postgres
+        password:
+        hikari:
+            maximum-pool-size: 20
+            idle-timeout: 30000
+    jpa:
+        hibernate:
+            ddl-auto: update
+    freemarker:
+        suffix: .ftl
+        charset: utf-8
+        cache: true
+        request-context-attribute: request
+server:
+    context-path: /dnslog
+    port: 8002
+sso:
+    url: http://127.0.0.1:9090/main/
+ngci:
+    base.dir: /phd
+    tree.file: tree.json

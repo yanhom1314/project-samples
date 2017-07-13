@@ -1,0 +1,8 @@
+[hello]
+select * from dps.cdndomainflags where 1 = 1 {{#age}} and age = :age{{/age}}{{#name}} and name =:name{{/name}}{{#name}} and name =:name{{/name}}
+[nice]
+select * from dps.nice where 1 = 1 {{#age}} and age = :age {{/age}}
+[fuck]
+select * from dps.fuck where 1 = 1 {{#age}} and age = :age {{/age}}
+[function]
+call dps.fun_fuck_you(:name,:age)
