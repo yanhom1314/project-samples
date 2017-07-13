@@ -1,4 +1,4 @@
-package com.example;
+package com.greatbit.sqlbuilder;
 
 public class SqlParam {
     private String name;

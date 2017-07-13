@@ -1,10 +1,10 @@
-package com.example;
+package com.greatbit.sqlbuilder;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.PropertyAccessorFactory;
+//import org.springframework.beans.BeanWrapper;
+//import org.springframework.beans.PropertyAccessorFactory;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -34,18 +34,18 @@ public class SqlBuilder {
         Mustache mustache = mf.compile(new StringReader(template), key);
         StringWriter writer = new StringWriter();
         try {
-            BeanWrapper wrapper = PropertyAccessorFactory.forBeanPropertyAccess(t);
-            mustache.execute(writer, t).flush();
-            Matcher m = pattern.matcher(writer.toString());
-            List<SqlParam> para = new ArrayList<>();
-
-            while (m.find()) {
-                para.add(new SqlParam(m.group(1), wrapper.getPropertyValue(m.group(1))));
-            }
-
-            sw.setKey(key);
-            sw.setSql(m.replaceAll(QUESTION_MARK).trim());
-            sw.setParams(para);
+//            BeanWrapper wrapper = PropertyAccessorFactory.forBeanPropertyAccess(t);
+//            mustache.execute(writer, t).flush();
+//            Matcher m = pattern.matcher(writer.toString());
+//            List<SqlParam> para = new ArrayList<>();
+//
+//            while (m.find()) {
+//                para.add(new SqlParam(m.group(1), wrapper.getPropertyValue(m.group(1))));
+////            }
+//
+//            sw.setKey(key);
+//            sw.setSql(m.replaceAll(QUESTION_MARK).trim());
+//            sw.setParams(para);
         } catch (Exception e) {
             e.printStackTrace();
         }

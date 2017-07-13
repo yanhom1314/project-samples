@@ -1,9 +1,11 @@
 apply plugin: 'java'
+apply plugin: 'application'
 
 version = '0.1.0-RC1'
 sourceCompatibility = 1.8
 
 dependencies {
-    compile("com.github.spullara.mustache.java:compiler:0.9.5")
-    testCompile('org.springframework.boot:spring-boot-starter-test',"junit:junit:$junit")
+    compile("com.github.spullara.mustache.java:compiler:0.9.5",
+            "cglib:cglib-nodep:3.2.5")
+    testCompile("junit:junit:$junit")
 }

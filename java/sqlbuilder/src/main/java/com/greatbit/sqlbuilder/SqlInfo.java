@@ -1,5 +1,4 @@
-package com.example;
-
+package com.greatbit.sqlbuilder;
 
 public class SqlInfo {
     private String key;

@@ -1,5 +1,4 @@
-package com.example;
-
+package com.greatbit.sqlbuilder;
 
 import java.util.Collections;
 import java.util.List;
