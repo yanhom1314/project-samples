@@ -1,13 +1,11 @@
 package com.example;
 
+import com.greatbit.jdbc.SqlBuilder;
+import com.greatbit.jdbc.SqlWrapper;
 import net.sf.cglib.beans.BeanMap;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,32 +32,25 @@ public class PatternTest {
         }
     }
 
-//    @Test
-//    public void test2() {
-//        try (BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/sql.mustache")))) {
-//            StringBuffer buffer = new StringBuffer();
-//            reader.lines().forEach(buffer::append);
-//
-//            Matcher m = p2.matcher(buffer);
-//            Map<String, String> sqlMap = new HashMap<>();
-//            while (m.find()) {
-//                sqlMap.put(m.group(1).trim().toLowerCase(), m.group(2).trim().toLowerCase());
-//            }
-//            sqlMap.forEach((k, v) -> {
-//                SqlWrapper s1 = SqlBuilder.currentSqlBuilder().buildSql(k, v, new User(12));
-//                System.out.println("----------------------------------");
-//                ptfn("%s:[%s]", s1.getKey(), s1.getSql());
-//                System.out.println(Arrays.deepToString(s1.getParams().toArray()));
-//                System.out.println("#########################");
-//                SqlWrapper s2 = SqlBuilder.currentSqlBuilder().buildSql(k, v, new User("demo", 12));
-//                ptfn("%s:[%s]", s2.getKey(), s2.getSql());
-//                System.out.println(Arrays.deepToString(s2.getParams().toArray()));
-//                System.out.println("----------------------------------");
-//            });
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @Test
+    public void test2() {
+        SqlBuilder.initResources("user","person");
+        SqlBuilder.keys().forEach(k -> {
+            try {
+                SqlWrapper s1 = SqlBuilder.open().build(k, new User(12));
+                System.out.println("----------------------------------");
+                ptfn("%s:[%s]", s1.getKey(), s1.getSql());
+                System.out.println(Arrays.deepToString(s1.getParams().toArray()));
+                System.out.println("#########################");
+                SqlWrapper s2 = SqlBuilder.open().build(k, new User("demo", 12));
+                ptfn("%s:[%s]", s2.getKey(), s2.getSql());
+                System.out.println(Arrays.deepToString(s2.getParams().toArray()));
+                System.out.println("----------------------------------");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     public void ptfn(String fmt, Object... ts) {
         System.out.printf("%s:[%s]" + System.lineSeparator(), ts);

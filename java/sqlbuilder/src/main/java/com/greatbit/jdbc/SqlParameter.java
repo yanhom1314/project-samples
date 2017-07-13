@@ -1,10 +1,10 @@
-package com.greatbit.sqlbuilder;
+package com.greatbit.jdbc;
 
-public class SqlParam {
+public class SqlParameter {
     private String name;
     private Object value;
 
-    public SqlParam(String name, Object value) {
+    public SqlParameter(String name, Object value) {
         this.name = name;
         this.value = value;
     }

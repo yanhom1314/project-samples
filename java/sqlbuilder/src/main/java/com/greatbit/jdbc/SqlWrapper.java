@@ -1,4 +1,4 @@
-package com.greatbit.sqlbuilder;
+package com.greatbit.jdbc;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 public class SqlWrapper {
     private String key;
     private String sql;
-    private List<SqlParam> params = Collections.emptyList();
+    private List<SqlParameter> params = Collections.emptyList();
 
     public String getKey() {
         return key;
@@ -24,11 +24,11 @@ public class SqlWrapper {
         this.sql = sql;
     }
 
-    public List<SqlParam> getParams() {
+    public List<SqlParameter> getParams() {
         return params;
     }
 
-    public void setParams(List<SqlParam> params) {
+    public void setParams(List<SqlParameter> params) {
         this.params = params;
     }
 }

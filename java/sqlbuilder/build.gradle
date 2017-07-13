@@ -6,6 +6,6 @@ sourceCompatibility = 1.8
 
 dependencies {
     compile("com.github.spullara.mustache.java:compiler:0.9.5",
-            "cglib:cglib-nodep:3.2.5")
+            "cglib:cglib-nodep:$cglib")
     testCompile("junit:junit:$junit")
 }
