@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'application'
 
 version = '0.1.0-RC1'
 sourceCompatibility = 1.8
