@@ -22,7 +22,21 @@ module.exports = {
     output: {
         path:  path.resolve(__dirname, './public/js'),
         filename: '[name].min.js'
-    },    
+    },  
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['env']
+            }
+          }
+        }
+      ]
+    },  
     //其它解决方案配置
     resolve: {
         alias: {
