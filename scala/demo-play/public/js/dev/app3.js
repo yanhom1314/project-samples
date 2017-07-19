@@ -1,6 +1,11 @@
 import $ from "jquery";
 import {jsonSubmit} from "../lib/math";
 
+import Person from '../lib/Person';
+
+let p = new Person('张三', 20);
+document.write(p.say());
+
 $(function () {
     $("#bt_1").click(function () {
         jsonSubmit("form_1", function (data) {
