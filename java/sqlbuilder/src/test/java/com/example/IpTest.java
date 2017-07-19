@@ -60,7 +60,6 @@ public class IpTest {
     //@Test
     public void testUtil() {
         System.out.println("255.255.255.255:" + ipUtil.ip2long("255.255.255.255"));
-        System.out.println("255.255.255.255:" + ipUtil.ips2long("255.255.255.255"));
 
         String ipStart_1 = "117.8.0.0";
         String ipEnd_1 = "117.15.255.255";
@@ -74,7 +73,6 @@ public class IpTest {
 
         time(count, t -> ipUtil.long2ip(v1));
         time(count, t -> ipUtil.ip2long("255.255.255.255"));
-        time(count, t -> ipUtil.ips2long("255.255.255.255"));
         time(count, t -> netmask("60.24.0.0", "60.27.255.255"));
     }
 

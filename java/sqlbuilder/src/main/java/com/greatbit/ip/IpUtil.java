@@ -17,7 +17,6 @@ public class IpUtil {
 
     private static ThreadLocal<IpUtil> threadLocal = new ThreadLocal<>();
 
-
     private IpUtil() {
     }
 
@@ -31,17 +30,16 @@ public class IpUtil {
     }
 
 
-    public long ip2long(String ipAddr) {
+    public long ip2long(String ip) {
+        int p1 = ip.indexOf(".");
+        int p2 = ip.indexOf(".", p1 + 1);
+        int p3 = ip.indexOf(".", p2 + 1);
+
         long[] ips = new long[4];
-
-        int p1 = ipAddr.indexOf(".");
-        int p2 = ipAddr.indexOf(".", p1 + 1);
-        int p3 = ipAddr.indexOf(".", p2 + 1);
-
-        ips[0] = Long.parseLong(ipAddr.substring(0, p1));
-        ips[1] = Long.parseLong(ipAddr.substring(p1 + 1, p2));
-        ips[2] = Long.parseLong(ipAddr.substring(p2 + 1, p3));
-        ips[3] = Long.parseLong(ipAddr.substring(p3 + 1));
+        ips[0] = Long.parseLong(ip.substring(0, p1));
+        ips[1] = Long.parseLong(ip.substring(p1 + 1, p2));
+        ips[2] = Long.parseLong(ip.substring(p2 + 1, p3));
+        ips[3] = Long.parseLong(ip.substring(p3 + 1));
         return (ips[0] << 24) + (ips[1] << 16) + (ips[2] << 8) + ips[3];//must quote
     }
 
@@ -53,13 +51,6 @@ public class IpUtil {
         }
         return ipBuffer.toString();
     }
-
-    @Deprecated
-    public long ips2long(String ipAddr) {
-        String[] ips = ipAddr.split("\\.");
-        return (Long.parseLong(ips[0]) << 24) + (Long.parseLong(ips[1]) << 16) + (Long.parseLong(ips[2]) << 8) + Long.parseLong(ips[3]);//must quote
-    }
-
 
     public void store(Map<Integer, Set<Long>> map, String... ipStrs) {
         Arrays.stream(ipStrs).forEach(t -> {
