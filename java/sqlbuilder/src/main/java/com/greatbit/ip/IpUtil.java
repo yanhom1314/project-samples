@@ -17,7 +17,6 @@ public class IpUtil {
 
     private static ThreadLocal<IpUtil> threadLocal = new ThreadLocal<>();
 
-
     private IpUtil() {
     }
 
@@ -29,7 +28,6 @@ public class IpUtil {
         }
         return util;
     }
-
 
     public long ip2long(String ipAddr) {
         long[] ips = new long[4];
@@ -59,7 +57,6 @@ public class IpUtil {
         String[] ips = ipAddr.split("\\.");
         return (Long.parseLong(ips[0]) << 24) + (Long.parseLong(ips[1]) << 16) + (Long.parseLong(ips[2]) << 8) + Long.parseLong(ips[3]);//must quote
     }
-
 
     public void store(Map<Integer, Set<Long>> map, String... ipStrs) {
         Arrays.stream(ipStrs).forEach(t -> {
