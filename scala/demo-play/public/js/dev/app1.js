@@ -22,9 +22,9 @@ $(function () {
         url: d7.context + 'jqgrid',
         datatype: "json",
         mtype: "POST",
-        loadBeforeSend: function(jqXHR) {
+        loadBeforeSend: function(xhr) {
             // you should modify the next line to get the CSRF tocken
-            jqXHR.setRequestHeader('Csrf-Token', csrfToken);
+            xht.setRequestHeader('Csrf-Token', csrfToken);
         },
         colNames: ['id', 'firstName', 'lastName', 'address'],
         colModel: [

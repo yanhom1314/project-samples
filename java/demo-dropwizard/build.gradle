@@ -15,7 +15,7 @@ dependencies {
             "io.dropwizard:dropwizard-views-freemarker:$dropwizard",
             "io.dropwizard:dropwizard-migrations:$dropwizard",
             "io.dropwizard:dropwizard-auth:$dropwizard",
-            'com.h2database:h2:1.3.168')
+            "com.h2database:h2:$h2")
 }
 
 task fatJar(type: Jar) {
