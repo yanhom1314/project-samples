@@ -5,13 +5,14 @@ import javax.inject._
 import play.api.Logger
 import play.api.i18n.Langs
 import play.api.mvc.{MessagesControllerComponents, MessagesRequest}
+import security.LangAbstractController
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
   * application's home page.
   */
 @Singleton
-class HomeController @Inject()(langs: Langs, cc: MessagesControllerComponents) extends CookieLang(cc) {
+class HomeController @Inject()(langs: Langs, cc: MessagesControllerComponents) extends LangAbstractController(cc, langs) {
 
   def default() = Action { implicit request: MessagesRequest[_] =>
     Ok(views.html.home("Hello World!"))

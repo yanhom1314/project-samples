@@ -8,13 +8,13 @@ import org.apache.shiro.authc._
 import org.apache.shiro.subject.Subject
 import play.api.data.Form
 import play.api.data.Forms.{mapping, _}
-import play.api.i18n.Messages
-import play.api.mvc.{MessagesControllerComponents, MessagesRequest, Request}
+import play.api.i18n.Langs
+import play.api.mvc.{MessagesControllerComponents, MessagesRequest}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import security.{Secured, SecuredProfile}
+import security.{SecuredAbstracController, SecuredProfile}
 import shiro.ShiroSubjectCache
 
-class Authorize @Inject()(val secureData: ShiroSubjectCache, addToken: CSRFAddToken, checkToken: CSRFCheck, cc: MessagesControllerComponents) extends Secured(cc) {
+class Authorize @Inject()(val secureData: ShiroSubjectCache, addToken: CSRFAddToken, checkToken: CSRFCheck, cc: MessagesControllerComponents, langs: Langs) extends SecuredAbstracController(cc, langs) {
   val loginForm = Form[Login](
     mapping(
       "username" -> nonEmptyText,

@@ -1,12 +1,13 @@
 package security
 
-import controllers.{CookieLang, routes}
+import controllers.routes
 import org.apache.shiro.subject.Subject
+import play.api.i18n.Langs
 import play.api.mvc._
 import security.SecuredProfile.S_USERNAME
 import shiro.ShiroSubjectCache
 
-abstract class Secured(cc: MessagesControllerComponents) extends CookieLang(cc) {
+abstract class SecuredAbstracController(cc: MessagesControllerComponents, langs: Langs) extends LangAbstractController(cc, langs) {
 
   def secureData: ShiroSubjectCache
 

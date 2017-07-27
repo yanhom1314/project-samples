@@ -3,12 +3,13 @@ package controllers
 import javax.inject.Inject
 
 import org.apache.shiro.realm.Realm
+import play.api.i18n.Langs
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
-import security.{Secured, SecuredProfile}
+import security.{SecuredAbstracController, SecuredProfile}
 import shiro.ShiroSubjectCache
 
-class AdminController @Inject()(realm: Realm, val secureData: ShiroSubjectCache, cc: MessagesControllerComponents) extends Secured(cc) {
+class AdminController @Inject()(realm: Realm, val secureData: ShiroSubjectCache, cc: MessagesControllerComponents, langs: Langs) extends SecuredAbstracController(cc, langs) {
 
   val ROLE_USER = "ROLE_USER"
 
