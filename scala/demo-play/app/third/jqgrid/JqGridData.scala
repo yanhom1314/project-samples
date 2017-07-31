@@ -6,7 +6,14 @@ import third.DemoData
 
 import scala.collection.mutable.ListBuffer
 
-case class JqGridData(total: Int, page: Int, records: Int, rows: ListBuffer[DemoData])
+/**
+  * @param total   总页数
+  * @param page    第几页
+  * @param records 总记录数
+  * @param rows    当前页记录
+  * @tparam A 记录类型
+  */
+case class JqGridData[A](total: Int, page: Int, records: Int, rows: Seq[A])
 
 object JqGridData {
   implicit val demoDataFormat = Json.format[DemoData]

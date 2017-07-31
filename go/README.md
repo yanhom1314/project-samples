@@ -16,6 +16,7 @@ Golang 测试
 		go install hello
 		go install demo			
 		go install modanywhere
+		go install speedup   //宽带提速
 
 + 测试运行：
 		
