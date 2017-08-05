@@ -2,6 +2,13 @@
 
 This project demonstrate how to create a simple CRUD application with Play integration Spring Data JPA.
 
+## Repository
++ `~/.sbt/repositories`:
+
+[repositories]        
+  local...
+  maven-central
+  ....
 
 ## conf/application.conf
 
