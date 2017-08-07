@@ -17,6 +17,7 @@ Golang 测试
 		go install demo			
 		go install modanywhere
 		go install speedup   //宽带提速
+		go build -ldflags="-s -w" speedup
 
 + 测试运行：
 		
