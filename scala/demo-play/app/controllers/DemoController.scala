@@ -12,15 +12,12 @@ import play.api.mvc._
 import services.SpringContextLoader
 import third.DemoData
 import third.datatables.DataTablesData
-import third.jqgrid.{JqGridData, JqGridForm}
+import third.jqgrid.JqGridForm
+import third.jqgrid.ext.JqGridDataDemoData
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable.ListBuffer
 
-/**
-  * This controller creates an `Action` to handle HTTP requests to the
-  * application's home page.
-  */
 @Singleton
 class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPersonRepository, cc: MessagesControllerComponents) extends MessagesAbstractController(cc) with I18nSupport {
 
@@ -59,8 +56,8 @@ class DemoController @Inject()(val sc: SpringContextLoader, val personRepo: TPer
       val start = o.rows * (o.page - 1) + 1
       val records = 36
 
-      val list = JqGridData(Math.ceil(records.toDouble / o.rows).toInt, o.page, records, ListBuffer[DemoData]())
-      (start to (if (start + o.rows <= records) start + o.rows else records)).foreach { i => list.rows += DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}") }
+      val list = JqGridDataDemoData(Math.ceil(records.toDouble / o.rows).toInt, o.page, records,
+        (start to (if (start + o.rows <= records) start + o.rows else records)).map(i => DemoData(i, s"firstName:${i}", s"lastName:${i}", s"address:${i}")))
 
       Ok(Json.toJson(list))
     })

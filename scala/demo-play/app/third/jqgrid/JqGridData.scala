@@ -1,29 +1,54 @@
 package third.jqgrid
 
-import play.api.libs.functional.syntax._
-import play.api.libs.json.{Format, Json, _}
-import third.DemoData
-
-import scala.collection.mutable.ListBuffer
+import play.api.data.Forms._
+import play.api.data._
 
 /**
-  * @param total   总页数
-  * @param page    第几页
-  * @param records 总记录数
-  * @param rows    当前页记录
   * @tparam A 记录类型
   */
-case class JqGridData[A](total: Int, page: Int, records: Int, rows: Seq[A])
+trait JqGridData[A] {
+
+  /**
+    * @return 总页数
+    */
+  def total: Int
+
+  /**
+    *
+    * @return 当前页码
+    */
+  def page: Int
+
+  /**
+    *
+    * @return 总记录数
+    */
+  def records: Int
+
+  /**
+    *
+    * @return 当前页记录有序集合
+    */
+  def rows: Seq[A]
+}
+
+case class JqGridForm(var _search: Boolean, val nd: Long, val rows: Int, val page: Int, val sidx: String,
+                      val sord: String, val searchField: Option[String], val searchString: Option[String],
+                      val searchOper: Option[String], val filters: Option[String])
 
 object JqGridData {
-  implicit val demoDataFormat = Json.format[DemoData]
-  implicit val jqGridDataFormat: Format[JqGridData] = (
-    (__ \ 'total).format[Int] and
-      (__ \ 'page).format[Int] and
-      (__ \ 'records).format[Int] and
-      (__ \ 'rows).formatNullable[ListBuffer[DemoData]].inmap[ListBuffer[DemoData]](
-        o => o.getOrElse(ListBuffer.empty[DemoData]),
-        s => if (s.isEmpty) None else Some(s)
-      )
-    ) (JqGridData.apply, unlift(JqGridData.unapply))
+  val jqGridForm = Form[JqGridForm](
+    mapping(
+      "_search" -> boolean,
+      "nd" -> longNumber,
+      "rows" -> number,
+      "page" -> number,
+      "sidx" -> text,
+      "sord" -> text,
+      "searchField" -> optional(text),
+      "searchString" -> optional(text),
+      "searchOper" -> optional(text),
+      "filters" -> optional(text)
+    )(JqGridForm.apply)(JqGridForm.unapply)
+  )
 }
