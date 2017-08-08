@@ -1,9 +1,9 @@
-@(user: Form[Login])(implicit flash: Flash, session: Session, request: MessagesRequestHeader)
+@(user: Form[Login])(implicit request: MessagesRequestHeader, session: Session, flash: Flash)
 
 @layout.main("Hello Login!") {
     <div id="login">
         <h2> 管理后台登录 <strong></strong></h2>
-        @helper.form(action = routes.Authorize.authenticate()) {
+        @helper.form(routes.Authorize.authenticate) {
             @helper.CSRF.formField
             <div class="form-group">
                 @helper.inputText(user("username"), '_label -> "登陆名", '_showConstraints -> false, 'class -> "form-control")

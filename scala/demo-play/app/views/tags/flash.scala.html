@@ -7,10 +7,8 @@
         top: 0px;
         text-align: center;">
     @for(t <- flash.data) {
-        <div class="@{
-            if(t._1 == "success") "alert alert-success" else if(t._1 == "error") "alert alert-danger" else "alert alert-info"
-        }">
-            <span style="font-weight: bold">@t._1 : @t._2</span>
+        <div class="@(if(t._1 == "success") "alert alert-success" else if(t._1 == "error") "alert alert-danger" else "alert alert-info")">
+            <span style="font-weight: bold">@t._2</span>
         </div>
     }
     </div>
