@@ -4,6 +4,7 @@
 *.war
 *.ear
 *.log
+*.exe
 .act.*
 # output dir
 build/
