@@ -6,7 +6,7 @@ lazy val server = project.in(file("server")).enablePlugins(SbtDistApp).dependsOn
   name := "server",
   organization := "org.koala",
   version := $("prod"),
-  scalaVersion := $("scala"),
+  scalaVersion in ThisBuild := $("scala"),
   mainClass := Some("demo.boot.ServerBoot"),
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-remote" % $("akka"),
@@ -19,7 +19,7 @@ lazy val client = project.in(file("client")).enablePlugins(SbtDistApp).dependsOn
   name := "client",
   organization := "org.koala",
   version := $("prod"),
-  scalaVersion := $("scala"),
+  scalaVersion in ThisBuild := $("scala"),
   mainClass := Some("demo.ClientBoot"),
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-actor" % $("akka"),
@@ -32,7 +32,7 @@ lazy val message = project.in(file("message")).enablePlugins(SbtDistApp).setting
   name := "message",
   organization := "org.koala",
   version := $("prod"),
-  scalaVersion := $("scala"),
+  scalaVersion in ThisBuild := $("scala"),
   mainClass := Some("message.boot.HelloMain"),
   libraryDependencies ++= Seq(
     "com.google.inject" % "guice" % $("guice"),
