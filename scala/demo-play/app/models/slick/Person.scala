@@ -1,4 +1,4 @@
-package models
+package models.slick
 
 import play.api.libs.json._
 

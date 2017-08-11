@@ -2,7 +2,6 @@ package controllers
 
 import javax.inject.Inject
 
-import models.Login
 import org.apache.shiro.SecurityUtils
 import org.apache.shiro.authc._
 import org.apache.shiro.subject.Subject
