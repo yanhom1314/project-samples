@@ -1,7 +1,6 @@
 package main
 
 import (
-	"C"
 	"fmt"
 	"strings"
 )
@@ -17,5 +16,5 @@ func Test() {
 
 func main() {
 	f := strings.Split("1+2+3", "+")
-	fmt.Printf("%d*************%s************\r\n", len(f), f[0])
+fmt.Printf("%d*************%s************\r\n", len(f), f[0])
 }

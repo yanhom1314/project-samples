@@ -25,7 +25,7 @@ func main() {
 		fmt.Println(a[i])
 	}
 
-	for _, s := range a {
+for _, s := range a {
 		fmt.Println(s)
 	}
 }
