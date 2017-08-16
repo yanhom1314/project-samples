@@ -1,0 +1,101 @@
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_boot")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+task genJaxb {
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.classesDir = "${buildDir}/classes/jaxb"
+    ext.schema = "src/main/resources/manager.xsd"
+
+    outputs.dir classesDir
+
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask", classpath: configurations.jaxb.asPath
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
+
+            xjc(destdir: sourcesDir, encoding: "utf-8", schema: schema) {
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
+
+            javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true, encoding: "utf-8",
+                    debugLevel: "lines,vars,source",
+                    classpath: configurations.jaxb.asPath) {
+                src(path: sourcesDir)
+                include(name: "**/*.java")
+                include(name: "*.java")
+            }
+
+            copy(todir: classesDir) {
+                fileset(dir: sourcesDir, erroronmissingdir: false) {
+                    exclude(name: "**/*.java")
+                }
+            }
+        }
+    }
+}
+task getWsimport {
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxws"
+    ext.classesDir = "${buildDir}/classes/jaxws"
+
+    outputs.dir classesDir
+    doLast {
+        ant {
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
+
+            taskdef(name: 'wsimport',
+                    classname: 'com.sun.tools.ws.ant.WsImport',
+                    classpath: configurations.jaxws.asPath
+            )
+            wsimport(keep: true,
+                    destdir: classesDir,
+                    sourcedestdir: sourcesDir,
+                    extension: "false",
+                    verbose: "false",
+                    quiet: "false",
+                    package: "com.greatbit.miit.ext.cq.ws.client.api",
+                    xnocompile: "false",
+                    wsdl: 'src/main/resources/dns_command_replay.wsdl') {
+                xjcarg(value: "-XautoNameResolution")
+            }
+        }
+    }
+}
+configurations {
+    jaxb
+    jaxws
+}
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    options.encoding = 'UTF-8'
+    //options.compilerArgs.addAll(["-XDignore.symbol.file", "-Xlint:unchecked"])
+    options.compilerArgs.addAll(["-Xlint:unchecked"])
+}
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web-services",
+            "com.sun.xml.ws:jaxws-rt:2.2.10",
+            "wsdl4j:wsdl4j:$wsdl4j",
+            "com.google.guava:guava:$guava")
+
+    jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
+    jaxws("com.sun.xml.ws:jaxws-tools:2.2.10")
+
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
+    compile(files(getWsimport.classesDir).builtBy(getWsimport))
+
+    testCompile("org.springframework.boot:spring-boot-starter-test",
+            "junit:junit:$junit")
+}
+
+
+
