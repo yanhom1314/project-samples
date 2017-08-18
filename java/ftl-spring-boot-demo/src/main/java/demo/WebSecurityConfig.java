@@ -23,6 +23,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyConfig mc;
     @Autowired
+    private CustomUsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter;
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
@@ -36,17 +38,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/index", "/greeting", "/login", "/error/*").permitAll()
                 .anyRequest().authenticated();
-        //http.addFilterAfter(csrfHeaderFilter, CsrfFilter.class).csrf().csrfTokenRepository(csrfTokenRepository());
+        //http.addFilterAfter(csrfHeaderFilter, CsrfFilter.class).csrf().csrfTokenRepository(csrfTokenRepository());    
         http.formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/admin")
+                .failureUrl("/login?error")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-                .permitAll()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
                 .and()
-                .rememberMe().key("greatbit@2017").tokenValiditySeconds(mc.getExpired())
-                .and().addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class);
+                .rememberMe().key("greatbit@2017").tokenValiditySeconds(600000)
+                .and()
+                .addFilterAt(usernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Autowired
