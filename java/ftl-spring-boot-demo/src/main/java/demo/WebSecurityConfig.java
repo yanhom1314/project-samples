@@ -1,6 +1,7 @@
 package demo;
 
 import demo.config.MyConfig;
+import demo.security.CustomUsernamePasswordAuthenticationFilter;
 import demo.service.CaptchaFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -38,7 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/index", "/greeting", "/login", "/error/*").permitAll()
                 .anyRequest().authenticated();
-        //http.addFilterAfter(csrfHeaderFilter, CsrfFilter.class).csrf().csrfTokenRepository(csrfTokenRepository());    
+        //http.addFilterAfter(csrfHeaderFilter, CsrfFilter.class).csrf().csrfTokenRepository(csrfTokenRepository());
+        http.headers()
+                .contentTypeOptions()
+                .and()
+                .xssProtection()
+                .and()
+                .cacheControl();
+        
         http.formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/admin")

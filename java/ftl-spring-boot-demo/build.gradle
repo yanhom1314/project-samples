@@ -1,14 +1,11 @@
-
 buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${spring_boot}")
     }
 }
-
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-project.buildDir = 'target'
+
 jar {
     baseName = 'gs-rest-service'
     version = '0.1.0'
@@ -38,4 +35,7 @@ dependencies {
             "com.h2database:h2:$h2",
             "com.github.axet:kaptcha:$kaptcha")
     testCompile("junit:junit")
+}
+bootRun {
+    systemProperties = System.properties
 }
